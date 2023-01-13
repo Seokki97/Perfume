@@ -1,16 +1,18 @@
 package com.example.perfume.crawling.domain;
 
+import java.util.List;
+import java.util.Map;
+
 public class Perfume {
     private String perfumeName;
-
-    private String feature;
-    public Perfume(String perfumeName,String feature) {
+    public Perfume(String perfumeName) {
         this.perfumeName = perfumeName;
-        this.feature = feature;
     }
 
     @Override
     public String toString(){
         return perfumeName;
     }
+
+
 }
