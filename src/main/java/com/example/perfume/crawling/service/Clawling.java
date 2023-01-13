@@ -39,8 +39,10 @@ public class Clawling {
 
         List<Feature> featureList = new ArrayList<>();
         for (int firstIndexOfList = ZERO; firstIndexOfList < setRange.size(); firstIndexOfList++) {
-            Feature feature = new Feature(setRange.get(firstIndexOfList).text());
+            String replaceString = setRange.get(firstIndexOfList).text().replaceAll(",","");
+            Feature feature = new Feature(replaceString);
             featureList.add(feature);
+
         }
         return featureList;
     }
