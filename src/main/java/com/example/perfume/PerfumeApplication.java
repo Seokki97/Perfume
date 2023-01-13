@@ -19,7 +19,7 @@ public class PerfumeApplication {
 	public static void main(String[] args) throws IOException {
 		Clawling clawling = new Clawling();
 
-		clawling.CrawWebSource();
+		clawling.CrawPerfumeFeature();
 	}
 
 }

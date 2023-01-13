@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Clawling {
     private static final String URL = "https://perfumegraphy.com/category/citrus/674/";
+    private static final int ZERO = 0;
 
     public Document connectAndGetDocument() throws IOException {
         Connection connection = Jsoup.connect(URL);
@@ -20,15 +21,24 @@ public class Clawling {
         return document;
     }
 
-    public List<Perfume> CrawPerfumeName() throws IOException {
-        Elements titles = connectAndGetDocument().select("section.thumbnail a img");
-        List<Perfume> perfumeList = new ArrayList<>();
-        for (int i = 0; i < titles.size(); i++) {
-            Perfume setPerfumeName = new Perfume(titles.get(i).attr("alt"));
-            perfumeList.add(setPerfumeName);
-            System.out.println(perfumeList.get(i).toString());
+    public List<String> CrawPerfumeName() throws IOException {
+        Elements setRange = connectAndGetDocument().select("section.thumbnail a img");
+        List<String> perfumeNameList = new ArrayList<>();
+        for (int firstIndexOfList = ZERO; firstIndexOfList < setRange.size(); firstIndexOfList++) {
+            perfumeNameList.add(setRange.get(firstIndexOfList).attr("alt"));
         }
-        return perfumeList;
+        return perfumeNameList;
     }
 
+    public List<String> CrawPerfumeFeature() throws IOException{
+        Elements setRange = connectAndGetDocument().select("ul.spec li.summary");
+
+        List<String> perfumeFeatureList = new ArrayList<>();
+        for(int firstIndexOfList = ZERO; firstIndexOfList < setRange.size(); firstIndexOfList++){
+
+          perfumeFeatureList.add(setRange.get(firstIndexOfList).text());
+
+        }
+        return perfumeFeatureList;
+    }
 }
