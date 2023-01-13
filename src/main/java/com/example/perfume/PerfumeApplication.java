@@ -1,8 +1,6 @@
 package com.example.perfume;
 
-import com.example.perfume.crawling.Clawling;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.example.perfume.crawling.service.Clawling;
 
 import java.io.IOException;
 /*

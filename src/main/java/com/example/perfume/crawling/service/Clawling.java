@@ -1,4 +1,4 @@
-package com.example.perfume.crawling;
+package com.example.perfume.crawling.service;
 
 
 
@@ -29,7 +29,7 @@ public class Clawling {
 
 
         for(int i = 0 ; i < titles.size(); i++){
-            System.out.println(titles.get(1).attr("alt"));
+            System.out.println(titles.get(i).attr("alt"));
 
         }
 
