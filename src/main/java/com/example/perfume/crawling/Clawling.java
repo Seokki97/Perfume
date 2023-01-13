@@ -21,9 +21,10 @@ public class Clawling {
     }
 
     public void CrawWebSource() throws IOException {
-        Elements urlElements = connectAndGetDocument().getElementsByClass("thumbnail");
-        for(Element element : urlElements){
-            System.out.println(element);
+        Elements titles = connectAndGetDocument().select("section.thumbnail");
+        Elements content = titles.select("a");
+        for (int i = 0; i < content.size(); i++) {
+            System.out.println(content.get(i));
         }
     }
 
