@@ -9,11 +9,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class Clawling {
+public class ClawlingService {
     private static final String URL = "https://perfumegraphy.com/category/citrus/674/";
     private static final int ZERO = 0;
 
@@ -23,6 +21,7 @@ public class Clawling {
 
         return document;
     }
+
 
     public List<Perfume> crawPerfumeName() throws IOException {
         Elements setRange = connectAndGetDocument().select("section.thumbnail a img");
