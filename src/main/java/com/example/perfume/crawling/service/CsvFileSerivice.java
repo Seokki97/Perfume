@@ -6,19 +6,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class CsvFileSerivice {
-     String filePath = "C:/Users/wnstj/perfume/Perfume.csv";
-     File file = new File(filePath);
-     BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+     private String filePath = "C:/Users/wnstj/perfume/Perfume1.csv";
+
+        File importedFile = new File(filePath);
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(importedFile));
 
     public CsvFileSerivice() throws IOException {
     }
-    public void makeCsvFile(ClawlingService clawlingService,String url) throws IOException {
 
-        for (int i = 0; i < clawlingService.crawPerfumeFeature(url).size(); i++) {
-            String aData = "";
-            aData = clawlingService.crawPerfumeName(url).get(i) + "," + clawlingService.crawPerfumeFeature(url).get(i);
-            bufferedWriter.write(aData);
+
+    public void makeCsvFile(CrawlingService crawlingService, String targetUrl) throws IOException {
+
+        for (int i = 0; i < crawlingService.crawPerfumeFeature(targetUrl).size(); i++) {
+            String crawledData = "";
+            crawledData = crawlingService.crawPerfumeName(targetUrl).get(i) + "," + crawlingService.crawPerfumeFeature(targetUrl).get(i);
+            bufferedWriter.write(crawledData);
             bufferedWriter.newLine();
+            System.out.println(crawledData);
 
         }
         bufferedWriter.flush();
