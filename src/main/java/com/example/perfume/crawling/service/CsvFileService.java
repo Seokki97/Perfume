@@ -5,13 +5,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class CsvFileSerivice {
+public class CsvFileService {
      private String filePath = "C:/Users/wnstj/perfume/Perfume1.csv";
 
         File importedFile = new File(filePath);
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(importedFile));
 
-    public CsvFileSerivice() throws IOException {
+    public CsvFileService() throws IOException {
     }
 
 
@@ -22,8 +22,6 @@ public class CsvFileSerivice {
             crawledData = crawlingService.crawPerfumeName(targetUrl).get(i) + "," + crawlingService.crawPerfumeFeature(targetUrl).get(i);
             bufferedWriter.write(crawledData);
             bufferedWriter.newLine();
-            System.out.println(crawledData);
-
         }
         bufferedWriter.flush();
     }
