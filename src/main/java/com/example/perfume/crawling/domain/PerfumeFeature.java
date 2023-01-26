@@ -1,9 +1,9 @@
 package com.example.perfume.crawling.domain;
 
-public class Feature {
+public class PerfumeFeature {
     private String feature;
 
-    public Feature(String feature) {
+    public PerfumeFeature(String feature) {
         this.feature = feature;
     }
 
