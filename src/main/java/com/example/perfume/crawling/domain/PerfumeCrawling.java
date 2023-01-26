@@ -1,11 +1,8 @@
 package com.example.perfume.crawling.domain;
 
-import java.util.List;
-import java.util.Map;
-
-public class Perfume {
+public class PerfumeCrawling {
     private String perfumeName;
-    public Perfume(String perfumeName) {
+    public PerfumeCrawling(String perfumeName) {
         this.perfumeName = perfumeName;
     }
 
