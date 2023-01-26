@@ -5,13 +5,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class CsvFileService {
+public class CsvFileConversion {
     private String filePath = "C:/Users/wnstj/perfume/Perfume3.csv";
 
     private File importedFile;
     private BufferedWriter bufferedWriter;
 
-    public CsvFileService() throws IOException {
+    public CsvFileConversion() throws IOException {
         this.importedFile = new File(filePath);
         this.bufferedWriter = new BufferedWriter(new FileWriter(importedFile));
     }
