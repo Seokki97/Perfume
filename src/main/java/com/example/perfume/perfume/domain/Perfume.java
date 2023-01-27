@@ -28,12 +28,17 @@ public class Perfume {
     @Column(nullable = false, length = 60)
     private String perfumeFeature;
 
+    @ManyToOne
+    @JoinColumn(name ="perfume_feature")
+    public Feature feature;
+
     @Builder
-    public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature){
+    public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature, Feature feature){
         this.id= id;
         this.perfumeName = perfumeName;
         this.brandName = brandName;
         this.perfumeFeature = perfumeFeature;
+        this.feature = feature;
     }
     //특징 : a , b , c , d
 }
