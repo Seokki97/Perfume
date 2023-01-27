@@ -29,7 +29,7 @@ public class Perfume {
     private String perfumeFeature;
 
     @ManyToOne
-    @JoinColumn(name ="perfume_feature")
+    @JoinColumn(name ="perfume_id")
     public Feature feature;
 
     @Builder
