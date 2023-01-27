@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CSVFileLoading {
-    String FILE_PATH = "C:/Users/wnstj/perfume/Perfume3.csv";
+    private final String FILE_PATH = "C:/Users/wnstj/perfume/Perfume3.csv";
 
-    List<String> perfumeListTest = new ArrayList<>();
-
+    private List<String> perfumeListTest = new ArrayList<>();
 
     public InputStreamReader importFile() throws UnsupportedEncodingException, FileNotFoundException {
 
         FileInputStream fileInputStream = new FileInputStream(FILE_PATH);
-        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "utf-8");
+        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "euc-kr");
         return inputStreamReader;
     }
 
@@ -24,23 +23,23 @@ public class CSVFileLoading {
     }
 
     public List<String> makePerfumeList(String[] array, String line) {
-        List<String> list = new ArrayList<>();
+
         for (int i = 0; i < array.length; i++) {
             array = line.split(",");
-            list.add(array[i]);
+            perfumeListTest.add(array[i]);
         }
-        return list;
+        return perfumeListTest;
     }
 
     public List<String> splitPerfumeData() throws IOException {
         String line;
         List<String> list = new ArrayList<>();
-
+        readPerfumeData();
         while ((line = readPerfumeData().readLine()) != null) {
             String[] array = line.split(",");
             list = makePerfumeList(array, line);
             perfumeListTest = makePerfumeList(array, line);
-            System.out.println(perfumeListTest.get(0));
+            System.out.println(perfumeListTest.get(1));
         }
         return list;
     }
