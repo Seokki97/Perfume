@@ -2,13 +2,15 @@ package com.example.perfume.perfume.domain;
 
 import com.sun.istack.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "perfume")
+@Entity(name = "feature")
+
 @Data
 @Table(name = "feature")
 public class Feature {
@@ -33,4 +35,12 @@ public class Feature {
     @Column(nullable = false, length = 5)
     private String fourthFeature;
 
+    @Builder
+    public Feature(Long id, String firstFeature, String secondFeature, String thirdFeature, String fourthFeature){
+        this.id = id;
+        this.firstFeature =firstFeature;
+        this.secondFeature = secondFeature;
+        this.thirdFeature = thirdFeature;
+        this.fourthFeature = fourthFeature;
+    }
 }
