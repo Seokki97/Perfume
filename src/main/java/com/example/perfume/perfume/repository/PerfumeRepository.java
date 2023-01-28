@@ -8,9 +8,9 @@ import java.util.Optional;
 
 @Repository
 public interface PerfumeRepository extends JpaRepository<Perfume, Long> {
-    Optional<Perfume> findById(Long id);
+
     Optional<Perfume> findByPerfumeName(String perfumeName);
     Optional<Perfume> findByPerfumeFeature(String perfumeFeature);
 
-    Optional<Perfume> findByPerfumeBrand(String perfumeBrand);
+    Optional<Perfume> findByBrandName(String perfumeBrand);
 }
