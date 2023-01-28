@@ -18,9 +18,9 @@ public class PerfumeDataController {
 
     private final PerfumeService perfumeService;
     @GetMapping("/save")
-    public String saveData(PerfumeDto perfumeDto, Feature feature) throws IOException {
-        perfumeService.savePerfumeList(perfumeDto,feature);
-    return "success";
+    public void saveData(Long id, PerfumeDto perfumeDto/*, Feature feature*/) throws IOException {
+        perfumeService.savePerfumeData(id,perfumeDto/*,feature*/);
+
     }
 
 }
