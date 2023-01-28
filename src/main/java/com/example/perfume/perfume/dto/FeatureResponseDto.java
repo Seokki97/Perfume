@@ -18,7 +18,7 @@ public class FeatureResponseDto {
     private String fourthFeature;
 
     @Builder
-    public FeatureResponseDto(Long id, String firstFeature, String secondFeature, String thirdFeature, String fourthFeature){
+    public FeatureResponseDto(Long id, String firstFeature, String secondFeature, String thirdFeature, String fourthFeature) {
         this.id = id;
         this.firstFeature = firstFeature;
         this.secondFeature = secondFeature;
@@ -26,7 +26,7 @@ public class FeatureResponseDto {
         this.fourthFeature = fourthFeature;
     }
 
-    public Feature toEntity(){
+    public Feature toEntity() {
         return Feature.builder()
                 .id(id)
                 .firstFeature(firstFeature)

@@ -17,9 +17,10 @@ import java.io.IOException;
 public class PerfumeDataController {
 
     private final PerfumeService perfumeService;
+
     @GetMapping("/save")
     public void saveData(Long id, PerfumeDto perfumeDto/*, Feature feature*/) throws IOException {
-        perfumeService.savePerfumeData(id,perfumeDto/*,feature*/);
+        perfumeService.savePerfumeData(id, perfumeDto/*,feature*/);
 
     }
 

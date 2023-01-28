@@ -36,9 +36,9 @@ public class Feature {
     private String fourthFeature;
 
     @Builder
-    public Feature(Long id, String firstFeature, String secondFeature, String thirdFeature, String fourthFeature){
+    public Feature(Long id, String firstFeature, String secondFeature, String thirdFeature, String fourthFeature) {
         this.id = id;
-        this.firstFeature =firstFeature;
+        this.firstFeature = firstFeature;
         this.secondFeature = secondFeature;
         this.thirdFeature = thirdFeature;
         this.fourthFeature = fourthFeature;

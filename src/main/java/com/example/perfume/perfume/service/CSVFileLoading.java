@@ -87,11 +87,13 @@ public class CSVFileLoading {
         return perfumeBrand;
 
     }
-    public void extractAllPerfumeData() throws IOException{
+
+    public void extractAllPerfumeData() throws IOException {
         extractPerfumeName();
         extractPerfumeFeature();
         extractPerfumeBrand();
     }
+
     public int setMaxListSize() {
         return perfumeBrand.size();
     }

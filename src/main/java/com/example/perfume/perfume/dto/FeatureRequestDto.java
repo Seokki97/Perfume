@@ -17,7 +17,7 @@ public class FeatureRequestDto {
     private String fourthFeature;
 
     @Builder
-    public FeatureRequestDto(Long id, String firstFeature, String secondFeature, String thirdFeature, String fourthFeature){
+    public FeatureRequestDto(Long id, String firstFeature, String secondFeature, String thirdFeature, String fourthFeature) {
         this.id = id;
         this.firstFeature = firstFeature;
         this.secondFeature = secondFeature;
@@ -25,7 +25,7 @@ public class FeatureRequestDto {
         this.fourthFeature = fourthFeature;
     }
 
-    public Feature toEntity(){
+    public Feature toEntity() {
         return Feature.builder()
                 .id(id)
                 .firstFeature(firstFeature)
