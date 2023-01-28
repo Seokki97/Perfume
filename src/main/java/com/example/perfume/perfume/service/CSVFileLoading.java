@@ -22,7 +22,7 @@ public class CSVFileLoading {
     private BufferedReader bufferedReader;
 
 
-   public CSVFileLoading() throws FileNotFoundException, UnsupportedEncodingException {
+    public CSVFileLoading() throws FileNotFoundException, UnsupportedEncodingException {
         this.perfumeListTest = new ArrayList<>();
         this.bufferedReader = new BufferedReader(importFile());
         this.perfumeName = new ArrayList<>();
@@ -87,9 +87,12 @@ public class CSVFileLoading {
         return perfumeBrand;
 
     }
-
-
-    public int setMaxListSize(){
-       return perfumeBrand.size();
+    public void extractAllPerfumeData() throws IOException{
+        extractPerfumeName();
+        extractPerfumeFeature();
+        extractPerfumeBrand();
+    }
+    public int setMaxListSize() {
+        return perfumeBrand.size();
     }
 }

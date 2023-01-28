@@ -18,9 +18,7 @@ public class PerfumeService {
     private final CSVFileLoading csvFileLoading;
 
     public void savePerfumeData(Long id, PerfumeDto perfumeDto/*, Feature feature*/) throws IOException {
-        csvFileLoading.extractPerfumeName();
-        csvFileLoading.extractPerfumeFeature();
-        csvFileLoading.extractPerfumeBrand();
+        csvFileLoading.extractAllPerfumeData();
         for (int i = 0; i < csvFileLoading.setMaxListSize(); i++) {
             perfumeDto = new PerfumeDto(id,
                     csvFileLoading.getPerfumeName().get(i),
