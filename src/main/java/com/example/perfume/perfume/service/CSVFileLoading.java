@@ -8,6 +8,10 @@ public class CSVFileLoading {
     private final String FILE_PATH = "C:/Users/wnstj/perfume/Perfume3.csv";
 
     private List<String> perfumeListTest = new ArrayList<>();
+    private BufferedReader bufferedReader = new BufferedReader(importFile());
+
+    public CSVFileLoading() throws FileNotFoundException, UnsupportedEncodingException {
+    }
 
     public InputStreamReader importFile() throws UnsupportedEncodingException, FileNotFoundException {
 
@@ -16,11 +20,6 @@ public class CSVFileLoading {
         return inputStreamReader;
     }
 
-    public BufferedReader readPerfumeData() throws UnsupportedEncodingException, FileNotFoundException {
-        BufferedReader bufferedReader = new BufferedReader(importFile());
-
-        return bufferedReader;
-    }
 
     public List<String> makePerfumeList(String[] array) {
 
@@ -35,15 +34,15 @@ public class CSVFileLoading {
     public List<String> splitPerfumeData() throws IOException {
         List<String> list = new ArrayList<>();
 
-        while (isDataNull(readPerfumeData().readLine()) == true) {
-            String[] line = readPerfumeData().readLine().split(",");
+        while (isDataNull(bufferedReader.readLine()) == true) {
+            String[] line = bufferedReader.readLine().split(",");
+
         }
         return list;
     }
 
     public boolean isDataNull(String data) {
         if (data == null) {
-
             return false;
         }
         return true;
