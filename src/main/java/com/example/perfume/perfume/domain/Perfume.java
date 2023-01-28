@@ -25,20 +25,20 @@ public class Perfume {
     private String brandName;
 
     @NotNull
-    @Column(nullable = false, length = 60)
+    @Column(nullable = false, length = 100)
     private String perfumeFeature;
 
-    @ManyToOne
+  /*  @ManyToOne
     @JoinColumn(name ="perfume_id")
-    public Feature feature;
+    public Feature feature;*/
 
     @Builder
-    public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature, Feature feature){
+    public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature/*, Feature feature*/){
         this.id= id;
         this.perfumeName = perfumeName;
         this.brandName = brandName;
         this.perfumeFeature = perfumeFeature;
-        this.feature = feature;
+       // this.feature = feature;
     }
     //특징 : a , b , c , d
 }

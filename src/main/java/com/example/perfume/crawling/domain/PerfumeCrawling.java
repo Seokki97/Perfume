@@ -10,6 +10,4 @@ public class PerfumeCrawling {
     public String toString(){
         return perfumeName;
     }
-
-
 }

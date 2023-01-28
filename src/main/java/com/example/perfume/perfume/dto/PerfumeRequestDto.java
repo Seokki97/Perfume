@@ -1,4 +1,4 @@
-package com.example.perfume.perfume.dto;
+/*package com.example.perfume.perfume.dto;
 
 
 import com.example.perfume.perfume.domain.Feature;
@@ -32,3 +32,4 @@ public class PerfumeRequestDto {
                 .build();
     }
 }
+*/
