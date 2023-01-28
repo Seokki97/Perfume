@@ -7,10 +7,13 @@ import java.util.List;
 public class CSVFileLoading {
     private final String FILE_PATH = "C:/Users/wnstj/perfume/Perfume3.csv";
 
-    private List<String> perfumeListTest = new ArrayList<>();
-    private BufferedReader bufferedReader = new BufferedReader(importFile());
+    private List<String> perfumeListTest;
+    private BufferedReader bufferedReader;
+
 
     public CSVFileLoading() throws FileNotFoundException, UnsupportedEncodingException {
+        this.perfumeListTest = new ArrayList<>();
+        this.bufferedReader = new BufferedReader(importFile());
     }
 
     public InputStreamReader importFile() throws UnsupportedEncodingException, FileNotFoundException {
@@ -32,27 +35,18 @@ public class CSVFileLoading {
     }
 
     public List<String> splitPerfumeData() throws IOException {
-        List<String> list = new ArrayList<>();
-
-        while (isDataNull(bufferedReader.readLine()) == true) {
-            String[] line = bufferedReader.readLine().split(",");
-
+        String perfumeData;
+        while ((perfumeData = bufferedReader.readLine()) != null) {
+            String[] line = perfumeData.split(",");
+            makePerfumeList(line);
         }
-        return list;
-    }
-
-    public boolean isDataNull(String data) {
-        if (data == null) {
-            return false;
-        }
-        return true;
+        return perfumeListTest;
     }
 
     public void testPerfumeList() throws IOException {
         splitPerfumeData();
         for (int i = 0; i < perfumeListTest.size(); i++) {
             System.out.println(perfumeListTest.get(i));
-
         }
     }
 
