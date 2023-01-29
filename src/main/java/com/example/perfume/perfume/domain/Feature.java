@@ -35,6 +35,9 @@ public class Feature {
     @Column(nullable = false, length = 5)
     private String fourthFeature;
 
+    @ManyToOne
+    @JoinColumn(name ="perfume_id")
+    public Feature feature;
     @Builder
     public Feature(Long id, String firstFeature, String secondFeature, String thirdFeature, String fourthFeature) {
         this.id = id;
