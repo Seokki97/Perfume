@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +45,14 @@ public class PerfumeService {
 
         return perfume;
     }
-    public void deleteAllData(){
+
+    public void deleteAllData() {
         perfumeRepository.deleteAll();
     }
+
+    public List<Perfume> showAllPerfumeData() {
+
+        return perfumeRepository.findAll().stream().collect(Collectors.toList());
+    }
+
 }
