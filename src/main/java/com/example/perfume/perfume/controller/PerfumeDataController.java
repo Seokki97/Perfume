@@ -2,6 +2,7 @@ package com.example.perfume.perfume.controller;
 
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.PerfumeDto;
+import com.example.perfume.perfume.dto.PerfumeRequestDto;
 import com.example.perfume.perfume.service.PerfumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +26,13 @@ public class PerfumeDataController {
     }
 
     @PostMapping("/find_by_name")
-    public ResponseEntity<Perfume> findByPerfumeName(@RequestBody String perfumeName) {
-        return ResponseEntity.ok(perfumeService.findPerfumeByName(perfumeName));
+    public ResponseEntity<Perfume> findByPerfumeName(@RequestBody PerfumeRequestDto perfumeRequestDto) {
+        return ResponseEntity.ok(perfumeService.findPerfumeByName(perfumeRequestDto));
     }
 
     @PostMapping("/find_by_brand")
-    public ResponseEntity<Perfume> findByBrandName(@RequestBody String brandName) {
-        return ResponseEntity.ok(perfumeService.findPerfumeByBrand(brandName));
+    public ResponseEntity<List<Perfume>> findByBrandName(@RequestBody PerfumeRequestDto perfumeRequestDto) {
+        return ResponseEntity.ok(perfumeService.findPerfumeByBrand(perfumeRequestDto));
     }
 
     @GetMapping("/delete")
@@ -43,4 +44,5 @@ public class PerfumeDataController {
     public ResponseEntity<List<Perfume>> showAllData() {
         return ResponseEntity.ok(perfumeService.showAllPerfumeData());
     }
+
 }
