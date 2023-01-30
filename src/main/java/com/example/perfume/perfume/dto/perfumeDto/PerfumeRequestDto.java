@@ -21,12 +21,15 @@ public class PerfumeRequestDto {
     private String brandName;
     private String perfumeFeature;
 
+    private String perfumeImageUrl;
+
     @Builder
-    public PerfumeRequestDto(Long id, String perfumeName, String brandName, String perfumeFeature) {
+    public PerfumeRequestDto(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
         this.id = id;
         this.perfumeName = perfumeName;
         this.brandName = brandName;
         this.perfumeFeature = perfumeFeature;
+        this.perfumeImageUrl = perfumeImageUrl;
     }
 
     public Perfume toEntity(){
@@ -35,6 +38,7 @@ public class PerfumeRequestDto {
                 .perfumeName(perfumeName)
                 .brandName(brandName)
                 .perfumeFeature(perfumeFeature)
+                .perfumeImageUrl(perfumeImageUrl)
                 .build();
     }
 }

@@ -28,13 +28,17 @@ public class Perfume {
     @Column(nullable = false, length = 100)
     private String perfumeFeature;
 
+    @NotNull
+    @Column(nullable = false, length = 255)
+    private String perfumeImageUrl;
+
     @Builder
-    public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature/*, Feature feature*/){
+    public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl){
         this.id= id;
         this.perfumeName = perfumeName;
         this.brandName = brandName;
         this.perfumeFeature = perfumeFeature;
-       // this.feature = feature;
+        this.perfumeImageUrl = perfumeImageUrl;
     }
     //특징 : a , b , c , d
 }

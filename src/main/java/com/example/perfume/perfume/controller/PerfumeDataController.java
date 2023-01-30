@@ -1,12 +1,11 @@
 package com.example.perfume.perfume.controller;
 
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.PerfumeDto;
-import com.example.perfume.perfume.dto.PerfumeRequestDto;
+import com.example.perfume.perfume.dto.perfumeDto.PerfumeDto;
+import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.perfume.service.PerfumeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -20,8 +19,8 @@ public class PerfumeDataController {
     private final PerfumeService perfumeService;
 
     @GetMapping("/save")
-    public void saveData(Long id, PerfumeDto perfumeDto/*, Feature feature*/) throws IOException {
-        perfumeService.savePerfumeData(id, perfumeDto /*,feature*/);
+    public void saveData(Long id, PerfumeDto perfumeDto) throws IOException {
+        perfumeService.savePerfumeData(id, perfumeDto);
 
     }
 

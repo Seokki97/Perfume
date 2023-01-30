@@ -1,9 +1,9 @@
 package com.example.perfume.perfume.service;
 
-
+import com.example.perfume.crawling.service.CSVFileLoading;
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.PerfumeDto;
-import com.example.perfume.perfume.dto.PerfumeRequestDto;
+import com.example.perfume.perfume.dto.perfumeDto.PerfumeDto;
+import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.perfume.repository.PerfumeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,17 +19,17 @@ public class PerfumeService {
 
     private final CSVFileLoading csvFileLoading;
 
-    public void savePerfumeData(Long id, PerfumeDto perfumeDto/*, Feature feature*/) throws IOException {
+    public void savePerfumeData(Long id, PerfumeDto perfumeDto) throws IOException {
         csvFileLoading.extractAllPerfumeData();
         for (int i = 0; i < csvFileLoading.setMaxListSize(); i++) {
-            /*,
-                    feature*/
+
             perfumeDto = new PerfumeDto(id,
                     csvFileLoading.getPerfumeName().get(i),
                     csvFileLoading.getPerfumeFeature().get(i),
-                    csvFileLoading.getPerfumeBrand().get(i)/*,
-                    feature*/);
-            Perfume perfumeDataSet = perfumeDto.toEntity(/*feature*/);
+                    csvFileLoading.getPerfumeBrand().get(i),
+                    csvFileLoading.getPerfumeImageUrl().get(i));
+
+            Perfume perfumeDataSet = perfumeDto.toEntity();
             perfumeRepository.save(perfumeDataSet);
         }
     }
@@ -56,8 +56,8 @@ public class PerfumeService {
         return perfumeRepository.findAll().stream().collect(Collectors.toList());
     }
 
-    public boolean isExistPerfumeName(PerfumeRequestDto perfumeRequestDto){
-        if(perfumeRepository.existsByPerfumeName(perfumeRequestDto.getPerfumeName())){
+    public boolean isExistPerfumeName(PerfumeRequestDto perfumeRequestDto) {
+        if (perfumeRepository.existsByPerfumeName(perfumeRequestDto.getPerfumeName())) {
             return true;
         }
         return false;

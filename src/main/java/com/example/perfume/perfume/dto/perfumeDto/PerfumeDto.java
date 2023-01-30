@@ -15,24 +15,24 @@ public class PerfumeDto {
     private String perfumeName;
     private String brandName;
     private String perfumeFeature;
-//    private Feature feature;
 
+    private String perfumeImageUrl;
     @Builder
-    public PerfumeDto(Long id, String perfumeName, String perfumeFeature, String brandName/*, Feature feature*/) {
+    public PerfumeDto(Long id, String perfumeName, String perfumeFeature, String brandName, String perfumeImageUrl) {
         this.id = id;
         this.perfumeName = perfumeName;
         this.brandName = brandName;
         this.perfumeFeature = perfumeFeature;
-        //  this.feature = feature;
+        this.perfumeImageUrl = perfumeImageUrl;
     }
 
-    public Perfume toEntity(/*Feature feature*/) {
+    public Perfume toEntity() {
         return Perfume.builder()
                 .id(id)
                 .perfumeName(perfumeName)
                 .brandName(brandName)
                 .perfumeFeature(perfumeFeature)
-                // .feature(feature)
+                .perfumeImageUrl(perfumeImageUrl)
                 .build();
     }
 }
