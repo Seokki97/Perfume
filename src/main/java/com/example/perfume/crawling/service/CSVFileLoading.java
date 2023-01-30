@@ -1,4 +1,4 @@
-package com.example.perfume.perfume.service;
+package com.example.perfume.crawling.service;
 
 import lombok.Getter;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,8 @@ public class CSVFileLoading {
     private List<String> perfumeName;
     private List<String> perfumeFeature;
     private List<String> perfumeBrand;
+
+    private List<String> perfumeImageUrl;
     private BufferedReader bufferedReader;
 
 
@@ -26,6 +28,7 @@ public class CSVFileLoading {
         this.perfumeName = new ArrayList<>();
         this.perfumeBrand = new ArrayList<>();
         this.perfumeFeature = new ArrayList<>();
+        this.perfumeImageUrl = new ArrayList<>();
     }
 
     public InputStreamReader importFile() throws UnsupportedEncodingException, FileNotFoundException {
@@ -62,7 +65,7 @@ public class CSVFileLoading {
 
     public List<String> extractPerfumeName() throws IOException {
         splitPerfumeData();
-        for (int i = 0; i < perfumeListTest.size(); i += 3) {
+        for (int i = 0; i < perfumeListTest.size(); i += 4) {
             perfumeName.add(perfumeListTest.get(i));
         }
         return perfumeName;
@@ -70,7 +73,7 @@ public class CSVFileLoading {
 
     public List<String> extractPerfumeFeature() throws IOException {
         splitPerfumeData();
-        for (int i = 1; i < perfumeListTest.size(); i += 3) {
+        for (int i = 1; i < perfumeListTest.size(); i += 4) {
             perfumeFeature.add(perfumeListTest.get(i));
         }
         return perfumeFeature;
@@ -79,17 +82,26 @@ public class CSVFileLoading {
 
     public List<String> extractPerfumeBrand() throws IOException {
         splitPerfumeData();
-        for (int i = 2; i < perfumeListTest.size(); i += 3) {
+        for (int i = 2; i < perfumeListTest.size(); i += 4) {
             perfumeBrand.add(perfumeListTest.get(i));
         }
         return perfumeBrand;
 
     }
 
+    public List<String> extractPerfumeImageUrl() throws IOException {
+        splitPerfumeData();
+        for (int i = 3; i < perfumeListTest.size(); i+= 4){
+            perfumeImageUrl.add(perfumeListTest.get(i));
+        }
+        return perfumeImageUrl;
+    }
+
     public void extractAllPerfumeData() throws IOException {
         extractPerfumeName();
         extractPerfumeFeature();
         extractPerfumeBrand();
+        extractPerfumeImageUrl();
     }
 
     public int setMaxListSize() {
