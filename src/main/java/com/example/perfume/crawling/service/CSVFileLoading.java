@@ -12,7 +12,8 @@ import java.util.List;
 @Getter
 public class CSVFileLoading {
     private final String FILE_PATH = "C:/Users/wnstj/perfume/Perfume4.csv";
-
+    //COLUMN_LENGTH : 향수 데이터 컬럼 개수가 늘어나면 수정해줘야함.
+    private static final int COLUMN_LENGTH = 4;
     private List<String> perfumeListTest;
     private List<String> perfumeName;
     private List<String> perfumeFeature;
@@ -65,7 +66,7 @@ public class CSVFileLoading {
 
     public List<String> extractPerfumeName() throws IOException {
         splitPerfumeData();
-        for (int i = 0; i < perfumeListTest.size(); i += 4) {
+        for (int i = 0; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
             perfumeName.add(perfumeListTest.get(i));
         }
         return perfumeName;
@@ -73,7 +74,7 @@ public class CSVFileLoading {
 
     public List<String> extractPerfumeFeature() throws IOException {
         splitPerfumeData();
-        for (int i = 1; i < perfumeListTest.size(); i += 4) {
+        for (int i = 1; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
             perfumeFeature.add(perfumeListTest.get(i));
         }
         return perfumeFeature;
@@ -82,7 +83,7 @@ public class CSVFileLoading {
 
     public List<String> extractPerfumeBrand() throws IOException {
         splitPerfumeData();
-        for (int i = 2; i < perfumeListTest.size(); i += 4) {
+        for (int i = 2; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
             perfumeBrand.add(perfumeListTest.get(i));
         }
         return perfumeBrand;
@@ -91,7 +92,7 @@ public class CSVFileLoading {
 
     public List<String> extractPerfumeImageUrl() throws IOException {
         splitPerfumeData();
-        for (int i = 3; i < perfumeListTest.size(); i+= 4){
+        for (int i = 3; i < perfumeListTest.size(); i+= COLUMN_LENGTH){
             perfumeImageUrl.add(perfumeListTest.get(i));
         }
         return perfumeImageUrl;
