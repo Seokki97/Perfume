@@ -1,4 +1,4 @@
-package com.example.perfume.perfume.dto;
+package com.example.perfume.perfume.dto.featureDto;
 
 import com.example.perfume.perfume.domain.Feature;
 import lombok.Builder;
