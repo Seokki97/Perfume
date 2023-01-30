@@ -2,6 +2,7 @@ package com.example.perfume.crawling.service;
 
 import com.example.perfume.crawling.domain.PerfumeFeature;
 import com.example.perfume.crawling.domain.PerfumeCrawling;
+import com.example.perfume.crawling.domain.PerfumeImage;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,6 +20,7 @@ public class CrawlingService {
     private static final String PERFUME_NAME_CSS_QUERY_RANGE = "section.thumbnail a img";
     private static final String PERFUME_NAME_ATTRIBUTE_KEY = "alt";
     private static final String PERFUME_FEATURE_CSS_QUERY_RANGE = "ul.spec li.summary";
+    private static final String IMG_URL = "src";
 
     public Document connectAndGetDocument(String targetUrl) throws IOException {
         Connection connection = Jsoup.connect(targetUrl);
@@ -51,4 +53,14 @@ public class CrawlingService {
         return perfumeFeatureList;
     }
 
+    public List<PerfumeImage> crawPerfumeImageUrl(String targetUrl) throws IOException{
+        Elements setRange = connectAndGetDocument(targetUrl).select(PERFUME_NAME_CSS_QUERY_RANGE);
+        List<PerfumeImage> perfumeImageList = new ArrayList<>();
+        for(int firstIndexOfList = LOOP_ZERO; firstIndexOfList < setRange.size(); firstIndexOfList++){
+            PerfumeImage perfumeImage = new PerfumeImage(setRange.get(firstIndexOfList).attr(IMG_URL));
+            perfumeImageList.add(perfumeImage);
+        }
+        return perfumeImageList;
+
+    }
 }

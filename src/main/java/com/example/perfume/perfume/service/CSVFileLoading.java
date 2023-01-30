@@ -1,8 +1,6 @@
 package com.example.perfume.perfume.service;
 
-import com.example.perfume.perfume.dto.PerfumeDto;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -13,7 +11,7 @@ import java.util.List;
 @Service
 @Getter
 public class CSVFileLoading {
-    private final String FILE_PATH = "C:/Users/wnstj/perfume/Perfume3.csv";
+    private final String FILE_PATH = "C:/Users/wnstj/perfume/Perfume4.csv";
 
     private List<String> perfumeListTest;
     private List<String> perfumeName;

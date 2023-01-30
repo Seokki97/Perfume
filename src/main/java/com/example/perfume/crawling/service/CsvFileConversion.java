@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class CsvFileConversion {
-    private String filePath = "C:/Users/wnstj/perfume/Perfume3.csv";
+    private String filePath = "C:/Users/wnstj/perfume/Perfume4.csv";
 
     private File importedFile;
     private BufferedWriter bufferedWriter;
@@ -19,9 +19,11 @@ public class CsvFileConversion {
 
     public void makeCsvData(CrawlingService crawlingService, String targetUrl) throws IOException {
         int listSize = crawlingService.crawPerfumeFeature(targetUrl).size();
+
         for (int i = 0; i < listSize; i++) {
             String crawledData = "";
-            crawledData = crawlingService.crawPerfumeName(targetUrl).get(i) + "," + crawlingService.crawPerfumeFeature(targetUrl).get(i);
+            crawledData = crawlingService.crawPerfumeName(targetUrl).get(i) + "," + crawlingService.crawPerfumeFeature(targetUrl).get(i)
+            + "," + crawlingService.crawPerfumeImageUrl(targetUrl).get(i);
             bufferedWriter.write(crawledData);
             bufferedWriter.newLine();
         }
