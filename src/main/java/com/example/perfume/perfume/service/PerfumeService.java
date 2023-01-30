@@ -3,6 +3,7 @@ package com.example.perfume.perfume.service;
 
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.PerfumeDto;
+import com.example.perfume.perfume.dto.PerfumeRequestDto;
 import com.example.perfume.perfume.repository.PerfumeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,14 +34,14 @@ public class PerfumeService {
         }
     }
 
-    public Perfume findPerfumeByName(String perfumeName) {
-        Perfume perfume = perfumeRepository.findByPerfumeName(perfumeName)
-                .orElseThrow(() -> new IllegalArgumentException("해당 향수를 찾을 수 없습니다."));
+    public Perfume findPerfumeByName(PerfumeRequestDto perfumeRequestDto) {
+        Perfume perfume = perfumeRepository.findByPerfumeName(perfumeRequestDto.getPerfumeName())
+                .orElseThrow(() -> new IllegalArgumentException("해당 향수를 찾을 수 없습니다"));
         return perfume;
     }
 
-    public Perfume findPerfumeByBrand(String brandName) {
-        Perfume perfume = perfumeRepository.findByBrandName(brandName)
+    public List<Perfume> findPerfumeByBrand(PerfumeRequestDto perfumeRequestDto) {
+        List<Perfume> perfume = perfumeRepository.findByBrandName(perfumeRequestDto.getBrandName())
                 .orElseThrow(() -> new IllegalArgumentException("해당 향수를 찾을 수 없습니다."));
 
         return perfume;
@@ -53,6 +54,13 @@ public class PerfumeService {
     public List<Perfume> showAllPerfumeData() {
 
         return perfumeRepository.findAll().stream().collect(Collectors.toList());
+    }
+
+    public boolean isExistPerfumeName(PerfumeRequestDto perfumeRequestDto){
+        if(perfumeRepository.existsByPerfumeName(perfumeRequestDto.getPerfumeName())){
+            return true;
+        }
+        return false;
     }
 
 }
