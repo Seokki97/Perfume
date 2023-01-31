@@ -8,26 +8,33 @@ import java.io.IOException;
 public class CsvFileConversion {
     private String filePath = "C:/Users/wnstj/perfume/Perfume4.csv";
 
+
     private File importedFile;
     private BufferedWriter bufferedWriter;
+
 
     public CsvFileConversion() throws IOException {
         this.importedFile = new File(filePath);
         this.bufferedWriter = new BufferedWriter(new FileWriter(importedFile));
     }
 
+    public String getCrawlingTarget(CrawlingService crawlingService, String targetUrl, int i) throws IOException {
+        return crawlingService.crawPerfumeName(targetUrl).get(i)
+                + "," + crawlingService.crawPerfumeFeature(targetUrl).get(i)
+                + "," + crawlingService.crawPerfumeImageUrl(targetUrl).get(i);
+    }
 
     public void makeCsvData(CrawlingService crawlingService, String targetUrl) throws IOException {
         int listSize = crawlingService.crawPerfumeFeature(targetUrl).size();
 
         for (int i = 0; i < listSize; i++) {
             String crawledData = "";
-            crawledData = crawlingService.crawPerfumeName(targetUrl).get(i) + "," + crawlingService.crawPerfumeFeature(targetUrl).get(i)
-            + "," + crawlingService.crawPerfumeImageUrl(targetUrl).get(i);
+            crawledData = getCrawlingTarget(crawlingService, targetUrl, i);
             bufferedWriter.write(crawledData);
             bufferedWriter.newLine();
         }
         bufferedWriter.flush();
+        bufferedWriter.close();
     }
 
     public void bufferClose() throws IOException {
