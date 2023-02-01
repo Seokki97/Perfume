@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Data
 @Table(name = "feature")
 public class FeatureDto {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;

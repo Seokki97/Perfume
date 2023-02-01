@@ -1,5 +1,10 @@
 package com.example.perfume.crawling.service;
 
+import com.example.perfume.crawling.domain.PerfumeBrand;
+import com.example.perfume.crawling.domain.PerfumeCrawling;
+import com.example.perfume.crawling.domain.PerfumeFeature;
+import com.example.perfume.crawling.domain.PerfumeImage;
+import com.example.perfume.perfume.domain.Perfume;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
@@ -66,6 +71,7 @@ public class CSVFileLoading {
 
     public List<String> extractPerfumeName() throws IOException {
         splitPerfumeData();
+
         for (int i = 0; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
             perfumeName.add(perfumeListTest.get(i));
         }
@@ -109,3 +115,4 @@ public class CSVFileLoading {
         return perfumeBrand.size();
     }
 }
+

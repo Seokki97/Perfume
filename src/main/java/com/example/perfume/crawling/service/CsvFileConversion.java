@@ -6,7 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class CsvFileConversion {
-    private String filePath = "C:/Users/wnstj/perfume/Perfume4.csv";
+    private String filePath = "C:/Users/wnstj/perfume/젠더리스.csv";
 
 
     private File importedFile;
@@ -34,7 +34,7 @@ public class CsvFileConversion {
             bufferedWriter.newLine();
         }
         bufferedWriter.flush();
-        bufferedWriter.close();
+
     }
 
     public void bufferClose() throws IOException {

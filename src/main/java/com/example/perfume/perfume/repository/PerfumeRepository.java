@@ -1,7 +1,6 @@
 package com.example.perfume.perfume.repository;
 
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.PerfumeRequestDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
