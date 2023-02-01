@@ -3,17 +3,12 @@ package com.example.perfume.perfume.dto.perfumeDto;
 
 import com.example.perfume.perfume.domain.Feature;
 import com.example.perfume.perfume.domain.Perfume;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Table;
-
-
-@RequiredArgsConstructor
+@Getter
+@Builder
 @Table(name = "perfume")
-@Data
 public class PerfumeRequestDto {
 
     private Long id;

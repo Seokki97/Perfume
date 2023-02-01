@@ -5,12 +5,16 @@ import com.example.perfume.perfume.domain.Feature;
 import com.example.perfume.perfume.domain.Perfume;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.Table;
 
-@Data
+@Builder
+@Getter
 @Table
 public class PerfumeDto {
+    //그렇기 때문에 클래스 변수를 final로 선언하고 객체의 생성은 빌더에 맡기는 것이 좋다.
+
     private Long id;
     private String perfumeName;
     private String brandName;
