@@ -19,7 +19,7 @@ public class PerfumeDataController {
 
     @GetMapping("/save")
     public void saveData(Long id, PerfumeDto perfumeDto) throws IOException {
-        perfumeService.savePerfumeData(id, perfumeDto);
+        perfumeService.savePerfumeData(id);
 
     }
 
