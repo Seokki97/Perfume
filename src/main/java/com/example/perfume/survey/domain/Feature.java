@@ -1,4 +1,4 @@
-package com.example.perfume.perfume.domain;
+package com.example.perfume.survey.domain;
 
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -16,7 +16,7 @@ public class Feature {
     private Long id;
 
     @NotNull
-    @Column(nullable = false, length =5)
+    @Column(nullable = false, length = 100)
     private String answerOfSurvey;
 
   /*  @Column(nullable = false, length = 5)

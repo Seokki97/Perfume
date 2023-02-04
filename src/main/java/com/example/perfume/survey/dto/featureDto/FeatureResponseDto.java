@@ -1,14 +1,10 @@
-package com.example.perfume.perfume.dto.featureDto;
+package com.example.perfume.survey.dto.featureDto;
 
-import com.example.perfume.perfume.domain.Feature;
+import com.example.perfume.survey.domain.Feature;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Table;
-import java.util.List;
 
 @Getter
 @Table(name = "feature")
@@ -21,7 +17,7 @@ public class FeatureResponseDto {
     public Long perfumeId;
 
     @Builder
-    public FeatureResponseDto(Long id,String answerOfSurvey) {
+    public FeatureResponseDto(Long id, String answerOfSurvey) {
         this.id = id;
         this.answerOfSurvey = answerOfSurvey;
     }
