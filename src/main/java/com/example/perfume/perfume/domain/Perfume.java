@@ -7,7 +7,6 @@ import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-@Data
 @Entity(name = "perfume")
 @Table(name = "perfume")
 public class Perfume {
@@ -40,5 +39,8 @@ public class Perfume {
         this.perfumeFeature = perfumeFeature;
         this.perfumeImageUrl = perfumeImageUrl;
     }
-    //특징 : a , b , c , d
+
+    public Long deliverPerfumeId(){
+        return id;
+    }
 }

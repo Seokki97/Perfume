@@ -1,7 +1,6 @@
 package com.example.perfume.perfume.dto.perfumeDto;
 
 
-import com.example.perfume.perfume.domain.Feature;
 import com.example.perfume.perfume.domain.Perfume;
 import lombok.*;
 

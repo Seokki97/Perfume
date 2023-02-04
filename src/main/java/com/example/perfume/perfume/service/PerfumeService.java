@@ -44,7 +44,7 @@ public class PerfumeService {
 
     public List<Perfume> findPerfumeByBrand(PerfumeRequestDto perfumeRequestDto) {
         List<Perfume> perfume = perfumeRepository.findByBrandName(perfumeRequestDto.getBrandName())
-                .orElseThrow(() -> new IllegalArgumentException("해당 향수를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("해당 브랜드를 찾을 수 없습니다."));
 
         return perfume;
     }

@@ -1,10 +1,8 @@
 package com.example.perfume.perfume.dto.perfumeDto;
 
 
-import com.example.perfume.perfume.domain.Feature;
 import com.example.perfume.perfume.domain.Perfume;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 import javax.persistence.Table;
