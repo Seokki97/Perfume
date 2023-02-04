@@ -7,8 +7,8 @@ import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Entity(name = "feature")
-@Table(name = "feature")
+@Entity(name = "features")
+@Table(name = "features")
 public class Feature {
 
     @Id
@@ -16,12 +16,8 @@ public class Feature {
     private Long id;
 
     @NotNull
-    @Column(nullable = false, length = 5)
+    @Column(nullable = false, length =5)
     private String answerOfSurvey;
-
-    @ManyToOne
-    @JoinColumn(name = "perfume_id")
-    public Perfume perfume;
 
   /*  @Column(nullable = false, length = 5)
     public Long perfumeId;*/

@@ -11,8 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
+@Builder
 @Getter
-@Table(name = "feature")
 public class FeatureDto {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
