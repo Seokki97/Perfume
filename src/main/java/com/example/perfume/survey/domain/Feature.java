@@ -15,17 +15,35 @@ public class Feature {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @NotNull
     @Column(nullable = false, length = 100)
-    private String answerOfSurvey;
+    private String firstAnswerOfSurvey;
 
-  /*  @Column(nullable = false, length = 5)
-    public Long perfumeId;*/
+    @NotNull
+    @Column(nullable = false, length = 100)
+    private String secondAnswerOfSurvey;
+
+    @NotNull
+    @Column(nullable = false, length = 100)
+    private String thirdAnswerOfSurvey;
+
+    @NotNull
+    @Column(nullable = false, length = 100)
+    private String fourthAnswerOfSurvey;
+
+    @NotNull
+    @Column(nullable = false, length = 100)
+    private String fifthAnswerOfSurvey;
 
     @Builder
-    public Feature(Long id, String answerOfSurvey) {
+    public Feature(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey) {
         this.id = id;
-        this.answerOfSurvey = answerOfSurvey;
+        this.firstAnswerOfSurvey = firstAnswerOfSurvey;
+        this.secondAnswerOfSurvey = secondAnswerOfSurvey;
+        this.thirdAnswerOfSurvey = thirdAnswerOfSurvey;
+        this.fourthAnswerOfSurvey = fourthAnswerOfSurvey;
+        this.fifthAnswerOfSurvey = fifthAnswerOfSurvey;
         //this.perfumeId = perfume.deliverPerfumeId();
     }
 }

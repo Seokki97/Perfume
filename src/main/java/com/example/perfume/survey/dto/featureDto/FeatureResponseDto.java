@@ -22,10 +22,4 @@ public class FeatureResponseDto {
         this.answerOfSurvey = answerOfSurvey;
     }
 
-    public Feature toEntity(Feature feature) {
-        return Feature.builder()
-                .id(id)
-                .answerOfSurvey(answerOfSurvey)
-                .build();
-    }
 }

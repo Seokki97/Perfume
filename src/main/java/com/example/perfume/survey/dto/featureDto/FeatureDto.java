@@ -15,10 +15,26 @@ public class FeatureDto {
     @Column(name = "id")
     private Long id;
 
-    private String answerOfSurvey;
+    private String firstAnswerOfSurvey;
+    private String secondAnswerOfSurvey;
+    private String thirdAnswerOfSurvey;
+    private String fourthAnswerOfSurvey;
+    private String fifthAnswerOfSurvey;
 
 
-    public Long perfumeId;
+    // public Long perfumeId;
+
+    public FeatureDto(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey) {
+        this.id = id;
+        this.firstAnswerOfSurvey = firstAnswerOfSurvey;
+        this.secondAnswerOfSurvey = secondAnswerOfSurvey;
+        this.thirdAnswerOfSurvey = thirdAnswerOfSurvey;
+        this.fourthAnswerOfSurvey = fourthAnswerOfSurvey;
+        this.fifthAnswerOfSurvey = fifthAnswerOfSurvey;
+    }
 
 
+    public FeatureDto() {
+
+    }
 }
