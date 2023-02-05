@@ -1,15 +1,12 @@
 package com.example.perfume.survey.dto.featureDto;
 
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.survey.domain.Feature;
+import com.example.perfume.survey.domain.Survey;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.Table;
-
 @Getter
-@Table(name = "feature")
-public class FeatureResponseDto {
+public class SurveyResponseDto {
 
     private Long id;
 
@@ -21,7 +18,7 @@ public class FeatureResponseDto {
     public Long perfumeId;
 
     @Builder
-    public FeatureResponseDto(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey) {
+    public SurveyResponseDto(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey) {
         this.id = id;
         this.firstAnswerOfSurvey = firstAnswerOfSurvey;
         this.secondAnswerOfSurvey = secondAnswerOfSurvey;
@@ -30,8 +27,8 @@ public class FeatureResponseDto {
         this.fifthAnswerOfSurvey = fifthAnswerOfSurvey;
     }
 
-    public Feature toEntity(Perfume perfume) {
-        return Feature.builder()
+    public Survey toEntity(Perfume perfume) {
+        return Survey.builder()
                 .id(id)
                 .perfume(perfume)
                 .firstAnswerOfSurvey(firstAnswerOfSurvey)

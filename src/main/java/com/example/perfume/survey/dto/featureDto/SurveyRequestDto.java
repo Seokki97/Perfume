@@ -1,16 +1,11 @@
 package com.example.perfume.survey.dto.featureDto;
 
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.survey.domain.Feature;
-import lombok.Builder;
+import com.example.perfume.survey.domain.Survey;
 import lombok.Getter;
 
-import javax.persistence.Table;
-import java.util.List;
-
 @Getter
-@Table(name = "feature")
-public class FeatureRequestDto {
+public class SurveyRequestDto {
 
     private Long id;
 
@@ -20,11 +15,11 @@ public class FeatureRequestDto {
     private String fourthAnswerOfSurvey;
     private String fifthAnswerOfSurvey;
 
-    public FeatureRequestDto(){
+    public SurveyRequestDto(){
 
     }
 
-    public FeatureRequestDto(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey) {
+    public SurveyRequestDto(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey) {
         this.id = id;
         this.firstAnswerOfSurvey = firstAnswerOfSurvey;
         this.secondAnswerOfSurvey = secondAnswerOfSurvey;
@@ -33,8 +28,8 @@ public class FeatureRequestDto {
         this.fifthAnswerOfSurvey = fifthAnswerOfSurvey;
     }
 
-    public Feature toEntity(Perfume perfume) {
-        return Feature.builder()
+    public Survey toEntity(Perfume perfume) {
+        return Survey.builder()
                 .id(id)
                 .perfume(perfume)
                 .firstAnswerOfSurvey(firstAnswerOfSurvey)

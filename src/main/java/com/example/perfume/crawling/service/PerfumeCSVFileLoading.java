@@ -1,10 +1,5 @@
 package com.example.perfume.crawling.service;
 
-import com.example.perfume.crawling.domain.PerfumeBrand;
-import com.example.perfume.crawling.domain.PerfumeCrawling;
-import com.example.perfume.crawling.domain.PerfumeFeature;
-import com.example.perfume.crawling.domain.PerfumeImage;
-import com.example.perfume.perfume.domain.Perfume;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +10,7 @@ import java.util.List;
 
 @Service
 @Getter
-public class CSVFileLoading {
+public class PerfumeCSVFileLoading {
     private final String FILE_PATH = "C:/Users/wnstj/perfume/Perfume4.csv";
     //COLUMN_LENGTH : 향수 데이터 컬럼 개수가 늘어나면 수정해줘야함.
     private static final int COLUMN_LENGTH = 4;
@@ -28,7 +23,7 @@ public class CSVFileLoading {
     private BufferedReader bufferedReader;
 
 
-    public CSVFileLoading() throws FileNotFoundException, UnsupportedEncodingException {
+    public PerfumeCSVFileLoading() throws FileNotFoundException, UnsupportedEncodingException {
         this.perfumeListTest = new ArrayList<>();
         this.bufferedReader = new BufferedReader(importFile());
         this.perfumeName = new ArrayList<>();

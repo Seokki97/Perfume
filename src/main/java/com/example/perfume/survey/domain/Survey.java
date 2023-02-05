@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Entity(name = "features")
 @Table(name = "features")
-public class Feature {
+public class Survey {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +41,7 @@ public class Feature {
     private Perfume perfume;
 
     @Builder
-    public Feature(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey, Perfume perfume) {
+    public Survey(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey, Perfume perfume) {
         this.id = id;
         this.firstAnswerOfSurvey = firstAnswerOfSurvey;
         this.secondAnswerOfSurvey = secondAnswerOfSurvey;
