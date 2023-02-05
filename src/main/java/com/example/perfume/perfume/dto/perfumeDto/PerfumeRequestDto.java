@@ -17,6 +17,7 @@ public class PerfumeRequestDto {
 
     private String perfumeImageUrl;
 
+
     @Builder
     public PerfumeRequestDto(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
         this.id = id;

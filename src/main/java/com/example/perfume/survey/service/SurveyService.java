@@ -1,8 +1,7 @@
 package com.example.perfume.survey.service;
 
 import com.example.perfume.survey.domain.Feature;
-import com.example.perfume.survey.dto.featureDto.FeatureDto;
-import com.example.perfume.survey.dto.featureDto.FeatureRequestDto;
+import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
 import com.example.perfume.survey.repository.FeatureRepository;
 import org.springframework.stereotype.Service;
 
@@ -47,12 +46,12 @@ public class SurveyService {
         return featureList;
     }
 
-    public List<Feature> findDataFromAnswerTest(FeatureDto featureDto) {
-        findFirstDataFromQuestionTest(featureDto.getFirstAnswerOfSurvey());
-        findSecondDataFromAnswer(featureDto.getSecondAnswerOfSurvey());
-        findThirdDataFromAnswer(featureDto.getThirdAnswerOfSurvey());
-        findFourthDataFromAnswer(featureDto.getFourthAnswerOfSurvey());
-        findFifthDataFromAnswer(featureDto.getFifthAnswerOfSurvey());
+    public List<Feature> findDataFromAnswerTest(FeatureResponseDto featureResponseDto) {
+        findFirstDataFromQuestionTest(featureResponseDto.getFirstAnswerOfSurvey());
+        findSecondDataFromAnswer(featureResponseDto.getSecondAnswerOfSurvey());
+        findThirdDataFromAnswer(featureResponseDto.getThirdAnswerOfSurvey());
+        findFourthDataFromAnswer(featureResponseDto.getFourthAnswerOfSurvey());
+        findFifthDataFromAnswer(featureResponseDto.getFifthAnswerOfSurvey());
         return featureList;
     }
 

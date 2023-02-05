@@ -2,7 +2,9 @@
 
 import com.example.perfume.perfume.domain.Perfume;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class PerfumeResponseDto {
 
     private Long id;

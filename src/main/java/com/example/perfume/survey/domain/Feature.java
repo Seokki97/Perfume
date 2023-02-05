@@ -1,5 +1,6 @@
 package com.example.perfume.survey.domain;
 
+import com.example.perfume.perfume.domain.Perfume;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -15,35 +16,39 @@ public class Feature {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @NotNull
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 10)
     private String firstAnswerOfSurvey;
 
     @NotNull
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 10)
     private String secondAnswerOfSurvey;
 
     @NotNull
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 10)
     private String thirdAnswerOfSurvey;
 
     @NotNull
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 10)
     private String fourthAnswerOfSurvey;
 
     @NotNull
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 10)
     private String fifthAnswerOfSurvey;
 
+    @ManyToOne
+    @JoinColumn(name = "perfume_id")
+    private Perfume perfume;
+
     @Builder
-    public Feature(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey) {
+    public Feature(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey, Perfume perfume) {
         this.id = id;
         this.firstAnswerOfSurvey = firstAnswerOfSurvey;
         this.secondAnswerOfSurvey = secondAnswerOfSurvey;
         this.thirdAnswerOfSurvey = thirdAnswerOfSurvey;
         this.fourthAnswerOfSurvey = fourthAnswerOfSurvey;
         this.fifthAnswerOfSurvey = fifthAnswerOfSurvey;
-        //this.perfumeId = perfume.deliverPerfumeId();
+        this.perfume = perfume;
+
     }
 }

@@ -2,8 +2,8 @@ package com.example.perfume.perfume.service;
 
 import com.example.perfume.crawling.service.CSVFileLoading;
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.perfumeDto.PerfumeDto;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
+import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.perfume.repository.PerfumeRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,21 +17,22 @@ public class PerfumeService {
 
     private final CSVFileLoading csvFileLoading;
 
-    public PerfumeService(PerfumeRepository perfumeRepository, CSVFileLoading csvFileLoading){
+    public PerfumeService(PerfumeRepository perfumeRepository, CSVFileLoading csvFileLoading) {
         this.perfumeRepository = perfumeRepository;
         this.csvFileLoading = csvFileLoading;
     }
+
     public void savePerfumeData(Long id) throws IOException {
         csvFileLoading.extractAllPerfumeData();
         for (int i = 0; i < csvFileLoading.setMaxListSize(); i++) {
 
-            PerfumeDto perfumeDto = new PerfumeDto(id,
+            PerfumeResponseDto perfumeResponseDto = new PerfumeResponseDto(id,
                     csvFileLoading.getPerfumeName().get(i),
                     csvFileLoading.getPerfumeFeature().get(i),
                     csvFileLoading.getPerfumeBrand().get(i),
                     csvFileLoading.getPerfumeImageUrl().get(i));
 
-            Perfume perfumeDataSet = perfumeDto.toEntity();
+            Perfume perfumeDataSet = perfumeResponseDto.toEntity();
             perfumeRepository.save(perfumeDataSet);
         }
     }

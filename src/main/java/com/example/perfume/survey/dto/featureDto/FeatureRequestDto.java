@@ -1,5 +1,6 @@
 package com.example.perfume.survey.dto.featureDto;
 
+import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Feature;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +20,6 @@ public class FeatureRequestDto {
     private String fourthAnswerOfSurvey;
     private String fifthAnswerOfSurvey;
 
-
     public FeatureRequestDto(){
 
     }
@@ -33,10 +33,10 @@ public class FeatureRequestDto {
         this.fifthAnswerOfSurvey = fifthAnswerOfSurvey;
     }
 
-
-    public Feature toEntity() {
+    public Feature toEntity(Perfume perfume) {
         return Feature.builder()
                 .id(id)
+                .perfume(perfume)
                 .firstAnswerOfSurvey(firstAnswerOfSurvey)
                 .secondAnswerOfSurvey(secondAnswerOfSurvey)
                 .thirdAnswerOfSurvey(thirdAnswerOfSurvey)

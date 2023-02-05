@@ -1,16 +1,16 @@
 package com.example.perfume.perfume.controller;
 
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.perfumeDto.PerfumeDto;
+
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.perfume.service.PerfumeService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/perfume")
@@ -19,7 +19,7 @@ public class PerfumeDataController {
     private final PerfumeService perfumeService;
 
     @GetMapping("/save")
-    public void saveData(Long id, PerfumeDto perfumeDto) throws IOException {
+    public void saveData(Long id) throws IOException {
         perfumeService.savePerfumeData(id);
 
     }
