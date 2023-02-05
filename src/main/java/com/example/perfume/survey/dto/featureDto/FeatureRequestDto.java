@@ -20,7 +20,9 @@ public class FeatureRequestDto {
     private String fifthAnswerOfSurvey;
 
 
-    // public Long perfumeId;
+    public FeatureRequestDto(){
+
+    }
 
     public FeatureRequestDto(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey) {
         this.id = id;

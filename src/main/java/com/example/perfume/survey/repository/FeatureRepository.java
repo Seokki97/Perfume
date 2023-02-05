@@ -14,4 +14,10 @@ import java.util.Optional;
 public interface FeatureRepository extends JpaRepository<Feature, Long>, JpaSpecificationExecutor<Feature> {
 
     List<Feature> findAll(@Nullable Specification<Feature> specification);
+
+    List<Feature> findByFirstAnswerOfSurvey(String firstAnswerOfSurvey);
+    List<Feature> findBySecondAnswerOfSurveyLike(String secondAnswerOfSurvey);
+    List<Feature> findByThirdAnswerOfSurvey(String thirdAnswerOfSurvey);
+    List<Feature> findByFourthAnswerOfSurvey(String fourthAnswerOfSurvey);
+    List<Feature> findByFifthAnswerOfSurvey(String fifthAnswerOfSurvey);
 }
