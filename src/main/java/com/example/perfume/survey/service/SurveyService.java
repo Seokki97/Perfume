@@ -1,15 +1,12 @@
 package com.example.perfume.survey.service;
 
-import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Feature;
 import com.example.perfume.survey.dto.featureDto.FeatureDto;
 import com.example.perfume.survey.dto.featureDto.FeatureRequestDto;
 import com.example.perfume.survey.repository.FeatureRepository;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 
 @Service
@@ -17,13 +14,10 @@ public class SurveyService {
 
     private final FeatureRepository featureRepository;
 
-    private final SurveyUtil surveyUtil;
-
     private List<Feature> featureList;
 
-    public SurveyService(FeatureRepository featureRepository, SurveyUtil surveyUtil, List<Feature> featureList) {
+    public SurveyService(FeatureRepository featureRepository, List<Feature> featureList) {
         this.featureRepository = featureRepository;
-        this.surveyUtil = surveyUtil;
         this.featureList = featureList;
     }
 
@@ -62,11 +56,9 @@ public class SurveyService {
         return featureList;
     }
 
-    public void saveAllData(Long id, FeatureRequestDto featureRequestDto) {
-
-        Feature feature = new Feature(id, featureRequestDto.getFirstAnswerOfSurvey(), featureRequestDto.getSecondAnswerOfSurvey(),
-                featureRequestDto.getThirdAnswerOfSurvey(), featureRequestDto.getFourthAnswerOfSurvey(), featureRequestDto.getFifthAnswerOfSurvey());
-        featureRepository.save(feature);
+    public List<Feature> initializeFeatureList() {
+        featureList = new ArrayList<>();
+        return featureList;
     }
 
 
