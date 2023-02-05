@@ -1,12 +1,15 @@
 package com.example.perfume.survey.service;
 
+import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Feature;
+import com.example.perfume.survey.dto.featureDto.FeatureDto;
 import com.example.perfume.survey.dto.featureDto.FeatureRequestDto;
 import com.example.perfume.survey.repository.FeatureRepository;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 
 @Service
@@ -16,27 +19,53 @@ public class SurveyService {
 
     private final SurveyUtil surveyUtil;
 
-    public SurveyService(FeatureRepository featureRepository, SurveyUtil surveyUtil) {
+    private List<Feature> featureList;
+
+    public SurveyService(FeatureRepository featureRepository, SurveyUtil surveyUtil, List<Feature> featureList) {
         this.featureRepository = featureRepository;
         this.surveyUtil = surveyUtil;
+        this.featureList = featureList;
     }
 
-    //첫번째 질문, 두번째 질문
-    public List<Feature> findDataFromAnswerData(FeatureRequestDto answerOfSurvey) {
-        List<String> answerList = surveyUtil.splitAnswerOfSurvey(answerOfSurvey.getAnswerOfSurvey());
-        //여기까지 됨
-
-        Specification<Feature> specification;
-        specification = SurveySpecification.findByFirstFeature("사랑 자유 거짓 참된");
-        List<Feature> feature = featureRepository.findAll(specification);
-        System.out.println("스페시피" + specification.toString());
-        System.out.println("엔서리스트" + answerList.toString());
-        System.out.println("피쳐" + feature.toString());
-        return feature;
+    public List<Feature> findFirstDataFromQuestionTest(String firstAnswerOfSurvey) {
+        featureList = featureRepository.findByFirstAnswerOfSurvey(firstAnswerOfSurvey);
+        return featureList;
     }
 
-    public void saveAllData(Long id) {
-        Feature feature = new Feature(id, "사랑 자유 거짓 참된");
+    public List<Feature> findSecondDataFromAnswer(String secondAnswerOfSurvey) {
+        featureList = featureRepository.findBySecondAnswerOfSurveyLike(secondAnswerOfSurvey);
+        featureList = featureRepository.findBySecondAnswerOfSurveyLike("무관");
+        return featureList;
+    }
+
+    public List<Feature> findThirdDataFromAnswer(String thirdAnswerOfSurvey) {
+        featureList = featureRepository.findByThirdAnswerOfSurvey(thirdAnswerOfSurvey);
+        return featureList;
+    }
+
+    public List<Feature> findFourthDataFromAnswer(String fourthAnswerOfSurvey) {
+        featureList = featureRepository.findByFourthAnswerOfSurvey(fourthAnswerOfSurvey);
+        return featureList;
+    }
+
+    public List<Feature> findFifthDataFromAnswer(String fifthAnswerOfSurvey) {
+        featureList = featureRepository.findByFifthAnswerOfSurvey(fifthAnswerOfSurvey);
+        return featureList;
+    }
+
+    public List<Feature> findDataFromAnswerTest(FeatureDto featureDto) {
+        findFirstDataFromQuestionTest(featureDto.getFirstAnswerOfSurvey());
+        findSecondDataFromAnswer(featureDto.getSecondAnswerOfSurvey());
+        findThirdDataFromAnswer(featureDto.getThirdAnswerOfSurvey());
+        findFourthDataFromAnswer(featureDto.getFourthAnswerOfSurvey());
+        findFifthDataFromAnswer(featureDto.getFifthAnswerOfSurvey());
+        return featureList;
+    }
+
+    public void saveAllData(Long id, FeatureRequestDto featureRequestDto) {
+
+        Feature feature = new Feature(id, featureRequestDto.getFirstAnswerOfSurvey(), featureRequestDto.getSecondAnswerOfSurvey(),
+                featureRequestDto.getThirdAnswerOfSurvey(), featureRequestDto.getFourthAnswerOfSurvey(), featureRequestDto.getFifthAnswerOfSurvey());
         featureRepository.save(feature);
     }
 
