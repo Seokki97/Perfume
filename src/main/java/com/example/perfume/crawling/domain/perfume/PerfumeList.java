@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class PerfumeList {
@@ -38,12 +37,4 @@ public class PerfumeList {
         return perfumeName.size();
     }
 
-    public PerfumeList toEntity(){
-        return PerfumeList.builder()
-                .perfumeName(perfumeName)
-                .perfumeFeature(perfumeFeature)
-                .perfumeBrand(perfumeBrand)
-                .perfumeImageUrl(perfumeImageUrl)
-                .build();
-    }
 }

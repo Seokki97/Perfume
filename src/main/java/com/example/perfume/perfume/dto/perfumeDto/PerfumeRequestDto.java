@@ -4,10 +4,8 @@ package com.example.perfume.perfume.dto.perfumeDto;
 import com.example.perfume.perfume.domain.Perfume;
 import lombok.*;
 
-import javax.persistence.Table;
 @Getter
 @Builder
-@Table(name = "perfume")
 public class PerfumeRequestDto {
 
     private Long id;
@@ -16,7 +14,6 @@ public class PerfumeRequestDto {
     private String perfumeFeature;
 
     private String perfumeImageUrl;
-
 
     @Builder
     public PerfumeRequestDto(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {

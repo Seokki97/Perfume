@@ -1,8 +1,8 @@
 package com.example.perfume.survey.controller;
 
-import com.example.perfume.survey.domain.Feature;
-import com.example.perfume.survey.dto.featureDto.FeatureRequestDto;
-import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
+import com.example.perfume.survey.domain.Survey;
+import com.example.perfume.survey.dto.featureDto.SurveyRequestDto;
+import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
 import com.example.perfume.survey.service.SurveyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +19,12 @@ public class SurveyController {
 
 
     @PostMapping("/first_question")
-    public ResponseEntity<List<Feature>> getFirstQuestionData(@RequestBody FeatureResponseDto featureResponseDto) {
+    public ResponseEntity<List<Survey>> getFirstQuestionData(@RequestBody SurveyResponseDto surveyResponseDto) {
 
-        return ResponseEntity.ok(surveyService.findDataFromAnswerTest(featureResponseDto));
+        return ResponseEntity.ok(surveyService.findDataFromAnswerTest(surveyResponseDto));
     }
 
     @PostMapping("/save")
-    public void saveData(Long id,@RequestBody FeatureRequestDto featureRequestDto) {
+    public void saveData(Long id,@RequestBody SurveyRequestDto surveyRequestDto) {
     }
 }

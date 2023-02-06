@@ -1,10 +1,13 @@
 package com.example.perfume.crawling.domain.survey;
 
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SurveyList {
 
     private List<String> firstAnswer;
@@ -18,6 +21,7 @@ public class SurveyList {
     private List<String> fifthAnswer;
 
 
+    @Builder
     public SurveyList(List<String> firstAnswer,List<String> secondAnswer,List<String> thirdAnswer, List<String> fourthAnswer, List<String> fifthAnswer){
         this.firstAnswer = firstAnswer;
         this.secondAnswer = secondAnswer;
@@ -25,4 +29,6 @@ public class SurveyList {
         this.fourthAnswer = fourthAnswer;
         this.fifthAnswer = fifthAnswer;
     }
+
+
 }

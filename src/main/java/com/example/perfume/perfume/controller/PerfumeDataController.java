@@ -1,5 +1,6 @@
 package com.example.perfume.perfume.controller;
 
+import com.example.perfume.crawling.domain.perfume.PerfumeList;
 import com.example.perfume.perfume.domain.Perfume;
 
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
@@ -19,8 +20,8 @@ public class PerfumeDataController {
     private final PerfumeService perfumeService;
 
     @GetMapping("/save")
-    public void saveData(Long id) throws IOException {
-        perfumeService.savePerfumeData(id);
+    public void saveData(Long id, PerfumeList perfumeList) throws IOException {
+        perfumeService.savePerfumeData(id,perfumeList);
 
     }
 

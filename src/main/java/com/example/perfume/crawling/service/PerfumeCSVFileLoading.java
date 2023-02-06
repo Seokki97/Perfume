@@ -32,7 +32,6 @@ public class PerfumeCSVFileLoading {
         return inputStreamReader;
     }
 
-
     public List<String> makePerfumeList(String[] array) {
         for (int i = 0; i < array.length; i++) {
             perfumeListTest.add(array[i]);
@@ -50,13 +49,6 @@ public class PerfumeCSVFileLoading {
         return perfumeListTest;
     }
 
-    public void testPerfumeList() throws IOException {
-        splitPerfumeData();
-        for (int i = 0; i < perfumeListTest.size(); i++) {
-            System.out.println(perfumeListTest.get(i));
-        }
-    }
-
     public List<String> extractPerfumeName() throws IOException {
         splitPerfumeData();
         List<String> testList = new ArrayList<>();
@@ -65,7 +57,6 @@ public class PerfumeCSVFileLoading {
         }
 
         return testList;
-        //perfumeList.setPerfumeName(testList);
     }
 
     public List<String> extractPerfumeFeature() throws IOException {
