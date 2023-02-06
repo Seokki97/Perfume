@@ -11,26 +11,21 @@ import java.util.List;
 
 @Service
 @Getter
-public class PerfumeCSVFileLoading {
-    private final String FILE_PATH = "C:/Users/wnstj/perfume/Perfume4.csv";
-    //COLUMN_LENGTH : 향수 데이터 컬럼 개수가 늘어나면 수정해줘야함.
-    private static final int COLUMN_LENGTH = 4;
+public class PerfumeCSVFileLoading extends CSVFileLoading {
+
     private List<String> perfumeListTest;
+    private static final int COLUMN_LENGTH = 4;
 
-    private BufferedReader bufferedReader;
+    private static final int NAME_COLUMN =0;
+    private static final int FEATURE_COLUMN =1;
+    private static final int BRAND_COLUMN =2;
+    private static final int IMAGE_URL_COLUMN =3;
 
+    public PerfumeCSVFileLoading(List<String> perfumeListTest) throws FileNotFoundException, UnsupportedEncodingException {
 
-    public PerfumeCSVFileLoading() throws FileNotFoundException, UnsupportedEncodingException {
-        this.perfumeListTest = new ArrayList<>();
-        this.bufferedReader = new BufferedReader(importFile());
+        this.perfumeListTest = perfumeListTest;
     }
 
-    public InputStreamReader importFile() throws UnsupportedEncodingException, FileNotFoundException {
-
-        FileInputStream fileInputStream = new FileInputStream(FILE_PATH);
-        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "euc-kr");
-        return inputStreamReader;
-    }
 
     public List<String> makePerfumeList(String[] array) {
         for (int i = 0; i < array.length; i++) {
@@ -49,40 +44,10 @@ public class PerfumeCSVFileLoading {
         return perfumeListTest;
     }
 
-    public List<String> extractPerfumeName() throws IOException {
+    public List<String> extractPerfumeData(int columnNumber) throws IOException {
         splitPerfumeData();
         List<String> testList = new ArrayList<>();
-        for (int i = 0; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
-            testList.add(perfumeListTest.get(i));
-        }
-
-        return testList;
-    }
-
-    public List<String> extractPerfumeFeature() throws IOException {
-        splitPerfumeData();
-        List<String> testList = new ArrayList<>();
-        for (int i = 1; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
-            testList.add(perfumeListTest.get(i));
-        }
-
-        return testList;
-    }
-
-    public List<String> extractPerfumeBrand() throws IOException {
-        splitPerfumeData();
-        List<String> testList = new ArrayList<>();
-        for (int i = 2; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
-            testList.add(perfumeListTest.get(i));
-        }
-
-        return testList;
-    }
-
-    public List<String> extractPerfumeImageUrl() throws IOException {
-        splitPerfumeData();
-        List<String> testList = new ArrayList<>();
-        for (int i = 3; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
+        for (int i = columnNumber ; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
             testList.add(perfumeListTest.get(i));
         }
 
@@ -90,10 +55,10 @@ public class PerfumeCSVFileLoading {
     }
 
     public PerfumeList extractAllPerfumeData(PerfumeList perfumeList) throws IOException {
-        perfumeList = perfumeList.builder().perfumeName(extractPerfumeName())
-                .perfumeFeature(extractPerfumeFeature())
-                .perfumeBrand(extractPerfumeBrand())
-                .perfumeImageUrl(extractPerfumeImageUrl())
+        perfumeList = perfumeList.builder().perfumeName(extractPerfumeData(NAME_COLUMN))
+                .perfumeFeature(extractPerfumeData(FEATURE_COLUMN))
+                .perfumeBrand(extractPerfumeData(BRAND_COLUMN))
+                .perfumeImageUrl(extractPerfumeData(IMAGE_URL_COLUMN))
                 .build();
         return perfumeList;
     }
