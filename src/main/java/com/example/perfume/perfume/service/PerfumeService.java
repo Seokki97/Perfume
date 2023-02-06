@@ -19,25 +19,28 @@ public class PerfumeService {
     private final PerfumeCSVFileLoading perfumeCsvFileLoading;
 
 
-
     public PerfumeService(PerfumeRepository perfumeRepository, PerfumeCSVFileLoading perfumeCsvFileLoading) {
         this.perfumeRepository = perfumeRepository;
         this.perfumeCsvFileLoading = perfumeCsvFileLoading;
     }
 
 
-    public void savePerfumeData(Long id,PerfumeList perfumeList) throws IOException {
+    public PerfumeResponseDto makePerfumeList(Long id, int firstIndex, PerfumeList perfumeList) {
+        PerfumeResponseDto perfumeResponseDto = new PerfumeResponseDto(id,
+                perfumeList.getPerfumeName().get(firstIndex),
+                perfumeList.getPerfumeFeature().get(firstIndex),
+                perfumeList.getPerfumeBrand().get(firstIndex),
+                perfumeList.getPerfumeImageUrl().get(firstIndex));
+        return perfumeResponseDto;
+    }
+
+    public void savePerfumeData(Long id, PerfumeList perfumeList) throws IOException {
         perfumeList = perfumeCsvFileLoading.extractAllPerfumeData(perfumeList);
 
-        for (int i = 0; i < perfumeList.getMaxSize(); i++) {
+        for (int firstIndex = 0; firstIndex < perfumeList.getMaxSize(); firstIndex++) {
 
-            PerfumeResponseDto perfumeResponseDto = new PerfumeResponseDto(id,
-                    perfumeList.getPerfumeName().get(i),
-                    perfumeList.getPerfumeFeature().get(i),
-                    perfumeList.getPerfumeBrand().get(i),
-                    perfumeList.getPerfumeImageUrl().get(i));
+            Perfume perfumeDataSet = makePerfumeList(id, firstIndex, perfumeList).toEntity();
 
-            Perfume perfumeDataSet = perfumeResponseDto.toEntity();
             perfumeRepository.save(perfumeDataSet);
         }
     }

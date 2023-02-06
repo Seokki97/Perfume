@@ -25,20 +25,24 @@ public class DataService {
 
     }
 
+    public SurveyResponseDto makeList(Long id, int firstIndex, SurveyList surveyList) {
+        SurveyResponseDto surveyResponseDto = new SurveyResponseDto(id,
+                surveyList.getFirstAnswer().get(firstIndex),
+                surveyList.getSecondAnswer().get(firstIndex),
+                surveyList.getThirdAnswer().get(firstIndex),
+                surveyList.getFourthAnswer().get(firstIndex),
+                surveyList.getFifthAnswer().get(firstIndex));
+        return surveyResponseDto;
+    }
+
     public void saveSurveyData(Long id, SurveyList surveyList) throws IOException {
         surveyList = surveyCSVFileLoading.extractAllSurveyData(surveyList);
 
-        for (int i = 0; i < surveyList.getMaxSize(); i++) {
+        for (int firstIndex = 0; firstIndex < surveyList.getMaxSize(); firstIndex++) {
 
-            SurveyResponseDto surveyResponseDto = new SurveyResponseDto(id,
-                    surveyList.getFirstAnswer().get(i),
-                    surveyList.getSecondAnswer().get(i),
-                    surveyList.getThirdAnswer().get(i),
-                    surveyList.getFourthAnswer().get(i),
-                    surveyList.getFifthAnswer().get(i));
-
-            Survey surveyDataSet = surveyResponseDto.toEntity();
+            Survey surveyDataSet = makeList(id, firstIndex, surveyList).toEntity();
             surveyRepository.save(surveyDataSet);
         }
     }
+
 }
