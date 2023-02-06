@@ -1,6 +1,7 @@
 package com.example.perfume.perfume.service;
 
-import com.example.perfume.crawling.service.CSVFileLoading;
+import com.example.perfume.crawling.domain.perfume.PerfumeList;
+import com.example.perfume.crawling.service.PerfumeCSVFileLoading;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
@@ -15,22 +16,26 @@ import java.util.stream.Collectors;
 public class PerfumeService {
     private final PerfumeRepository perfumeRepository;
 
-    private final CSVFileLoading csvFileLoading;
+    private final PerfumeCSVFileLoading perfumeCsvFileLoading;
 
-    public PerfumeService(PerfumeRepository perfumeRepository, CSVFileLoading csvFileLoading) {
+
+
+    public PerfumeService(PerfumeRepository perfumeRepository, PerfumeCSVFileLoading perfumeCsvFileLoading) {
         this.perfumeRepository = perfumeRepository;
-        this.csvFileLoading = csvFileLoading;
+        this.perfumeCsvFileLoading = perfumeCsvFileLoading;
     }
 
-    public void savePerfumeData(Long id) throws IOException {
-        csvFileLoading.extractAllPerfumeData();
-        for (int i = 0; i < csvFileLoading.setMaxListSize(); i++) {
+
+    public void savePerfumeData(Long id,PerfumeList perfumeList) throws IOException {
+        perfumeList = perfumeCsvFileLoading.extractAllPerfumeData(perfumeList);
+
+        for (int i = 0; i < perfumeList.getMaxSize(); i++) {
 
             PerfumeResponseDto perfumeResponseDto = new PerfumeResponseDto(id,
-                    csvFileLoading.getPerfumeName().get(i),
-                    csvFileLoading.getPerfumeFeature().get(i),
-                    csvFileLoading.getPerfumeBrand().get(i),
-                    csvFileLoading.getPerfumeImageUrl().get(i));
+                    perfumeList.getPerfumeName().get(i),
+                    perfumeList.getPerfumeFeature().get(i),
+                    perfumeList.getPerfumeBrand().get(i),
+                    perfumeList.getPerfumeImageUrl().get(i));
 
             Perfume perfumeDataSet = perfumeResponseDto.toEntity();
             perfumeRepository.save(perfumeDataSet);
@@ -38,13 +43,13 @@ public class PerfumeService {
     }
 
     public Perfume findPerfumeByName(PerfumeRequestDto perfumeRequestDto) {
-        Perfume perfume = perfumeRepository.findByPerfumeName(perfumeRequestDto.getPerfumeName())
+        Perfume perfume = perfumeRepository.findByPerfumeNameLike(perfumeRequestDto.getPerfumeName())
                 .orElseThrow(() -> new IllegalArgumentException("해당 향수를 찾을 수 없습니다"));
         return perfume;
     }
 
     public List<Perfume> findPerfumeByBrand(PerfumeRequestDto perfumeRequestDto) {
-        List<Perfume> perfume = perfumeRepository.findByBrandName(perfumeRequestDto.getBrandName())
+        List<Perfume> perfume = perfumeRepository.findByBrandNameLike(perfumeRequestDto.getBrandName())
                 .orElseThrow(() -> new IllegalArgumentException("해당 브랜드를 찾을 수 없습니다."));
 
         return perfume;
