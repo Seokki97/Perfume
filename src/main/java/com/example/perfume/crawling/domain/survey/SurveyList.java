@@ -2,10 +2,12 @@ package com.example.perfume.crawling.domain.survey;
 
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SurveyList {
@@ -30,5 +32,8 @@ public class SurveyList {
         this.fifthAnswer = fifthAnswer;
     }
 
+    public int getMaxSize(){
+        return fifthAnswer.size();
+    }
 
 }

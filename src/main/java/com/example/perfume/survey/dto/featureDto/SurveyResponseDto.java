@@ -27,10 +27,9 @@ public class SurveyResponseDto {
         this.fifthAnswerOfSurvey = fifthAnswerOfSurvey;
     }
 
-    public Survey toEntity(Perfume perfume) {
+    public Survey toEntity() {
         return Survey.builder()
                 .id(id)
-                .perfume(perfume)
                 .firstAnswerOfSurvey(firstAnswerOfSurvey)
                 .secondAnswerOfSurvey(secondAnswerOfSurvey)
                 .thirdAnswerOfSurvey(thirdAnswerOfSurvey)

@@ -1,10 +1,15 @@
 package com.example.perfume.survey.service;
 
+import com.example.perfume.crawling.domain.perfume.PerfumeList;
+import com.example.perfume.crawling.domain.survey.SurveyList;
+import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 
 
@@ -15,10 +20,12 @@ public class SurveyService {
 
     private List<Survey> surveyList;
 
+
     public SurveyService(SurveyRepository surveyRepository, List<Survey> surveyList) {
         this.surveyRepository = surveyRepository;
         this.surveyList = surveyList;
     }
+
 
     public List<Survey> findFirstDataFromQuestionTest(String firstAnswerOfSurvey) {
         surveyList = surveyRepository.findByFirstAnswerOfSurvey(firstAnswerOfSurvey);
