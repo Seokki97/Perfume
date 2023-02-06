@@ -1,5 +1,6 @@
 package com.example.perfume.crawling.service;
 
+import com.example.perfume.crawling.domain.perfume.PerfumeList;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
@@ -15,21 +16,13 @@ public class PerfumeCSVFileLoading {
     //COLUMN_LENGTH : 향수 데이터 컬럼 개수가 늘어나면 수정해줘야함.
     private static final int COLUMN_LENGTH = 4;
     private List<String> perfumeListTest;
-    private List<String> perfumeName;
-    private List<String> perfumeFeature;
-    private List<String> perfumeBrand;
 
-    private List<String> perfumeImageUrl;
     private BufferedReader bufferedReader;
 
 
     public PerfumeCSVFileLoading() throws FileNotFoundException, UnsupportedEncodingException {
         this.perfumeListTest = new ArrayList<>();
         this.bufferedReader = new BufferedReader(importFile());
-        this.perfumeName = new ArrayList<>();
-        this.perfumeBrand = new ArrayList<>();
-        this.perfumeFeature = new ArrayList<>();
-        this.perfumeImageUrl = new ArrayList<>();
     }
 
     public InputStreamReader importFile() throws UnsupportedEncodingException, FileNotFoundException {
@@ -66,48 +59,52 @@ public class PerfumeCSVFileLoading {
 
     public List<String> extractPerfumeName() throws IOException {
         splitPerfumeData();
-
+        List<String> testList = new ArrayList<>();
         for (int i = 0; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
-            perfumeName.add(perfumeListTest.get(i));
+            testList.add(perfumeListTest.get(i));
         }
-        return perfumeName;
+
+        return testList;
+        //perfumeList.setPerfumeName(testList);
     }
 
     public List<String> extractPerfumeFeature() throws IOException {
         splitPerfumeData();
+        List<String> testList = new ArrayList<>();
         for (int i = 1; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
-            perfumeFeature.add(perfumeListTest.get(i));
+            testList.add(perfumeListTest.get(i));
         }
-        return perfumeFeature;
 
+        return testList;
     }
 
     public List<String> extractPerfumeBrand() throws IOException {
         splitPerfumeData();
+        List<String> testList = new ArrayList<>();
         for (int i = 2; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
-            perfumeBrand.add(perfumeListTest.get(i));
+            testList.add(perfumeListTest.get(i));
         }
-        return perfumeBrand;
 
+        return testList;
     }
 
     public List<String> extractPerfumeImageUrl() throws IOException {
         splitPerfumeData();
-        for (int i = 3; i < perfumeListTest.size(); i+= COLUMN_LENGTH){
-            perfumeImageUrl.add(perfumeListTest.get(i));
+        List<String> testList = new ArrayList<>();
+        for (int i = 3; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
+            testList.add(perfumeListTest.get(i));
         }
-        return perfumeImageUrl;
+
+        return testList;
     }
 
-    public void extractAllPerfumeData() throws IOException {
-        extractPerfumeName();
-        extractPerfumeFeature();
-        extractPerfumeBrand();
-        extractPerfumeImageUrl();
-    }
-
-    public int setMaxListSize() {
-        return perfumeBrand.size();
+    public PerfumeList extractAllPerfumeData(PerfumeList perfumeList) throws IOException {
+        perfumeList = perfumeList.builder().perfumeName(extractPerfumeName())
+                .perfumeFeature(extractPerfumeFeature())
+                .perfumeBrand(extractPerfumeBrand())
+                .perfumeImageUrl(extractPerfumeImageUrl())
+                .build();
+        return perfumeList;
     }
 }
 
