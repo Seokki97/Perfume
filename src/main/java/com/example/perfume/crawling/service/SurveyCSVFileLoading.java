@@ -17,11 +17,11 @@ public class SurveyCSVFileLoading extends CSVFileLoading {
 
     private static final int COLUMN_LENGTH = 5;
 
-    private static final int FIRST_COLUMN = 0;
-    private static final int SECOND_COLUMN = 1;
-    private static final int THIRD_COLUMN = 2;
-    private static final int FOURTH_COLUMN = 3;
-    private static final int FIFTH_COLUMN = 4;
+    private static final int FIRST_COLUMN = 0; //남녀
+    private static final int SECOND_COLUMN = 1; //향
+    private static final int THIRD_COLUMN = 2; //무드
+    private static final int FOURTH_COLUMN = 3; //계절
+    private static final int FIFTH_COLUMN = 4; //스타일
 
     public SurveyCSVFileLoading(List<String> surveyListTest) throws FileNotFoundException, UnsupportedEncodingException {
 
@@ -31,7 +31,6 @@ public class SurveyCSVFileLoading extends CSVFileLoading {
     public List<String> makeSurveyList(String[] array) {
         for (int i = 0; i < array.length; i++) {
             surveyListTest.add(array[i]);
-
         }
         return surveyListTest;
     }
@@ -39,8 +38,7 @@ public class SurveyCSVFileLoading extends CSVFileLoading {
     public List<String> splitSurveyData() throws IOException {
         String surveyData;
         while ((surveyData = bufferedReader.readLine()) != null) {
-            String[] line = surveyData.split(",");
-            makeSurveyList(line);
+            makeSurveyList(splitData(surveyData));
         }
         return surveyListTest;
     }

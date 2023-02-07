@@ -1,6 +1,7 @@
 package com.example.perfume.survey.controller;
 
 import com.example.perfume.crawling.domain.survey.SurveyList;
+import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.SurveyRequestDto;
 import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
@@ -33,7 +34,9 @@ public class SurveyController {
         return ResponseEntity.ok(surveyService.findDataFromAnswerTest(surveyResponseDto));
     }
 
-    @PostMapping("/save")
-    public void saveData(Long id,@RequestBody SurveyRequestDto surveyRequestDto) {
+
+    @DeleteMapping("/delete")
+    public void deleteData(){
+        dataService.deleteAllData();
     }
 }

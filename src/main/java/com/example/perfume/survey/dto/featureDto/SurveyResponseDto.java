@@ -15,7 +15,10 @@ public class SurveyResponseDto {
     private String thirdAnswerOfSurvey;
     private String fourthAnswerOfSurvey;
     private String fifthAnswerOfSurvey;
-    public Long perfumeId;
+
+    private Long perfumeId;
+
+    private Perfume perfume;
 
     @Builder
     public SurveyResponseDto(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey) {
@@ -25,10 +28,16 @@ public class SurveyResponseDto {
         this.thirdAnswerOfSurvey = thirdAnswerOfSurvey;
         this.fourthAnswerOfSurvey = fourthAnswerOfSurvey;
         this.fifthAnswerOfSurvey = fifthAnswerOfSurvey;
+
     }
 
-    public Survey toEntity() {
+    public SurveyResponseDto(){
+
+    }
+
+    public Survey toEntity(Perfume perfume) {
         return Survey.builder()
+                .perfume(perfume)
                 .id(id)
                 .firstAnswerOfSurvey(firstAnswerOfSurvey)
                 .secondAnswerOfSurvey(secondAnswerOfSurvey)

@@ -1,6 +1,7 @@
 package com.example.perfume.survey.domain;
 
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -18,25 +19,25 @@ public class Survey {
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String firstAnswerOfSurvey;
+    private String firstAnswerOfSurvey; //남녀
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String secondAnswerOfSurvey;
+    private String secondAnswerOfSurvey; //향
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String thirdAnswerOfSurvey;
+    private String thirdAnswerOfSurvey; //무드
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String fourthAnswerOfSurvey;
+    private String fourthAnswerOfSurvey; //계절
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String fifthAnswerOfSurvey;
+    private String fifthAnswerOfSurvey; //스타일
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "perfume_id")
     private Perfume perfume;
 

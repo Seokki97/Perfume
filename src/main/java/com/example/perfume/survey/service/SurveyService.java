@@ -20,12 +20,10 @@ public class SurveyService {
 
     private List<Survey> surveyList;
 
-
     public SurveyService(SurveyRepository surveyRepository, List<Survey> surveyList) {
         this.surveyRepository = surveyRepository;
         this.surveyList = surveyList;
     }
-
 
     public List<Survey> findFirstDataFromQuestionTest(String firstAnswerOfSurvey) {
         surveyList = surveyRepository.findByFirstAnswerOfSurvey(firstAnswerOfSurvey);

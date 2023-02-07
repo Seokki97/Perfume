@@ -4,6 +4,7 @@ import com.example.perfume.crawling.domain.survey.SurveyList;
 import com.example.perfume.crawling.service.SurveyCSVFileLoading;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
+import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
 import com.example.perfume.survey.repository.SurveyRepository;
@@ -19,9 +20,12 @@ public class DataService {
     private final SurveyRepository surveyRepository;
     private final SurveyCSVFileLoading surveyCSVFileLoading;
 
-    public DataService(SurveyRepository surveyRepository, SurveyCSVFileLoading surveyCSVFileLoading) {
+    private final PerfumeRepository perfumeRepository;
+
+    public DataService(SurveyRepository surveyRepository, SurveyCSVFileLoading surveyCSVFileLoading,PerfumeRepository perfumeRepository) {
         this.surveyRepository = surveyRepository;
         this.surveyCSVFileLoading = surveyCSVFileLoading;
+        this.perfumeRepository = perfumeRepository;
 
     }
 
@@ -37,12 +41,19 @@ public class DataService {
 
     public void saveSurveyData(Long id, SurveyList surveyList) throws IOException {
         surveyList = surveyCSVFileLoading.extractAllSurveyData(surveyList);
-
         for (int firstIndex = 0; firstIndex < surveyList.getMaxSize(); firstIndex++) {
-
-            Survey surveyDataSet = makeList(id, firstIndex, surveyList).toEntity();
+            Long secondIndex = (long)firstIndex+1;
+            Survey surveyDataSet = makeList(id, firstIndex, surveyList).toEntity(getPerfumeId(secondIndex));
             surveyRepository.save(surveyDataSet);
         }
     }
+
+    public Perfume getPerfumeId(Long id){
+        return perfumeRepository.findById(id).get();
+    }
+    public void deleteAllData() {
+        surveyRepository.deleteAll();
+    }
+
 
 }

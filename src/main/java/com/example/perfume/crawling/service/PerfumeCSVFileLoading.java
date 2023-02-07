@@ -13,13 +13,15 @@ import java.util.List;
 @Getter
 public class PerfumeCSVFileLoading extends CSVFileLoading {
 
-    private List<String> perfumeListTest;
+
     private static final int COLUMN_LENGTH = 4;
 
-    private static final int NAME_COLUMN =0;
-    private static final int FEATURE_COLUMN =1;
-    private static final int BRAND_COLUMN =2;
-    private static final int IMAGE_URL_COLUMN =3;
+    private static final int NAME_COLUMN = 0;
+    private static final int FEATURE_COLUMN = 1;
+    private static final int BRAND_COLUMN = 2;
+    private static final int IMAGE_URL_COLUMN = 3;
+
+    private List<String> perfumeListTest;
 
     public PerfumeCSVFileLoading(List<String> perfumeListTest) throws FileNotFoundException, UnsupportedEncodingException {
 
@@ -30,16 +32,15 @@ public class PerfumeCSVFileLoading extends CSVFileLoading {
     public List<String> makePerfumeList(String[] array) {
         for (int i = 0; i < array.length; i++) {
             perfumeListTest.add(array[i]);
-
         }
         return perfumeListTest;
     }
 
+
     public List<String> splitPerfumeData() throws IOException {
         String perfumeData;
         while ((perfumeData = bufferedReader.readLine()) != null) {
-            String[] line = perfumeData.split(",");
-            makePerfumeList(line);
+            makePerfumeList(splitData(perfumeData));
         }
         return perfumeListTest;
     }
@@ -47,7 +48,7 @@ public class PerfumeCSVFileLoading extends CSVFileLoading {
     public List<String> extractPerfumeData(int columnNumber) throws IOException {
         splitPerfumeData();
         List<String> testList = new ArrayList<>();
-        for (int i = columnNumber ; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
+        for (int i = columnNumber; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
             testList.add(perfumeListTest.get(i));
         }
 
