@@ -27,56 +27,38 @@ public class SurveyService {
         this.surveyList = surveyList;
     }
 
-    public List<Survey> findFirstDataFromQuestionTest(String firstAnswerOfSurvey) {
-        surveyRepository.findByFirstAnswerOfSurvey(firstAnswerOfSurvey);
-        surveyRepository.findByFirstAnswerOfSurvey("젠더리스");
-        return surveyList;
+    public List<Survey> findDataToStream(List<Survey> testList, List<Survey> surveyList){
+        List<Survey> test = testList.stream().filter(o -> surveyList.stream()
+                .anyMatch(Predicate.isEqual(o))).collect(Collectors.toList());
+        return test;
     }
 
-    public List<Survey> findSecondDataFromAnswer(String secondAnswerOfSurvey) {
-        surveyRepository.findBySecondAnswerOfSurvey(secondAnswerOfSurvey);
-        return surveyList;
-    }
-
-    public List<Survey> findThirdDataFromAnswer(String thirdAnswerOfSurvey) {
-        surveyRepository.findByThirdAnswerOfSurveyLike(thirdAnswerOfSurvey);
-        return surveyList;
-    }
-
-    public List<Survey> findFourthDataFromAnswer(String fourthAnswerOfSurvey) {
-        surveyRepository.findByFourthAnswerOfSurveyLike(fourthAnswerOfSurvey);
-        surveyRepository.findByFourthAnswerOfSurveyLike("무관");
-
-        return surveyList;
-    }
-
-    public List<Survey> findFifthDataFromAnswer(String fifthAnswerOfSurvey) {
-        surveyRepository.findByFifthAnswerOfSurvey(fifthAnswerOfSurvey);
-        surveyRepository.findByFifthAnswerOfSurvey("디폴트");
-        return surveyList;
+    public List<Survey> addList(List<Survey> list1, List<Survey> list2){
+        List<Survey> addedList = new ArrayList<>();
+        addedList.addAll(list1);
+        addedList.addAll(list2);
+        return addedList;
     }
 
     public List<Survey> findDataFromAnswerTest(SurveyResponseDto surveyResponseDto) {
-        List<Survey> first = surveyRepository.findByFirstAnswerOfSurvey(surveyResponseDto.getFirstAnswerOfSurvey());
+        List<Survey> firstTest = addList(surveyRepository.findByFirstAnswerOfSurvey(surveyResponseDto.getFirstAnswerOfSurvey()),surveyRepository.findByFirstAnswerOfSurvey("젠더리스")); // 두개 더함
+
         List<Survey> second = surveyRepository.findBySecondAnswerOfSurvey(surveyResponseDto.getSecondAnswerOfSurvey());
-        List<Survey> test = first.stream().filter(o ->second.stream()
-                .anyMatch(Predicate.isEqual(o))).collect(Collectors.toList()); //첫번째 두번째 같은거 찾기
+        List<Survey> test = findDataToStream(firstTest,second); //첫번째 두번째 같은거 찾기
 
-        List<Survey> third = surveyRepository.findByThirdAnswerOfSurveyLike(surveyResponseDto.getThirdAnswerOfSurvey());
+        List<Survey> third = surveyRepository.findByThirdAnswerOfSurveyContaining(surveyResponseDto.getThirdAnswerOfSurvey());
+        List<Survey> test2 = findDataToStream(test,third);
 
-        List<Survey> test2 = test.stream().filter(o -> third.stream()
-                .anyMatch(Predicate.isEqual(o))).collect(Collectors.toList());
-
-        List<Survey> fourth = surveyRepository.findByFourthAnswerOfSurveyLike(surveyResponseDto.getFourthAnswerOfSurvey());
-
-        List<Survey> test3 = test2.stream().filter(o -> fourth.stream()
-                .anyMatch(Predicate.isEqual(o))).collect(Collectors.toList());
+        List<Survey> fourth = surveyRepository.findByFourthAnswerOfSurveyContaining(surveyResponseDto.getFourthAnswerOfSurvey());
+        List<Survey> fourth1 = surveyRepository.findByFourthAnswerOfSurvey("무관");
+        List<Survey> fourthTest = addList(fourth,fourth1);
+        List<Survey> test3 = findDataToStream(test2, fourthTest);
 
         List<Survey> fifth = surveyRepository.findByFifthAnswerOfSurvey(surveyResponseDto.getFifthAnswerOfSurvey());
+        List<Survey> fifth1 = surveyRepository.findByFifthAnswerOfSurvey("디폴트");
+        List<Survey> fifthTest = addList(fifth,fifth1);
 
-        List<Survey> test4 = test3.stream().filter(o -> fifth.stream()
-                .anyMatch(Predicate.isEqual(o))).collect(Collectors.toList());
-
+        List<Survey> test4 = findDataToStream(test3, fifthTest);
         surveyList = test4;
         return surveyList;
     }
