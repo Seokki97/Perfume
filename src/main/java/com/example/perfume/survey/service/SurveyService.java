@@ -22,48 +22,63 @@ public class SurveyService {
 
     private List<Survey> surveyList;
 
-    public SurveyService(SurveyRepository surveyRepository, List<Survey> surveyList) {
+    private SurveyUtil surveyUtil;
+
+    public SurveyService(SurveyRepository surveyRepository, List<Survey> surveyList, SurveyUtil surveyUtil) {
         this.surveyRepository = surveyRepository;
         this.surveyList = surveyList;
+        this.surveyUtil = surveyUtil;
     }
 
-    public List<Survey> findDataToStream(List<Survey> testList, List<Survey> surveyList){
+    private List<Survey> findDataToStream(List<Survey> testList, List<Survey> surveyList) {
         List<Survey> test = testList.stream().filter(o -> surveyList.stream()
                 .anyMatch(Predicate.isEqual(o))).collect(Collectors.toList());
         return test;
     }
 
-    public List<Survey> addList(List<Survey> list1, List<Survey> list2){
+    private List<Survey> addList(List<Survey> list1, List<Survey> list2) {
         List<Survey> addedList = new ArrayList<>();
         addedList.addAll(list1);
         addedList.addAll(list2);
         return addedList;
     }
 
-    public List<Survey> findDataFromAnswerTest(SurveyResponseDto surveyResponseDto) {
-        List<Survey> firstTest = addList(surveyRepository.findByFirstAnswerOfSurvey(surveyResponseDto.getFirstAnswerOfSurvey()),surveyRepository.findByFirstAnswerOfSurvey("젠더리스")); // 두개 더함
-
-        List<Survey> second = surveyRepository.findBySecondAnswerOfSurvey(surveyResponseDto.getSecondAnswerOfSurvey());
-        List<Survey> test = findDataToStream(firstTest,second); //첫번째 두번째 같은거 찾기
-
-        List<Survey> third = surveyRepository.findByThirdAnswerOfSurveyContaining(surveyResponseDto.getThirdAnswerOfSurvey());
-        List<Survey> test2 = findDataToStream(test,third);
-
-        List<Survey> fourth = surveyRepository.findByFourthAnswerOfSurveyContaining(surveyResponseDto.getFourthAnswerOfSurvey());
-        List<Survey> fourth1 = surveyRepository.findByFourthAnswerOfSurvey("무관");
-        List<Survey> fourthTest = addList(fourth,fourth1);
-        List<Survey> test3 = findDataToStream(test2, fourthTest);
-
-        List<Survey> fifth = surveyRepository.findByFifthAnswerOfSurvey(surveyResponseDto.getFifthAnswerOfSurvey());
-        List<Survey> fifth1 = surveyRepository.findByFifthAnswerOfSurvey("디폴트");
-        List<Survey> fifthTest = addList(fifth,fifth1);
-
-        List<Survey> test4 = findDataToStream(test3, fifthTest);
-        surveyList = test4;
-        return surveyList;
+    private List<Survey> filterFirstAnswer(SurveyResponseDto surveyResponseDto) {
+        return surveyRepository.findByFirstAnswerOfSurvey(surveyResponseDto.getFirstAnswerOfSurvey());
     }
 
-    public List<Survey> showAllData() {
+    private List<Survey> filterSecondAnswer(SurveyResponseDto surveyResponseDto) {
+        return surveyRepository.findBySecondAnswerOfSurvey(surveyResponseDto.getSecondAnswerOfSurvey());
+    }
+
+    private List<Survey> filterThirdAnswer(SurveyResponseDto surveyResponseDto) {
+        return surveyRepository.findByThirdAnswerOfSurveyContaining(surveyResponseDto.getThirdAnswerOfSurvey());
+    }
+
+    private List<Survey> addFirstAnswerList(SurveyResponseDto surveyResponseDto) {
+        return addList(filterFirstAnswer(surveyResponseDto), surveyRepository.findByFirstAnswerOfSurvey("젠더리스"));
+    }
+
+    private List<Survey> addFourthAnswerList(SurveyResponseDto surveyResponseDto) {
+        return addList(surveyRepository.findByFourthAnswerOfSurveyContaining
+                (surveyResponseDto.getFourthAnswerOfSurvey()), surveyRepository.findByFourthAnswerOfSurvey("무관"));
+    }
+
+    private List<Survey> addFifthAnswerList(SurveyResponseDto surveyResponseDto) {
+        return addList(surveyRepository.findByFifthAnswerOfSurvey(
+                surveyResponseDto.getFifthAnswerOfSurvey()), surveyRepository.findByFifthAnswerOfSurvey("디폴트"));
+    }
+
+    public List<Survey> findDataFromAnswerTest(SurveyResponseDto surveyResponseDto) {
+
+        List<Survey> firstFilteringList = findDataToStream(addFirstAnswerList(surveyResponseDto), filterSecondAnswer(surveyResponseDto)); //첫번째 두번째 같은거 찾기
+
+        List<Survey> secondFilteringList = findDataToStream(firstFilteringList, filterThirdAnswer(surveyResponseDto));
+
+        List<Survey> thirdFilteringList = findDataToStream(secondFilteringList, addFourthAnswerList(surveyResponseDto));
+
+        List<Survey> filteringListResult = findDataToStream(thirdFilteringList, addFifthAnswerList(surveyResponseDto));
+        surveyList = filteringListResult;
         return surveyList;
     }
 
