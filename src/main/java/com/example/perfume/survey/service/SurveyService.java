@@ -1,15 +1,10 @@
 package com.example.perfume.survey.service;
 
-import com.example.perfume.crawling.domain.perfume.PerfumeList;
-import com.example.perfume.crawling.domain.survey.SurveyList;
-import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -20,26 +15,21 @@ public class SurveyService {
 
     private final SurveyRepository surveyRepository;
 
-    private List<Survey> surveyList;
-
-    private SurveyUtil surveyUtil;
-
-    public SurveyService(SurveyRepository surveyRepository, List<Survey> surveyList, SurveyUtil surveyUtil) {
+    public SurveyService(SurveyRepository surveyRepository) {
         this.surveyRepository = surveyRepository;
-        this.surveyList = surveyList;
-        this.surveyUtil = surveyUtil;
     }
 
-    private List<Survey> findDataToStream(List<Survey> testList, List<Survey> surveyList) {
-        List<Survey> test = testList.stream().filter(o -> surveyList.stream()
-                .anyMatch(Predicate.isEqual(o))).collect(Collectors.toList());
-        return test;
+    private List<Survey> compareTwoFilteredSurveyData(List<Survey> firstDataList, List<Survey> secondDataList) {
+
+        return firstDataList.stream()
+                .filter(o -> secondDataList.stream().anyMatch(Predicate.isEqual(o)))
+                .collect(Collectors.toList());
     }
 
-    private List<Survey> addList(List<Survey> list1, List<Survey> list2) {
+    private List<Survey> addList(List<Survey> firstDataList, List<Survey> secondDataList) {
         List<Survey> addedList = new ArrayList<>();
-        addedList.addAll(list1);
-        addedList.addAll(list2);
+        addedList.addAll(firstDataList);
+        addedList.addAll(secondDataList);
         return addedList;
     }
 
@@ -71,21 +61,17 @@ public class SurveyService {
 
     public List<Survey> findDataFromAnswerTest(SurveyResponseDto surveyResponseDto) {
 
-        List<Survey> firstFilteringList = findDataToStream(addFirstAnswerList(surveyResponseDto), filterSecondAnswer(surveyResponseDto)); //첫번째 두번째 같은거 찾기
+        List<Survey> firstFilteringList = compareTwoFilteredSurveyData(addFirstAnswerList(surveyResponseDto), filterSecondAnswer(surveyResponseDto)); //첫번째 두번째 같은거 찾기
 
-        List<Survey> secondFilteringList = findDataToStream(firstFilteringList, filterThirdAnswer(surveyResponseDto));
+        List<Survey> secondFilteringList = compareTwoFilteredSurveyData(firstFilteringList, filterThirdAnswer(surveyResponseDto));
 
-        List<Survey> thirdFilteringList = findDataToStream(secondFilteringList, addFourthAnswerList(surveyResponseDto));
+        List<Survey> thirdFilteringList = compareTwoFilteredSurveyData(secondFilteringList, addFourthAnswerList(surveyResponseDto));
 
-        List<Survey> filteringListResult = findDataToStream(thirdFilteringList, addFifthAnswerList(surveyResponseDto));
-        surveyList = filteringListResult;
-        return surveyList;
+        List<Survey> filteringListResult = compareTwoFilteredSurveyData(thirdFilteringList, addFifthAnswerList(surveyResponseDto));
+
+        return filteringListResult;
     }
 
-    public List<Survey> initializeFeatureList() {
-        surveyList = new ArrayList<>();
-        return surveyList;
-    }
 
 
 }
