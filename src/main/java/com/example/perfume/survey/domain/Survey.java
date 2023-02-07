@@ -37,7 +37,7 @@ public class Survey {
     @Column(nullable = false, length = 10)
     private String fifthAnswerOfSurvey; //스타일
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "perfume_id")
     private Perfume perfume;
 

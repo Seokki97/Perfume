@@ -15,8 +15,11 @@ public interface SurveyRepository extends JpaRepository<Survey, Long>, JpaSpecif
     List<Survey> findAll(@Nullable Specification<Survey> specification);
 
     List<Survey> findByFirstAnswerOfSurvey(String firstAnswerOfSurvey);
-    List<Survey> findBySecondAnswerOfSurveyLike(String secondAnswerOfSurvey);
-    List<Survey> findByThirdAnswerOfSurvey(String thirdAnswerOfSurvey);
-    List<Survey> findByFourthAnswerOfSurvey(String fourthAnswerOfSurvey);
+    List<Survey> findBySecondAnswerOfSurvey(String secondAnswerOfSurvey);
+    List<Survey> findByThirdAnswerOfSurveyLike(String thirdAnswerOfSurvey);
+    List<Survey> findByFourthAnswerOfSurveyLike(String fourthAnswerOfSurvey);
     List<Survey> findByFifthAnswerOfSurvey(String fifthAnswerOfSurvey);
+
+
+
 }

@@ -28,10 +28,11 @@ public class SurveyController {
     public void saveSurveyData(Long id, SurveyList surveyList ) throws IOException {
         dataService.saveSurveyData(id,surveyList);
     }
-    @PostMapping("/first_question")
+    @PostMapping("/answer")
     public ResponseEntity<List<Survey>> getFirstQuestionData(@RequestBody SurveyResponseDto surveyResponseDto) {
-
-        return ResponseEntity.ok(surveyService.findDataFromAnswerTest(surveyResponseDto));
+        List<Survey> test = surveyService.findDataFromAnswerTest(surveyResponseDto);
+        surveyService.initializeFeatureList();
+        return ResponseEntity.ok(test);
     }
 
 

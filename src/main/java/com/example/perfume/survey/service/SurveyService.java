@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,37 +28,60 @@ public class SurveyService {
     }
 
     public List<Survey> findFirstDataFromQuestionTest(String firstAnswerOfSurvey) {
-        surveyList = surveyRepository.findByFirstAnswerOfSurvey(firstAnswerOfSurvey);
+        surveyRepository.findByFirstAnswerOfSurvey(firstAnswerOfSurvey);
+        surveyRepository.findByFirstAnswerOfSurvey("젠더리스");
         return surveyList;
     }
 
     public List<Survey> findSecondDataFromAnswer(String secondAnswerOfSurvey) {
-        surveyList = surveyRepository.findBySecondAnswerOfSurveyLike(secondAnswerOfSurvey);
-        surveyList = surveyRepository.findBySecondAnswerOfSurveyLike("무관");
+        surveyRepository.findBySecondAnswerOfSurvey(secondAnswerOfSurvey);
         return surveyList;
     }
 
     public List<Survey> findThirdDataFromAnswer(String thirdAnswerOfSurvey) {
-        surveyList = surveyRepository.findByThirdAnswerOfSurvey(thirdAnswerOfSurvey);
+        surveyRepository.findByThirdAnswerOfSurveyLike(thirdAnswerOfSurvey);
         return surveyList;
     }
 
     public List<Survey> findFourthDataFromAnswer(String fourthAnswerOfSurvey) {
-        surveyList = surveyRepository.findByFourthAnswerOfSurvey(fourthAnswerOfSurvey);
+        surveyRepository.findByFourthAnswerOfSurveyLike(fourthAnswerOfSurvey);
+        surveyRepository.findByFourthAnswerOfSurveyLike("무관");
+
         return surveyList;
     }
 
     public List<Survey> findFifthDataFromAnswer(String fifthAnswerOfSurvey) {
-        surveyList = surveyRepository.findByFifthAnswerOfSurvey(fifthAnswerOfSurvey);
+        surveyRepository.findByFifthAnswerOfSurvey(fifthAnswerOfSurvey);
+        surveyRepository.findByFifthAnswerOfSurvey("디폴트");
         return surveyList;
     }
 
     public List<Survey> findDataFromAnswerTest(SurveyResponseDto surveyResponseDto) {
-        findFirstDataFromQuestionTest(surveyResponseDto.getFirstAnswerOfSurvey());
-        findSecondDataFromAnswer(surveyResponseDto.getSecondAnswerOfSurvey());
-        findThirdDataFromAnswer(surveyResponseDto.getThirdAnswerOfSurvey());
-        findFourthDataFromAnswer(surveyResponseDto.getFourthAnswerOfSurvey());
-        findFifthDataFromAnswer(surveyResponseDto.getFifthAnswerOfSurvey());
+        List<Survey> first = surveyRepository.findByFirstAnswerOfSurvey(surveyResponseDto.getFirstAnswerOfSurvey());
+        List<Survey> second = surveyRepository.findBySecondAnswerOfSurvey(surveyResponseDto.getSecondAnswerOfSurvey());
+        List<Survey> test = first.stream().filter(o ->second.stream()
+                .anyMatch(Predicate.isEqual(o))).collect(Collectors.toList()); //첫번째 두번째 같은거 찾기
+
+        List<Survey> third = surveyRepository.findByThirdAnswerOfSurveyLike(surveyResponseDto.getThirdAnswerOfSurvey());
+
+        List<Survey> test2 = test.stream().filter(o -> third.stream()
+                .anyMatch(Predicate.isEqual(o))).collect(Collectors.toList());
+
+        List<Survey> fourth = surveyRepository.findByFourthAnswerOfSurveyLike(surveyResponseDto.getFourthAnswerOfSurvey());
+
+        List<Survey> test3 = test2.stream().filter(o -> fourth.stream()
+                .anyMatch(Predicate.isEqual(o))).collect(Collectors.toList());
+
+        List<Survey> fifth = surveyRepository.findByFifthAnswerOfSurvey(surveyResponseDto.getFifthAnswerOfSurvey());
+
+        List<Survey> test4 = test3.stream().filter(o -> fifth.stream()
+                .anyMatch(Predicate.isEqual(o))).collect(Collectors.toList());
+
+        surveyList = test4;
+        return surveyList;
+    }
+
+    public List<Survey> showAllData() {
         return surveyList;
     }
 
