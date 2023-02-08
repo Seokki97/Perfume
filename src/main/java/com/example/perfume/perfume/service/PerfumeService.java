@@ -5,12 +5,18 @@ import com.example.perfume.crawling.service.PerfumeCSVFileLoading;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
+import com.example.perfume.perfume.exception.BrandNotFoundException;
+import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 public class PerfumeService {
@@ -46,14 +52,15 @@ public class PerfumeService {
     }
 
     public Perfume findPerfumeByName(PerfumeRequestDto perfumeRequestDto) {
-        Perfume perfume = perfumeRepository.findByPerfumeNameLike(perfumeRequestDto.getPerfumeName())
-                .orElseThrow(() -> new IllegalArgumentException("해당 향수를 찾을 수 없습니다"));
+
+        Perfume perfume = perfumeRepository.findByPerfumeNameContaining(perfumeRequestDto.getPerfumeName())
+                .orElseThrow(PerfumeNotFoundException::new);
         return perfume;
     }
 
-    public List<Perfume> findPerfumeByBrand(PerfumeRequestDto perfumeRequestDto) {
-        List<Perfume> perfume = perfumeRepository.findByBrandNameLike(perfumeRequestDto.getBrandName())
-                .orElseThrow(() -> new IllegalArgumentException("해당 브랜드를 찾을 수 없습니다."));
+    public Perfume findPerfumeByBrand(PerfumeRequestDto perfumeRequestDto) {
+        Perfume perfume = perfumeRepository.findByBrandNameContaining(perfumeRequestDto.getBrandName())
+                .orElseThrow(BrandNotFoundException::new);
 
         return perfume;
     }
@@ -65,10 +72,6 @@ public class PerfumeService {
     public List<Perfume> showAllPerfumeData() {
 
         return perfumeRepository.findAll().stream().collect(Collectors.toList());
-    }
-
-    public boolean isExistPerfumeName(PerfumeRequestDto perfumeRequestDto) {
-        return perfumeRepository.existsByPerfumeName(perfumeRequestDto.getPerfumeName());
     }
 
 }
