@@ -4,8 +4,14 @@ import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
 import com.example.perfume.survey.repository.SurveyRepository;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -20,8 +26,7 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
     }
 
-    private List<Survey> compareTwoFilteredSurveyData(List<Survey> firstDataList, List<Survey> secondDataList) {
-
+    public List<Survey> compareTwoFilteredSurveyData(List<Survey> firstDataList, List<Survey> secondDataList) {
         return firstDataList.stream()
                 .filter(o -> secondDataList.stream().anyMatch(Predicate.isEqual(o)))
                 .collect(Collectors.toList());
@@ -34,7 +39,7 @@ public class SurveyService {
         return addedList;
     }
 
-    private List<Survey> filterFirstAnswer(SurveyResponseDto surveyResponseDto) {
+    public List<Survey> filterFirstAnswer(SurveyResponseDto surveyResponseDto) {
         return surveyRepository.findByFirstAnswerOfSurvey(surveyResponseDto.getFirstAnswerOfSurvey());
     }
 
@@ -46,7 +51,7 @@ public class SurveyService {
         return surveyRepository.findByThirdAnswerOfSurveyContaining(surveyResponseDto.getThirdAnswerOfSurvey());
     }
 
-    private List<Survey> addFirstAnswerList(SurveyResponseDto surveyResponseDto) {
+    public List<Survey> addFirstAnswerList(SurveyResponseDto surveyResponseDto) {
         return addList(filterFirstAnswer(surveyResponseDto), surveyRepository.findByFirstAnswerOfSurvey("젠더리스"));
     }
 
@@ -81,23 +86,21 @@ public class SurveyService {
                 , surveyRepository.findByThirdAnswerOfSurveyNotContaining(surveyResponseDto.getThirdAnswerOfSurvey()));
     }
 
-    public List<Survey> findDataFromAnswerTest(SurveyResponseDto surveyResponseDto) {
-
-        List<Survey> firstFilteringList = compareTwoFilteredSurveyData(addFirstAnswerList(surveyResponseDto), filterSecondAnswer(surveyResponseDto));
-
-        List<Survey> secondFilteringList = compareTwoFilteredSurveyData(firstFilteringList, filterThirdAnswer(surveyResponseDto));
-
-        List<Survey> thirdFilteringList = compareTwoFilteredSurveyData(isEmptyMoodColumn(surveyResponseDto, secondFilteringList), addFourthAnswerList(surveyResponseDto));
-
-        List<Survey> filteringListResult = compareTwoFilteredSurveyData(thirdFilteringList, addFifthAnswerList(surveyResponseDto));
-        isEmptyFinalResult(filteringListResult, thirdFilteringList);
-
-        return filteringListResult;
+    public List<Survey> compareFirstData(SurveyResponseDto surveyResponseDto) {
+        return compareTwoFilteredSurveyData(addFirstAnswerList(surveyResponseDto), filterSecondAnswer(surveyResponseDto));
     }
 
-    public List<Survey> extractPerfumeDataFromSurvey(SurveyResponseDto surveyResponseDto) {
-        return findDataFromAnswerTest(surveyResponseDto);
+    public List<Survey> compareSecondData(SurveyResponseDto surveyResponseDto) {
+        return compareTwoFilteredSurveyData(compareFirstData(surveyResponseDto), filterThirdAnswer(surveyResponseDto));
     }
 
-    //이제 최종 결과물에 대한 perfume 객체를 리턴해주면 됨
+    public List<Survey> compareThirdData(SurveyResponseDto surveyResponseDto) {
+        return compareTwoFilteredSurveyData
+                (isEmptyMoodColumn(surveyResponseDto, compareSecondData(surveyResponseDto)), addFourthAnswerList(surveyResponseDto));
+    }
+
+    public List<Survey> showFinalResult(SurveyResponseDto surveyResponseDto) {
+        List<Survey> finalDataList = compareTwoFilteredSurveyData(compareThirdData(surveyResponseDto), addFifthAnswerList(surveyResponseDto));
+        return isEmptyFinalResult(finalDataList, compareThirdData(surveyResponseDto));
+    }
 }

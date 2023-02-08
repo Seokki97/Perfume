@@ -8,6 +8,7 @@ import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
 import com.example.perfume.survey.service.DataService;
 import com.example.perfume.survey.service.SurveyService;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,11 +31,9 @@ public class SurveyController {
     }
     @PostMapping("/answer")
     public ResponseEntity<List<Survey>> getFirstQuestionData(@RequestBody SurveyResponseDto surveyResponseDto) {
-        List<Survey> test = surveyService.findDataFromAnswerTest(surveyResponseDto);
-        surveyService.initializeFeatureList();
-        return ResponseEntity.ok(test);
-    }
 
+        return ResponseEntity.ok(surveyService.showFinalResult(surveyResponseDto));
+    }
 
     @DeleteMapping("/delete")
     public void deleteData(){

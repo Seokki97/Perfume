@@ -3,13 +3,10 @@ package com.example.perfume.survey.service;
 import com.example.perfume.crawling.domain.survey.SurveyList;
 import com.example.perfume.crawling.service.SurveyCSVFileLoading;
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
 import com.example.perfume.survey.repository.SurveyRepository;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -28,6 +25,7 @@ public class DataService {
         this.perfumeRepository = perfumeRepository;
 
     }
+
 
     public SurveyResponseDto makeList(Long id, int firstIndex, SurveyList surveyList) {
         SurveyResponseDto surveyResponseDto = new SurveyResponseDto(id,

@@ -10,10 +10,12 @@ import java.util.Optional;
 @Repository
 public interface PerfumeRepository extends JpaRepository<Perfume, Long> {
 
-    Optional<Perfume> findByPerfumeNameLike(String perfumeName);
+
+    Optional<Perfume> findById(Long id);
+    Optional<Perfume> findByPerfumeNameContaining(String perfumeName);
 
 
-    Optional<List<Perfume>> findByBrandNameLike(String perfumeBrand);
+    Optional<Perfume> findByBrandNameContaining(String perfumeBrand);
 
     boolean existsByPerfumeName(String perfumeName);
 

@@ -8,6 +8,7 @@ import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
+import com.example.perfume.survey.repository.SurveyRepository;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +25,12 @@ public class PerfumeService {
 
     private final PerfumeCSVFileLoading perfumeCsvFileLoading;
 
+    private final SurveyRepository surveyRepository;
 
-    public PerfumeService(PerfumeRepository perfumeRepository, PerfumeCSVFileLoading perfumeCsvFileLoading) {
+    public PerfumeService(PerfumeRepository perfumeRepository, PerfumeCSVFileLoading perfumeCsvFileLoading,SurveyRepository surveyRepository) {
         this.perfumeRepository = perfumeRepository;
         this.perfumeCsvFileLoading = perfumeCsvFileLoading;
+        this.surveyRepository = surveyRepository;
     }
 
 
@@ -64,6 +67,9 @@ public class PerfumeService {
 
         return perfume;
     }
+    //브랜드나 향수를 입력해 -> 해당 향수 리스트를 보내고 사용자는 거기서 선택해 -> 그럼 다시 향수를 리턴받아,
+    // 그럼 리턴받은 향수의 id의 survey데이터를 가져와서 거기에 시트러스라 적혀져 있으면 시트러스 + 여자or 남자or 젠더리스 맞게 반환해주면됨
+
 
     public void deleteAllData() {
         perfumeRepository.deleteAll();

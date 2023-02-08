@@ -6,9 +6,9 @@ import lombok.*;
 import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 @Entity(name = "perfume")
 @Table(name = "perfume")
+@Getter
 public class Perfume {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

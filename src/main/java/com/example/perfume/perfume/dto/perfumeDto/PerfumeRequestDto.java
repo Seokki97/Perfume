@@ -5,7 +5,6 @@ import com.example.perfume.perfume.domain.Perfume;
 import lombok.*;
 
 @Getter
-@Builder
 public class PerfumeRequestDto {
 
     private Long id;
@@ -15,7 +14,11 @@ public class PerfumeRequestDto {
 
     private String perfumeImageUrl;
 
-    @Builder
+
+    public PerfumeRequestDto(){
+
+    }
+
     public PerfumeRequestDto(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
         this.id = id;
         this.perfumeName = perfumeName;
@@ -24,7 +27,7 @@ public class PerfumeRequestDto {
         this.perfumeImageUrl = perfumeImageUrl;
     }
 
-    public Perfume toEntity(){
+    public Perfume toEntity(Perfume perfume) {
         return Perfume.builder()
                 .id(id)
                 .perfumeName(perfumeName)

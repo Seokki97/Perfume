@@ -1,6 +1,7 @@
  package com.example.perfume.perfume.dto.perfumeDto;
 
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.perfume.repository.PerfumeRepository;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -23,6 +24,9 @@ public class PerfumeResponseDto {
         this.perfumeImageUrl = perfumeImageUrl;
     }
 
+    public PerfumeResponseDto(){
+
+    }
     public Perfume toEntity(){
         return Perfume.builder()
                 .id(id)

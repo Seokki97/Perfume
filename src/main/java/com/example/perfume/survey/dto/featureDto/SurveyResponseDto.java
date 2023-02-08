@@ -5,6 +5,8 @@ import com.example.perfume.survey.domain.Survey;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class SurveyResponseDto {
 
