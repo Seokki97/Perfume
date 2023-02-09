@@ -32,15 +32,15 @@ public class Perfume {
     private String perfumeImageUrl;
 
     @Builder
-    public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl){
-        this.id= id;
+    public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
+        this.id = id;
         this.perfumeName = perfumeName;
         this.brandName = brandName;
         this.perfumeFeature = perfumeFeature;
         this.perfumeImageUrl = perfumeImageUrl;
     }
 
-    public Long deliverPerfumeId(){
+    public Long deliverPerfumeId() {
         return id;
     }
 }

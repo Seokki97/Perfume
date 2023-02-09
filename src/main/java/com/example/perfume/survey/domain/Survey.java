@@ -1,12 +1,10 @@
 package com.example.perfume.survey.domain;
 
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter

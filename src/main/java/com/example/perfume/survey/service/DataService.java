@@ -16,7 +16,6 @@ public class DataService {
 
     private final SurveyRepository surveyRepository;
     private final SurveyCSVFileLoading surveyCSVFileLoading;
-
     private final PerfumeRepository perfumeRepository;
 
     public DataService(SurveyRepository surveyRepository, SurveyCSVFileLoading surveyCSVFileLoading,PerfumeRepository perfumeRepository) {
@@ -25,7 +24,6 @@ public class DataService {
         this.perfumeRepository = perfumeRepository;
 
     }
-
 
     public SurveyResponseDto makeList(Long id, int firstIndex, SurveyList surveyList) {
         SurveyResponseDto surveyResponseDto = new SurveyResponseDto(id,

@@ -8,7 +8,6 @@ import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.perfume.service.RecommendService;
 import com.example.perfume.survey.domain.Survey;
-import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +26,7 @@ public class PerfumeDataController {
 
     @GetMapping("/save")
     public void saveData(Long id, PerfumeList perfumeList) throws IOException {
-        perfumeService.savePerfumeData(id,perfumeList);
-
+        perfumeService.savePerfumeData(id, perfumeList);
     }
 
     @PostMapping("/find_by_name")
@@ -52,8 +50,8 @@ public class PerfumeDataController {
     }
 
     @PostMapping("/select_perfume")
-    public ResponseEntity<List<Survey>> selectPerfume(@RequestBody PerfumeResponseDto perfumeResponseDto,SurveyResponseDto surveyResponseDto){
-        return ResponseEntity.ok(recommendService.findSimilarPerfume(perfumeResponseDto.getId()));
+    public ResponseEntity<List<Survey>> selectPerfume(@RequestBody PerfumeResponseDto perfumeResponseDto) {
+        return ResponseEntity.ok(recommendService.showSimilarPerfume(perfumeResponseDto));
     }
 
 

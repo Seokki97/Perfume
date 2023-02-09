@@ -5,8 +5,6 @@ import com.example.perfume.survey.domain.Survey;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.List;
-
 @Getter
 public class SurveyResponseDto {
 
@@ -30,11 +28,9 @@ public class SurveyResponseDto {
         this.thirdAnswerOfSurvey = thirdAnswerOfSurvey;
         this.fourthAnswerOfSurvey = fourthAnswerOfSurvey;
         this.fifthAnswerOfSurvey = fifthAnswerOfSurvey;
-
     }
 
-    public SurveyResponseDto(){
-
+    public SurveyResponseDto() {
     }
 
     public Survey toEntity(Perfume perfume) {

@@ -14,7 +14,6 @@ public class PerfumeRequestDto {
 
     private String perfumeImageUrl;
 
-
     public PerfumeRequestDto(){
 
     }
@@ -27,7 +26,7 @@ public class PerfumeRequestDto {
         this.perfumeImageUrl = perfumeImageUrl;
     }
 
-    public Perfume toEntity(Perfume perfume) {
+    public Perfume toEntity() {
         return Perfume.builder()
                 .id(id)
                 .perfumeName(perfumeName)
