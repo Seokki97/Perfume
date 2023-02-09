@@ -24,7 +24,7 @@ public class SurveyUtilTest {
     @Autowired
     private SurveyRepository surveyRepository;
 
-    @DisplayName("두개의 리스트를 합친다")
+    @DisplayName("두개의 리스트를 합친다.")
     @Test
     void addList() {
         List<Survey> survey1 = surveyRepository.findByFifthAnswerOfSurvey("디폴트");
@@ -36,6 +36,19 @@ public class SurveyUtilTest {
 
         assertAll(
                 () -> assertEquals(resultSize,addedList.size())
+        );
+    }
+
+    @DisplayName("두개의 리스트에서 같은 항목들을 찾는다.")
+    @Test
+    void filterList(){
+        List<Survey> survey1 = surveyRepository.findByFifthAnswerOfSurvey("디폴트");
+        List<Survey> survey2 = surveyRepository.findByFifthAnswerOfSurvey("캐쥬얼");
+        int filteredList = surveyUtil.compareTwoFilteredSurveyData(survey1,survey2).size();
+        int result = 0;
+
+        assertAll(
+                () -> assertEquals(result,filteredList)
         );
     }
 }
