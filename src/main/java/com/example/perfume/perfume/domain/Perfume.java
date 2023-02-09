@@ -45,16 +45,4 @@ public class Perfume {
         return id;
     }
 
-    @Override
-    public boolean equals(Object o){
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Perfume perfume1 = (Perfume) o;
-        return Objects.equals(perfumeName,perfume1.perfumeName);
-    }
-
-    @Override
-    public int hashCode(){
-        return Objects.hash(perfumeName);
-    }
 }
