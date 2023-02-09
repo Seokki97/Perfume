@@ -31,20 +31,9 @@ public class SurveyService {
         this.surveyUtil = surveyUtil;
     }
 
-    public List<Survey> filterFirstAnswer(SurveyResponseDto surveyResponseDto) {
-        return surveyRepository.findByFirstAnswerOfSurvey(surveyResponseDto.getFirstAnswerOfSurvey());
-    }
-
-    private List<Survey> filterSecondAnswer(SurveyResponseDto surveyResponseDto) {
-        return surveyRepository.findBySecondAnswerOfSurvey(surveyResponseDto.getSecondAnswerOfSurvey());
-    }
-
-    private List<Survey> filterThirdAnswer(SurveyResponseDto surveyResponseDto) {
-        return surveyRepository.findByThirdAnswerOfSurveyContaining(surveyResponseDto.getThirdAnswerOfSurvey());
-    }
 
     public List<Survey> addFirstAnswerList(SurveyResponseDto surveyResponseDto) {
-        return surveyUtil.addList(filterFirstAnswer(surveyResponseDto), surveyRepository.findByFirstAnswerOfSurvey("젠더리스"));
+        return surveyUtil.addList(surveyUtil.filterFirstAnswer(surveyResponseDto), surveyRepository.findByFirstAnswerOfSurvey("젠더리스"));
     }
 
     private List<Survey> addFourthAnswerList(SurveyResponseDto surveyResponseDto) {
@@ -74,7 +63,7 @@ public class SurveyService {
 
     private List<Survey> compareFirstAndSecondData(SurveyResponseDto surveyResponseDto) {
         return surveyUtil.compareTwoFilteredSurveyData(addFirstAnswerList(surveyResponseDto)
-                , filterSecondAnswer(surveyResponseDto));
+                , surveyUtil.filterSecondAnswer(surveyResponseDto));
     }
 
     private List<Survey> retrySecondFiltering(SurveyResponseDto surveyResponseDto) {
@@ -82,24 +71,12 @@ public class SurveyService {
                 (compareFirstAndSecondData(surveyResponseDto), surveyRepository.findByThirdAnswerOfSurveyNotContaining(surveyResponseDto.getThirdAnswerOfSurvey()));
     }
 
-    public List<Survey> compareFirstData(SurveyResponseDto surveyResponseDto) {
-        return surveyUtil.compareTwoFilteredSurveyData
-                (addFirstAnswerList(surveyResponseDto), filterSecondAnswer(surveyResponseDto));
+    public List<Survey> compareData(SurveyResponseDto surveyResponseDto){
+        List<Survey> firstComparedList = surveyUtil.compareTwoFilteredSurveyData(addFirstAnswerList(surveyResponseDto),surveyUtil.filterSecondAnswer(surveyResponseDto));
+        List<Survey> secondComparedList = surveyUtil.compareTwoFilteredSurveyData(firstComparedList,surveyUtil.filterThirdAnswer(surveyResponseDto));
+        List<Survey> thirdComparedList = surveyUtil.compareTwoFilteredSurveyData(isEmptyMoodColumn(surveyResponseDto,secondComparedList),addFourthAnswerList(surveyResponseDto));
+        List<Survey> finalDataList =  surveyUtil.compareTwoFilteredSurveyData(thirdComparedList,addFifthAnswerList(surveyResponseDto));
+        return isEmptyFinalResult(finalDataList,thirdComparedList);
     }
 
-    public List<Survey> compareSecondData(SurveyResponseDto surveyResponseDto) {
-        return surveyUtil.compareTwoFilteredSurveyData
-                (compareFirstData(surveyResponseDto), filterThirdAnswer(surveyResponseDto));
-    }
-
-    public List<Survey> compareThirdData(SurveyResponseDto surveyResponseDto) {
-        return surveyUtil.compareTwoFilteredSurveyData
-                (isEmptyMoodColumn(surveyResponseDto, compareSecondData(surveyResponseDto)), addFourthAnswerList(surveyResponseDto));
-    }
-
-    public List<Survey> showFinalResult(SurveyResponseDto surveyResponseDto) {
-        List<Survey> finalDataList = surveyUtil.compareTwoFilteredSurveyData
-                (compareThirdData(surveyResponseDto), addFifthAnswerList(surveyResponseDto));
-        return isEmptyFinalResult(finalDataList, compareThirdData(surveyResponseDto));
-    }
 }
