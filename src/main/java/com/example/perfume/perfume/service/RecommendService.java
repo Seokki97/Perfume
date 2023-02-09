@@ -1,6 +1,7 @@
 package com.example.perfume.perfume.service;
 
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
@@ -25,28 +26,32 @@ public class RecommendService {
         this.surveyUtil = surveyUtil;
     }
 
-    //브랜드나 향수를 입력해 -> 해당 향수 리스트를 보내고 사용자는 거기서 선택해 -> 그럼 다시 향수를 리턴받아,
-    // 그럼 리턴받은 향수의 id의 survey데이터를 가져와서 거기에 시트러스라 적혀져 있으면 시트러스 + 여자or 남자or 젠더리스 맞게 반환해주면됨
-    public String findSecondFeatureSelectedPerfume(Long id) {
-
-        return surveyRepository.findById(id).get().getSecondAnswerOfSurvey();
-    } //두번째 대답을 반환해줌
-
-    public String findFirstFeatureSelectedPerfume(Long id) {
-        return surveyRepository.findById(id).get().getFirstAnswerOfSurvey();
-    } //첫번째 대답을 반환해줌
-
-    public String findThirdFeatureSelectedPerfume(Long id) {
-        return surveyRepository.findById(id).get().getThirdAnswerOfSurvey();
+    public Survey findFeatureSelectedPerfume(PerfumeResponseDto perfumeResponseDto) {
+        Long matchingNumber = perfumeResponseDto.getId();
+        return surveyRepository.findById(matchingNumber).get();
     }
 
-    public List<Survey> findSimilarPerfume(Long id) {
-        List<Survey> firstFeatureList = surveyRepository.findByFirstAnswerOfSurvey(findFirstFeatureSelectedPerfume(id));
-        List<Survey> secondFeatureList = surveyRepository.findBySecondAnswerOfSurvey(findSecondFeatureSelectedPerfume(id));
-        List<Survey> addedList = surveyUtil.addList(firstFeatureList, surveyRepository.findByFirstAnswerOfSurvey("젠더리스"));
-        List<Survey> comparedList = surveyUtil.compareTwoFilteredSurveyData(addedList, secondFeatureList);
-        List<Survey> thirdData = surveyRepository.findByThirdAnswerOfSurveyContaining(findThirdFeatureSelectedPerfume(id));
-        return surveyUtil.compareTwoFilteredSurveyData(comparedList, thirdData);
+    public List<Survey> extractFirstFeature(PerfumeResponseDto perfumeResponseDto) {
+        return surveyRepository.findByFirstAnswerOfSurvey(findFeatureSelectedPerfume(perfumeResponseDto).getFirstAnswerOfSurvey());
     }
+
+    public List<Survey> addFirstFeatureAndGenderless(PerfumeResponseDto perfumeResponseDto) {
+        return surveyUtil.addList(extractFirstFeature(perfumeResponseDto), surveyRepository.findByFirstAnswerOfSurvey("젠더리스"));
+    }
+
+    public List<Survey> extractSecondFeature(PerfumeResponseDto perfumeResponseDto) {
+        return surveyRepository.findBySecondAnswerOfSurvey(findFeatureSelectedPerfume(perfumeResponseDto).getSecondAnswerOfSurvey());
+    }
+
+    public List<Survey> extractThirdFeature(PerfumeResponseDto perfumeResponseDto) {
+        return surveyRepository.findByThirdAnswerOfSurveyContaining(findFeatureSelectedPerfume(perfumeResponseDto).getThirdAnswerOfSurvey());
+    }
+
+    public List<Survey> showSimilarPerfume(PerfumeResponseDto perfumeResponseDto) {
+        List<Survey> firstComparedList = surveyUtil.compareTwoFilteredSurveyData(addFirstFeatureAndGenderless(perfumeResponseDto), extractSecondFeature(perfumeResponseDto));
+        List<Survey> secondComparedList = surveyUtil.compareTwoFilteredSurveyData(firstComparedList, extractThirdFeature(perfumeResponseDto));
+        return secondComparedList;
+    }
+
 
 }
