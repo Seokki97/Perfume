@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "perfume")
@@ -28,7 +29,7 @@ public class Perfume {
     private String perfumeFeature;
 
     @NotNull
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String perfumeImageUrl;
 
     @Builder
@@ -42,5 +43,18 @@ public class Perfume {
 
     public Long deliverPerfumeId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Perfume perfume1 = (Perfume) o;
+        return Objects.equals(perfumeName,perfume1.perfumeName);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(perfumeName);
     }
 }
