@@ -24,7 +24,7 @@ public class PerfumeServiceTest {
 
     @DisplayName("사용자가 원하는 향수를 이름으로 찾는다.")
     @Test
-    void findPerfumeByName(){
+    void findPerfumeByName() {
         Perfume actual = perfumeRepository.findByPerfumeNameContaining("오도랑쥬").get();
 
         Perfume expected = Perfume.builder()
@@ -38,5 +38,21 @@ public class PerfumeServiceTest {
                 .ignoringFields("id")
                 .isEqualTo(expected);
 
+    }
+
+    @DisplayName("사용자가 원하는 향수를 브랜드로 찾는다")
+    @Test
+    void findPerfumeByBrand() {
+        Perfume actual = perfumeRepository.findByBrandNameContaining("구찌블룸네타레").get();
+
+        Perfume expected = Perfume.builder()
+                .perfumeName("구찌블룸네타레")
+                .perfumeFeature("구찌 블룸 정원 신비로운 노란 달콤함을 불러일으키는 넥타린과 허니서클 향기")
+                .brandName("구찌블룸네타레")
+                .perfumeImageUrl("//perfumegraphy.com/web/product/medium/202212/dd852ce8c0e3d3edfa62d472f80a70e1.jpg")                .build();
+
+        assertThat(actual).usingRecursiveComparison()
+                .ignoringFields("id")
+                .isEqualTo(expected);
     }
 }
