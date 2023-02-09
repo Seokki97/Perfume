@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,21 +23,12 @@ public class SurveyService {
 
     private final SurveyRepository surveyRepository;
 
-    public SurveyService(SurveyRepository surveyRepository) {
+
+    private final SurveyUtil surveyUtil;
+
+    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil) {
         this.surveyRepository = surveyRepository;
-    }
-
-    public List<Survey> compareTwoFilteredSurveyData(List<Survey> firstDataList, List<Survey> secondDataList) {
-        return firstDataList.stream()
-                .filter(o -> secondDataList.stream().anyMatch(Predicate.isEqual(o)))
-                .collect(Collectors.toList());
-    }
-
-    public List<Survey> addList(List<Survey> firstDataList, List<Survey> secondDataList) {
-        List<Survey> addedList = new ArrayList<>();
-        addedList.addAll(firstDataList);
-        addedList.addAll(secondDataList);
-        return addedList;
+        this.surveyUtil = surveyUtil;
     }
 
     public List<Survey> filterFirstAnswer(SurveyResponseDto surveyResponseDto) {
@@ -52,16 +44,16 @@ public class SurveyService {
     }
 
     public List<Survey> addFirstAnswerList(SurveyResponseDto surveyResponseDto) {
-        return addList(filterFirstAnswer(surveyResponseDto), surveyRepository.findByFirstAnswerOfSurvey("젠더리스"));
+        return surveyUtil.addList(filterFirstAnswer(surveyResponseDto), surveyRepository.findByFirstAnswerOfSurvey("젠더리스"));
     }
 
     private List<Survey> addFourthAnswerList(SurveyResponseDto surveyResponseDto) {
-        return addList(surveyRepository.findByFourthAnswerOfSurveyContaining
+        return surveyUtil.addList(surveyRepository.findByFourthAnswerOfSurveyContaining
                 (surveyResponseDto.getFourthAnswerOfSurvey()), surveyRepository.findByFourthAnswerOfSurvey("무관"));
     }
 
     private List<Survey> addFifthAnswerList(SurveyResponseDto surveyResponseDto) {
-        return addList(surveyRepository.findByFifthAnswerOfSurvey(
+        return surveyUtil.addList(surveyRepository.findByFifthAnswerOfSurvey(
                 surveyResponseDto.getFifthAnswerOfSurvey()), surveyRepository.findByFifthAnswerOfSurvey("디폴트"));
     }
 
@@ -80,27 +72,34 @@ public class SurveyService {
         return secondAnswer;
     }
 
+    private List<Survey> compareFirstAndSecondData(SurveyResponseDto surveyResponseDto) {
+        return surveyUtil.compareTwoFilteredSurveyData(addFirstAnswerList(surveyResponseDto)
+                , filterSecondAnswer(surveyResponseDto));
+    }
+
     private List<Survey> retrySecondFiltering(SurveyResponseDto surveyResponseDto) {
-        return compareTwoFilteredSurveyData(compareTwoFilteredSurveyData(addFirstAnswerList(surveyResponseDto)
-                        , filterSecondAnswer(surveyResponseDto))
-                , surveyRepository.findByThirdAnswerOfSurveyNotContaining(surveyResponseDto.getThirdAnswerOfSurvey()));
+        return surveyUtil.compareTwoFilteredSurveyData
+                (compareFirstAndSecondData(surveyResponseDto), surveyRepository.findByThirdAnswerOfSurveyNotContaining(surveyResponseDto.getThirdAnswerOfSurvey()));
     }
 
     public List<Survey> compareFirstData(SurveyResponseDto surveyResponseDto) {
-        return compareTwoFilteredSurveyData(addFirstAnswerList(surveyResponseDto), filterSecondAnswer(surveyResponseDto));
+        return surveyUtil.compareTwoFilteredSurveyData
+                (addFirstAnswerList(surveyResponseDto), filterSecondAnswer(surveyResponseDto));
     }
 
     public List<Survey> compareSecondData(SurveyResponseDto surveyResponseDto) {
-        return compareTwoFilteredSurveyData(compareFirstData(surveyResponseDto), filterThirdAnswer(surveyResponseDto));
+        return surveyUtil.compareTwoFilteredSurveyData
+                (compareFirstData(surveyResponseDto), filterThirdAnswer(surveyResponseDto));
     }
 
     public List<Survey> compareThirdData(SurveyResponseDto surveyResponseDto) {
-        return compareTwoFilteredSurveyData
+        return surveyUtil.compareTwoFilteredSurveyData
                 (isEmptyMoodColumn(surveyResponseDto, compareSecondData(surveyResponseDto)), addFourthAnswerList(surveyResponseDto));
     }
 
     public List<Survey> showFinalResult(SurveyResponseDto surveyResponseDto) {
-        List<Survey> finalDataList = compareTwoFilteredSurveyData(compareThirdData(surveyResponseDto), addFifthAnswerList(surveyResponseDto));
+        List<Survey> finalDataList = surveyUtil.compareTwoFilteredSurveyData
+                (compareThirdData(surveyResponseDto), addFifthAnswerList(surveyResponseDto));
         return isEmptyFinalResult(finalDataList, compareThirdData(surveyResponseDto));
     }
 }
