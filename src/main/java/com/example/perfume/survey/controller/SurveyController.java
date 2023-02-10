@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@RequiredArgsConstructor
+
 @RestController
 @RequestMapping("/survey")
 public class SurveyController {
@@ -20,6 +20,11 @@ public class SurveyController {
     private final SurveyService surveyService;
 
     private final DataService dataService;
+
+    public SurveyController(SurveyService surveyService, DataService dataService){
+        this.surveyService = surveyService;
+        this.dataService = dataService;
+    }
 
     @GetMapping("/save")
     public void saveSurveyData(Long id, SurveyList surveyList) throws IOException {

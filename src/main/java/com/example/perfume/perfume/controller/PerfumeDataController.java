@@ -16,13 +16,17 @@ import java.io.IOException;
 import java.util.List;
 
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/perfume")
 public class PerfumeDataController {
 
     private final PerfumeService perfumeService;
     private final RecommendService recommendService;
+
+    public PerfumeDataController(PerfumeService perfumeService, RecommendService recommendService){
+        this.perfumeService = perfumeService;
+        this.recommendService = recommendService;
+    }
 
     @GetMapping("/save")
     public void saveData(Long id, PerfumeList perfumeList) throws IOException {
