@@ -14,6 +14,10 @@ public class PostRequestDto {
     private String content;
 
 
+    public PostRequestDto(){
+
+    }
+
     @Builder
     public PostRequestDto(Long id, String visitor, String content) {
         this.id = id;

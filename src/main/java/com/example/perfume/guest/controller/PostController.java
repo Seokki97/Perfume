@@ -1,8 +1,13 @@
 package com.example.perfume.guest.controller;
 
+import com.example.perfume.guest.domain.Post;
+import com.example.perfume.guest.dto.PostRequestDto;
+import com.example.perfume.guest.dto.PostResponseDto;
 import com.example.perfume.guest.service.PostService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/post")
@@ -12,5 +17,20 @@ public class PostController {
 
     public PostController(PostService postService){
         this.postService = postService;
+    }
+
+    @PostMapping("save-post")
+    public void savePost(@RequestBody PostRequestDto postRequestDto){
+        postService.savePost(postRequestDto);
+    }
+
+    @GetMapping("show-post/{id}")
+    public ResponseEntity<Post> showOnePost(@PathVariable PostResponseDto postResponseDto){
+        return ResponseEntity.ok(postService.showOnePost(postResponseDto));
+    }
+
+    @GetMapping("show-all-post")
+    public ResponseEntity<List<Post>> showOnePost(){
+        return ResponseEntity.ok(postService.showAllPost());
     }
 }

@@ -2,7 +2,9 @@ package com.example.perfume.guest.dto;
 
 import com.example.perfume.guest.domain.Post;
 import lombok.Builder;
+import lombok.Getter;
 
+@Getter
 public class PostResponseDto {
     private Long id;
 
@@ -11,6 +13,9 @@ public class PostResponseDto {
     private String content;
 
 
+    public PostResponseDto(){
+
+    }
     @Builder
     public PostResponseDto(Long id, String visitor, String content) {
         this.id = id;
