@@ -33,12 +33,12 @@ public class PerfumeDataController {
         perfumeService.savePerfumeData(id, perfumeList);
     }
 
-    @PostMapping("/find_by_name")
+    @PostMapping("/find-by-name")
     public ResponseEntity<Perfume> findByPerfumeName(@RequestBody PerfumeRequestDto perfumeRequestDto) {
         return ResponseEntity.ok(perfumeService.findPerfumeByName(perfumeRequestDto));
     }
 
-    @PostMapping("/find_by_brand")
+    @PostMapping("/find-by-brand")
     public ResponseEntity<Perfume> findByBrandName(@RequestBody PerfumeRequestDto perfumeRequestDto) {
         return ResponseEntity.ok(perfumeService.findPerfumeByBrand(perfumeRequestDto));
     }
@@ -48,12 +48,12 @@ public class PerfumeDataController {
         perfumeService.deleteAllData();
     }
 
-    @GetMapping("/show_all_data")
+    @GetMapping("/show-all-data")
     public ResponseEntity<List<Perfume>> showAllData() {
         return ResponseEntity.ok(perfumeService.showAllPerfumeData());
     }
 
-    @PostMapping("/select_perfume")
+    @PostMapping("/select-perfume")
     public ResponseEntity<List<Survey>> selectPerfume(@RequestBody PerfumeResponseDto perfumeResponseDto) {
         return ResponseEntity.ok(recommendService.showSimilarPerfume(perfumeResponseDto));
     }
