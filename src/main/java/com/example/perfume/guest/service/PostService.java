@@ -3,6 +3,7 @@ package com.example.perfume.guest.service;
 import com.example.perfume.guest.domain.Post;
 import com.example.perfume.guest.dto.PostRequestDto;
 import com.example.perfume.guest.dto.PostResponseDto;
+import com.example.perfume.guest.exception.PostNotFoundException;
 import com.example.perfume.guest.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +25,24 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public Post showOnePost(PostResponseDto postResponseDto) {
-        Post post = postRepository.findById(postResponseDto.getId()).get();
+    public Post showOnePost(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(PostNotFoundException::new);
 
         return post;
     }
 
-    public List<Post> showAllPost(){
-        List<Post> post = postRepository.findAll();
+    public List<Post> showAllPost() {
+        if (!isPostExist()) {
+            throw new PostNotFoundException();
+        }
+        return postRepository.findAll();
+    }
 
-        return post;
+    public boolean isPostExist() {
+        if (postRepository.count() == 0) {
+            return false;
+        }
+        return true;
     }
 }

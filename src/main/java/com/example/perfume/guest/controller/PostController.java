@@ -25,8 +25,8 @@ public class PostController {
     }
 
     @GetMapping("show-post/{id}")
-    public ResponseEntity<Post> showOnePost(@PathVariable PostResponseDto postResponseDto){
-        return ResponseEntity.ok(postService.showOnePost(postResponseDto));
+    public ResponseEntity<Post> showOnePost(@PathVariable Long id){
+        return ResponseEntity.ok(postService.showOnePost(id));
     }
 
     @GetMapping("show-all-post")

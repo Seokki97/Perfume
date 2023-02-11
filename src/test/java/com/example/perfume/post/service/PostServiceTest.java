@@ -26,7 +26,6 @@ public class PostServiceTest {
     @Autowired
     private PostRepository postRepository;
 
-
     @DisplayName("작성한 게시물이 DB에 저장된다.")
     @Test
     void savePost() {
@@ -59,7 +58,7 @@ public class PostServiceTest {
                 .content("작품 너무 예뻐용 ㅋ")
                 .visitor("익명의 코끼리")
                 .build();
-        Post expected = postService.showOnePost(postResponseDto);
+        Post expected = postService.showOnePost(postResponseDto.getId());
 
         assertAll(
                 () -> assertThat(actual).usingRecursiveComparison()
