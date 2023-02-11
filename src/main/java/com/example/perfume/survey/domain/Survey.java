@@ -18,36 +18,36 @@ public class Survey {
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String firstAnswerOfSurvey; //남녀
+    private String genderAnswer; //남녀
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String secondAnswerOfSurvey; //향
+    private String scentAnswer; //향
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String thirdAnswerOfSurvey; //무드
+    private String moodAnswer; //무드
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String fourthAnswerOfSurvey; //계절
+    private String seasonAnswer; //계절
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String fifthAnswerOfSurvey; //스타일
+    private String styleAnswer; //스타일
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "perfume_id")
     private Perfume perfume;
 
     @Builder
-    public Survey(Long id, String firstAnswerOfSurvey, String secondAnswerOfSurvey, String thirdAnswerOfSurvey, String fourthAnswerOfSurvey, String fifthAnswerOfSurvey, Perfume perfume) {
+    public Survey(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer, Perfume perfume) {
         this.id = id;
-        this.firstAnswerOfSurvey = firstAnswerOfSurvey;
-        this.secondAnswerOfSurvey = secondAnswerOfSurvey;
-        this.thirdAnswerOfSurvey = thirdAnswerOfSurvey;
-        this.fourthAnswerOfSurvey = fourthAnswerOfSurvey;
-        this.fifthAnswerOfSurvey = fifthAnswerOfSurvey;
+        this.genderAnswer = genderAnswer;
+        this.scentAnswer = scentAnswer;
+        this.moodAnswer = moodAnswer;
+        this.seasonAnswer = seasonAnswer;
+        this.styleAnswer = styleAnswer;
         this.perfume = perfume;
 
     }

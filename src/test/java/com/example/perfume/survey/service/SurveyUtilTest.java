@@ -27,10 +27,10 @@ public class SurveyUtilTest {
     @DisplayName("두개의 리스트를 합친다.")
     @Test
     void addList() {
-        List<Survey> survey1 = surveyRepository.findByFifthAnswerOfSurvey("디폴트");
-        List<Survey> survey2 = surveyRepository.findByFifthAnswerOfSurvey("캐쥬얼");
-        int firstSize = surveyRepository.findByFifthAnswerOfSurvey("디폴트").size();
-        int secondSize = surveyRepository.findByFifthAnswerOfSurvey("캐쥬얼").size();
+        List<Survey> survey1 = surveyRepository.findByStyleAnswer("디폴트");
+        List<Survey> survey2 = surveyRepository.findByStyleAnswer("캐쥬얼");
+        int firstSize = surveyRepository.findByStyleAnswer("디폴트").size();
+        int secondSize = surveyRepository.findByStyleAnswer("캐쥬얼").size();
         int resultSize = firstSize + secondSize;
         List<Survey> addedList = surveyUtil.addList(survey1, survey2);
 
@@ -42,8 +42,8 @@ public class SurveyUtilTest {
     @DisplayName("두개의 리스트에서 같은 항목들을 찾는다.")
     @Test
     void filterList(){
-        List<Survey> survey1 = surveyRepository.findByFifthAnswerOfSurvey("디폴트");
-        List<Survey> survey2 = surveyRepository.findByFifthAnswerOfSurvey("캐쥬얼");
+        List<Survey> survey1 = surveyRepository.findByStyleAnswer("디폴트");
+        List<Survey> survey2 = surveyRepository.findByStyleAnswer("캐쥬얼");
         int filteredList = surveyUtil.compareTwoFilteredSurveyData(survey1,survey2).size();
         int result = 0;
 

@@ -1,7 +1,7 @@
 package com.example.perfume.survey.service;
 
 import com.example.perfume.survey.domain.Survey;
-import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
+import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,17 +18,17 @@ public class SurveyService {
     }
 
     public List<Survey> addFirstAnswerList(SurveyResponseDto surveyResponseDto) {
-        return surveyUtil.addList(surveyUtil.filterFirstAnswer(surveyResponseDto), surveyRepository.findByFirstAnswerOfSurvey("젠더리스"));
+        return surveyUtil.addList(surveyUtil.filterFirstAnswer(surveyResponseDto), surveyRepository.findByGenderAnswer("젠더리스"));
     }
 
     private List<Survey> addFourthAnswerList(SurveyResponseDto surveyResponseDto) {
-        return surveyUtil.addList(surveyRepository.findByFourthAnswerOfSurveyContaining
-                (surveyResponseDto.getFourthAnswerOfSurvey()), surveyRepository.findByFourthAnswerOfSurvey("무관"));
+        return surveyUtil.addList(surveyRepository.findBySeasonAnswerContaining
+                (surveyResponseDto.getSeasonAnswer()), surveyRepository.findBySeasonAnswer("무관"));
     }
 
     private List<Survey> addFifthAnswerList(SurveyResponseDto surveyResponseDto) {
-        return surveyUtil.addList(surveyRepository.findByFifthAnswerOfSurvey(
-                surveyResponseDto.getFifthAnswerOfSurvey()), surveyRepository.findByFifthAnswerOfSurvey("디폴트"));
+        return surveyUtil.addList(surveyRepository.findByStyleAnswer(
+                surveyResponseDto.getStyleAnswer()), surveyRepository.findByStyleAnswer("디폴트"));
     }
 
     private List<Survey> isEmptyFinalResult(List<Survey> finalResult, List<Survey> beforeResult) {
@@ -53,7 +53,7 @@ public class SurveyService {
 
     private List<Survey> retrySecondFiltering(SurveyResponseDto surveyResponseDto) {
         return surveyUtil.compareTwoFilteredSurveyData
-                (compareFirstAndSecondData(surveyResponseDto), surveyRepository.findByThirdAnswerOfSurveyNotContaining(surveyResponseDto.getThirdAnswerOfSurvey()));
+                (compareFirstAndSecondData(surveyResponseDto), surveyRepository.findByMoodAnswerNotContaining(surveyResponseDto.getMoodAnswer()));
     }
 
     public List<Survey> compareData(SurveyResponseDto surveyResponseDto) {

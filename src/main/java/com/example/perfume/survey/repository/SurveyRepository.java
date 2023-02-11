@@ -12,19 +12,19 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     Optional<Survey> findById(Long id);
 
-    List<Survey> findByFirstAnswerOfSurvey(String firstAnswerOfSurvey);
+    List<Survey> findByGenderAnswer(String genderAnswer);
 
-    List<Survey> findBySecondAnswerOfSurvey(String secondAnswerOfSurvey);
+    List<Survey> findByScentAnswer(String scentAnswer);
 
-    List<Survey> findByThirdAnswerOfSurveyContaining(String thirdAnswerOfSurvey);
+    List<Survey> findByMoodAnswerContaining(String moodAnswer);
 
-    List<Survey> findByThirdAnswerOfSurveyNotContaining(String thirdAnswerOfSurvey);
+    List<Survey> findByMoodAnswerNotContaining(String moodAnswer);
 
-    List<Survey> findByFourthAnswerOfSurveyContaining(String fourthAnswerOfSurvey);
+    List<Survey> findBySeasonAnswerContaining(String seasonAnswer);
 
-    List<Survey> findByFourthAnswerOfSurvey(String fourthAnswerOfSurvey);
+    List<Survey> findBySeasonAnswer(String seasonAnswer);
 
-    List<Survey> findByFifthAnswerOfSurvey(String fifthAnswerOfSurvey);
+    List<Survey> findByStyleAnswer(String styleAnswer);
 
 
 }

@@ -1,7 +1,7 @@
 package com.example.perfume.survey.service;
 
 import com.example.perfume.survey.domain.Survey;
-import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
+import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,14 +32,14 @@ public class SurveyUtil {
     }
 
     public List<Survey> filterFirstAnswer(SurveyResponseDto surveyResponseDto) {
-        return surveyRepository.findByFirstAnswerOfSurvey(surveyResponseDto.getFirstAnswerOfSurvey());
+        return surveyRepository.findByGenderAnswer(surveyResponseDto.getGenderAnswer());
     }
 
     public List<Survey> filterSecondAnswer(SurveyResponseDto surveyResponseDto) {
-        return surveyRepository.findBySecondAnswerOfSurvey(surveyResponseDto.getSecondAnswerOfSurvey());
+        return surveyRepository.findByScentAnswer(surveyResponseDto.getScentAnswer());
     }
 
     public List<Survey> filterThirdAnswer(SurveyResponseDto surveyResponseDto) {
-        return surveyRepository.findByThirdAnswerOfSurveyContaining(surveyResponseDto.getThirdAnswerOfSurvey());
+        return surveyRepository.findByMoodAnswerContaining(surveyResponseDto.getMoodAnswer());
     }
 }

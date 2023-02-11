@@ -2,10 +2,10 @@ package com.example.perfume.survey.controller;
 
 import com.example.perfume.crawling.domain.survey.SurveyList;
 import com.example.perfume.survey.domain.Survey;
-import com.example.perfume.survey.dto.featureDto.SurveyResponseDto;
+import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
 import com.example.perfume.survey.service.DataService;
+import com.example.perfume.survey.service.FeatureService;
 import com.example.perfume.survey.service.SurveyService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +35,12 @@ public class SurveyController {
     public ResponseEntity<List<Survey>> getFirstQuestionData(@RequestBody SurveyResponseDto surveyResponseDto) {
 
         return ResponseEntity.ok(surveyService.compareData(surveyResponseDto));
+    }
+
+    @GetMapping("/show-feature")
+    public ResponseEntity<FeatureService> showFeatureSummary(@RequestBody SurveyResponseDto surveyResponseDto){
+
+        return null;
     }
 
     @DeleteMapping("/delete")
