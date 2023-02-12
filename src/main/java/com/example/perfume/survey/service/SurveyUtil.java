@@ -2,6 +2,7 @@ package com.example.perfume.survey.service;
 
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
+import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,10 @@ public class SurveyUtil {
 
     private final SurveyRepository surveyRepository;
 
-    public SurveyUtil(SurveyRepository surveyRepository){
+    public SurveyUtil(SurveyRepository surveyRepository) {
         this.surveyRepository = surveyRepository;
     }
+
     public List<Survey> compareTwoFilteredSurveyData(List<Survey> firstDataList, List<Survey> secondDataList) {
         return firstDataList.stream()
                 .filter(o -> secondDataList.stream().anyMatch(Predicate.isEqual(o)))
@@ -31,15 +33,15 @@ public class SurveyUtil {
         return addedList;
     }
 
-    public List<Survey> filterFirstAnswer(SurveyResponseDto surveyResponseDto) {
+    public List<Survey> filterFirstAnswer(SurveyResponseDto surveyResponseDto) throws SurveyNotFoundException {
         return surveyRepository.findByGenderAnswer(surveyResponseDto.getGenderAnswer());
     }
 
-    public List<Survey> filterSecondAnswer(SurveyResponseDto surveyResponseDto) {
+    public List<Survey> filterSecondAnswer(SurveyResponseDto surveyResponseDto) throws SurveyNotFoundException {
         return surveyRepository.findByScentAnswer(surveyResponseDto.getScentAnswer());
     }
 
-    public List<Survey> filterThirdAnswer(SurveyResponseDto surveyResponseDto) {
+    public List<Survey> filterThirdAnswer(SurveyResponseDto surveyResponseDto) throws SurveyNotFoundException {
         return surveyRepository.findByMoodAnswerContaining(surveyResponseDto.getMoodAnswer());
     }
 }

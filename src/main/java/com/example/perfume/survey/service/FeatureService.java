@@ -1,18 +1,16 @@
 package com.example.perfume.survey.service;
 
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
-import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
+import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.message.MoodMessage;
 import com.example.perfume.survey.message.ScentMessage;
 import com.example.perfume.survey.message.SeasonMessage;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class FeatureService {
@@ -20,21 +18,17 @@ public class FeatureService {
     private final SurveyRepository surveyRepository;
 
     private final PerfumeRepository perfumeRepository;
-    private final SurveyService surveyService;
 
-    public FeatureService(SurveyRepository surveyRepository, SurveyService surveyService, PerfumeRepository perfumeRepository) {
+    public FeatureService(SurveyRepository surveyRepository, PerfumeRepository perfumeRepository) {
         this.surveyRepository = surveyRepository;
-        this.surveyService = surveyService;
         this.perfumeRepository = perfumeRepository;
     }
 
-    //구조 : 향수 클릭하면 세부사항 뷰를 보여줘야함 ->향수 클릭하면 향수 ID 반환받아서 해당 향수 디테일 제공, 향수 쓸때 팁 제공
     public Survey findFeature(Long id) {
 
-        return surveyRepository.findById(id).get();
+        return surveyRepository.findById(id).orElseThrow(SurveyNotFoundException::new);
     }
 
-    //그럼 각 무드에 대해 메시지를 맵핑해야하나..?
     public FeatureResponseDto showFeatureDetails(Long id) {
         Survey survey = findFeature(id);
         FeatureResponseDto featureResponseDto = FeatureResponseDto.builder()
@@ -47,7 +41,7 @@ public class FeatureService {
     }
 
     public Perfume selectPerfume(Long id) {
-        return perfumeRepository.findById(id).get();
+        return perfumeRepository.findById(id).orElseThrow(PerfumeNotFoundException::new);
     }
 
     public String selectScent(Long id) {
@@ -79,8 +73,7 @@ public class FeatureService {
         if (survey.getSeasonAnswer().equals("무관")) {
             return SeasonMessage.FOUR_SEASONS_MESSAGE;
         }
-        return survey.getSeasonAnswer()+SeasonMessage.SEASON_MESSAGE;
+        return survey.getSeasonAnswer() + SeasonMessage.SEASON_MESSAGE;
     }
-
 
 }
