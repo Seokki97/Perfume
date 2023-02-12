@@ -37,17 +37,19 @@ public class FeatureService {
     //그럼 각 무드에 대해 메시지를 맵핑해야하나..?
     public FeatureResponseDto showFeatureDetails(Long id) {
         Survey survey = findFeature(id);
-       FeatureResponseDto featureResponseDto = FeatureResponseDto.builder()
+        FeatureResponseDto featureResponseDto = FeatureResponseDto.builder()
                 .perfume(selectPerfume(id))
                 .scentRecommend(selectScent(id))
                 .moodRecommend(survey.getMoodAnswer() + MoodMessage.MOOD_MESSAGE)
-                .seasonRecommend(survey.getSeasonAnswer() + SeasonMessage.SEASON_MESSAGE)
+                .seasonRecommend(selectSeason(id))
                 .build();
         return featureResponseDto;
     }
-    public Perfume selectPerfume(Long id){
+
+    public Perfume selectPerfume(Long id) {
         return perfumeRepository.findById(id).get();
     }
+
     public String selectScent(Long id) {
         Survey survey = findFeature(id);
         String message = "";
@@ -70,6 +72,14 @@ public class FeatureService {
             message = ScentMessage.VANILLA_MESSAGE;
         }
         return message;
+    }
+
+    public String selectSeason(Long id) {
+        Survey survey = findFeature(id);
+        if (survey.getSeasonAnswer().equals("무관")) {
+            return SeasonMessage.FOUR_SEASONS_MESSAGE;
+        }
+        return survey.getSeasonAnswer()+SeasonMessage.SEASON_MESSAGE;
     }
 
 
