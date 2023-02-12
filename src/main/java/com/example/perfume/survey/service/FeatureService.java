@@ -3,6 +3,8 @@ package com.example.perfume.survey.service;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
+import com.example.perfume.survey.domain.ScentType;
+import com.example.perfume.survey.domain.Season;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
@@ -47,22 +49,22 @@ public class FeatureService {
     public String selectScent(Long id) {
         Survey survey = findFeature(id);
         String message = "";
-        if (survey.getScentAnswer().equals("시트러스")) {
+        if (survey.getScentAnswer().equals(ScentType.CITRUS.getType())) {
             message = ScentMessage.CITRUS_MESSAGE;
         }
-        if (survey.getScentAnswer().equals("소피")) {
+        if (survey.getScentAnswer().equals(ScentType.SOAPY.getType())) {
             message = ScentMessage.SOAPY_MESSAGE;
         }
-        if (survey.getScentAnswer().equals("우디")) {
+        if (survey.getScentAnswer().equals(ScentType.WOODY.getType())) {
             message = ScentMessage.WOODY_MESSAGE;
         }
-        if (survey.getScentAnswer().equals("플로럴")) {
+        if (survey.getScentAnswer().equals(ScentType.FLORAL.getType())) {
             message = ScentMessage.FLORAL_MESSAGE;
         }
-        if (survey.getScentAnswer().equals("프루티")) {
+        if (survey.getScentAnswer().equals(ScentType.FRUITY.getType())) {
             message = ScentMessage.FRUITY_MESSAGE;
         }
-        if (survey.getScentAnswer().equals("바닐라")) {
+        if (survey.getScentAnswer().equals(ScentType.VANILLA.getType())) {
             message = ScentMessage.VANILLA_MESSAGE;
         }
         return message;
@@ -70,7 +72,7 @@ public class FeatureService {
 
     public String selectSeason(Long id) {
         Survey survey = findFeature(id);
-        if (survey.getSeasonAnswer().equals("무관")) {
+        if (survey.getSeasonAnswer().equals(Season.FOUR_SEASON.getSeason())) {
             return SeasonMessage.FOUR_SEASONS_MESSAGE;
         }
         return survey.getSeasonAnswer() + SeasonMessage.SEASON_MESSAGE;
