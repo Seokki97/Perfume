@@ -8,10 +8,12 @@ import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
-import com.example.perfume.survey.repository.SurveyRepository;
+import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
+import com.example.perfume.survey.service.FeatureService;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,12 +24,12 @@ public class PerfumeService {
 
     private final PerfumeCSVFileLoading perfumeCsvFileLoading;
 
-    private final SurveyRepository surveyRepository;
 
-    public PerfumeService(PerfumeRepository perfumeRepository, PerfumeCSVFileLoading perfumeCsvFileLoading, SurveyRepository surveyRepository) {
+
+
+    public PerfumeService(PerfumeRepository perfumeRepository, PerfumeCSVFileLoading perfumeCsvFileLoading) {
         this.perfumeRepository = perfumeRepository;
         this.perfumeCsvFileLoading = perfumeCsvFileLoading;
-        this.surveyRepository = surveyRepository;
     }
 
     public PerfumeResponseDto makePerfumeList(Long id, int firstIndex, PerfumeList perfumeList) {

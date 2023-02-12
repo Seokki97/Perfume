@@ -8,6 +8,8 @@ import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.perfume.service.RecommendService;
 import com.example.perfume.survey.domain.Survey;
+import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
+import com.example.perfume.survey.service.FeatureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +25,12 @@ public class PerfumeDataController {
     private final PerfumeService perfumeService;
     private final RecommendService recommendService;
 
-    public PerfumeDataController(PerfumeService perfumeService, RecommendService recommendService){
+    private final FeatureService featureService;
+
+    public PerfumeDataController(PerfumeService perfumeService, RecommendService recommendService, FeatureService featureService) {
         this.perfumeService = perfumeService;
         this.recommendService = recommendService;
+        this.featureService = featureService;
     }
 
     @GetMapping("/save")
@@ -56,6 +61,11 @@ public class PerfumeDataController {
     @PostMapping("/select-perfume")
     public ResponseEntity<List<Survey>> selectPerfume(@RequestBody PerfumeResponseDto perfumeResponseDto) {
         return ResponseEntity.ok(recommendService.showSimilarPerfume(perfumeResponseDto));
+    }
+
+    @GetMapping("/show-perfume/{id}")
+    public ResponseEntity<FeatureResponseDto> showPerfumeDetails(@PathVariable Long id) {
+        return ResponseEntity.ok(featureService.showFeatureDetails(id));
     }
 
 
