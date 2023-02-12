@@ -33,15 +33,21 @@ public class SurveyUtil {
         return addedList;
     }
 
-    public List<Survey> filterFirstAnswer(SurveyResponseDto surveyResponseDto) throws SurveyNotFoundException {
+    public List<Survey> filterGenderAnswer(SurveyResponseDto surveyResponseDto){
+        if(!surveyRepository.existsByGenderAnswer(surveyResponseDto.getGenderAnswer())){
+            throw new SurveyNotFoundException();
+        }
         return surveyRepository.findByGenderAnswer(surveyResponseDto.getGenderAnswer());
     }
 
-    public List<Survey> filterSecondAnswer(SurveyResponseDto surveyResponseDto) throws SurveyNotFoundException {
+    public List<Survey> filterScentAnswer(SurveyResponseDto surveyResponseDto) {
+        if(!surveyRepository.existsByScentAnswer(surveyResponseDto.getScentAnswer())){
+            throw new SurveyNotFoundException();
+        };
         return surveyRepository.findByScentAnswer(surveyResponseDto.getScentAnswer());
     }
 
-    public List<Survey> filterThirdAnswer(SurveyResponseDto surveyResponseDto) throws SurveyNotFoundException {
+    public List<Survey> filterMoodAnswer(SurveyResponseDto surveyResponseDto) throws SurveyNotFoundException {
         return surveyRepository.findByMoodAnswerContaining(surveyResponseDto.getMoodAnswer());
     }
 }
