@@ -26,5 +26,9 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     List<Survey> findByStyleAnswer(String styleAnswer);
 
+    boolean existsByScentAnswer(String scentAnswer);
 
+    boolean existsByGenderAnswer(String genderAnswer);
+
+    boolean existsByMoodAnswer(String moodAnswer);
 }
