@@ -1,5 +1,6 @@
 package com.example.perfume.survey.domain;
 
+import com.example.perfume.survey.exception.SeasonNotFoundException;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import lombok.Getter;
 
@@ -26,7 +27,7 @@ public enum SeasonType {
         String expectedSeason = survey.getSeasonAnswer();
         SeasonType seasonType = Arrays.stream(SeasonType.values())
                 .filter(season -> season.getSeason().equals(expectedSeason)).findAny()
-                .orElseThrow(SurveyNotFoundException::new);
+                .orElseThrow(SeasonNotFoundException::new);
         return seasonType.getFeature();
     }
 }

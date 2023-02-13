@@ -1,5 +1,6 @@
 package com.example.perfume.survey.domain;
 
+import com.example.perfume.survey.exception.ScentNotFoundException;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import lombok.Getter;
 
@@ -28,7 +29,7 @@ public enum ScentType {
         String expectedScent = survey.getScentAnswer();
         ScentType scentType = Arrays.stream(ScentType.values())
                 .filter(scent -> scent.getScent().equals(expectedScent))
-                .findAny().orElseThrow(SurveyNotFoundException::new);
+                .findAny().orElseThrow(ScentNotFoundException::new);
         return scentType.getFeature();
     }
 
