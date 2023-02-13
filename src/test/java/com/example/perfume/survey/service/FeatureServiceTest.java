@@ -2,8 +2,7 @@ package com.example.perfume.survey.service;
 
 
 import com.example.perfume.perfume.repository.PerfumeRepository;
-import com.example.perfume.survey.domain.Survey;
-import com.example.perfume.survey.message.ScentMessage;
+import com.example.perfume.survey.domain.ScentType;
 import com.example.perfume.survey.message.SeasonMessage;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -28,29 +27,29 @@ public class FeatureServiceTest {
 
     @DisplayName("선택된 향에 맞는 메세지가 출력된다.")
     @Test
-    void selectScent() {
+    void selectScent(){
         long perfumeId = 1l;
 
         String actual = featureService.selectScent(perfumeId);
 
-        String expected = ScentMessage.FLORAL_MESSAGE;
+        String expected = ScentType.FLORAL.getFeature();
 
         assertAll(
-                () -> assertEquals(actual, expected)
+                () -> assertEquals(expected,actual)
         );
     }
 
     @DisplayName("선택된 계절에 맞는 메세지가 출력된다.")
     @Test
-    void selectSeason() {
+    void selectSeason(){
         long perfumeId = 1l;
 
         String actual = featureService.selectSeason(perfumeId);
 
-        String expected = "겨울" + SeasonMessage.SEASON_MESSAGE;
+        String expected = "겨울"+SeasonMessage.SEASON_MESSAGE;
 
         assertAll(
-                () -> assertEquals(actual, expected)
+                () -> assertEquals(expected,actual)
         );
     }
 }

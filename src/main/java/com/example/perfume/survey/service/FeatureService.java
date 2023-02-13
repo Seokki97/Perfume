@@ -9,7 +9,6 @@ import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.message.MoodMessage;
-import com.example.perfume.survey.message.ScentMessage;
 import com.example.perfume.survey.message.SeasonMessage;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
@@ -48,26 +47,7 @@ public class FeatureService {
 
     public String selectScent(Long id) {
         Survey survey = findFeature(id);
-        String message = "";
-        if (survey.getScentAnswer().equals(ScentType.CITRUS.getType())) {
-            message = ScentMessage.CITRUS_MESSAGE;
-        }
-        if (survey.getScentAnswer().equals(ScentType.SOAPY.getType())) {
-            message = ScentMessage.SOAPY_MESSAGE;
-        }
-        if (survey.getScentAnswer().equals(ScentType.WOODY.getType())) {
-            message = ScentMessage.WOODY_MESSAGE;
-        }
-        if (survey.getScentAnswer().equals(ScentType.FLORAL.getType())) {
-            message = ScentMessage.FLORAL_MESSAGE;
-        }
-        if (survey.getScentAnswer().equals(ScentType.FRUITY.getType())) {
-            message = ScentMessage.FRUITY_MESSAGE;
-        }
-        if (survey.getScentAnswer().equals(ScentType.VANILLA.getType())) {
-            message = ScentMessage.VANILLA_MESSAGE;
-        }
-        return message;
+        return ScentType.getFeature(survey);
     }
 
     public String selectSeason(Long id) {
