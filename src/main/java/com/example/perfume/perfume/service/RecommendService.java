@@ -25,19 +25,19 @@ public class RecommendService {
     }
 
     public List<Survey> extractFirstFeature(PerfumeResponseDto perfumeResponseDto) {
-        return surveyRepository.findByFirstAnswerOfSurvey(findFeatureSelectedPerfume(perfumeResponseDto).getFirstAnswerOfSurvey());
+        return surveyRepository.findByGenderAnswer(findFeatureSelectedPerfume(perfumeResponseDto).getGenderAnswer());
     }
 
     public List<Survey> extractSecondFeature(PerfumeResponseDto perfumeResponseDto) {
-        return surveyRepository.findBySecondAnswerOfSurvey(findFeatureSelectedPerfume(perfumeResponseDto).getSecondAnswerOfSurvey());
+        return surveyRepository.findByScentAnswer(findFeatureSelectedPerfume(perfumeResponseDto).getScentAnswer());
     }
 
     public List<Survey> extractThirdFeature(PerfumeResponseDto perfumeResponseDto) {
-        return surveyRepository.findByThirdAnswerOfSurveyContaining(findFeatureSelectedPerfume(perfumeResponseDto).getThirdAnswerOfSurvey());
+        return surveyRepository.findByMoodAnswerContaining(findFeatureSelectedPerfume(perfumeResponseDto).getMoodAnswer());
     }
 
     public List<Survey> addFirstFeatureAndGenderless(PerfumeResponseDto perfumeResponseDto) {
-        return surveyUtil.addList(extractFirstFeature(perfumeResponseDto), surveyRepository.findByFirstAnswerOfSurvey("젠더리스"));
+        return surveyUtil.addList(extractFirstFeature(perfumeResponseDto), surveyRepository.findByGenderAnswer("젠더리스"));
     }
 
     public List<Survey> showSimilarPerfume(PerfumeResponseDto perfumeResponseDto) {

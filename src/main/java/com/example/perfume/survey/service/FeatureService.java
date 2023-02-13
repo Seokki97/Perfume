@@ -9,7 +9,6 @@ import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.message.MoodMessage;
-import com.example.perfume.survey.message.SeasonMessage;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
 

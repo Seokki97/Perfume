@@ -10,13 +10,11 @@ import com.example.perfume.perfume.service.RecommendService;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
 import com.example.perfume.survey.service.FeatureService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/perfume")
@@ -58,8 +56,8 @@ public class PerfumeDataController {
         return ResponseEntity.ok(perfumeService.showAllPerfumeData());
     }
 
-    @PostMapping("/select-perfume")
-    public ResponseEntity<List<Survey>> selectPerfume(@RequestBody PerfumeResponseDto perfumeResponseDto) {
+    @PostMapping("/select-similar-perfume")
+    public ResponseEntity<List<Survey>> selectSimilarPerfume(@RequestBody PerfumeResponseDto perfumeResponseDto) {
         return ResponseEntity.ok(recommendService.showSimilarPerfume(perfumeResponseDto));
     }
 

@@ -49,7 +49,7 @@ public class SurveyUtil {
     }
 
     public List<Survey> filterMoodAnswer(SurveyResponseDto surveyResponseDto) {
-        if(!surveyRepository.existsByMoodAnswer(surveyResponseDto.getMoodAnswer())){
+        if (!surveyRepository.existsByMoodAnswer(surveyResponseDto.getMoodAnswer())) {
             throw new SurveyNotFoundException();
         }
         return surveyRepository.findByMoodAnswerContaining(surveyResponseDto.getMoodAnswer());

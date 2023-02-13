@@ -20,7 +20,9 @@ public class SurveyResponseDto {
 
     private Perfume perfume;
 
-    public SurveyResponseDto(){}
+    public SurveyResponseDto() {
+    }
+
     @Builder
     public SurveyResponseDto(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer) {
         this.id = id;

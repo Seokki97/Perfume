@@ -7,9 +7,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity(name = "perfume")
-@Table(name = "perfume")
 @Getter
+@Entity(name = "perfume")
 public class Perfume {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

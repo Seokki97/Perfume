@@ -26,10 +26,10 @@ public enum ScentType {
 
     public static String getFeature(Survey survey) {
         String expectedScent = survey.getScentAnswer();
-        ScentType scentType = Arrays.stream(ScentType.values()).filter(scent -> scent.getScent().equals(expectedScent))
+        ScentType scentType = Arrays.stream(ScentType.values())
+                .filter(scent -> scent.getScent().equals(expectedScent))
                 .findAny().orElseThrow(SurveyNotFoundException::new);
         return scentType.getFeature();
     }
-
 
 }

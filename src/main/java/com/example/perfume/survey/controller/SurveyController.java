@@ -21,7 +21,7 @@ public class SurveyController {
 
     private final DataService dataService;
 
-    public SurveyController(SurveyService surveyService, DataService dataService){
+    public SurveyController(SurveyService surveyService, DataService dataService) {
         this.surveyService = surveyService;
         this.dataService = dataService;
     }
@@ -31,14 +31,14 @@ public class SurveyController {
         dataService.saveSurveyData(id, surveyList);
     }
 
-    @PostMapping("/answer")
-    public ResponseEntity<List<Survey>> getFirstQuestionData(@RequestBody SurveyResponseDto surveyResponseDto) {
+    @PostMapping("/show-perfume-by-survey")
+    public ResponseEntity<List<Survey>> showPerfumeDataBySurvey(@RequestBody SurveyResponseDto surveyResponseDto) {
 
         return ResponseEntity.ok(surveyService.compareData(surveyResponseDto));
     }
 
     @GetMapping("/show-feature")
-    public ResponseEntity<FeatureService> showFeatureSummary(@RequestBody SurveyResponseDto surveyResponseDto){
+    public ResponseEntity<FeatureService> showFeatureSummary(@RequestBody SurveyResponseDto surveyResponseDto) {
 
         return null;
     }

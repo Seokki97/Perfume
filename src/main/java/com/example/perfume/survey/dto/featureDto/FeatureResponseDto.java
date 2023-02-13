@@ -13,7 +13,8 @@ public class FeatureResponseDto {
     private String seasonRecommend;
 
     private Perfume perfume;
-    public FeatureResponseDto(){
+
+    public FeatureResponseDto() {
 
     }
 

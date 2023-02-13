@@ -8,14 +8,13 @@ import lombok.Getter;
 public class SurveyRequestDto {
 
     private Long id;
-
     private String genderAnswer;
     private String scentAnswer;
     private String moodAnswer;
     private String seasonAnswer;
     private String styleAnswer;
 
-    public SurveyRequestDto(){
+    public SurveyRequestDto() {
 
     }
 

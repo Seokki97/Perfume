@@ -95,5 +95,30 @@ public class URL {
     public static String POWDERY_URL6 = "https://perfumegraphy.com/category/powdery/681/?page=6";
     public static String POWDERY_URL7 = "https://perfumegraphy.com/category/powdery/681/?page=7";
 
+    public static String MEN_PERFUME = "http://pc.perfumegraphy.com/category/him/659/";
+    public static String MEN_PERFUME2 = "http://pc.perfumegraphy.com/category/him/659/?page=2";
+    public static String MEN_PERFUME3 = "http://pc.perfumegraphy.com/category/him/659/?page=3";
+    public static String MEN_PERFUME4 = "http://pc.perfumegraphy.com/category/him/659/?page=4";
+    public static String MEN_PERFUME5 = "http://pc.perfumegraphy.com/category/him/659/?page=5";
+    public static String MEN_PERFUME6 = "http://pc.perfumegraphy.com/category/him/659/?page=6";
+    public static String MEN_PERFUME7 = "http://pc.perfumegraphy.com/category/him/659/?page=7";
+    public static String MEN_PERFUME8 = "http://pc.perfumegraphy.com/category/him/659/?page=8";
+    public static String MEN_PERFUME9 = "http://pc.perfumegraphy.com/category/him/659/?page=9";
+    public static String MEN_PERFUME10 = "http://pc.perfumegraphy.com/category/him/659/?page=10";
+    public static String MEN_PERFUME11 = "http://pc.perfumegraphy.com/category/him/659/?page=11";
+    public static String MEN_PERFUME12 = "http://pc.perfumegraphy.com/category/him/659/?page=12";
+
+    public static String GENDERLESS_PERFUME = "http://pc.perfumegraphy.com/category/genderless/661/";
+    public static String GENDERLESS_PERFUME2 = "http://pc.perfumegraphy.com/category/genderless/661/?page=2";
+    public static String GENDERLESS_PERFUME3 = "http://pc.perfumegraphy.com/category/genderless/661/?page=3";
+    public static String GENDERLESS_PERFUME4 = "http://pc.perfumegraphy.com/category/genderless/661/?page=4";
+    public static String GENDERLESS_PERFUME5 = "http://pc.perfumegraphy.com/category/genderless/661/?page=5";
+    public static String GENDERLESS_PERFUME6 = "http://pc.perfumegraphy.com/category/genderless/661/?page=6";
+    public static String GENDERLESS_PERFUME7 = "http://pc.perfumegraphy.com/category/genderless/661/?page=7";
+    public static String GENDERLESS_PERFUME8 = "http://pc.perfumegraphy.com/category/genderless/661/?page=8";
+    public static String GENDERLESS_PERFUME9 = "http://pc.perfumegraphy.com/category/genderless/661/?page=9";
+
+
+
 
 }
