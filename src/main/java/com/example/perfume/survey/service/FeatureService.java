@@ -4,7 +4,7 @@ import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.survey.domain.ScentType;
-import com.example.perfume.survey.domain.Season;
+import com.example.perfume.survey.domain.SeasonType;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
@@ -52,10 +52,7 @@ public class FeatureService {
 
     public String selectSeason(Long id) {
         Survey survey = findFeature(id);
-        if (survey.getSeasonAnswer().equals(Season.FOUR_SEASON.getSeason())) {
-            return SeasonMessage.FOUR_SEASONS_MESSAGE;
-        }
-        return survey.getSeasonAnswer() + SeasonMessage.SEASON_MESSAGE;
-    }
 
+        return SeasonType.getFeature(survey);
+    }
 }
