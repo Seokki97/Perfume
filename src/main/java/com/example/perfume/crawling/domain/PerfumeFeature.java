@@ -8,7 +8,7 @@ public class PerfumeFeature {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return feature;
     }
 }

@@ -53,10 +53,10 @@ public class CrawlingService {
         return perfumeFeatureList;
     }
 
-    public List<PerfumeImage> crawPerfumeImageUrl(String targetUrl) throws IOException{
+    public List<PerfumeImage> crawPerfumeImageUrl(String targetUrl) throws IOException {
         Elements setRange = connectAndGetDocument(targetUrl).select(PERFUME_NAME_CSS_QUERY_RANGE);
         List<PerfumeImage> perfumeImageList = new ArrayList<>();
-        for(int firstIndexOfList = LOOP_ZERO; firstIndexOfList < setRange.size(); firstIndexOfList++){
+        for (int firstIndexOfList = LOOP_ZERO; firstIndexOfList < setRange.size(); firstIndexOfList++) {
             PerfumeImage perfumeImage = new PerfumeImage(setRange.get(firstIndexOfList).attr(IMG_URL));
             perfumeImageList.add(perfumeImage);
         }

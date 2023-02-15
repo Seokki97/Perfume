@@ -33,7 +33,7 @@ public class PerfumeList {
     }
 
 
-    public int getMaxSize(){
+    public int getMaxSize() {
         return perfumeName.size();
     }
 

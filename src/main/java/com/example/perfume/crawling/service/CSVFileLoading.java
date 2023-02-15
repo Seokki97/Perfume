@@ -22,7 +22,7 @@ public class CSVFileLoading {
     }
 
 
-    public String[] splitData(String data){
+    public String[] splitData(String data) {
         return data.split(",");
     }
 

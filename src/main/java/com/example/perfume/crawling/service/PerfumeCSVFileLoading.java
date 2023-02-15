@@ -15,7 +15,6 @@ public class PerfumeCSVFileLoading extends CSVFileLoading {
 
 
     private static final int COLUMN_LENGTH = 4;
-
     private static final int NAME_COLUMN = 0;
     private static final int FEATURE_COLUMN = 1;
     private static final int BRAND_COLUMN = 2;

@@ -4,7 +4,6 @@ package com.example.perfume.survey.service;
 import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.survey.domain.ScentType;
 import com.example.perfume.survey.domain.SeasonType;
-import com.example.perfume.survey.message.SeasonMessage;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
