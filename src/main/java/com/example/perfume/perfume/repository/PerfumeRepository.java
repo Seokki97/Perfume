@@ -12,9 +12,9 @@ public interface PerfumeRepository extends JpaRepository<Perfume, Long> {
 
     Optional<Perfume> findById(Long id);
 
-    Optional<Perfume> findByPerfumeNameContaining(String perfumeName);
+    List<Perfume> findByPerfumeNameContaining(String perfumeName);
 
-    Optional<Perfume> findByBrandNameContaining(String perfumeBrand);
+    List<Perfume> findByBrandNameContaining(String perfumeBrand);
 
     boolean existsByPerfumeName(String perfumeName);
 

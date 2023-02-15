@@ -37,12 +37,12 @@ public class PerfumeDataController {
     }
 
     @PostMapping("/find-by-name")
-    public ResponseEntity<Perfume> findByPerfumeName(@RequestBody PerfumeRequestDto perfumeRequestDto) {
+    public ResponseEntity<List<Perfume>> findByPerfumeName(@RequestBody PerfumeRequestDto perfumeRequestDto) {
         return ResponseEntity.ok(perfumeService.findPerfumeByName(perfumeRequestDto));
     }
 
     @PostMapping("/find-by-brand")
-    public ResponseEntity<Perfume> findByBrandName(@RequestBody PerfumeRequestDto perfumeRequestDto) {
+    public ResponseEntity<List<Perfume>> findByBrandName(@RequestBody PerfumeRequestDto perfumeRequestDto) {
         return ResponseEntity.ok(perfumeService.findPerfumeByBrand(perfumeRequestDto));
     }
 

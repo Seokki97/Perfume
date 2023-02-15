@@ -49,16 +49,15 @@ public class PerfumeService {
         }
     }
 
-    public Perfume findPerfumeByName(PerfumeRequestDto perfumeRequestDto) {
+    public List<Perfume> findPerfumeByName(PerfumeRequestDto perfumeRequestDto) {
 
-        Perfume perfume = perfumeRepository.findByPerfumeNameContaining(perfumeRequestDto.getPerfumeName())
-                .orElseThrow(PerfumeNotFoundException::new);
+        List<Perfume> perfume = perfumeRepository.findByPerfumeNameContaining(perfumeRequestDto.getPerfumeName());
+
         return perfume;
     }
 
-    public Perfume findPerfumeByBrand(PerfumeRequestDto perfumeRequestDto) {
-        Perfume perfume = perfumeRepository.findByBrandNameContaining(perfumeRequestDto.getBrandName())
-                .orElseThrow(BrandNotFoundException::new);
+    public List<Perfume> findPerfumeByBrand(PerfumeRequestDto perfumeRequestDto) {
+        List<Perfume> perfume = perfumeRepository.findByBrandNameContaining(perfumeRequestDto.getBrandName());
 
         return perfume;
     }
