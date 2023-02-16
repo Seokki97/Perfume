@@ -1,6 +1,7 @@
 package com.example.perfume.crawling.service;
 
 import com.example.perfume.crawling.domain.perfume.PerfumeList;
+import com.example.perfume.crawling.domain.perfume.PerfumeType;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
@@ -11,37 +12,19 @@ import java.util.List;
 
 @Service
 @Getter
-public class PerfumeCSVFileLoading {
-
+public class PerfumeCSVFileLoading extends CSVFileLoading {
 
     private static final int COLUMN_LENGTH = 4;
-    private static final int NAME_COLUMN = 0;
-    private static final int FEATURE_COLUMN = 1;
-    private static final int BRAND_COLUMN = 2;
-    private static final int IMAGE_URL_COLUMN = 3;
 
     private List<String> perfumeListTest;
-    public final String FILE_PATH = "/home/ubuntu/data/PerfumeData.csv";
+    public final String FILE_PATH = "C:/Users/wnstj/gradu/PerfumeData.csv";
 
     public BufferedReader bufferedReader;
 
-
-    public InputStreamReader importFile() throws UnsupportedEncodingException, FileNotFoundException {
-
-        FileInputStream fileInputStream = new FileInputStream(FILE_PATH);
-        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "euc-kr");
-        return inputStreamReader;
-    }
-
-    public String[] splitData(String data) {
-        return data.split(",");
-    }
-
     public PerfumeCSVFileLoading(List<String> perfumeListTest) throws FileNotFoundException, UnsupportedEncodingException {
-        this.bufferedReader = new BufferedReader(importFile());
+        this.bufferedReader = new BufferedReader(importFile(FILE_PATH));
         this.perfumeListTest = perfumeListTest;
     }
-
 
     public List<String> makePerfumeList(String[] array) {
         for (int i = 0; i < array.length; i++) {
@@ -49,7 +32,6 @@ public class PerfumeCSVFileLoading {
         }
         return perfumeListTest;
     }
-
 
     public List<String> splitPerfumeData() throws IOException {
         String perfumeData;
@@ -70,10 +52,10 @@ public class PerfumeCSVFileLoading {
     }
 
     public PerfumeList extractAllPerfumeData(PerfumeList perfumeList) throws IOException {
-        perfumeList = perfumeList.builder().perfumeName(extractPerfumeData(NAME_COLUMN))
-                .perfumeFeature(extractPerfumeData(FEATURE_COLUMN))
-                .perfumeBrand(extractPerfumeData(BRAND_COLUMN))
-                .perfumeImageUrl(extractPerfumeData(IMAGE_URL_COLUMN))
+        perfumeList = perfumeList.builder().perfumeName(extractPerfumeData(PerfumeType.NAME.selectTypeColumn()))
+                .perfumeFeature(extractPerfumeData(PerfumeType.FEATURE.selectTypeColumn()))
+                .perfumeBrand(extractPerfumeData(PerfumeType.BRAND.selectTypeColumn()))
+                .perfumeImageUrl(extractPerfumeData(PerfumeType.IMAGE.selectTypeColumn()))
                 .build();
         return perfumeList;
     }
