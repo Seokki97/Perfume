@@ -26,32 +26,24 @@ public class PerfumeCSVFileLoading extends CSVFileLoading {
         this.perfumeListTest = perfumeListTest;
     }
 
-    public List<String> makePerfumeList(String[] array) {
-        for (int i = 0; i < array.length; i++) {
-            perfumeListTest.add(array[i]);
-        }
-        return perfumeListTest;
-    }
-
     public List<String> splitPerfumeData() throws IOException {
         String perfumeData;
         while ((perfumeData = bufferedReader.readLine()) != null) {
-            makePerfumeList(splitData(perfumeData));
+            makeList(splitData(perfumeData),perfumeListTest);
         }
         return perfumeListTest;
     }
 
-    public List<String> extractPerfumeData(int columnNumber) throws IOException {
-        splitPerfumeData();
+    public List<String> extractPerfumeData(int columnNumber) {
         List<String> testList = new ArrayList<>();
         for (int i = columnNumber; i < perfumeListTest.size(); i += COLUMN_LENGTH) {
             testList.add(perfumeListTest.get(i));
         }
-
         return testList;
     }
 
     public PerfumeList extractAllPerfumeData(PerfumeList perfumeList) throws IOException {
+        splitPerfumeData();
         perfumeList = perfumeList.builder().perfumeName(extractPerfumeData(PerfumeType.NAME.selectTypeColumn()))
                 .perfumeFeature(extractPerfumeData(PerfumeType.FEATURE.selectTypeColumn()))
                 .perfumeBrand(extractPerfumeData(PerfumeType.BRAND.selectTypeColumn()))

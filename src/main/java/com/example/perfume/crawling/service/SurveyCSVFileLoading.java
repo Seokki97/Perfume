@@ -27,32 +27,23 @@ public class SurveyCSVFileLoading extends CSVFileLoading {
         this.surveyListTest = surveyListTest;
     }
 
-    public List<String> makeSurveyList(String[] array) {
-        for (int i = 0; i < array.length; i++) {
-            surveyListTest.add(array[i]);
-        }
-        return surveyListTest;
-    }
-
     public List<String> splitSurveyData() throws IOException {
-        String surveyData;
-        while ((surveyData = bufferedReader.readLine()) != null) {
-            makeSurveyList(splitData(surveyData));
+        String perfumeData;
+        while ((perfumeData = bufferedReader.readLine()) != null) {
+            makeList(splitData(perfumeData),surveyListTest);
         }
         return surveyListTest;
     }
-
-    public List<String> extractAnswerFromSurvey(int columnName) throws IOException {
-        splitSurveyData();
+    public List<String> extractAnswerFromSurvey(int columnName) {
         List<String> testList = new ArrayList<>();
         for (int i = columnName; i < surveyListTest.size(); i += COLUMN_LENGTH) {
             testList.add(surveyListTest.get(i));
         }
-
         return testList;
     }
 
     public SurveyList extractAllSurveyData(SurveyList surveyList) throws IOException {
+        splitSurveyData();
         surveyList = surveyList.builder().firstAnswer(extractAnswerFromSurvey(SurveyType.GENDER.selectTypeValue()))
                 .secondAnswer(extractAnswerFromSurvey(SurveyType.SCENT.selectTypeValue()))
                 .thirdAnswer(extractAnswerFromSurvey(SurveyType.MOOD.selectTypeValue()))
