@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @Getter
-public class PerfumeCSVFileLoading extends CSVFileLoading {
+public class PerfumeCSVFileLoading {
 
 
     private static final int COLUMN_LENGTH = 4;
@@ -21,9 +21,24 @@ public class PerfumeCSVFileLoading extends CSVFileLoading {
     private static final int IMAGE_URL_COLUMN = 3;
 
     private List<String> perfumeListTest;
+    public final String FILE_PATH = "/home/ubuntu/data/PerfumeData.csv";
+
+    public BufferedReader bufferedReader;
+
+
+    public InputStreamReader importFile() throws UnsupportedEncodingException, FileNotFoundException {
+
+        FileInputStream fileInputStream = new FileInputStream(FILE_PATH);
+        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "euc-kr");
+        return inputStreamReader;
+    }
+
+    public String[] splitData(String data) {
+        return data.split(",");
+    }
 
     public PerfumeCSVFileLoading(List<String> perfumeListTest) throws FileNotFoundException, UnsupportedEncodingException {
-
+        this.bufferedReader = new BufferedReader(importFile());
         this.perfumeListTest = perfumeListTest;
     }
 

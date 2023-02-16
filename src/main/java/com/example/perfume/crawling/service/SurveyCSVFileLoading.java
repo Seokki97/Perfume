@@ -2,16 +2,16 @@ package com.example.perfume.crawling.service;
 
 import com.example.perfume.crawling.domain.perfume.PerfumeList;
 import com.example.perfume.crawling.domain.survey.SurveyList;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SurveyCSVFileLoading extends CSVFileLoading {
+@Getter
+public class SurveyCSVFileLoading {
 
     private List<String> surveyListTest;
 
@@ -22,9 +22,24 @@ public class SurveyCSVFileLoading extends CSVFileLoading {
     private static final int MOOD_COLUMN = 2; //무드
     private static final int SEASON_COLUMN = 3; //계절
     private static final int STYLE_COLUMN = 4; //스타일
+    public final String FILE_PATH = "/home/ubuntu/data/SurveyData.csv";
+
+    public BufferedReader bufferedReader;
+
+
+    public InputStreamReader importFile() throws UnsupportedEncodingException, FileNotFoundException {
+
+        FileInputStream fileInputStream = new FileInputStream(FILE_PATH);
+        InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "euc-kr");
+        return inputStreamReader;
+    }
+
+    public String[] splitData(String data) {
+        return data.split(",");
+    }
 
     public SurveyCSVFileLoading(List<String> surveyListTest) throws FileNotFoundException, UnsupportedEncodingException {
-
+        this.bufferedReader = new BufferedReader(importFile());
         this.surveyListTest = surveyListTest;
     }
 
