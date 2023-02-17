@@ -17,10 +17,10 @@ public class SurveyCSVFileLoading extends CSVFileLoading {
 
     private List<String> surveyListTest;
 
+    public final String FILE_PATH = "/home/ubuntu/data/SurveyData.csv";
     private static final int COLUMN_LENGTH = 5;
-    public final String FILE_PATH = "C:/Users/wnstj/gradu/SurveyData.csv";
 
-    public BufferedReader bufferedReader;
+    private BufferedReader bufferedReader;
 
     public SurveyCSVFileLoading(List<String> surveyListTest) throws FileNotFoundException, UnsupportedEncodingException {
         this.bufferedReader = new BufferedReader(importFile(FILE_PATH));
@@ -30,10 +30,11 @@ public class SurveyCSVFileLoading extends CSVFileLoading {
     public List<String> splitSurveyData() throws IOException {
         String perfumeData;
         while ((perfumeData = bufferedReader.readLine()) != null) {
-            makeList(splitData(perfumeData),surveyListTest);
+            makeList(splitData(perfumeData), surveyListTest);
         }
         return surveyListTest;
     }
+
     public List<String> extractAnswerFromSurvey(int columnName) {
         List<String> testList = new ArrayList<>();
         for (int i = columnName; i < surveyListTest.size(); i += COLUMN_LENGTH) {

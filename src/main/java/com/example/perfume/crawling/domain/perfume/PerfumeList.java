@@ -18,7 +18,6 @@ public class PerfumeList {
     private List<String> perfumeName;
     private List<String> perfumeFeature;
 
-
     private List<String> perfumeBrand;
 
     private List<String> perfumeImageUrl;

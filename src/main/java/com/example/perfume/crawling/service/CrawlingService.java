@@ -1,8 +1,9 @@
 package com.example.perfume.crawling.service;
-
+/*
 import com.example.perfume.crawling.domain.PerfumeFeature;
 import com.example.perfume.crawling.domain.PerfumeCrawling;
 import com.example.perfume.crawling.domain.PerfumeImage;
+import com.example.perfume.perfume.domain.Perfume;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,6 +13,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
+
 
 public class CrawlingService {
 
@@ -37,6 +40,7 @@ public class CrawlingService {
             PerfumeCrawling perfumeCrawling = new PerfumeCrawling(setRange.get(firstIndexOfList).attr(PERFUME_NAME_ATTRIBUTE_KEY));
             perfumeCrawlingNameList.add(perfumeCrawling);
         }
+
         return perfumeCrawlingNameList;
     }
 
@@ -64,3 +68,4 @@ public class CrawlingService {
 
     }
 }
+*/

@@ -15,11 +15,10 @@ import java.util.List;
 public class PerfumeCSVFileLoading extends CSVFileLoading {
 
     private static final int COLUMN_LENGTH = 4;
+    public final String FILE_PATH = "/home/ubuntu/data/PerfumeData.csv";
 
     private List<String> perfumeListTest;
-    public final String FILE_PATH = "C:/Users/wnstj/gradu/PerfumeData.csv";
-
-    public BufferedReader bufferedReader;
+    private BufferedReader bufferedReader;
 
     public PerfumeCSVFileLoading(List<String> perfumeListTest) throws FileNotFoundException, UnsupportedEncodingException {
         this.bufferedReader = new BufferedReader(importFile(FILE_PATH));
@@ -29,7 +28,7 @@ public class PerfumeCSVFileLoading extends CSVFileLoading {
     public List<String> splitPerfumeData() throws IOException {
         String perfumeData;
         while ((perfumeData = bufferedReader.readLine()) != null) {
-            makeList(splitData(perfumeData),perfumeListTest);
+            makeList(splitData(perfumeData), perfumeListTest);
         }
         return perfumeListTest;
     }
