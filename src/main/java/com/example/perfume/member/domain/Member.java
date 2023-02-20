@@ -1,5 +1,6 @@
 package com.example.perfume.member.domain;
 
+import com.sun.istack.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,15 +18,21 @@ public class Member {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String nickname;
+    @NotNull
+    private Long memberId;
 
+    @NotNull
+    private String nickname;
+    @NotNull
+    @Column(length = 550)
     private String email;
 
     private String refreshToken;
 
     @Builder
-    public Member(Long id, String nickname, String email, String refreshToken){
+    public Member(Long id,Long memberId, String nickname, String email, String refreshToken){
         this.id = id;
+        this.memberId = memberId;
         this.nickname = nickname;
         this.email = email;
         this.refreshToken = refreshToken;

@@ -1,5 +1,6 @@
 package com.example.perfume.oauth.controller;
 
+import com.example.perfume.member.domain.Member;
 import com.example.perfume.oauth.service.OauthService;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +23,10 @@ public class OauthController {
 
     //프론트로부터 인가코드 받아오기
     @GetMapping("/kakao/callback")
-    public String getRedirectUrl(@RequestParam String code, HttpSession httpSession) throws ParseException {
+    public ResponseEntity<Member> getRedirectUrl(@RequestParam String code, HttpSession httpSession) throws ParseException {
 
 
-        return oauthService.getUserProfile(code,httpSession);
+        return ResponseEntity.ok(oauthService.loadUserProfile(code, httpSession));
     }
 
 }

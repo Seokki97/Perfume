@@ -1,6 +1,9 @@
 package com.example.perfume.oauth.service;
 
+import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.oauth.OauthType;
+import com.example.perfume.oauth.exception.MemberAlreadyExistException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -28,6 +31,12 @@ import static org.apache.el.util.MessageFactory.get;
 @Service
 public class OauthService {
 
+    private final MemberRepository memberRepository;
+
+    public OauthService(MemberRepository memberRepository){
+        this.memberRepository = memberRepository;
+    }
+
 
     public HttpHeaders setHttpHeaders() {
 
@@ -47,41 +56,57 @@ public class OauthService {
         return accessTokenParams;
     }
 
-    public RestTemplate getRestTemplate() {
+    public RestTemplate createRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate;
     }
 
     //여기까지 토큰 값 받기
-    public ResponseEntity<String> getResponse(String url, String code,HttpHeaders httpHeaders) {
+    public ResponseEntity<String> getResponseFromServer(String url, String code,HttpHeaders httpHeaders) {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>((setHttpBody(code)), httpHeaders);
 
 
-        ResponseEntity<String> response = getRestTemplate().exchange(url, HttpMethod.POST, request, String.class);
+        ResponseEntity<String> response = createRestTemplate().exchange(url, HttpMethod.POST, request, String.class);
 
         return response;
     }
 
-    public String getUserProfile(String code, HttpSession httpSession) {
+    public Member loadUserProfile(String code, HttpSession httpSession) {
         try {
             JSONParser jsonParser = new JSONParser();
             HttpHeaders httpHeaders = setHttpHeaders();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(getResponse("https://kauth.kakao.com/oauth/token", code,httpHeaders).getBody());
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(getResponseFromServer("https://kauth.kakao.com/oauth/token", code,httpHeaders).getBody());
             httpSession.setAttribute("Authorization", jsonObject.get("access_token"));
-
 
             httpHeaders.add("Authorization", "Bearer "+jsonObject.get("access_token"));
 
-            ResponseEntity<String> responseEntity = getResponse("https://kapi.kakao.com/v2/user/me",code,httpHeaders);
+            ResponseEntity<String> responseEntity = getResponseFromServer("https://kapi.kakao.com/v2/user/me",code,httpHeaders);
 
             JSONObject profile = (JSONObject) jsonParser.parse(responseEntity.getBody());
             JSONObject properties = (JSONObject) profile.get("properties");
             JSONObject kakaoAccount = (JSONObject) profile.get("kakao_account");
-            return (String) properties.get("nickname");
+
+            Long memberId= (Long) profile.get("id");
+            String nickname = (String) properties.get("nickname");
+            String email = (String) kakaoAccount.get("kakao_account");
+
+            return saveUserProfile(memberId,email, nickname);
 
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Member saveUserProfile(Long memberId,String email, String nickname){
+        Member member = Member.builder()
+                .memberId(memberId)
+                .email(email)
+                .nickname(nickname)
+                .build();
+        if(memberRepository.existsByMemberId(member.getMemberId())){
+            throw new MemberAlreadyExistException();
+        }
+        return memberRepository.save(member);
     }
 
 }
