@@ -1,7 +1,7 @@
-package com.example.perfume.guest.repository;
+package com.example.perfume.post.repository;
 
 
-import com.example.perfume.guest.domain.Post;
+import com.example.perfume.post.domain.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

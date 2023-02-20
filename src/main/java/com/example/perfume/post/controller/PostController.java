@@ -1,9 +1,8 @@
-package com.example.perfume.guest.controller;
+package com.example.perfume.post.controller;
 
-import com.example.perfume.guest.domain.Post;
-import com.example.perfume.guest.dto.PostRequestDto;
-import com.example.perfume.guest.dto.PostResponseDto;
-import com.example.perfume.guest.service.PostService;
+import com.example.perfume.post.domain.Post;
+import com.example.perfume.post.dto.PostRequestDto;
+import com.example.perfume.post.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,5 @@
-package com.example.perfume.guest.domain;
+package com.example.perfume.post.domain;
 
-import com.example.perfume.perfume.domain.Perfume;
 import com.sun.istack.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
