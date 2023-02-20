@@ -74,7 +74,10 @@ public class OauthService {
 
             ResponseEntity<String> responseEntity = getResponse("https://kapi.kakao.com/v2/user/me",code,httpHeaders);
 
-            return responseEntity.getBody();
+            JSONObject profile = (JSONObject) jsonParser.parse(responseEntity.getBody());
+            JSONObject properties = (JSONObject) profile.get("properties");
+            JSONObject kakaoAccount = (JSONObject) profile.get("kakao_account");
+            return (String) properties.get("nickname");
 
         } catch (ParseException e) {
             throw new RuntimeException(e);
