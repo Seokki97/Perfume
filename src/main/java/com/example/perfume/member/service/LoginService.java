@@ -37,17 +37,13 @@ public class LoginService implements UserDetailsService {
         return (UserDetails) memberRepository.findByEmail(refreshToken)
                 .orElseThrow(UserNotFoundException::new);
     }
+
     //로그인 기능
     public LoginResponse permitLogin(Long memberId) {
         Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(UserNotFoundException::new);
-        LoginResponse loginResponse = LoginResponse.builder()
-                .id(member.getId())
-                .email(member.getEmail())
-                .nickname(member.getNickname())
-                .accessToken(jwtProvider.createToken(member.getEmail()))
-                .refreshToken(jwtProvider.createRefreshToken(member.getEmail()))
-                .build();
+
+        LoginResponse loginResponse = createLoginResponse(member);
 
         saveToken(loginResponse, member);
         return loginResponse;
@@ -61,6 +57,17 @@ public class LoginService implements UserDetailsService {
                 .memberId(member.getMemberId())
                 .build();
         return tokenRepository.save(token);
+    }
+
+    public LoginResponse createLoginResponse(Member member) {
+        LoginResponse loginResponse = LoginResponse.builder()
+                .id(member.getId())
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .accessToken(jwtProvider.createToken(member.getEmail()))
+                .refreshToken(jwtProvider.createRefreshToken(member.getEmail()))
+                .build();
+        return loginResponse;
     }
 
 }
