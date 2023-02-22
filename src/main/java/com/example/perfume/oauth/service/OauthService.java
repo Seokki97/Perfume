@@ -90,10 +90,13 @@ public class OauthService {
     public Member saveUserProfile(Long memberId, String email, String nickname) {
         Member member = Member.builder()
                 .memberId(memberId)
-                .email("wnstjr9477@naver.com")
+                .email(email)
                 .nickname(nickname)
                 .build();
-        return memberRepository.save(member);
+        if(!memberRepository.existsByMemberId(member.getMemberId())){
+            memberRepository.save(member);
+        }
+        return memberRepository.findByMemberId(member.getMemberId()).get();
     }
 
 }

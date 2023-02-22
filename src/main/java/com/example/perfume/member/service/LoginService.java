@@ -28,8 +28,8 @@ public class LoginService implements UserDetailsService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    public LoginResponse permitLogin(MemberRequestDto memberRequestDto) {
-        Member member = memberRepository.findByEmail(memberRequestDto.getEmail())
+    public LoginResponse permitLogin(Long memberId) {
+        Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(UserNotFoundException::new);
 
         return LoginResponse.builder()
