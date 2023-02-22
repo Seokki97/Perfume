@@ -13,25 +13,20 @@ public class MemberRequestDto {
 
     private String email;
 
-    private String refreshToken;
-
-
-    public MemberRequestDto(){
+    public MemberRequestDto() {
     }
 
-    public MemberRequestDto(Long id, String nickname, String email, String refreshToken){
+    public MemberRequestDto(Long id, String nickname, String email) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
-        this.refreshToken = refreshToken;
     }
 
-    public Member toEntity(){
+    public Member toEntity() {
         return Member.builder()
                 .id(id)
                 .email(email)
                 .nickname(nickname)
-                .refreshToken(refreshToken)
                 .build();
     }
 

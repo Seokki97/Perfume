@@ -1,11 +1,10 @@
 package com.example.perfume.post.service;
 
 
-import com.example.perfume.guest.domain.Post;
-import com.example.perfume.guest.dto.PostRequestDto;
-import com.example.perfume.guest.dto.PostResponseDto;
-import com.example.perfume.guest.repository.PostRepository;
-import com.example.perfume.guest.service.PostService;
+import com.example.perfume.post.domain.Post;
+import com.example.perfume.post.dto.PostRequestDto;
+import com.example.perfume.post.dto.PostResponseDto;
+import com.example.perfume.post.repository.PostRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

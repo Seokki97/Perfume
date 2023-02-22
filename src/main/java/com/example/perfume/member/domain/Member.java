@@ -23,18 +23,15 @@ public class Member {
 
     @NotNull
     private String nickname;
-    @NotNull
     @Column(length = 550)
     private String email;
 
-    private String refreshToken;
-
     @Builder
-    public Member(Long id,Long memberId, String nickname, String email, String refreshToken){
+    public Member(Long id, Long memberId, String nickname, String email) {
         this.id = id;
         this.memberId = memberId;
         this.nickname = nickname;
         this.email = email;
-        this.refreshToken = refreshToken;
     }
+
 }

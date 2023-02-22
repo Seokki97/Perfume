@@ -15,7 +15,6 @@ public class OauthController {
 
     private final OauthService oauthService;
 
-
     public OauthController(OauthService oauthService) {
         this.oauthService = oauthService;
     }
@@ -23,7 +22,7 @@ public class OauthController {
 
     //프론트로부터 인가코드 받아오기
     @GetMapping("/kakao/callback")
-    public ResponseEntity<Member> getRedirectUrl(@RequestParam String code, HttpSession httpSession) throws ParseException {
+    public ResponseEntity<Member> signUp(@RequestParam String code, HttpSession httpSession) throws ParseException {
 
 
         return ResponseEntity.ok(oauthService.loadUserProfile(code, httpSession));

@@ -12,25 +12,21 @@ public class MemberResponseDto {
 
     private String email;
 
-    private String refreshToken;
-
-
-    public MemberResponseDto(){
+    public MemberResponseDto() {
     }
 
-    public MemberResponseDto(Long id, String nickname, String email, String refreshToken){
+    public MemberResponseDto(Long id, String nickname, String email) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
-        this.refreshToken = refreshToken;
+
     }
 
-    public Member toEntity(){
+    public Member toEntity() {
         return Member.builder()
                 .id(id)
                 .email(email)
                 .nickname(nickname)
-                .refreshToken(refreshToken)
                 .build();
     }
 

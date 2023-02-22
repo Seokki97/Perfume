@@ -2,12 +2,8 @@ package com.example.perfume.oauth.service;
 
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.repository.MemberRepository;
+import com.example.perfume.member.service.JwtProvider;
 import com.example.perfume.oauth.OauthType;
-import com.example.perfume.oauth.exception.MemberAlreadyExistException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -17,26 +13,20 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.apache.el.util.MessageFactory.get;
 
 @Service
 public class OauthService {
 
     private final MemberRepository memberRepository;
 
-    public OauthService(MemberRepository memberRepository){
-        this.memberRepository = memberRepository;
-    }
+    private final JwtProvider jwtProvider;
 
+    public OauthService(MemberRepository memberRepository, JwtProvider jwtProvider) {
+        this.memberRepository = memberRepository;
+        this.jwtProvider = jwtProvider;
+
+    }
 
     public HttpHeaders setHttpHeaders() {
 
@@ -62,7 +52,7 @@ public class OauthService {
     }
 
     //여기까지 토큰 값 받기
-    public ResponseEntity<String> getResponseFromServer(String url, String code,HttpHeaders httpHeaders) {
+    public ResponseEntity<String> getResponseFromServer(String url, String code, HttpHeaders httpHeaders) {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>((setHttpBody(code)), httpHeaders);
 
 
@@ -75,37 +65,34 @@ public class OauthService {
         try {
             JSONParser jsonParser = new JSONParser();
             HttpHeaders httpHeaders = setHttpHeaders();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(getResponseFromServer("https://kauth.kakao.com/oauth/token", code,httpHeaders).getBody());
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(getResponseFromServer("https://kauth.kakao.com/oauth/token", code, httpHeaders).getBody());
             httpSession.setAttribute("Authorization", jsonObject.get("access_token"));
 
-            httpHeaders.add("Authorization", "Bearer "+jsonObject.get("access_token"));
+            httpHeaders.add("Authorization", "Bearer " + jsonObject.get("access_token"));
 
-            ResponseEntity<String> responseEntity = getResponseFromServer("https://kapi.kakao.com/v2/user/me",code,httpHeaders);
+            ResponseEntity<String> responseEntity = getResponseFromServer("https://kapi.kakao.com/v2/user/me", code, httpHeaders);
 
             JSONObject profile = (JSONObject) jsonParser.parse(responseEntity.getBody());
             JSONObject properties = (JSONObject) profile.get("properties");
             JSONObject kakaoAccount = (JSONObject) profile.get("kakao_account");
 
-            Long memberId= (Long) profile.get("id");
+            Long memberId = (Long) profile.get("id");
             String nickname = (String) properties.get("nickname");
             String email = (String) kakaoAccount.get("kakao_account");
 
-            return saveUserProfile(memberId,email, nickname);
+            return saveUserProfile(memberId, email, nickname);
 
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
     }
-
-    public Member saveUserProfile(Long memberId,String email, String nickname){
+    //회원가입
+    public Member saveUserProfile(Long memberId, String email, String nickname) {
         Member member = Member.builder()
                 .memberId(memberId)
-                .email(email)
+                .email("wnstjr9477@naver.com")
                 .nickname(nickname)
                 .build();
-        if(memberRepository.existsByMemberId(member.getMemberId())){
-            throw new MemberAlreadyExistException();
-        }
         return memberRepository.save(member);
     }
 

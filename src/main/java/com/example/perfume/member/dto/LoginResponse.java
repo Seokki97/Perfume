@@ -13,7 +13,7 @@ public class LoginResponse {
     private String refreshToken;
 
     @Builder
-    public LoginResponse(Long id, String nickname, String email, String accessToken, String refreshToken){
+    public LoginResponse(Long id, String nickname, String email, String accessToken, String refreshToken) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
