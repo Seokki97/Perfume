@@ -6,9 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class MemberRequestDto {
-
-    private Long id;
-
+    private Long memberId;
     private String nickname;
 
     private String email;
@@ -16,15 +14,15 @@ public class MemberRequestDto {
     public MemberRequestDto() {
     }
 
-    public MemberRequestDto(Long id, String nickname, String email) {
-        this.id = id;
+    public MemberRequestDto(Long memberId ,String nickname, String email) {
         this.nickname = nickname;
         this.email = email;
+        this.memberId = memberId;
     }
 
     public Member toEntity() {
         return Member.builder()
-                .id(id)
+                .memberId(memberId)
                 .email(email)
                 .nickname(nickname)
                 .build();

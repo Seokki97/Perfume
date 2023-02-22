@@ -1,6 +1,7 @@
 package com.example.perfume.oauth.service;
 
 import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.dto.MemberRequestDto;
 import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.member.service.JwtProvider;
 import com.example.perfume.oauth.OauthType;
@@ -77,11 +78,8 @@ public class OauthService {
             JSONObject properties = (JSONObject) profile.get("properties");
             JSONObject kakaoAccount = (JSONObject) profile.get("kakao_account");
 
-            Long memberId = (Long) profile.get("id");
-            String nickname = (String) properties.get("nickname");
-            String email = (String) kakaoAccount.get("email");
-
-            return saveUserProfile(memberId, email, nickname);
+            MemberRequestDto memberRequestDto = new MemberRequestDto((Long) profile.get("id"), (String) properties.get("nickname"), (String) kakaoAccount.get("email"));
+            return getUserProfile(memberRequestDto);
 
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -89,17 +87,15 @@ public class OauthService {
     }
 
     //회원가입
-    public Member saveUserProfile(Long memberId, String email, String nickname) {
+    public Member getUserProfile(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
-                .memberId(memberId)
-                .email(email)
-                .nickname(nickname)
+                .memberId(memberRequestDto.getMemberId())
+                .email(memberRequestDto.getEmail())
+                .nickname(memberRequestDto.getNickname())
                 .build();
-        isAgreeEmailUsing(email);
-        if (!memberRepository.existsByMemberId(member.getMemberId())) {
-            memberRepository.save(member);
-        }
-        return memberRepository.findByMemberId(member.getMemberId()).get();
+        isAgreeEmailUsing(memberRequestDto.getEmail());
+
+        return member;
     }
 
     public boolean isAgreeEmailUsing(String email) {
