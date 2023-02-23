@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/oauth")
@@ -22,15 +21,12 @@ public class OauthController {
         this.oauthService = oauthService;
         this.loginService = loginService;
     }
-
-
-    //프론트로부터 인가코드 받아오기
     @GetMapping("/login")
     public ResponseEntity<LoginResponse> signUp(@RequestParam String code, HttpSession httpSession) throws ParseException {
 
         Member member = oauthService.loadUserProfile(code,httpSession);
 
-        return ResponseEntity.ok(loginService.permitLogin(member.getMemberId()));
+        return ResponseEntity.ok(loginService.generateToken(member.getMemberId()));
     }
 
 }

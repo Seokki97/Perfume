@@ -29,5 +29,4 @@ public class MemberResponseDto {
                 .nickname(nickname)
                 .build();
     }
-
 }

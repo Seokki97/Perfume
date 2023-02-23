@@ -61,7 +61,7 @@ public class LoginService implements UserDetailsService {
         return loginResponse;
     }
 
-    //로그인 기능
+    //토큰 생성
     public LoginResponse generateToken(Long memberId) {
         Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(UserNotFoundException::new);

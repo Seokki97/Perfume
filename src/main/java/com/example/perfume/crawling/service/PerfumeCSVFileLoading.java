@@ -16,7 +16,7 @@ public class PerfumeCSVFileLoading extends CSVFileLoading {
 
     private static final int COLUMN_LENGTH = 4;
     public final String FILE_PATH = "/C:/Users/wnstj/gradu/PerfumeData.csv";
-
+   // public final String FILE_PATH = "/home/ubuntu/data/PerfumeData.csv";
     private List<String> perfumeListTest;
     private BufferedReader bufferedReader;
 

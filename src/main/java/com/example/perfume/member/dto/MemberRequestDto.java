@@ -1,7 +1,6 @@
 package com.example.perfume.member.dto;
 
 import com.example.perfume.member.domain.Member;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter

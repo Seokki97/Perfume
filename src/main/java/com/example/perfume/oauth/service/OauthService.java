@@ -78,7 +78,7 @@ public class OauthService {
             JSONObject properties = (JSONObject) profile.get("properties");
             JSONObject kakaoAccount = (JSONObject) profile.get("kakao_account");
 
-            MemberRequestDto memberRequestDto = new MemberRequestDto((Long) profile.get("id"), (String) properties.get("nickname"), (String) kakaoAccount.get("email"));
+            MemberRequestDto memberRequestDto = new MemberRequestDto((Long) profile.get("id"),(String) properties.get("nickname"),(String) kakaoAccount.get("email"));
             return getUserProfile(memberRequestDto);
 
         } catch (ParseException e) {
@@ -95,7 +95,10 @@ public class OauthService {
                 .build();
         isAgreeEmailUsing(memberRequestDto.getEmail());
 
-        return member;
+        if(!memberRepository.existsByMemberId(member.getMemberId())){
+            memberRepository.save(member);
+        }
+        return memberRepository.findByMemberId(member.getMemberId()).get();
     }
 
     public boolean isAgreeEmailUsing(String email) {
