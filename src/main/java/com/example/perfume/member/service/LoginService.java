@@ -40,6 +40,11 @@ public class LoginService implements UserDetailsService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
+    public Member findMember(String token) {
+        return memberRepository.findByEmail(jwtProvider.getUserPk(token))
+                .orElseThrow(UserNotFoundException::new);
+    }
+
     //토큰 저장
     public Token saveToken(LoginResponse loginResponse, Member member) {
         Token token = Token.builder()
@@ -61,7 +66,6 @@ public class LoginService implements UserDetailsService {
         return loginResponse;
     }
 
-    //토큰 생성
     public LoginResponse generateToken(Long memberId) {
         Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(UserNotFoundException::new);
@@ -73,21 +77,21 @@ public class LoginService implements UserDetailsService {
         return loginResponse;
     }
 
-    //토큰이 유효한지 판별후 LoginResponse를 반환
-    public LoginResponse permitClientRequest(HttpServletRequest httpServletRequest) {
-        String token = jwtProvider.resolveToken(httpServletRequest);
+    public LoginResponse permitClientRequest(Member member) {
+        Token generatedToken = tokenRepository.findByMemberId(member.getMemberId()).get();
 
-        Member member = memberRepository.findByEmail(jwtProvider.getUserPk(token))
-                .orElseThrow(UserNotFoundException::new);
+        return createLoginResponse(member, generatedToken.getAccessToken(), generatedToken.getRefreshToken());
+    }
+
+    public LoginResponse responseToken(HttpServletRequest httpServletRequest) {
+        String token = jwtProvider.resolveToken(httpServletRequest);
+        Member member = findMember(token);
 
         if (!jwtProvider.validateToken(token)) {
             tokenRepository.deleteByMemberId(member.getMemberId());
             LoginResponse newTokenResponse = generateToken(member.getMemberId());
             return newTokenResponse;
         }
-        Token generatedToken = tokenRepository.findByMemberId(member.getMemberId()).get();
-        LoginResponse loginResponse = createLoginResponse
-                (member, generatedToken.getAccessToken(), generatedToken.getRefreshToken());
-        return loginResponse;
+        return permitClientRequest(member);
     }
 }

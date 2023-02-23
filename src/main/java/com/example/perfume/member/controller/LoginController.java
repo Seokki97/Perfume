@@ -21,6 +21,6 @@ public class LoginController {
 
     @PostMapping("/response")
     public ResponseEntity<LoginResponse> responseEntity(HttpServletRequest httpServletRequest) {
-        return ResponseEntity.ok(loginService.permitClientRequest(httpServletRequest));
+        return ResponseEntity.ok(loginService.responseToken(httpServletRequest));
     }
 }
