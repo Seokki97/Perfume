@@ -62,7 +62,7 @@ public class LoginService implements UserDetailsService {
     }
 
     //로그인 기능
-    public LoginResponse permitLogin(Long memberId) {
+    public LoginResponse generateToken(Long memberId) {
         Member member = memberRepository.findByMemberId(memberId)
                 .orElseThrow(UserNotFoundException::new);
         String accessToken = jwtProvider.createToken(member.getEmail());
@@ -73,31 +73,21 @@ public class LoginService implements UserDetailsService {
         return loginResponse;
     }
 
-    //요청이 있을때마다 헤더에 붙여온 token을 읽고 만료시간 판단 -> 후 만료됐으면 새로 발급 아니면
-    public LoginResponse readToken(HttpServletRequest httpServletRequest) {
+    //토큰이 유효한지 판별후 LoginResponse를 반환
+    public LoginResponse permitClientRequest(HttpServletRequest httpServletRequest) {
         String token = jwtProvider.resolveToken(httpServletRequest);
 
         Member member = memberRepository.findByEmail(jwtProvider.getUserPk(token))
                 .orElseThrow(UserNotFoundException::new);
 
-        if (!jwtProvider.validateToken(token)) { //만료되었으면 기존 토큰 삭제하고, 새로 발급해서 저장하고 반환
-            String accessToken = jwtProvider.createToken(member.getEmail());
-            String refreshToken = jwtProvider.createRefreshToken(member.getEmail());
-            tokenRepository.deleteByMemberId(member.getMemberId()).get();
-            LoginResponse loginResponse2 = createLoginResponse(member,accessToken,refreshToken);
-            Token newToken = Token.builder()
-                    .memberId(member.getMemberId())
-                    .accessToken(accessToken)
-                    .refreshToken(refreshToken)
-                    .build();
-            tokenRepository.save(newToken);
-            return loginResponse2;
+        if (!jwtProvider.validateToken(token)) {
+            tokenRepository.deleteByMemberId(member.getMemberId());
+            LoginResponse newTokenResponse = generateToken(member.getMemberId());
+            return newTokenResponse;
         }
-
         Token generatedToken = tokenRepository.findByMemberId(member.getMemberId()).get();
         LoginResponse loginResponse = createLoginResponse
                 (member, generatedToken.getAccessToken(), generatedToken.getRefreshToken());
         return loginResponse;
     }
-
 }
