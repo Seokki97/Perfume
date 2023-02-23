@@ -86,7 +86,6 @@ public class OauthService {
         }
     }
 
-    //회원가입
     public Member getUserProfile(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
                 .memberId(memberRequestDto.getMemberId())
