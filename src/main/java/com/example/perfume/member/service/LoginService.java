@@ -3,17 +3,17 @@ package com.example.perfume.member.service;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.domain.Token;
 import com.example.perfume.member.dto.LoginResponse;
-import com.example.perfume.member.dto.MemberRequestDto;
+import com.example.perfume.member.dto.TokenDto;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.member.repository.TokenRepository;
-import com.example.perfume.oauth.exception.EmailNotFoundException;
 import com.example.perfume.oauth.service.OauthService;
+import lombok.extern.java.Log;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -52,7 +52,10 @@ public class LoginService implements UserDetailsService {
                 .refreshToken(loginResponse.getRefreshToken())
                 .memberId(member.getMemberId())
                 .build();
-        return tokenRepository.save(token);
+        if(!tokenRepository.existsByMemberId(member.getMemberId())) {
+            tokenRepository.save(token);
+        }
+        return token;
     }
 
     public LoginResponse createLoginResponse(Member member, String accessToken, String refreshToken) {
@@ -93,5 +96,20 @@ public class LoginService implements UserDetailsService {
             return newTokenResponse;
         }
         return permitClientRequest(member);
+    }
+
+    @Transactional
+    public LoginResponse generateNewAccessToken(HttpServletRequest httpServletRequest){
+        String accessToken = jwtProvider.resolveToken(httpServletRequest);
+        String refreshToken = jwtProvider.resolveRefreshToken(httpServletRequest);
+
+        if(!tokenRepository.existsByRefreshToken(refreshToken)){
+            //예외
+        }
+        Token token = tokenRepository.findByRefreshTokenAndAccessToken(refreshToken,accessToken).orElseThrow(UserNotFoundException::new);
+
+        tokenRepository.deleteByMemberId(token.getMemberId());
+        LoginResponse newTokenResponse = generateToken(token.getMemberId());
+        return newTokenResponse;
     }
 }

@@ -21,7 +21,7 @@ public class JwtProvider {
             "c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK";
 
     // 토큰 유효시간 168 시간(7일)
-    private long tokenValidTime = 1440 * 60 * 7 * 1000L;
+    private long tokenValidTime =60000L;
 
     private final LoginService loginService;
 
@@ -75,6 +75,10 @@ public class JwtProvider {
     // Request의 Header에서 token 값을 가져옵니다. "X-AUTH-TOKEN" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
         return request.getHeader("X-AUTH-TOKEN");
+    }
+
+    public String resolveRefreshToken(HttpServletRequest request){
+        return request.getHeader("X-REFRESH-TOKEN");
     }
 
     // 토큰의 유효성 + 만료일자 확인
