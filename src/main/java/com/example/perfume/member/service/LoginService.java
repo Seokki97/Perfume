@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Service
 public class LoginService implements UserDetailsService {
 
@@ -38,17 +40,6 @@ public class LoginService implements UserDetailsService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    //로그인 기능
-    public LoginResponse permitLogin(Long memberId) {
-        Member member = memberRepository.findByMemberId(memberId)
-                .orElseThrow(UserNotFoundException::new);
-
-        LoginResponse loginResponse = createLoginResponse(member);
-
-        saveToken(loginResponse, member);
-        return loginResponse;
-    }
-
     //토큰 저장
     public Token saveToken(LoginResponse loginResponse, Member member) {
         Token token = Token.builder()
@@ -59,14 +50,53 @@ public class LoginService implements UserDetailsService {
         return tokenRepository.save(token);
     }
 
-    public LoginResponse createLoginResponse(Member member) {
+    public LoginResponse createLoginResponse(Member member, String accessToken, String refreshToken) {
         LoginResponse loginResponse = LoginResponse.builder()
                 .id(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
-                .accessToken(jwtProvider.createToken(member.getEmail()))
-                .refreshToken(jwtProvider.createRefreshToken(member.getEmail()))
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
+        return loginResponse;
+    }
+
+    //로그인 기능
+    public LoginResponse permitLogin(Long memberId) {
+        Member member = memberRepository.findByMemberId(memberId)
+                .orElseThrow(UserNotFoundException::new);
+        String accessToken = jwtProvider.createToken(member.getEmail());
+        String refreshToken = jwtProvider.createRefreshToken(member.getEmail());
+        LoginResponse loginResponse = createLoginResponse(member, accessToken, refreshToken);
+
+        saveToken(loginResponse, member);
+        return loginResponse;
+    }
+
+    //요청이 있을때마다 헤더에 붙여온 token을 읽고 만료시간 판단 -> 후 만료됐으면 새로 발급 아니면
+    public LoginResponse readToken(HttpServletRequest httpServletRequest) {
+        String token = jwtProvider.resolveToken(httpServletRequest);
+
+        Member member = memberRepository.findByEmail(jwtProvider.getUserPk(token))
+                .orElseThrow(UserNotFoundException::new);
+
+        if (!jwtProvider.validateToken(token)) { //만료되었으면 기존 토큰 삭제하고, 새로 발급해서 저장하고 반환
+            String accessToken = jwtProvider.createToken(member.getEmail());
+            String refreshToken = jwtProvider.createRefreshToken(member.getEmail());
+            tokenRepository.deleteByMemberId(member.getMemberId()).get();
+            LoginResponse loginResponse2 = createLoginResponse(member,accessToken,refreshToken);
+            Token newToken = Token.builder()
+                    .memberId(member.getMemberId())
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+            tokenRepository.save(newToken);
+            return loginResponse2;
+        }
+
+        Token generatedToken = tokenRepository.findByMemberId(member.getMemberId()).get();
+        LoginResponse loginResponse = createLoginResponse
+                (member, generatedToken.getAccessToken(), generatedToken.getRefreshToken());
         return loginResponse;
     }
 
