@@ -34,20 +34,14 @@ public class Survey {
     @Column(nullable = false, length = 10)
     private String styleAnswer; //스타일
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "perfume_id")
-    private Perfume perfume;
-
     @Builder
-    public Survey(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer, Perfume perfume) {
+    public Survey(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer) {
         this.id = id;
         this.genderAnswer = genderAnswer;
         this.scentAnswer = scentAnswer;
         this.moodAnswer = moodAnswer;
         this.seasonAnswer = seasonAnswer;
         this.styleAnswer = styleAnswer;
-        this.perfume = perfume;
-
     }
 
 }

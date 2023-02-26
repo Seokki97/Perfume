@@ -31,7 +31,6 @@ public class SurveyRequestDto {
     public Survey toEntity(Perfume perfume) {
         return Survey.builder()
                 .id(id)
-                .perfume(perfume)
                 .genderAnswer(genderAnswer)
                 .scentAnswer(scentAnswer)
                 .moodAnswer(moodAnswer)

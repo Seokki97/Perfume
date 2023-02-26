@@ -61,6 +61,7 @@ public class SurveyService {
         List<Survey> secondComparedList = surveyUtil.compareTwoFilteredSurveyData(firstComparedList, surveyUtil.filterMoodAnswer(surveyResponseDto));
         List<Survey> thirdComparedList = surveyUtil.compareTwoFilteredSurveyData(isEmptyMoodColumn(surveyResponseDto, secondComparedList), addSeasonAnswerList(surveyResponseDto));
         List<Survey> finalDataList = surveyUtil.compareTwoFilteredSurveyData(thirdComparedList, addStyleAnswerList(surveyResponseDto));
+
         return isEmptyFinalResult(finalDataList, thirdComparedList);
     }
 

@@ -17,10 +17,8 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-
     @NotNull
     private Long memberId;
-
     @NotNull
     private String nickname;
     @Column(length = 550)

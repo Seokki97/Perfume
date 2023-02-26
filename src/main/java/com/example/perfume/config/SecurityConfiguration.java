@@ -30,6 +30,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/perfume/**", "/post/**", "/member/**", "/oauth/**", "/survey/**").permitAll()
                 .anyRequest().authenticated();
-
     }
 }

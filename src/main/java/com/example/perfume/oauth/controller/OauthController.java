@@ -2,6 +2,7 @@ package com.example.perfume.oauth.controller;
 
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.dto.LoginResponse;
+import com.example.perfume.member.dto.TokenDto;
 import com.example.perfume.member.service.LoginService;
 import com.example.perfume.oauth.service.OauthService;
 import org.json.simple.parser.ParseException;

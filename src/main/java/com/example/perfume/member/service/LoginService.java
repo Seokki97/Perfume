@@ -3,12 +3,12 @@ package com.example.perfume.member.service;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.domain.Token;
 import com.example.perfume.member.dto.LoginResponse;
-import com.example.perfume.member.dto.TokenDto;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.member.repository.TokenRepository;
-import com.example.perfume.oauth.service.OauthService;
-import lombok.extern.java.Log;
+import io.jsonwebtoken.ExpiredJwtException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,22 +16,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Service
 public class LoginService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
     private final JwtProvider jwtProvider;
-
-    private final OauthService oauthService;
     private final TokenRepository tokenRepository;
+    private final JwtInterceptor jwtInterceptor;
 
-    public LoginService(MemberRepository memberRepository, JwtProvider jwtProvider, OauthService oauthService,
-                        TokenRepository tokenRepository) {
+    public LoginService(MemberRepository memberRepository, JwtProvider jwtProvider,
+                        TokenRepository tokenRepository, JwtInterceptor jwtInterceptor) {
         this.memberRepository = memberRepository;
         this.jwtProvider = jwtProvider;
-        this.oauthService = oauthService;
         this.tokenRepository = tokenRepository;
+        this.jwtInterceptor = jwtInterceptor;
     }
 
     @Override
@@ -86,15 +87,13 @@ public class LoginService implements UserDetailsService {
         return createLoginResponse(member, generatedToken.getAccessToken(), generatedToken.getRefreshToken());
     }
 
-    public LoginResponse responseToken(HttpServletRequest httpServletRequest) {
+    public LoginResponse responseToken(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws IOException {
         String token = jwtProvider.resolveToken(httpServletRequest);
-        Member member = findMember(token);
-
-        if (!jwtProvider.validateToken(token)) {
-            tokenRepository.deleteByMemberId(member.getMemberId());
-            LoginResponse newTokenResponse = generateToken(member.getMemberId());
-            return newTokenResponse;
+        if(!jwtProvider.validateToken(token)){
+            httpServletResponse.sendError(401, "401에러 받아랑!");
         }
+        Member member = findMember(token);
+        //만료됐으면 만료 응답 내려줌 -> 재발급 요청 -> 재생성해서 보내줌
         return permitClientRequest(member);
     }
 
@@ -103,9 +102,6 @@ public class LoginService implements UserDetailsService {
         String accessToken = jwtProvider.resolveToken(httpServletRequest);
         String refreshToken = jwtProvider.resolveRefreshToken(httpServletRequest);
 
-        if(!tokenRepository.existsByRefreshToken(refreshToken)){
-            //예외
-        }
         Token token = tokenRepository.findByRefreshTokenAndAccessToken(refreshToken,accessToken).orElseThrow(UserNotFoundException::new);
 
         tokenRepository.deleteByMemberId(token.getMemberId());
