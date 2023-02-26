@@ -27,11 +27,17 @@ public class Recommend {
     @JoinColumn(name = "survey_id")
     private List<Survey> survey;
 
+    private String recommender;
+
+    private String comment;
+
     @Builder
-    public Recommend(Long id, Member member, List<Survey> survey) {
+    public Recommend(Long id, Member member, List<Survey> survey, String recommender, String comment) {
         this.id = id;
         this.member = member;
         this.survey = survey;
+        this.recommender = recommender;
+        this.comment = comment;
     }
 
 }
