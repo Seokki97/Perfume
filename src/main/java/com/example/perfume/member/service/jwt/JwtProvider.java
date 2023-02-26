@@ -1,5 +1,6 @@
-package com.example.perfume.member.service;
+package com.example.perfume.member.service.jwt;
 
+import com.example.perfume.member.service.LoginService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;

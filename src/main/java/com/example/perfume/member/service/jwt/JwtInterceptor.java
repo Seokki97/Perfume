@@ -1,11 +1,10 @@
-package com.example.perfume.member.service;
+package com.example.perfume.member.service.jwt;
 
 
 import com.example.perfume.advice.BadRequestException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;

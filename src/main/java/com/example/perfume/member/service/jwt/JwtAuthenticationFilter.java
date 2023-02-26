@@ -1,4 +1,4 @@
-package com.example.perfume.member.service;
+package com.example.perfume.member.service.jwt;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
