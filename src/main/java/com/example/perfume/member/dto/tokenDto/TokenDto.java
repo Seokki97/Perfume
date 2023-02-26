@@ -1,4 +1,4 @@
-package com.example.perfume.member.dto;
+package com.example.perfume.member.dto.tokenDto;
 
 import lombok.Builder;
 import lombok.Getter;

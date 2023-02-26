@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RecommendService {
+public class SimilarPerfumeService {
     private final SurveyRepository surveyRepository;
     private final SurveyUtil surveyUtil;
 
-    public RecommendService(SurveyRepository surveyRepository, SurveyUtil surveyUtil) {
+    public SimilarPerfumeService(SurveyRepository surveyRepository, SurveyUtil surveyUtil) {
 
         this.surveyRepository = surveyRepository;
         this.surveyUtil = surveyUtil;
