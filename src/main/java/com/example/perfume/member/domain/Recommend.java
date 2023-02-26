@@ -23,12 +23,12 @@ public class Recommend {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "survey_id")
-    private Survey survey;
+    private List<Survey> survey;
 
     @Builder
-    public Recommend(Long id, Member member, Survey survey) {
+    public Recommend(Long id, Member member, List<Survey> survey) {
         this.id = id;
         this.member = member;
         this.survey = survey;
