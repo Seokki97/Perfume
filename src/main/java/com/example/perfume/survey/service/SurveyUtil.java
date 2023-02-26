@@ -21,9 +21,9 @@ public class SurveyUtil {
     }
 
     public List<Survey> compareTwoFilteredSurveyData(List<Survey> firstDataList, List<Survey> secondDataList) {
-        return firstDataList.stream()
-                .filter(o -> secondDataList.stream().anyMatch(Predicate.isEqual(o)))
-                .collect(Collectors.toList());
+        return firstDataList.stream().filter(o -> secondDataList.stream()
+                .anyMatch(n -> o.getId().equals(n.getId()))).collect(Collectors.toList());
+
     }
 
     public List<Survey> addList(List<Survey> firstDataList, List<Survey> secondDataList) {
@@ -44,7 +44,6 @@ public class SurveyUtil {
         if (!surveyRepository.existsByScentAnswer(surveyResponseDto.getScentAnswer())) {
             throw new SurveyNotFoundException();
         }
-        ;
         return surveyRepository.findByScentAnswer(surveyResponseDto.getScentAnswer());
     }
 
