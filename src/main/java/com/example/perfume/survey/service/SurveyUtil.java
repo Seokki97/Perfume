@@ -14,12 +14,6 @@ import java.util.stream.Collectors;
 @Service
 public class SurveyUtil {
 
-    private final SurveyRepository surveyRepository;
-
-    public SurveyUtil(SurveyRepository surveyRepository) {
-        this.surveyRepository = surveyRepository;
-    }
-
     public List<Survey> compareTwoFilteredSurveyData(List<Survey> firstDataList, List<Survey> secondDataList) {
         return firstDataList.stream().filter(o -> secondDataList.stream()
                 .anyMatch(n -> o.getId().equals(n.getId()))).collect(Collectors.toList());
@@ -33,24 +27,15 @@ public class SurveyUtil {
         return addedList;
     }
 
-    public List<Survey> filterGenderAnswer(SurveyResponseDto surveyResponseDto) {
-        if (!surveyRepository.existsByGenderAnswer(surveyResponseDto.getGenderAnswer())) {
-            throw new SurveyNotFoundException();
-        }
-        return surveyRepository.findByGenderAnswer(surveyResponseDto.getGenderAnswer());
+    public List<Survey> addAnswerListByType(List<Survey> firstList, List<Survey> secondList) {
+        return addList(firstList, secondList);
     }
 
-    public List<Survey> filterScentAnswer(SurveyResponseDto surveyResponseDto) {
-        if (!surveyRepository.existsByScentAnswer(surveyResponseDto.getScentAnswer())) {
-            throw new SurveyNotFoundException();
+    public List<Survey> isEmptyFinalResult(List<Survey> finalResult, List<Survey> beforeResult) {
+        if (finalResult.isEmpty()) {
+            return beforeResult;
         }
-        return surveyRepository.findByScentAnswer(surveyResponseDto.getScentAnswer());
+        return finalResult;
     }
 
-    public List<Survey> filterMoodAnswer(SurveyResponseDto surveyResponseDto) {
-        if (!surveyRepository.existsByMoodAnswer(surveyResponseDto.getMoodAnswer())) {
-            throw new SurveyNotFoundException();
-        }
-        return surveyRepository.findByMoodAnswerContaining(surveyResponseDto.getMoodAnswer());
-    }
 }
