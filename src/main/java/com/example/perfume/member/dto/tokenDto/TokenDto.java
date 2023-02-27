@@ -10,7 +10,6 @@ public class TokenDto {
 
     private String refreshToken;
 
-
     @Builder
     private TokenDto(String accessToken, String refreshToken) {
         this.accessToken = accessToken;

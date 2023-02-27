@@ -1,6 +1,7 @@
 package com.example.perfume.survey.controller;
 
 import com.example.perfume.crawling.domain.survey.SurveyList;
+import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
@@ -40,19 +41,8 @@ public class SurveyController {
     }
 
     @PostMapping("/show-perfume-by-survey")
-    public ResponseEntity<List<Survey>> showPerfumeDataBySurvey(@RequestBody SurveyResponseDto surveyResponseDto) {
+    public ResponseEntity<List<Perfume>> showPerfumeDataBySurvey(@RequestBody SurveyResponseDto surveyResponseDto) {
         return ResponseEntity.ok(surveyService.compareData(surveyResponseDto));
-    }
-
-    @GetMapping("/show-feature")
-    public ResponseEntity<FeatureService> showFeatureSummary(@RequestBody SurveyResponseDto surveyResponseDto) {
-
-        return null;
-    }
-
-    @DeleteMapping("/delete")
-    public void deleteData() {
-        dataService.deleteAllData();
     }
 
     @PostMapping("/show")

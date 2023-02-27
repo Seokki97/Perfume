@@ -1,5 +1,7 @@
 package com.example.perfume.survey.service;
 
+import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
 import com.example.perfume.survey.repository.SurveyRepository;
@@ -11,10 +13,13 @@ import java.util.*;
 public class SurveyService {
     private final SurveyRepository surveyRepository;
     private final SurveyUtil surveyUtil;
+    private final PerfumeRepository perfumeRepository;
 
-    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil) {
+    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil,
+                         PerfumeRepository perfumeRepository) {
         this.surveyRepository = surveyRepository;
         this.surveyUtil = surveyUtil;
+        this.perfumeRepository = perfumeRepository;
     }
 
     public List<Survey> addGenderAnswerList(SurveyResponseDto surveyResponseDto) {
@@ -56,13 +61,22 @@ public class SurveyService {
                 (compareFilteredData(surveyResponseDto), surveyRepository.findByMoodAnswerNotContaining(surveyResponseDto.getMoodAnswer()));
     }
 
-    public List<Survey> compareData(SurveyResponseDto surveyResponseDto) {
+    public List<Perfume> compareData(SurveyResponseDto surveyResponseDto) {
         List<Survey> firstComparedList = surveyUtil.compareTwoFilteredSurveyData(addGenderAnswerList(surveyResponseDto), surveyUtil.filterScentAnswer(surveyResponseDto));
         List<Survey> secondComparedList = surveyUtil.compareTwoFilteredSurveyData(firstComparedList, surveyUtil.filterMoodAnswer(surveyResponseDto));
         List<Survey> thirdComparedList = surveyUtil.compareTwoFilteredSurveyData(isEmptyMoodColumn(surveyResponseDto, secondComparedList), addSeasonAnswerList(surveyResponseDto));
         List<Survey> finalDataList = surveyUtil.compareTwoFilteredSurveyData(thirdComparedList, addStyleAnswerList(surveyResponseDto));
 
-        return isEmptyFinalResult(finalDataList, thirdComparedList);
+        return findPerfumeData(finalDataList, thirdComparedList);
+    }
+
+    public List<Perfume> findPerfumeData(List<Survey> finalDataList, List<Survey> thirdComparedList) {
+        List<Perfume> perfumeList = new ArrayList<>();
+        for (int i = 0; i < isEmptyFinalResult(finalDataList, thirdComparedList).size(); i++) {
+            Long perfumeId = isEmptyFinalResult(finalDataList, thirdComparedList).get(i).getId();
+            perfumeList.add(perfumeRepository.findById(perfumeId).get());
+        }
+        return perfumeList;
     }
 
 }

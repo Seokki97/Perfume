@@ -11,7 +11,6 @@ public class PerfumeResponseDto {
     private String perfumeName;
     private String brandName;
     private String perfumeFeature;
-
     private String perfumeImageUrl;
 
     @Builder

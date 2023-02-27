@@ -1,6 +1,5 @@
 package com.example.perfume.config;
 
-import com.example.perfume.member.service.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

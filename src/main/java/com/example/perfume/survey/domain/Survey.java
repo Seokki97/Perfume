@@ -1,5 +1,6 @@
 package com.example.perfume.survey.domain;
 
+import com.example.perfume.member.domain.Recommendation;
 import com.example.perfume.perfume.domain.Perfume;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -16,23 +17,23 @@ public class Survey {
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String genderAnswer; //남녀
+    private String genderAnswer;
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String scentAnswer; //향
+    private String scentAnswer;
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String moodAnswer; //무드
+    private String moodAnswer;
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String seasonAnswer; //계절
+    private String seasonAnswer;
 
     @NotNull
     @Column(nullable = false, length = 10)
-    private String styleAnswer; //스타일
+    private String styleAnswer;
 
     @Builder
     public Survey(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer) {

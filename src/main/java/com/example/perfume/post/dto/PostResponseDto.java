@@ -16,8 +16,6 @@ public class PostResponseDto {
     public PostResponseDto() {
 
     }
-
-    @Builder
     public PostResponseDto(Long id, String visitor, String content) {
         this.id = id;
         this.visitor = visitor;

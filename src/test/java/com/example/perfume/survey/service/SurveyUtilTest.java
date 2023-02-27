@@ -47,7 +47,7 @@ public class SurveyUtilTest {
     @DisplayName("두개의 리스트에서 같은 항목들을 찾는다.")
     @Test
     void filterList() {
-        List<Survey> survey1 = surveyRepository.findByStyleAnswer("디폴트");
+        List<Survey> survey1 = surveyRepository.findByGenderAnswer("여자");
         List<Survey> survey2 = surveyRepository.findByStyleAnswer("캐쥬얼");
         int filteredList = surveyUtil.compareTwoFilteredSurveyData(survey1, survey2).size();
         int result = 0;

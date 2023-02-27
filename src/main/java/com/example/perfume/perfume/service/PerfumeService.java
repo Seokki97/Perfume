@@ -42,9 +42,7 @@ public class PerfumeService {
         perfumeList = perfumeCsvFileLoading.extractAllPerfumeData(perfumeList);
 
         for (int firstIndex = 0; firstIndex < perfumeList.getMaxSize(); firstIndex++) {
-
             Perfume perfumeDataSet = makePerfumeList(id, firstIndex, perfumeList).toEntity();
-
             perfumeRepository.save(perfumeDataSet);
         }
     }

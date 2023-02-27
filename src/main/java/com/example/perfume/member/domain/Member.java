@@ -21,7 +21,8 @@ public class Member {
     private Long memberId;
     @NotNull
     private String nickname;
-    @Column(length = 550)
+
+    @Column(length = 100)
     private String email;
 
     @Builder

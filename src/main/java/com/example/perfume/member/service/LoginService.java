@@ -2,13 +2,12 @@ package com.example.perfume.member.service;
 
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.domain.Token;
-import com.example.perfume.member.dto.LoginResponse;
+import com.example.perfume.member.dto.memberDto.LoginResponse;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.member.repository.TokenRepository;
-import io.jsonwebtoken.ExpiredJwtException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.example.perfume.member.service.jwt.JwtInterceptor;
+import com.example.perfume.member.service.jwt.JwtProvider;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -53,7 +52,7 @@ public class LoginService implements UserDetailsService {
                 .refreshToken(loginResponse.getRefreshToken())
                 .memberId(member.getMemberId())
                 .build();
-        if(!tokenRepository.existsByMemberId(member.getMemberId())) {
+        if (!tokenRepository.existsByMemberId(member.getMemberId())) {
             tokenRepository.save(token);
         }
         return token;
@@ -87,22 +86,19 @@ public class LoginService implements UserDetailsService {
         return createLoginResponse(member, generatedToken.getAccessToken(), generatedToken.getRefreshToken());
     }
 
-    public LoginResponse responseToken(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse) throws IOException {
+    public LoginResponse responseToken(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws IOException {
         String token = jwtProvider.resolveToken(httpServletRequest);
-        if(!jwtProvider.validateToken(token)){
-            httpServletResponse.sendError(401, "401에러 받아랑!");
-        }
+        jwtInterceptor.preHandle(httpServletRequest, httpServletResponse, handler);
         Member member = findMember(token);
-        //만료됐으면 만료 응답 내려줌 -> 재발급 요청 -> 재생성해서 보내줌
         return permitClientRequest(member);
     }
 
     @Transactional
-    public LoginResponse generateNewAccessToken(HttpServletRequest httpServletRequest){
+    public LoginResponse generateNewAccessToken(HttpServletRequest httpServletRequest) {
         String accessToken = jwtProvider.resolveToken(httpServletRequest);
         String refreshToken = jwtProvider.resolveRefreshToken(httpServletRequest);
 
-        Token token = tokenRepository.findByRefreshTokenAndAccessToken(refreshToken,accessToken).orElseThrow(UserNotFoundException::new);
+        Token token = tokenRepository.findByRefreshTokenAndAccessToken(refreshToken, accessToken).orElseThrow(UserNotFoundException::new);
 
         tokenRepository.deleteByMemberId(token.getMemberId());
         LoginResponse newTokenResponse = generateToken(token.getMemberId());

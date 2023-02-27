@@ -1,9 +1,9 @@
 package com.example.perfume.oauth.service;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.dto.MemberRequestDto;
+import com.example.perfume.member.dto.memberDto.MemberRequestDto;
 import com.example.perfume.member.repository.MemberRepository;
-import com.example.perfume.member.service.JwtProvider;
+import com.example.perfume.member.service.jwt.JwtProvider;
 import com.example.perfume.oauth.OauthType;
 import com.example.perfume.oauth.exception.EmailNotFoundException;
 import org.json.simple.JSONObject;
@@ -78,7 +78,7 @@ public class OauthService {
             JSONObject properties = (JSONObject) profile.get("properties");
             JSONObject kakaoAccount = (JSONObject) profile.get("kakao_account");
 
-            MemberRequestDto memberRequestDto = new MemberRequestDto((Long) profile.get("id"),(String) properties.get("nickname"),(String) kakaoAccount.get("email"));
+            MemberRequestDto memberRequestDto = new MemberRequestDto((Long) profile.get("id"), (String) properties.get("nickname"), (String) kakaoAccount.get("email"));
             return getUserProfile(memberRequestDto);
 
         } catch (ParseException e) {
@@ -94,7 +94,7 @@ public class OauthService {
                 .build();
         isAgreeEmailUsing(memberRequestDto.getEmail());
 
-        if(!memberRepository.existsByMemberId(member.getMemberId())){
+        if (!memberRepository.existsByMemberId(member.getMemberId())) {
             memberRepository.save(member);
         }
         return memberRepository.findByMemberId(member.getMemberId()).get();

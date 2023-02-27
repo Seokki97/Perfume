@@ -1,8 +1,6 @@
 package com.example.perfume.member.controller;
 
-import com.example.perfume.member.dto.LoginResponse;
-import com.example.perfume.member.service.JwtInterceptor;
-import com.example.perfume.member.service.JwtProvider;
+import com.example.perfume.member.dto.memberDto.LoginResponse;
 import com.example.perfume.member.service.LoginService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +20,8 @@ public class LoginController {
     }
 
     @PostMapping("/response")
-    public ResponseEntity<LoginResponse> responseEntity(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
-        return ResponseEntity.ok(loginService.responseToken(httpServletRequest,httpServletResponse));
+    public ResponseEntity<LoginResponse> responseEntity(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,Object handler) throws IOException {
+        return ResponseEntity.ok(loginService.responseToken(httpServletRequest,httpServletResponse,handler));
     }
 
     @PostMapping("/regenerate")

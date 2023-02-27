@@ -11,7 +11,6 @@ public class PerfumeRequestDto {
     private String perfumeName;
     private String brandName;
     private String perfumeFeature;
-
     private String perfumeImageUrl;
 
     public PerfumeRequestDto(){

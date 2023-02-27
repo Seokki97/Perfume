@@ -24,11 +24,13 @@ public class Recommendation {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Perfume> perfume;
 
+    @Column(nullable = false,length = 40)
     private String recommender;
 
+    @Column(length = 500)
     private String comment;
 
     @Builder

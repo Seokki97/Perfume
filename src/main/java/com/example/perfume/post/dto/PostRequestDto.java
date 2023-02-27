@@ -13,7 +13,6 @@ public class PostRequestDto {
 
     private String content;
 
-
     public PostRequestDto() {
 
     }

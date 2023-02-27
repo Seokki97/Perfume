@@ -48,9 +48,5 @@ public class DataService {
         return perfumeRepository.findById(id).get();
     }
 
-    public void deleteAllData() {
-        surveyRepository.deleteAll();
-    }
-
 
 }

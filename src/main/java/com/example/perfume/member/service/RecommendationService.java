@@ -57,7 +57,7 @@ public class RecommendationService {
                 .build();
         recommendRepository.save(recommendation);
     }
-    //추천받은 향수 조회 (토큰 인증해야함)
+    //추천받은 향수 조회 (토큰 인증 기능 추가해야함!!)
     @Transactional
     public List<Recommendation> showRecommendedPerfume() {
         Member member = memberRepository.findById(1l).orElseThrow(UserNotFoundException::new);
