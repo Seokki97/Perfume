@@ -1,5 +1,6 @@
 package com.example.perfume.perfume.domain;
 
+import com.example.perfume.member.domain.Recommendation;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -30,6 +31,9 @@ public class Perfume {
     @NotNull
     @Column(nullable = false)
     private String perfumeImageUrl;
+
+    @ManyToOne
+    private Recommendation recommendation;
 
     @Builder
     public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
