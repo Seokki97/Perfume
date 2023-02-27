@@ -8,34 +8,34 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "recommend")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Recommend {
+public class Recommendation {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany
-    @JoinColumn(name = "survey_id")
-    private List<Survey> survey;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE,orphanRemoval = true)
+    private List<Perfume> perfume;
 
     private String recommender;
 
     private String comment;
 
     @Builder
-    public Recommend(Long id, Member member, List<Survey> survey, String recommender, String comment) {
+    public Recommendation(Long id, Member member, List<Perfume> perfume, String recommender, String comment) {
         this.id = id;
         this.member = member;
-        this.survey = survey;
+        this.perfume = perfume;
         this.recommender = recommender;
         this.comment = comment;
     }
