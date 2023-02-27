@@ -1,12 +1,15 @@
 package com.example.perfume.member.dto.recommendDto;
 
-import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.domain.Recommend;
-import com.example.perfume.survey.domain.Survey;
 import lombok.Getter;
 
 @Getter
 public class RecommendRequestDto {
+
+    private String genderAnswer;
+    private String moodAnswer;
+    private String scentAnswer;
+    private String seasonAnswer;
+    private String styleAnswer;
 
     private String recommender;
     private String comment;
@@ -14,9 +17,14 @@ public class RecommendRequestDto {
     public RecommendRequestDto() {
     }
 
-    public RecommendRequestDto(String recommender, String comment) {
+    public RecommendRequestDto(String recommender, String comment,String genderAnswer, String moodAnswer, String scentAnswer, String seasonAnswer, String styleAnswer) {
         this.recommender = recommender;
         this.comment = comment;
+        this.genderAnswer = genderAnswer;
+        this.moodAnswer = moodAnswer;
+        this.scentAnswer = scentAnswer;
+        this.seasonAnswer = seasonAnswer;
+        this.styleAnswer = styleAnswer;
     }
 
 }
