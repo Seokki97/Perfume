@@ -20,19 +20,20 @@ public class JwtInterceptor implements HandlerInterceptor {
     public JwtInterceptor(JwtProvider jwtProvider) {
         this.jwtProvider = jwtProvider;
     }
-
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws IOException {
-        String refreshToken = httpServletRequest.getHeader("X-REFRESH-TOKEN");
+        String refreshToken = httpServletRequest.getHeader("X-AUTH-TOKEN");
         try {
-            if (jwtProvider.validateToken(refreshToken)) {
-                return true;
+            if (!jwtProvider.validateToken(refreshToken)) {
+                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                httpServletResponse.getWriter().write("만료됐다자식아");
+                return false;
             }
-            throw new BadRequestException("권한이 없는 토큰입니다");
         } catch (MalformedJwtException e) {
             throw new BadRequestException("위조된 토큰입니다.");
         } catch (ExpiredJwtException e) {
             throw new BadRequestException("만료된 토큰입니다.");
         }
+        return true;
     }
 }

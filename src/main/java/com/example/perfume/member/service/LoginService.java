@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Service
 public class LoginService implements UserDetailsService {
@@ -88,7 +89,16 @@ public class LoginService implements UserDetailsService {
 
     public LoginResponse responseToken(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws IOException {
         String token = jwtProvider.resolveToken(httpServletRequest);
-        jwtInterceptor.preHandle(httpServletRequest, httpServletResponse, handler);
+
+        if (!jwtInterceptor.preHandle(httpServletRequest, httpServletResponse, handler)) {
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            PrintWriter writer = httpServletResponse.getWriter();
+            writer.write("만료된 토큰입니다.");
+            writer.flush();
+            writer.close();
+            return null; // 또는 원하는 다른 값으로 반환할 수 있습니다.
+        }
+        System.out.println(jwtProvider.validateToken(token));
         Member member = findMember(token);
         return permitClientRequest(member);
     }
