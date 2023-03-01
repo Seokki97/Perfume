@@ -87,26 +87,15 @@ public class LoginService implements UserDetailsService {
         return createLoginResponse(member, generatedToken.getAccessToken(), generatedToken.getRefreshToken());
     }
 
-    public LoginResponse responseToken(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws IOException {
+    public LoginResponse responseToken(HttpServletRequest httpServletRequest) {
         String token = jwtProvider.resolveToken(httpServletRequest);
 
-        if (!jwtInterceptor.preHandle(httpServletRequest, httpServletResponse, handler)) {
-            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            PrintWriter writer = httpServletResponse.getWriter();
-            writer.write("만료된 토큰입니다.");
-            writer.flush();
-            writer.close();
-            return null; // 또는 원하는 다른 값으로 반환할 수 있습니다.
-        }
-        System.out.println(jwtProvider.validateToken(token));
         Member member = findMember(token);
         return permitClientRequest(member);
     }
 
     @Transactional
-    public LoginResponse generateNewAccessToken(HttpServletRequest httpServletRequest) {
-        String accessToken = jwtProvider.resolveToken(httpServletRequest);
-        String refreshToken = jwtProvider.resolveRefreshToken(httpServletRequest);
+    public LoginResponse generateNewAccessToken(String accessToken, String refreshToken) {
 
         Token token = tokenRepository.findByRefreshTokenAndAccessToken(refreshToken, accessToken).orElseThrow(UserNotFoundException::new);
 
