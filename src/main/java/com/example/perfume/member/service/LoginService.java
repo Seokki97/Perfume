@@ -25,14 +25,12 @@ public class LoginService implements UserDetailsService {
     private final MemberRepository memberRepository;
     private final JwtProvider jwtProvider;
     private final TokenRepository tokenRepository;
-    private final JwtInterceptor jwtInterceptor;
 
     public LoginService(MemberRepository memberRepository, JwtProvider jwtProvider,
-                        TokenRepository tokenRepository, JwtInterceptor jwtInterceptor) {
+                        TokenRepository tokenRepository) {
         this.memberRepository = memberRepository;
         this.jwtProvider = jwtProvider;
         this.tokenRepository = tokenRepository;
-        this.jwtInterceptor = jwtInterceptor;
     }
 
     @Override
@@ -87,10 +85,9 @@ public class LoginService implements UserDetailsService {
         return createLoginResponse(member, generatedToken.getAccessToken(), generatedToken.getRefreshToken());
     }
 
-    public LoginResponse responseToken(HttpServletRequest httpServletRequest) {
-        String token = jwtProvider.resolveToken(httpServletRequest);
+    public LoginResponse responseToken(String accessToken) {
 
-        Member member = findMember(token);
+        Member member = findMember(accessToken);
         return permitClientRequest(member);
     }
 
