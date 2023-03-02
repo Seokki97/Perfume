@@ -9,6 +9,7 @@ import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SurveyService {
@@ -25,7 +26,6 @@ public class SurveyService {
 
     private List<Survey> isEmptyMoodColumn(SurveyResponseDto surveyResponseDto, List<Survey> secondAnswer) {
         if (secondAnswer.isEmpty()) {
-            //비었으면 그 해당 데이터를 제외한 나머지 데이터를 다시 리스트로 가져와야함.
             return retrySecondFiltering(surveyResponseDto);
         }
         return secondAnswer;
@@ -76,21 +76,19 @@ public class SurveyService {
         return findPerfumeData(finalDataList, thirdComparedList);
     }
 
-    public List<Survey> compareGenderAndScentAnswer(SurveyResponseDto surveyResponseDto) {
+    private List<Survey> compareGenderAndScentAnswer(SurveyResponseDto surveyResponseDto) {
         return surveyUtil.compareTwoFilteredSurveyData(
                 surveyUtil.addAnswerListByType(
                         filterGenderAnswer(surveyResponseDto),
                         surveyRepository.findByGenderAnswer("젠더리스")),
                 filterScentAnswer(surveyResponseDto));
     }
-    public List<Perfume> findPerfumeData(List<Survey> finalDataList, List<Survey> thirdComparedList) {
-        List<Perfume> perfumeList = new ArrayList<>();
-        for (int i = 0; i < surveyUtil.isEmptyFinalResult(finalDataList, thirdComparedList).size(); i++) {
-            Long perfumeId = surveyUtil.isEmptyFinalResult(finalDataList, thirdComparedList).get(i).getId();
-            perfumeList.add(perfumeRepository.findById(perfumeId).get());
-        }
+
+    private List<Perfume> findPerfumeData(List<Survey> finalDataList, List<Survey> thirdComparedList) {
+        List<Perfume> perfumeList = surveyUtil.isEmptyFinalResult(finalDataList, thirdComparedList).stream()
+                .map(data -> perfumeRepository.findById(data.getId()).orElse(null))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
         return perfumeList;
     }
-
-
 }
