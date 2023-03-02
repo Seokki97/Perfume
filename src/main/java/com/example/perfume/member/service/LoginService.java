@@ -22,27 +22,20 @@ import java.io.PrintWriter;
 
 @Service
 public class LoginService implements UserDetailsService {
-
-    private final MemberRepository memberRepository;
     private final JwtProvider jwtProvider;
     private final TokenRepository tokenRepository;
 
-    public LoginService(MemberRepository memberRepository, JwtProvider jwtProvider,
-                        TokenRepository tokenRepository) {
-        this.memberRepository = memberRepository;
+    private final MemberService memberService;
+
+    public LoginService(JwtProvider jwtProvider, TokenRepository tokenRepository, MemberService memberService) {
         this.jwtProvider = jwtProvider;
         this.tokenRepository = tokenRepository;
+        this.memberService = memberService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String refreshToken) throws UsernameNotFoundException {
-        return (UserDetails) memberRepository.findByEmail(refreshToken)
-                .orElseThrow(UserNotFoundException::new);
-    }
-
-    public Member findMember(String token) {
-        return memberRepository.findByEmail(jwtProvider.getUserPk(token))
-                .orElseThrow(UserNotFoundException::new);
+        return (UserDetails) memberService.findMemberByEmail(refreshToken);
     }
 
     //토큰 저장
@@ -70,8 +63,7 @@ public class LoginService implements UserDetailsService {
     }
 
     public LoginResponse generateToken(Long memberId) {
-        Member member = memberRepository.findByMemberId(memberId)
-                .orElseThrow(UserNotFoundException::new);
+        Member member = memberService.findByMemberPk(memberId);
         String accessToken = jwtProvider.createToken(member.getEmail());
         String refreshToken = jwtProvider.createRefreshToken(member.getEmail());
         LoginResponse loginResponse = createLoginResponse(member, accessToken, refreshToken);
@@ -88,7 +80,7 @@ public class LoginService implements UserDetailsService {
 
     public LoginResponse responseToken(String accessToken) {
 
-        Member member = findMember(accessToken);
+        Member member = memberService.findMemberByEmail(jwtProvider.getUserPk(accessToken));
         return permitClientRequest(member);
     }
 

@@ -18,4 +18,13 @@ public class MemberService {
     public Member findMemberById(Long id) {
         return memberRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
+
+    public Member findMemberByEmail(String token) {
+        return memberRepository.findByEmail(token)
+                .orElseThrow(UserNotFoundException::new);
+    }
+
+    public Member findByMemberPk(Long memberId){
+        return memberRepository.findByMemberId(memberId).orElseThrow(UserNotFoundException::new);
+    }
 }
