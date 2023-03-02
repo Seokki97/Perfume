@@ -54,6 +54,10 @@ public class PerfumeService {
         return perfume;
     }
 
+    public Perfume findPerfumeById(Long id) {
+        return perfumeRepository.findById(id).orElseThrow(PerfumeNotFoundException::new);
+    }
+
     public void deleteAllData() {
         perfumeRepository.deleteAll();
     }

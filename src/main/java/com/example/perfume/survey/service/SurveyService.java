@@ -1,7 +1,9 @@
 package com.example.perfume.survey.service;
 
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
+import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
@@ -15,13 +17,12 @@ import java.util.stream.Collectors;
 public class SurveyService {
     private final SurveyRepository surveyRepository;
     private final SurveyUtil surveyUtil;
-    private final PerfumeRepository perfumeRepository;
+    private final PerfumeService perfumeService;
 
-    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil,
-                         PerfumeRepository perfumeRepository) {
+    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil, PerfumeService perfumeService) {
         this.surveyRepository = surveyRepository;
         this.surveyUtil = surveyUtil;
-        this.perfumeRepository = perfumeRepository;
+        this.perfumeService = perfumeService;
     }
 
     private List<Survey> isEmptyMoodColumn(SurveyResponseDto surveyResponseDto, List<Survey> secondAnswer) {
@@ -86,7 +87,7 @@ public class SurveyService {
 
     private List<Perfume> findPerfumeData(List<Survey> finalDataList, List<Survey> thirdComparedList) {
         List<Perfume> perfumeList = surveyUtil.isEmptyFinalResult(finalDataList, thirdComparedList).stream()
-                .map(data -> perfumeRepository.findById(data.getId()).orElse(null))
+                .map(data -> perfumeService.findPerfumeById(data.getId()))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
         return perfumeList;
