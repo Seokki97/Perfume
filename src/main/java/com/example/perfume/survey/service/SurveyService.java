@@ -25,6 +25,10 @@ public class SurveyService {
         this.perfumeService = perfumeService;
     }
 
+    public Survey findSurveyById(Long id) {
+        return surveyRepository.findById(id).orElseThrow(SurveyNotFoundException::new);
+    }
+
     private List<Survey> isEmptyMoodColumn(SurveyResponseDto surveyResponseDto, List<Survey> secondAnswer) {
         if (secondAnswer.isEmpty()) {
             return retrySecondFiltering(surveyResponseDto);
