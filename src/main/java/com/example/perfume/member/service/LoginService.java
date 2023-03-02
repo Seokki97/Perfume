@@ -3,6 +3,7 @@ package com.example.perfume.member.service;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.domain.Token;
 import com.example.perfume.member.dto.memberDto.LoginResponse;
+import com.example.perfume.member.exception.TokenInvalidException;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.member.repository.TokenRepository;
@@ -80,7 +81,7 @@ public class LoginService implements UserDetailsService {
     }
 
     public LoginResponse permitClientRequest(Member member) {
-        Token generatedToken = tokenRepository.findByMemberId(member.getMemberId()).get();
+        Token generatedToken = tokenRepository.findByMemberId(member.getMemberId()).orElseThrow(TokenInvalidException::new);
 
         return createLoginResponse(member, generatedToken.getAccessToken(), generatedToken.getRefreshToken());
     }
