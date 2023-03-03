@@ -3,6 +3,7 @@ package com.example.perfume.perfume.service;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.repository.SurveyRepository;
+import com.example.perfume.survey.service.SurveyService;
 import com.example.perfume.survey.service.SurveyUtil;
 import org.springframework.stereotype.Service;
 
@@ -12,28 +13,24 @@ import java.util.List;
 public class SimilarPerfumeRecommend {
     private final SurveyRepository surveyRepository;
     private final SurveyUtil surveyUtil;
+    private final SurveyService surveyService;
 
-    public SimilarPerfumeRecommend(SurveyRepository surveyRepository, SurveyUtil surveyUtil) {
-
+    public SimilarPerfumeRecommend(SurveyRepository surveyRepository, SurveyUtil surveyUtil, SurveyService surveyService) {
+        this.surveyService = surveyService;
         this.surveyRepository = surveyRepository;
         this.surveyUtil = surveyUtil;
     }
 
-    public Survey findFeatureSelectedPerfume(PerfumeResponseDto perfumeResponseDto) {
-        Long matchingNumber = perfumeResponseDto.getId();
-        return surveyRepository.findById(matchingNumber).get();
-    }
-
     public List<Survey> extractFirstFeature(PerfumeResponseDto perfumeResponseDto) {
-        return surveyRepository.findByGenderAnswer(findFeatureSelectedPerfume(perfumeResponseDto).getGenderAnswer());
+        return surveyRepository.findByGenderAnswer(surveyService.findSurveyById(perfumeResponseDto.getId()).getGenderAnswer());
     }
 
     public List<Survey> extractSecondFeature(PerfumeResponseDto perfumeResponseDto) {
-        return surveyRepository.findByScentAnswer(findFeatureSelectedPerfume(perfumeResponseDto).getScentAnswer());
+        return surveyRepository.findByScentAnswer(surveyService.findSurveyById(perfumeResponseDto.getId()).getScentAnswer());
     }
 
     public List<Survey> extractThirdFeature(PerfumeResponseDto perfumeResponseDto) {
-        return surveyRepository.findByMoodAnswerContaining(findFeatureSelectedPerfume(perfumeResponseDto).getMoodAnswer());
+        return surveyRepository.findByMoodAnswerContaining(surveyService.findSurveyById(perfumeResponseDto.getId()).getMoodAnswer());
     }
 
     public List<Survey> addFirstFeatureAndGenderless(PerfumeResponseDto perfumeResponseDto) {
@@ -43,8 +40,8 @@ public class SimilarPerfumeRecommend {
     public List<Survey> showSimilarPerfume(PerfumeResponseDto perfumeResponseDto) {
         List<Survey> firstComparedList = surveyUtil.compareTwoFilteredSurveyData
                 (addFirstFeatureAndGenderless(perfumeResponseDto), extractSecondFeature(perfumeResponseDto));
-        List<Survey> secondComparedList = surveyUtil.compareTwoFilteredSurveyData(firstComparedList, extractThirdFeature(perfumeResponseDto));
-        return secondComparedList;
+
+        return surveyUtil.compareTwoFilteredSurveyData(firstComparedList, extractThirdFeature(perfumeResponseDto));
     }
 
 }
