@@ -1,16 +1,11 @@
 package com.example.perfume.survey.service;
 
-import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.exception.PerfumeNotFoundException;
-import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.perfume.service.PerfumeService;
+import com.example.perfume.survey.domain.MoodType;
 import com.example.perfume.survey.domain.ScentType;
 import com.example.perfume.survey.domain.SeasonType;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
-import com.example.perfume.survey.exception.SurveyNotFoundException;
-import com.example.perfume.survey.message.MoodMessage;
-import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,14 +20,12 @@ public class FeatureService {
 
 
     public FeatureResponseDto showFeatureDetails(Long id) {
-        Survey survey = surveyService.findSurveyById(id);
-        FeatureResponseDto featureResponseDto = FeatureResponseDto.builder()
+        return  FeatureResponseDto.builder()
                 .perfume(perfumeService.findPerfumeById(id))
                 .scentRecommend(selectScent(id))
-                .moodRecommend(survey.getMoodAnswer() + MoodMessage.MOOD_MESSAGE)
+                .moodRecommend(selectMood(id))
                 .seasonRecommend(selectSeason(id))
                 .build();
-        return featureResponseDto;
     }
 
 
@@ -45,5 +38,10 @@ public class FeatureService {
         Survey survey = surveyService.findSurveyById(id);
 
         return SeasonType.getFeature(survey);
+    }
+
+    public String selectMood(Long id) {
+        Survey survey = surveyService.findSurveyById(id);
+        return MoodType.getMessage(survey);
     }
 }
