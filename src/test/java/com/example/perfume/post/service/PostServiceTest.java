@@ -4,6 +4,7 @@ package com.example.perfume.post.service;
 import com.example.perfume.post.domain.Post;
 import com.example.perfume.post.dto.PostRequestDto;
 import com.example.perfume.post.dto.PostResponseDto;
+import com.example.perfume.post.exception.PostNotFoundException;
 import com.example.perfume.post.repository.PostRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,13 +29,13 @@ public class PostServiceTest {
     @DisplayName("작성한 게시물이 DB에 저장된다.")
     @Test
     void savePost() {
-        long id = 2l;
+        long id = 1l;
 
         PostRequestDto actual = new PostRequestDto(id, "익명의 준석킴", "테스트해주세용");
 
         postService.savePost(actual);
 
-        Post expected = postRepository.findById(id).get();
+        Post expected = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
 
         assertAll(
                 () -> assertThat(actual).usingRecursiveComparison()
@@ -52,12 +53,13 @@ public class PostServiceTest {
                 .visitor("익명의 코끼리")
                 .build();
 
-        PostResponseDto postResponseDto = PostResponseDto.builder()
+        PostRequestDto postRequestDto = PostRequestDto.builder()
                 .id(id)
                 .content("작품 너무 예뻐용 ㅋ")
                 .visitor("익명의 코끼리")
                 .build();
-        Post expected = postService.showOnePost(postResponseDto.getId());
+        postService.savePost(postRequestDto);
+        Post expected = postService.showOnePost(postRequestDto.getId());
 
         assertAll(
                 () -> assertThat(actual).usingRecursiveComparison()
@@ -70,26 +72,29 @@ public class PostServiceTest {
     @Test
     void showAllPost() {
 
-        List<Post> actual = postService.showAllPost();
 
-        Post expected1 = Post.builder()
+        PostRequestDto expected1 = PostRequestDto.builder()
                 .id(1l)
                 .content("작품 너무 예뻐용 ㅋ")
                 .visitor("익명의 코끼리")
                 .build();
-        Post expected2 = Post.builder().id(2l)
+        PostRequestDto expected2 = PostRequestDto.builder().id(2l)
                 .visitor("익명의 준석킴")
                 .content("테스트해주세용")
                 .build();
 
-        List<Post> expected = new ArrayList<>();
-        expected.add(expected1);
-        expected.add(expected2);
+        postService.savePost(expected1);
+        postService.savePost(expected2);
+        List<Post> actual = postService.showAllPost();
 
         assertAll(
-                () -> assertThat(actual).usingRecursiveComparison()
+                () -> assertThat(actual.get(0)).usingRecursiveComparison()
                         .ignoringFields("id")
-                        .isEqualTo(expected)
+                        .isEqualTo(expected1),
+
+                () -> assertThat(actual.get(1)).usingRecursiveComparison()
+                        .ignoringFields("id")
+                        .isEqualTo(expected2)
         );
 
     }
