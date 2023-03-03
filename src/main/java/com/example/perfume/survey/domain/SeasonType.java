@@ -1,13 +1,13 @@
 package com.example.perfume.survey.domain;
 
 import com.example.perfume.survey.exception.SeasonNotFoundException;
-import com.example.perfume.survey.exception.SurveyNotFoundException;
 import lombok.Getter;
 
 import java.util.Arrays;
 
 @Getter
 public enum SeasonType {
+
     SPRING("봄", "봄에 잘 어울리는 향이에요. 그 외에 계절에는 안 어울릴 수도 있으니 피해주는게 좋을 것 같아요!"),
     SUMMER("여름", "여름에 잘 어울리는 향이에요. 그 외에 계절에는 안 어울릴 수도 있으니 피해주는게 좋을 것 같아요!"),
     AUTUMN("가을", "가을에 잘 어울리는 향이에요. 그 외에 계절에는 안 어울릴 수도 있으니 피해주는게 좋을 것 같아요!"),
@@ -19,9 +19,9 @@ public enum SeasonType {
     AUTUMN_WINTER("가을 겨울", "이 향수는 가을과 겨울에 잘 어울리는 향수예요! 그 외에 계절에는 안 어울릴 수도 있어요."),
     WINTER_SPRING("봄 겨울", "이 향수는 봄과 겨울에 잘 어울리는 향수예요! 그 외에 계절에는 안 어울릴 수도 있어요!");
 
-    private String season;
+    private final String season;
 
-    private String feature;
+    private final String feature;
 
     SeasonType(String season, String feature) {
         this.season = season;
