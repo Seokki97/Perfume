@@ -24,7 +24,7 @@ public class SurveyUtilTest {
     @Autowired
     private SurveyUtil surveyUtil;
     @Autowired
-    private DataService dataService;
+    private SurveyService surveyService;
 
     @Autowired
     private SurveyRepository surveyRepository;
@@ -67,11 +67,11 @@ public class SurveyUtilTest {
                 .build();
 
         assertAll(
-                () -> assertThatThrownBy(() -> surveyUtil.filterGenderAnswer(surveyResponseDto))
+                () -> assertThatThrownBy(() -> surveyService.filterGenderAnswer(surveyResponseDto))
                         .isInstanceOf(SurveyNotFoundException.class).hasMessage("해당 설문 응답을 찾을 수 없습니다."),
-                () -> assertThatThrownBy(() -> surveyUtil.filterScentAnswer(surveyResponseDto))
+                () -> assertThatThrownBy(() -> surveyService.filterScentAnswer(surveyResponseDto))
                         .isInstanceOf(SurveyNotFoundException.class).hasMessage("해당 설문 응답을 찾을 수 없습니다."),
-                () -> assertThatThrownBy(() -> surveyUtil.filterMoodAnswer(surveyResponseDto))
+                () -> assertThatThrownBy(() -> surveyService.filterMoodAnswer(surveyResponseDto))
                         .isInstanceOf(SurveyNotFoundException.class).hasMessage("해당 설문 응답을 찾을 수 없습니다.")
         );
     }
