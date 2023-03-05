@@ -5,6 +5,7 @@ import com.example.perfume.crawling.service.PerfumeCSVFileLoading;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
+import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
 import org.springframework.stereotype.Service;
@@ -25,12 +26,11 @@ public class PerfumeService {
     }
 
     public PerfumeResponseDto makePerfumeList(Long id, int firstIndex, PerfumeList perfumeList) {
-        PerfumeResponseDto perfumeResponseDto = new PerfumeResponseDto(id,
+        return new PerfumeResponseDto(id,
                 perfumeList.getPerfumeName().get(firstIndex),
                 perfumeList.getPerfumeFeature().get(firstIndex),
                 perfumeList.getPerfumeBrand().get(firstIndex),
                 perfumeList.getPerfumeImageUrl().get(firstIndex));
-        return perfumeResponseDto;
     }
 
     public void savePerfumeData(Long id, PerfumeList perfume) throws IOException {
@@ -50,7 +50,7 @@ public class PerfumeService {
 
     public List<Perfume> findPerfumeByBrand(PerfumeRequestDto perfumeRequestDto) {
         List<Perfume> perfume = perfumeRepository.findByBrandNameContaining(perfumeRequestDto.getBrandName());
-        isPerfumeListEmpty(perfume);
+        isBrandListEmpty(perfume);
         return perfume;
     }
 
@@ -69,6 +69,13 @@ public class PerfumeService {
     public boolean isPerfumeListEmpty(List<Perfume> perfumeList) {
         if (perfumeList.isEmpty()) {
             throw new PerfumeNotFoundException();
+        }
+        return true;
+    }
+
+    public boolean isBrandListEmpty(List<Perfume> brandList){
+        if(brandList.isEmpty()){
+            throw new BrandNotFoundException();
         }
         return true;
     }
