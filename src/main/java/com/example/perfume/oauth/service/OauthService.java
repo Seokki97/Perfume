@@ -83,14 +83,15 @@ public class OauthService {
                     .memberId((Long) profile.get("id"))
                     .nickname((String) properties.get("nickname"))
                     .email((String) kakaoAccount.get("email")).build();
-            return getUserProfile(memberRequestDto);
+            saveUserProfile(memberRequestDto);
+            return memberService.findByMemberPk(memberRequestDto.getMemberId());
 
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public Member getUserProfile(MemberRequestDto memberRequestDto) {
+    public Member saveUserProfile(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
                 .id(memberRequestDto.getId())
                 .memberId(memberRequestDto.getMemberId())
@@ -101,7 +102,7 @@ public class OauthService {
 
         memberService.isExistMember(member);
 
-        return memberService.findByMemberPk(member.getMemberId());
+        return memberService.saveMemberProfile(member);
     }
 
     public boolean isAgreeEmailUsing(String email) {
