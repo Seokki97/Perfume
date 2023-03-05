@@ -3,6 +3,7 @@ package com.example.perfume.oauth.service;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.dto.memberDto.MemberRequestDto;
 import com.example.perfume.member.repository.MemberRepository;
+import com.example.perfume.member.service.MemberService;
 import com.example.perfume.member.service.jwt.JwtProvider;
 import com.example.perfume.oauth.OauthType;
 import com.example.perfume.oauth.exception.EmailNotFoundException;
@@ -20,12 +21,12 @@ import javax.servlet.http.HttpSession;
 @Service
 public class OauthService {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     private final JwtProvider jwtProvider;
 
-    public OauthService(MemberRepository memberRepository, JwtProvider jwtProvider) {
-        this.memberRepository = memberRepository;
+    public OauthService(MemberService memberService, JwtProvider jwtProvider) {
+        this.memberService = memberService;
         this.jwtProvider = jwtProvider;
 
     }
@@ -78,7 +79,10 @@ public class OauthService {
             JSONObject properties = (JSONObject) profile.get("properties");
             JSONObject kakaoAccount = (JSONObject) profile.get("kakao_account");
 
-            MemberRequestDto memberRequestDto = new MemberRequestDto((Long) profile.get("id"), (String) properties.get("nickname"), (String) kakaoAccount.get("email"));
+            MemberRequestDto memberRequestDto = MemberRequestDto.builder()
+                    .memberId((Long) profile.get("id"))
+                    .nickname((String) properties.get("nickname"))
+                    .email((String) kakaoAccount.get("email")).build();
             return getUserProfile(memberRequestDto);
 
         } catch (ParseException e) {
@@ -88,16 +92,16 @@ public class OauthService {
 
     public Member getUserProfile(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
+                .id(memberRequestDto.getId())
                 .memberId(memberRequestDto.getMemberId())
                 .email(memberRequestDto.getEmail())
                 .nickname(memberRequestDto.getNickname())
                 .build();
         isAgreeEmailUsing(memberRequestDto.getEmail());
 
-        if (!memberRepository.existsByMemberId(member.getMemberId())) {
-            memberRepository.save(member);
-        }
-        return memberRepository.findByMemberId(member.getMemberId()).get();
+        memberService.isExistMember(member);
+
+        return memberService.findByMemberPk(member.getMemberId());
     }
 
     public boolean isAgreeEmailUsing(String email) {
@@ -106,5 +110,6 @@ public class OauthService {
         }
         return true;
     }
+
 
 }
