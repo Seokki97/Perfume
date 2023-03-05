@@ -63,7 +63,10 @@ public class PerfumeService {
     }
 
     public List<Perfume> showAllPerfumeData() {
-        return perfumeRepository.findAll().stream().collect(Collectors.toList());
+        List<Perfume> perfumeList = perfumeRepository.findAll().stream().collect(Collectors.toList());
+
+        isBrandListEmpty(perfumeList);
+        return perfumeList;
     }
 
     public boolean isPerfumeListEmpty(List<Perfume> perfumeList) {
@@ -73,8 +76,8 @@ public class PerfumeService {
         return true;
     }
 
-    public boolean isBrandListEmpty(List<Perfume> brandList){
-        if(brandList.isEmpty()){
+    public boolean isBrandListEmpty(List<Perfume> brandList) {
+        if (brandList.isEmpty()) {
             throw new BrandNotFoundException();
         }
         return true;
