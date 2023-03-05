@@ -65,7 +65,7 @@ public class PerfumeService {
     public List<Perfume> showAllPerfumeData() {
         List<Perfume> perfumeList = perfumeRepository.findAll().stream().collect(Collectors.toList());
 
-        isBrandListEmpty(perfumeList);
+        isPerfumeListEmpty(perfumeList);
         return perfumeList;
     }
 
