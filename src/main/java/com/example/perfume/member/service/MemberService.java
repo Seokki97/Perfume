@@ -1,8 +1,10 @@
 package com.example.perfume.member.service;
 
 import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.dto.memberDto.MemberRequestDto;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.repository.MemberRepository;
+import com.example.perfume.oauth.exception.MemberAlreadyExistException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,4 +29,16 @@ public class MemberService {
     public Member findByMemberPk(Long memberId){
         return memberRepository.findByMemberId(memberId).orElseThrow(UserNotFoundException::new);
     }
+
+    public boolean isExistMember(Member member){
+        if(memberRepository.existsById(member.getId())){
+            throw new MemberAlreadyExistException();
+        }
+        return true;
+    }
+
+    public Member saveMemberProfile(Member member){
+        return memberRepository.save(member);
+    }
+
 }
