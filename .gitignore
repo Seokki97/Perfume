@@ -39,7 +39,7 @@ out/
 ### application properties ###
 
 application.properties
-
+application.yml
 ### Oauth ###
 OauthType.java
 README.MD
