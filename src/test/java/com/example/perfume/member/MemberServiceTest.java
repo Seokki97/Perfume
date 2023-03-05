@@ -60,4 +60,23 @@ public class MemberServiceTest {
         );
     }
 
+    @DisplayName("email로 회원을 찾는다. 없을 시 UserNotFoundException 을 발생시킨다.")
+    @Test
+    void findByEmail(){
+
+        Member expected = Member.builder()
+                .id(1l)
+                .memberId(123l)
+                .email("ddas@mav.com")
+                .nickname("석키")
+                .build();
+        memberService.saveMemberProfile(expected);
+
+        Member actual = memberService.findMemberByEmail(expected.getEmail());
+
+        assertAll(
+                () -> assertThat(actual).usingRecursiveComparison().isEqualTo(expected),
+                () -> assertThrows(UserNotFoundException.class, () ->{ memberService.findMemberByEmail("Dasda");})
+        );
+    }
 }
