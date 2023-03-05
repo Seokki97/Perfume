@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -74,6 +75,26 @@ public class SurveyUtilTest {
                 () -> assertThatThrownBy(() -> surveyService.filterMoodAnswer(surveyResponseDto))
                         .isInstanceOf(SurveyNotFoundException.class).hasMessage("해당 설문 응답을 찾을 수 없습니다.")
         );
+    }
+
+    @DisplayName("최종 결과물이 Null일 경우 그 이전까지의 결과물을 반환한다.")
+    @Test
+    void isEmptyFinalList(){
+        List<Survey> finalList = new ArrayList<>();
+
+        Survey survey = Survey.builder()
+                .genderAnswer("중성")
+                .moodAnswer("자기")
+                .scentAnswer("무향")
+                .styleAnswer("포멀")
+                .seasonAnswer("여름")
+                .build();
+        surveyRepository.save(survey);
+        List<Survey> beforeList = new ArrayList<>();
+        beforeList.add(survey);
+
+        List<Survey> expected = surveyUtil.isEmptyFinalResult(finalList,beforeList);
+        assertThat(beforeList).isEqualTo(expected);
     }
 
 }
