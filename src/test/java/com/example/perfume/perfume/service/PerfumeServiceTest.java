@@ -6,12 +6,16 @@ import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
+import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
+import com.example.perfume.survey.repository.SurveyRepository;
+import net.bytebuddy.matcher.FilterableList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -27,7 +31,8 @@ public class PerfumeServiceTest {
 
     @Autowired
     private PerfumeService perfumeService;
-
+    @Autowired
+    private SurveyRepository surveyRepository;
 
     @DisplayName("사용자가 원하는 향수를 이름으로 찾는다. 해당 향수가 없을 시 커스텀 Exception을 발생시킨다.")
     @Test
@@ -118,4 +123,35 @@ public class PerfumeServiceTest {
                         .isInstanceOf(PerfumeNotFoundException.class).hasMessage("해당 향수를 찾을 수 없습니다.")
         );
     }
+
+    @DisplayName("전체 향수 리스트를 조회한다.")
+    @Test
+    void findAllData() {
+        Perfume list1 = Perfume.builder()
+                .id(1l)
+                .perfumeName("조말론")
+                .perfumeFeature("특징")
+                .perfumeImageUrl("예시")
+                .brandName("조말론")
+                .build();
+        Perfume list2 = Perfume.builder()
+                .id(2l)
+                .perfumeName("예씨")
+                .perfumeFeature("특")
+                .perfumeImageUrl("이미")
+                .brandName("브랜드")
+                .build();
+
+        perfumeRepository.save(list1);
+        perfumeRepository.save(list2);
+        List<Perfume> actual = perfumeService.showAllPerfumeData();
+        List<Perfume> expected = new ArrayList<>();
+        expected.add(list1);
+        expected.add(list2);
+
+        assertThat(actual).usingRecursiveComparison()
+                .isEqualTo(expected);
+
+    }
+
 }
