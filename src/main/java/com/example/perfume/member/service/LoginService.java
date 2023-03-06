@@ -5,9 +5,7 @@ import com.example.perfume.member.domain.Token;
 import com.example.perfume.member.dto.memberDto.LoginResponse;
 import com.example.perfume.member.exception.TokenInvalidException;
 import com.example.perfume.member.exception.UserNotFoundException;
-import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.member.repository.TokenRepository;
-import com.example.perfume.member.service.jwt.JwtInterceptor;
 import com.example.perfume.member.service.jwt.JwtProvider;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,16 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-
 @Service
 public class LoginService implements UserDetailsService {
     private final JwtProvider jwtProvider;
     private final TokenRepository tokenRepository;
-
     private final MemberService memberService;
 
     public LoginService(JwtProvider jwtProvider, TokenRepository tokenRepository, MemberService memberService) {
@@ -41,7 +33,6 @@ public class LoginService implements UserDetailsService {
     //토큰 저장
     public Token saveToken(LoginResponse loginResponse, Member member) {
         Token token = Token.builder()
-                .accessToken(loginResponse.getAccessToken())
                 .refreshToken(loginResponse.getRefreshToken())
                 .memberId(member.getMemberId())
                 .build();
@@ -51,7 +42,11 @@ public class LoginService implements UserDetailsService {
         return token;
     }
 
-    public LoginResponse createLoginResponse(Member member, String accessToken, String refreshToken) {
+    public LoginResponse generateToken(Long memberId) {
+        Member member = memberService.findByMemberPk(memberId);
+        String accessToken = jwtProvider.createToken(member.getEmail());
+        String refreshToken = jwtProvider.createRefreshToken(member.getEmail());
+
         LoginResponse loginResponse = LoginResponse.builder()
                 .id(member.getId())
                 .email(member.getEmail())
@@ -59,38 +54,36 @@ public class LoginService implements UserDetailsService {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
-        return loginResponse;
-    }
-
-    public LoginResponse generateToken(Long memberId) {
-        Member member = memberService.findByMemberPk(memberId);
-        String accessToken = jwtProvider.createToken(member.getEmail());
-        String refreshToken = jwtProvider.createRefreshToken(member.getEmail());
-        LoginResponse loginResponse = createLoginResponse(member, accessToken, refreshToken);
 
         saveToken(loginResponse, member);
         return loginResponse;
     }
 
-    public LoginResponse permitClientRequest(Member member) {
-        Token generatedToken = tokenRepository.findByMemberId(member.getMemberId()).orElseThrow(TokenInvalidException::new);
-
-        return createLoginResponse(member, generatedToken.getAccessToken(), generatedToken.getRefreshToken());
-    }
-
-    public LoginResponse responseToken(String accessToken) {
-
+    public LoginResponse permitClientRequest(String accessToken) { // 요청 보내는 부분
         Member member = memberService.findMemberByEmail(jwtProvider.getUserPk(accessToken));
-        return permitClientRequest(member);
+
+        return LoginResponse.builder()
+                .id(member.getId())
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .build();
     }
 
     @Transactional
-    public LoginResponse generateNewAccessToken(String accessToken, String refreshToken) {
-
-        Token token = tokenRepository.findByRefreshTokenAndAccessToken(refreshToken, accessToken).orElseThrow(UserNotFoundException::new);
-
+    public LoginResponse generateNewAccessToken(String refreshToken) {
+        Token token = tokenRepository.findByRefreshToken(refreshToken).orElseThrow(UserNotFoundException::new);
+        Member member = memberService.findByMemberPk(token.getMemberId());
         tokenRepository.deleteByMemberId(token.getMemberId());
-        LoginResponse newTokenResponse = generateToken(token.getMemberId());
-        return newTokenResponse;
+
+        return LoginResponse.builder()
+                .id(member.getId())
+                .nickname(member.getNickname())
+                .email(member.getEmail())
+                .accessToken(regenerateAccessToken(jwtProvider.getUserPk(token.getRefreshToken())))
+                .build();
+    }
+
+    public String regenerateAccessToken(String userPk) {
+        return jwtProvider.createToken(userPk);
     }
 }
