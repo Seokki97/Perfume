@@ -82,7 +82,9 @@ public class OauthService {
             MemberRequestDto memberRequestDto = MemberRequestDto.builder()
                     .memberId((Long) profile.get("id"))
                     .nickname((String) properties.get("nickname"))
-                    .email((String) kakaoAccount.get("email")).build();
+                    .email((String) kakaoAccount.get("email"))
+                    .thumbnailImage((String) properties.get("thumbnail_image"))
+                    .build();
             saveUserProfile(memberRequestDto);
             return memberService.findByMemberPk(memberRequestDto.getMemberId());
 
@@ -97,6 +99,7 @@ public class OauthService {
                 .memberId(memberRequestDto.getMemberId())
                 .email(memberRequestDto.getEmail())
                 .nickname(memberRequestDto.getNickname())
+                .thumbnailImage(memberRequestDto.getThumbnailImage())
                 .build();
         isAgreeEmailUsing(memberRequestDto.getEmail());
 

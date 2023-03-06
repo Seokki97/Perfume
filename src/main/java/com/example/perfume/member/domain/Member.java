@@ -25,11 +25,15 @@ public class Member {
     @Column(length = 100)
     private String email;
 
+    @NotNull
+    private String thumbnailImage;
+
     @Builder
-    public Member(Long id, Long memberId, String nickname, String email) {
+    public Member(Long id, Long memberId, String nickname, String email,String thumbnailImage) {
         this.id = id;
         this.memberId = memberId;
         this.nickname = nickname;
         this.email = email;
+        this.thumbnailImage = thumbnailImage;
     }
 }

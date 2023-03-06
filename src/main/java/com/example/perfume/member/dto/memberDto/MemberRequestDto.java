@@ -12,15 +12,18 @@ public class MemberRequestDto {
 
     private String email;
 
+    private String thumbnailImage;
+
     public MemberRequestDto() {
     }
 
     @Builder
-    public MemberRequestDto(Long id, Long memberId ,String nickname, String email) {
+    public MemberRequestDto(Long id, Long memberId ,String nickname, String email,String thumbnailImage) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
         this.memberId = memberId;
+        this.thumbnailImage = thumbnailImage;
     }
 
     public Member toEntity() {
