@@ -26,19 +26,15 @@ public class MemberService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    public Member findByMemberPk(Long memberId){
+    public Member findByMemberPk(Long memberId) {
         return memberRepository.findByMemberId(memberId).orElseThrow(UserNotFoundException::new);
     }
 
-    public boolean isExistMember(Member member){
-        if(memberRepository.existsById(member.getId())){
-            throw new MemberAlreadyExistException();
+    public boolean isAlreadyExistMember(MemberRequestDto memberRequestDto) {
+        if (memberRepository.existsByMemberId(memberRequestDto.getMemberId())) {
+            return true;
         }
-        return true;
-    }
-
-    public Member saveMemberProfile(Member member){
-        return memberRepository.save(member);
+        return false;
     }
 
 }

@@ -7,6 +7,7 @@ import com.example.perfume.member.service.MemberService;
 import com.example.perfume.member.service.jwt.JwtProvider;
 import com.example.perfume.oauth.OauthType;
 import com.example.perfume.oauth.exception.EmailNotFoundException;
+import com.example.perfume.oauth.exception.MemberAlreadyExistException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -24,11 +25,14 @@ public class OauthService {
     private final MemberService memberService;
 
     private final JwtProvider jwtProvider;
+    private final MemberRepository memberRepository;
 
-    public OauthService(MemberService memberService, JwtProvider jwtProvider) {
+    public OauthService(MemberService memberService, JwtProvider jwtProvider,
+                        MemberRepository memberRepository) {
         this.memberService = memberService;
         this.jwtProvider = jwtProvider;
 
+        this.memberRepository = memberRepository;
     }
 
     public HttpHeaders setHttpHeaders() {
@@ -93,19 +97,20 @@ public class OauthService {
         }
     }
 
-    public Member saveUserProfile(MemberRequestDto memberRequestDto) {
+    public void saveUserProfile(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
-                .id(memberRequestDto.getId())
                 .memberId(memberRequestDto.getMemberId())
                 .email(memberRequestDto.getEmail())
                 .nickname(memberRequestDto.getNickname())
                 .thumbnailImage(memberRequestDto.getThumbnailImage())
                 .build();
+
         isAgreeEmailUsing(memberRequestDto.getEmail());
 
-        memberService.isExistMember(member);
-
-        return memberService.saveMemberProfile(member);
+        if(memberService.isAlreadyExistMember(memberRequestDto)){
+            throw new MemberAlreadyExistException();
+        }
+        memberRepository.save(member);
     }
 
     public boolean isAgreeEmailUsing(String email) {
