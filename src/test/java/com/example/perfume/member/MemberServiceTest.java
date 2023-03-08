@@ -1,9 +1,11 @@
 package com.example.perfume.member;
 
 import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.dto.memberDto.MemberRequestDto;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.oauth.exception.MemberAlreadyExistException;
+import com.example.perfume.oauth.service.OauthService;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,54 +23,55 @@ public class MemberServiceTest {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private OauthService oauthService;
     @DisplayName("id로 회원을 찾는다. 없을 시 UserNotFoundException 을 발생시킨다.")
     @Test
     void findById() {
         Member expected = Member.builder()
-                .id(1l)
-                .memberId(123l)
-                .email("ddas@mav.com")
-                .nickname("석키")
+                .memberId(12323l)
+                .email("dd32as@mav.com")
+                .nickname("석32키")
                 .build();
         memberService.saveMemberProfile(expected);
-
         Member actual = memberService.findMemberById(expected.getId());
 
         assertAll(
                 () -> assertThat(actual).usingRecursiveComparison().isEqualTo(expected),
-                () -> assertThrows(UserNotFoundException.class, () ->{ memberService.findMemberById(123141224l);})
+                () -> assertThrows(UserNotFoundException.class, () -> {
+                    memberService.findMemberById(123141224l);
+                })
         );
     }
 
-
     @DisplayName("pk로 회원을 찾는다. 없을 시 UserNotFoundException 을 발생시킨다.")
     @Test
-    void findByPk(){
+    void findByPk() {
 
         Member expected = Member.builder()
-                .id(1l)
-                .memberId(123l)
+                .memberId(12332l)
                 .email("ddas@mav.com")
                 .nickname("석키")
                 .build();
-        memberService.saveMemberProfile(expected);
 
+        memberService.saveMemberProfile(expected);
         Member actual = memberService.findByMemberPk(expected.getMemberId());
 
         assertAll(
                 () -> assertThat(actual).usingRecursiveComparison().isEqualTo(expected),
-                () -> assertThrows(UserNotFoundException.class, () ->{ memberService.findByMemberPk(123141224l);})
+                () -> assertThrows(UserNotFoundException.class, () -> {
+                    memberService.findByMemberPk(123141224l);
+                })
         );
     }
 
     @DisplayName("email로 회원을 찾는다. 없을 시 UserNotFoundException 을 발생시킨다.")
     @Test
-    void findByEmail(){
+    void findByEmail() {
 
         Member expected = Member.builder()
-                .id(1l)
                 .memberId(123l)
-                .email("ddas@mav.com")
+                .email("ddas@m21av.com")
                 .nickname("석키")
                 .build();
         memberService.saveMemberProfile(expected);
@@ -77,22 +80,28 @@ public class MemberServiceTest {
 
         assertAll(
                 () -> assertThat(actual).usingRecursiveComparison().isEqualTo(expected),
-                () -> assertThrows(UserNotFoundException.class, () ->{ memberService.findMemberByEmail("Dasda");})
+                () -> assertThrows(UserNotFoundException.class, () -> {
+                    memberService.findMemberByEmail("Dasda");
+                })
         );
     }
 
     @DisplayName("회원이 이미 존재하면, MemberAlreadyException 을 발생시킨다.")
     @Test
-    void isAlreadyExist(){
+    void isAlreadyExist() {
 
         Member expected = Member.builder()
-                .id(1l)
-                .memberId(123l)
-                .email("ddas@mav.com")
-                .nickname("석키")
+                .memberId(123123l)
+                .email("ddas@m123av.com")
+                .nickname("석키123")
                 .build();
+        MemberRequestDto memberId = MemberRequestDto.builder().memberId(expected.getMemberId())
+                .email("ddas@m123av.com")
+                .nickname("석키123").build();
         memberService.saveMemberProfile(expected);
 
-        assertThrows(MemberAlreadyExistException.class, () ->{ memberService.isExistMember(expected);});
+        assertThrows(MemberAlreadyExistException.class, () -> {
+            oauthService.saveUserProfile(memberId);
+        });
     }
 }
