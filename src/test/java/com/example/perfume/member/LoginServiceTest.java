@@ -7,9 +7,11 @@ import com.example.perfume.member.dto.memberDto.LoginResponse;
 import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.member.repository.TokenRepository;
 import com.example.perfume.member.service.LoginService;
+import com.example.perfume.member.service.jwt.JwtProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,6 +25,14 @@ public class LoginServiceTest {
     private MemberRepository memberRepository;
     @Autowired
     private TokenRepository tokenRepository;
+
+    @Autowired
+    private JwtProvider jwtProvider;
+
+    @Value("${jwt.secret}")
+    private String secretKey;
+    // 토큰 유효시간 168 시간(7일)
+    private long tokenValidTime =6000L;
 
 
     @DisplayName("응답값으로 사용자 정보를 받아온다")
@@ -48,7 +58,7 @@ public class LoginServiceTest {
                 .isEqualTo(expected);
     }
 
-    @DisplayName("리프레시 토큰을 저장한다.")
+    @DisplayName("Refresh 토큰을 저장한다.")
     @Test
     void saveRefreshToken(){
         LoginResponse loginResponse = LoginResponse.builder()
@@ -66,6 +76,35 @@ public class LoginServiceTest {
        Token expected = tokenRepository.findByMemberId(member.getMemberId()).orElseThrow();
 
        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+    }
 
+    @DisplayName("Access 토큰을 생성한다.")
+    @Test
+    void provideAccessToken(){
+        String userPk = String.valueOf(123l);
+        String actual = jwtProvider.createToken(userPk);
+
+        assertThat(actual).isNotNull();
+    }
+
+    @DisplayName("Refresh 토큰을 생성한다.")
+    @Test
+    void provideRefreshToken(){
+        String userPk = String.valueOf(123l);
+        String actual = jwtProvider.createRefreshToken(userPk);
+
+        assertThat(actual).isNotNull();
+    }
+
+    @DisplayName("Access 토큰으로 사용자 정보를 조회한다.")
+    @Test
+    void showUserDetails(){
+
+        String userPk = String.valueOf(123l);
+        String actual = jwtProvider.createToken(userPk);
+
+        String expected = jwtProvider.getUserPk(actual);
+
+        assertThat(userPk).isEqualTo(expected);
     }
 }
