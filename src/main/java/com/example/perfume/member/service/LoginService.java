@@ -44,8 +44,8 @@ public class LoginService implements UserDetailsService {
 
     public LoginResponse generateToken(Long memberId) {
         Member member = memberService.findByMemberPk(memberId);
-        String accessToken = jwtProvider.createToken(member.getEmail());
-        String refreshToken = jwtProvider.createRefreshToken(member.getEmail());
+        String accessToken = jwtProvider.createToken(String.valueOf(member.getMemberId()));
+        String refreshToken = jwtProvider.createRefreshToken(String.valueOf(member.getMemberId()));
 
         LoginResponse loginResponse = LoginResponse.builder()
                 .id(member.getId())
@@ -73,13 +73,12 @@ public class LoginService implements UserDetailsService {
     public LoginResponse generateNewAccessToken(String refreshToken) {
         Token token = tokenRepository.findByRefreshToken(refreshToken).orElseThrow(UserNotFoundException::new);
         Member member = memberService.findByMemberPk(token.getMemberId());
-        tokenRepository.deleteByMemberId(token.getMemberId());
 
         return LoginResponse.builder()
                 .id(member.getId())
                 .nickname(member.getNickname())
                 .email(member.getEmail())
-                .accessToken(regenerateAccessToken(jwtProvider.getUserPk(token.getRefreshToken())))
+                .accessToken(regenerateAccessToken(String.valueOf(member.getMemberId())))
                 .build();
     }
 
