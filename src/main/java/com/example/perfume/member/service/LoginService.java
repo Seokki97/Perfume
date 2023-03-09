@@ -2,8 +2,7 @@ package com.example.perfume.member.service;
 
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.domain.Token;
-import com.example.perfume.member.dto.memberDto.LoginResponse;
-import com.example.perfume.member.exception.TokenInvalidException;
+import com.example.perfume.member.dto.loginDto.LoginResponse;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.repository.TokenRepository;
 import com.example.perfume.member.service.jwt.JwtProvider;
@@ -12,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.Cookie;
 
 @Service
 public class LoginService implements UserDetailsService {
@@ -51,6 +52,7 @@ public class LoginService implements UserDetailsService {
                 .id(member.getId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
+                .thumbnailImage(member.getThumbnailImage())
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
@@ -60,7 +62,7 @@ public class LoginService implements UserDetailsService {
     }
 
     public LoginResponse permitClientRequest(String accessToken) { // 요청 보내는 부분
-        Member member = memberService.findMemberByEmail(jwtProvider.getUserPk(accessToken));
+        Member member = memberService.findByMemberPk(Long.valueOf(jwtProvider.getUserPk(accessToken)));
 
         return LoginResponse.builder()
                 .id(member.getId())
@@ -84,5 +86,15 @@ public class LoginService implements UserDetailsService {
 
     public String regenerateAccessToken(String userPk) {
         return jwtProvider.createToken(userPk);
+    }
+
+    public Cookie createCookie(String refreshToken) {
+
+        Cookie cookie = new Cookie("refreshToken", refreshToken);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setMaxAge(7*24*60*60);
+
+        return cookie;
     }
 }
