@@ -26,6 +26,9 @@ public class SurveyService {
     public Survey findSurveyById(Long id) {
         return surveyRepository.findById(id).orElseThrow(SurveyNotFoundException::new);
     }
+    public Survey saveSurveyData(Survey survey){
+        return surveyRepository.save(survey);
+    }
 
     private List<Survey> isEmptyMoodColumn(SurveyResponseDto surveyResponseDto, List<Survey> secondAnswer) {
         if (secondAnswer.isEmpty()) {
