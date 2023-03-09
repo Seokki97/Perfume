@@ -1,9 +1,11 @@
 package com.example.perfume.member.controller;
 
-import com.example.perfume.member.dto.memberDto.LoginResponse;
+import com.example.perfume.member.dto.loginDto.LoginResponse;
+import com.example.perfume.member.exception.TokenInvalidException;
 import com.example.perfume.member.service.LoginService;
 import com.example.perfume.member.service.jwt.JwtInterceptor;
 import com.example.perfume.member.service.jwt.JwtProvider;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,23 +30,24 @@ public class LoginController {
     }
 
     @PostMapping("/response")
-    public ResponseEntity<LoginResponse> responseEntity(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws IOException {
+    public ResponseEntity responseEntity(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws IOException {
 
         if (!jwtInterceptor.preHandle(httpServletRequest, httpServletResponse, handler)) {
             httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            PrintWriter writer = httpServletResponse.getWriter();
-            writer.write("만료된 토큰입니다.");
-            writer.flush();
-            writer.close();
-            return (ResponseEntity<LoginResponse>) ResponseEntity.status(httpServletResponse.getStatus());
+            return ResponseEntity.status(httpServletResponse.SC_UNAUTHORIZED).body("토큰이 만료되었습니다.");
         }
-        return ResponseEntity.ok(loginService.responseToken(httpServletRequest));
+        String accessToken = jwtProvider.resolveToken(httpServletRequest);
+
+        return ResponseEntity.ok(loginService.permitClientRequest(accessToken));
     }
 
     @PostMapping("/regenerate")
     public ResponseEntity<LoginResponse> regenerateEntity(HttpServletRequest httpServletRequest) {
+
         String accessToken = jwtProvider.resolveToken(httpServletRequest);
         String refreshToken = jwtProvider.resolveRefreshToken(httpServletRequest);
-        return ResponseEntity.ok(loginService.generateNewAccessToken(accessToken, refreshToken));
+
+        return ResponseEntity.ok(loginService.generateNewAccessToken(refreshToken));
     }
+
 }
