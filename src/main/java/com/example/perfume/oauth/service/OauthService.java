@@ -107,10 +107,10 @@ public class OauthService {
 
         isAgreeEmailUsing(memberRequestDto.getEmail());
 
-        if(memberService.isAlreadyExistMember(memberRequestDto)){
+        if (memberService.isAlreadyExistMember(memberRequestDto)) {
             throw new MemberAlreadyExistException();
         }
-        memberRepository.save(member);
+        memberService.saveMemberProfile(member);
     }
 
     public boolean isAgreeEmailUsing(String email) {
