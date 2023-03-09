@@ -10,6 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
@@ -22,11 +23,9 @@ public class JwtInterceptor implements HandlerInterceptor {
     }
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws IOException {
-        String refreshToken = httpServletRequest.getHeader("X-AUTH-TOKEN");
+        String accessToken = httpServletRequest.getHeader("Authorization");
         try {
-            if (!jwtProvider.validateToken(refreshToken)) {
-                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                httpServletResponse.getWriter().write("만료됐다자식아");
+            if (!jwtProvider.validateToken(accessToken)) {
                 return false;
             }
         } catch (MalformedJwtException e) {
