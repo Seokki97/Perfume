@@ -1,9 +1,9 @@
-package com.example.perfume.post.service;
+package com.example.perfume.survey.domain.post.service;
 
-import com.example.perfume.post.domain.Post;
-import com.example.perfume.post.dto.PostRequestDto;
-import com.example.perfume.post.exception.PostNotFoundException;
-import com.example.perfume.post.repository.PostRepository;
+import com.example.perfume.survey.domain.post.domain.Post;
+import com.example.perfume.survey.domain.post.dto.PostRequestDto;
+import com.example.perfume.survey.domain.post.exception.PostNotFoundException;
+import com.example.perfume.survey.domain.post.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,10 +25,8 @@ public class PostService {
     }
 
     public Post showOnePost(Long id) {
-        Post post = postRepository.findById(id)
+        return postRepository.findById(id)
                 .orElseThrow(PostNotFoundException::new);
-
-        return post;
     }
 
     public List<Post> showAllPost() {

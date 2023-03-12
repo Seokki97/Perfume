@@ -1,4 +1,4 @@
-package com.example.perfume.post.domain;
+package com.example.perfume.survey.domain.post.domain;
 
 import com.sun.istack.NotNull;
 import lombok.AccessLevel;
