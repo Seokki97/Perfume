@@ -1,18 +1,17 @@
 package com.example.perfume.exception;
 
+import com.example.perfume.member.exception.RecommendNotFoundException;
 import com.example.perfume.member.exception.TokenInvalidException;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.oauth.exception.EmailNotFoundException;
 import com.example.perfume.oauth.exception.MemberAlreadyExistException;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
-import com.example.perfume.post.exception.PostNotFoundException;
+import com.example.perfume.survey.domain.post.exception.PostNotFoundException;
 import com.example.perfume.survey.exception.ScentNotFoundException;
 import com.example.perfume.survey.exception.SeasonNotFoundException;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -67,6 +66,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<?> handleUserNotFoundException(UserNotFoundException e){
+        return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleRecommendNotFoundException(RecommendNotFoundException e){
         return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
     }
 
