@@ -78,23 +78,9 @@ public class RecommendationService {
         RecommendResponseDto recommendResponseDto = RecommendResponseDto.builder()
                 .id(memberId)
                 .recommendationList(recommendRepository.findByMemberId(memberId))
-                .recommender(getRecommender(id))
-                .comment(getComment(id))
                 .build();
         return recommendResponseDto;
     }
-
-    public String getRecommender(Long id){
-       return findRecommendData(id).getRecommender();
-    }
-
-    public String getComment(Long id){
-        return findRecommendData(id).getComment();
-    }
-    public Recommendation findRecommendData(Long id){
-        return recommendRepository.findById(id).orElseThrow(RecommendNotFoundException::new);
-    }
-
     //추천받은 향수 세부 조회
 }
 
