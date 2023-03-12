@@ -16,25 +16,24 @@ import java.util.List;
 @Getter
 public class Recommendation {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    private Perfume perfume;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Perfume> perfume;
-
-    @Column(nullable = false,length = 40)
+    @Column(nullable = false, length = 40)
     private String recommender;
 
     @Column(length = 500)
     private String comment;
 
     @Builder
-    public Recommendation(Long id, Member member, List<Perfume> perfume, String recommender, String comment) {
+    public Recommendation(Long id, Member member, Perfume perfume, String recommender, String comment) {
         this.id = id;
         this.member = member;
         this.perfume = perfume;

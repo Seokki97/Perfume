@@ -5,7 +5,7 @@ import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -31,9 +31,6 @@ public class Perfume {
     @NotNull
     @Column(nullable = false)
     private String perfumeImageUrl;
-
-    @ManyToOne
-    private Recommendation recommendation;
 
     @Builder
     public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
