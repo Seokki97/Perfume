@@ -1,14 +1,12 @@
-package com.example.perfume.member.service.recommend;
+package com.example.perfume.recommend.service;
 
-import com.example.perfume.member.domain.Recommendation;
-import com.example.perfume.member.dto.recommendDto.RecommendRequestDto;
-import com.example.perfume.member.dto.recommendDto.RecommendResponseDto;
-import com.example.perfume.member.exception.RecommendNotFoundException;
-import com.example.perfume.member.repository.RecommendRepository;
+import com.example.perfume.recommend.domain.Recommendation;
+import com.example.perfume.recommend.dto.RecommendRequestDto;
+import com.example.perfume.recommend.dto.RecommendResponseDto;
+import com.example.perfume.recommend.exception.RecommendNotFoundException;
+import com.example.perfume.recommend.repository.RecommendRepository;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.exception.PerfumeNotFoundException;
-import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
 import com.example.perfume.survey.service.SurveyService;

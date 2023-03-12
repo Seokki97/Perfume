@@ -1,4 +1,4 @@
-package com.example.perfume.member.dto.recommendDto;
+package com.example.perfume.recommend.dto;
 
 import lombok.Getter;
 

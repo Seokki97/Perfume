@@ -1,13 +1,11 @@
-package com.example.perfume.member.controller;
+package com.example.perfume.recommend.controller;
 
-import com.example.perfume.member.domain.Recommendation;
-import com.example.perfume.member.dto.recommendDto.RecommendRequestDto;
-import com.example.perfume.member.dto.recommendDto.RecommendResponseDto;
-import com.example.perfume.member.service.recommend.RecommendationService;
+import com.example.perfume.recommend.domain.Recommendation;
+import com.example.perfume.recommend.dto.RecommendRequestDto;
+import com.example.perfume.recommend.dto.RecommendResponseDto;
+import com.example.perfume.recommend.service.RecommendationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/member")

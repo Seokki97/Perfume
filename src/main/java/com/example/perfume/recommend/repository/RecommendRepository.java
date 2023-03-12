@@ -1,6 +1,6 @@
-package com.example.perfume.member.repository;
+package com.example.perfume.recommend.repository;
 
-import com.example.perfume.member.domain.Recommendation;
+import com.example.perfume.recommend.domain.Recommendation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
