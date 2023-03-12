@@ -2,6 +2,8 @@ package com.example.perfume.member.service.recommend;
 
 import com.example.perfume.member.domain.Recommendation;
 import com.example.perfume.member.dto.recommendDto.RecommendRequestDto;
+import com.example.perfume.member.dto.recommendDto.RecommendResponseDto;
+import com.example.perfume.member.exception.RecommendNotFoundException;
 import com.example.perfume.member.repository.RecommendRepository;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.perfume.domain.Perfume;
@@ -72,11 +74,27 @@ public class RecommendationService {
 
     //추천받은 향수 조회 (토큰 인증 기능 추가해야함!!)
     @Transactional
-    public List<Recommendation> showRecommendedPerfume(Long id) {
+    public RecommendResponseDto showRecommendedPerfume(Long id) {
         Long memberId = memberService.findMemberById(id).getId();
-        List<Recommendation> recommendationList = recommendRepository.findByMemberId(memberId);
 
-        return recommendationList;
+        RecommendResponseDto recommendResponseDto = RecommendResponseDto.builder()
+                .id(memberId)
+                .recommendationList(recommendRepository.findByMemberId(memberId))
+                .recommender(getRecommender(id))
+                .comment(getComment(id))
+                .build();
+        return recommendResponseDto;
+    }
+
+    public String getRecommender(Long id){
+       return findRecommendData(id).getRecommender();
+    }
+
+    public String getComment(Long id){
+        return findRecommendData(id).getComment();
+    }
+    public Recommendation findRecommendData(Long id){
+        return recommendRepository.findById(id).orElseThrow(RecommendNotFoundException::new);
     }
 
     //추천받은 향수 세부 조회
