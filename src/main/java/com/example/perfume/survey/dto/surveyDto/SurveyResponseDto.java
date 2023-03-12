@@ -16,10 +16,6 @@ public class SurveyResponseDto {
     private String seasonAnswer;
     private String styleAnswer;
 
-    private Long perfumeId;
-
-    private Perfume perfume;
-
     public SurveyResponseDto() {
     }
 

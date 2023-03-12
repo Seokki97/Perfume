@@ -57,7 +57,7 @@ public class PerfumeDataController {
     }
 
     @PostMapping("/select-similar-perfume")
-    public ResponseEntity<List<Survey>> selectSimilarPerfume(@RequestBody PerfumeResponseDto perfumeResponseDto) {
+    public ResponseEntity<List<Perfume>> selectSimilarPerfume(@RequestBody PerfumeResponseDto perfumeResponseDto) {
         return ResponseEntity.ok(similarPerfumeRecommend.showSimilarPerfume(perfumeResponseDto));
     }
 

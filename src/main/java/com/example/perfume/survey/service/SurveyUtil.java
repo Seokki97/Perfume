@@ -1,14 +1,10 @@
 package com.example.perfume.survey.service;
 
 import com.example.perfume.survey.domain.Survey;
-import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
-import com.example.perfume.survey.exception.SurveyNotFoundException;
-import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,7 +13,6 @@ public class SurveyUtil {
     public List<Survey> compareTwoFilteredSurveyData(List<Survey> firstDataList, List<Survey> secondDataList) {
         return firstDataList.stream().filter(o -> secondDataList.stream()
                 .anyMatch(n -> o.getId().equals(n.getId()))).collect(Collectors.toList());
-
     }
 
     public List<Survey> addList(List<Survey> firstDataList, List<Survey> secondDataList) {

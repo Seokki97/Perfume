@@ -14,9 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -27,7 +24,7 @@ public class FeatureServiceTest {
     @Autowired
     private FeatureService featureService;
 
-    @DisplayName("선택된 향에 맞는 메세지가 출력된다.")
+    @DisplayName("선택된 향에 맞는 메세지가 응답된다.")
     @Test
     void selectScent(){
         Survey survey = Survey.builder()
@@ -46,7 +43,7 @@ public class FeatureServiceTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("선택된 계절에 맞는 메세지가 출력된다.")
+    @DisplayName("선택된 계절에 맞는 메세지가 응답된다.")
     @Test
     void selectSeason(){
         Survey survey = Survey.builder()
@@ -66,7 +63,7 @@ public class FeatureServiceTest {
         assertThat(actual).isEqualTo(expected);
     }
 
-    @DisplayName("선택된 무드에 맞는 메세지가 출력된다.")
+    @DisplayName("선택된 무드에 맞는 메세지가 응답된다.")
     @Test
     void selectMood(){
         Survey survey = Survey.builder()

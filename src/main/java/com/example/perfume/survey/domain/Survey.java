@@ -1,7 +1,5 @@
 package com.example.perfume.survey.domain;
 
-import com.example.perfume.member.domain.Recommendation;
-import com.example.perfume.perfume.domain.Perfume;
 import com.sun.istack.NotNull;
 import lombok.*;
 

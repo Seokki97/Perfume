@@ -3,7 +3,7 @@ package com.example.perfume.member;
 
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.domain.Token;
-import com.example.perfume.member.dto.memberDto.LoginResponse;
+import com.example.perfume.member.dto.loginDto.LoginResponse;
 import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.member.repository.TokenRepository;
 import com.example.perfume.member.service.LoginService;

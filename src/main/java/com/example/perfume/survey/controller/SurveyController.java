@@ -5,26 +5,21 @@ import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
-import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.repository.SurveyRepository;
 import com.example.perfume.survey.service.DataService;
-import com.example.perfume.survey.service.FeatureService;
 import com.example.perfume.survey.service.SurveyService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
-
 @RestController
 @RequestMapping("/survey")
 public class SurveyController {
 
     private final SurveyService surveyService;
-
     private final DataService dataService;
     private final SurveyRepository surveyRepository;
 

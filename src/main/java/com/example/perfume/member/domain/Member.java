@@ -25,7 +25,6 @@ public class Member {
     @Column(length = 100)
     private String email;
 
-    @NotNull
     private String thumbnailImage;
 
     @Builder

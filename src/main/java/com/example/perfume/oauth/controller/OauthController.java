@@ -1,11 +1,10 @@
 package com.example.perfume.oauth.controller;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.dto.memberDto.LoginResponse;
+import com.example.perfume.member.dto.loginDto.LoginResponse;
 import com.example.perfume.member.dto.memberDto.MemberRequestDto;
 import com.example.perfume.member.service.LoginService;
 import com.example.perfume.oauth.service.OauthService;
-import org.json.simple.parser.ParseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,5 +1,6 @@
 package com.example.perfume.survey.domain;
 
+import com.example.perfume.survey.exception.MoodNotFoundException;
 import com.example.perfume.survey.exception.SeasonNotFoundException;
 import lombok.Getter;
 
@@ -42,7 +43,7 @@ public enum MoodType {
         String expectedMood = survey.getMoodAnswer();
         MoodType moodType = Arrays.stream(MoodType.values())
                 .filter(mood -> mood.getMood().equals(expectedMood)).findAny()
-                .orElseThrow(SeasonNotFoundException::new);
+                .orElseThrow(MoodNotFoundException::new);
         return moodType.getMessage();
     }
 }

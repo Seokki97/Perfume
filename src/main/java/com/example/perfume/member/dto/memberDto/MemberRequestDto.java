@@ -28,6 +28,7 @@ public class MemberRequestDto {
 
     public Member toEntity() {
         return Member.builder()
+                .id(id)
                 .memberId(memberId)
                 .email(email)
                 .nickname(nickname)

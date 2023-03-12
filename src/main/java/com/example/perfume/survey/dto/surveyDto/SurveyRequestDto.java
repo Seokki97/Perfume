@@ -1,7 +1,9 @@
 package com.example.perfume.survey.dto.surveyDto;
 
+
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Survey;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -18,6 +20,7 @@ public class SurveyRequestDto {
 
     }
 
+    @Builder
     public SurveyRequestDto(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer) {
         this.id = id;
         this.genderAnswer = genderAnswer;
