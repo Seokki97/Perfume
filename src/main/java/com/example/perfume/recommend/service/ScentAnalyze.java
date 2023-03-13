@@ -21,7 +21,7 @@ public class ScentAnalyze {
         1. 향이 제일 많이 추천된 것을 찾는 기능
         2. 추천된 향수에서 가장 향이 많은것을 찾아 Response
      */
-    public List<String> extractScentAnswer(Long memberId){
+    private List<String> extractScentAnswer(Long memberId){
         List<Recommendation> recommendationList = recommendRepository.findByMemberId(memberId);
         List<String> perfumeList = new ArrayList<>();
         for (Recommendation recommendation : recommendationList) {
@@ -42,14 +42,14 @@ public class ScentAnalyze {
                 maxCount = count;
             }
         }
-        PerfumeAnalyze.isCountingNumberExist(maxCount);
+        AnalyzeUtil.isCountingNumberExist(maxCount);
         return ScentAnalyzeResponse.builder()
                 .scent(scentAnswer)
                 .count(maxCount)
                 .build();
     }
 
-    public Long countScent(List<String> scentList, int i) {
+    private Long countScent(List<String> scentList, int i) {
         return scentList.stream().filter(x -> scentList.get(i).matches(x)).count();
     }
 }

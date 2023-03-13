@@ -1,6 +1,5 @@
 package com.example.perfume.recommend.service;
 
-import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.PerfumeAnalyzeResponse;
 import com.example.perfume.recommend.exception.RecommendNotFoundException;
@@ -12,17 +11,13 @@ import java.util.List;
 
 @Service
 public class PerfumeAnalyze {
-
     private final RecommendRepository recommendRepository;
 
-    private final PerfumeService perfumeService;
+    public PerfumeAnalyze(RecommendRepository recommendRepository) {
 
-    public PerfumeAnalyze(RecommendRepository recommendRepository, PerfumeService perfumeService) {
         this.recommendRepository = recommendRepository;
-        this.perfumeService = perfumeService;
     }
-
-    public List<String> extractRecommendedPerfume(Long memberId) { //추천된 향수 리스트에서 향수 id를 추출해 List 생성
+    private List<String> extractRecommendedPerfume(Long memberId) { //추천된 향수 리스트에서 향수 id를 추출해 List 생성
         List<Recommendation> recommendationList = recommendRepository.findByMemberId(memberId);
         List<String> perfumeList = new ArrayList<>();
         for (Recommendation recommendation : recommendationList) {
@@ -43,20 +38,15 @@ public class PerfumeAnalyze {
                 maxCount = count;
             }
         }
-        isCountingNumberExist(maxCount);
+        AnalyzeUtil.isCountingNumberExist(maxCount);
         return PerfumeAnalyzeResponse.builder()
                 .perfumeName(perfumeName)
                 .countNumber(maxCount).build();
     }
 
-    public Long countPerfume(List<String> perfumeNameList, int finalI) {
-        return perfumeNameList.stream().filter(x -> perfumeNameList.get(finalI).matches(x)).count();
+    private Long countPerfume(List<String> perfumeNameList, int i) {
+        return perfumeNameList.stream().filter(x -> perfumeNameList.get(i).matches(x)).count();
     }
 
-    public void isCountingNumberExist(Long maxCount) {
-        if (maxCount < 1) {
-            throw new RecommendNotFoundException();
-        }
-    }
 
 }

@@ -25,7 +25,7 @@ public class PerfumeService {
         this.perfumeCsvFileLoading = perfumeCsvFileLoading;
     }
 
-    public PerfumeResponseDto makePerfumeList(Long id, int firstIndex, PerfumeList perfumeList) {
+    private PerfumeResponseDto makePerfumeList(Long id, int firstIndex, PerfumeList perfumeList) {
         return new PerfumeResponseDto(id,
                 perfumeList.getPerfumeName().get(firstIndex),
                 perfumeList.getPerfumeFeature().get(firstIndex),
@@ -69,14 +69,14 @@ public class PerfumeService {
         return perfumeList;
     }
 
-    public boolean isPerfumeListEmpty(List<Perfume> perfumeList) {
+    private boolean isPerfumeListEmpty(List<Perfume> perfumeList) {
         if (perfumeList.isEmpty()) {
             throw new PerfumeNotFoundException();
         }
         return true;
     }
 
-    public boolean isBrandListEmpty(List<Perfume> brandList) {
+    private boolean isBrandListEmpty(List<Perfume> brandList) {
         if (brandList.isEmpty()) {
             throw new BrandNotFoundException();
         }

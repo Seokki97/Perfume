@@ -22,7 +22,7 @@ public class DataService {
 
     }
 
-    public SurveyResponseDto makeList(Long id, int firstIndex, SurveyList surveyList) {
+    private SurveyResponseDto makeList(Long id, int firstIndex, SurveyList surveyList) {
         return new SurveyResponseDto(id,
                 surveyList.getFirstAnswer().get(firstIndex),
                 surveyList.getSecondAnswer().get(firstIndex),

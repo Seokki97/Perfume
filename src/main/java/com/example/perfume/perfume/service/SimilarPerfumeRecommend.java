@@ -29,19 +29,19 @@ public class SimilarPerfumeRecommend {
         this.perfumeRepository = perfumeRepository;
     }
 
-    public List<Survey> extractFirstFeature(PerfumeResponseDto perfumeResponseDto) {
+    private List<Survey> extractFirstFeature(PerfumeResponseDto perfumeResponseDto) {
         return surveyRepository.findByGenderAnswer(surveyService.findSurveyById(perfumeResponseDto.getId()).getGenderAnswer());
     }
 
-    public List<Survey> extractSecondFeature(PerfumeResponseDto perfumeResponseDto) {
+    private List<Survey> extractSecondFeature(PerfumeResponseDto perfumeResponseDto) {
         return surveyRepository.findByScentAnswer(surveyService.findSurveyById(perfumeResponseDto.getId()).getScentAnswer());
     }
 
-    public List<Survey> extractThirdFeature(PerfumeResponseDto perfumeResponseDto) {
+    private List<Survey> extractThirdFeature(PerfumeResponseDto perfumeResponseDto) {
         return surveyRepository.findByMoodAnswerContaining(surveyService.findSurveyById(perfumeResponseDto.getId()).getMoodAnswer());
     }
 
-    public List<Survey> addFirstFeatureAndGenderless(PerfumeResponseDto perfumeResponseDto) {
+    private List<Survey> addFirstFeatureAndGenderless(PerfumeResponseDto perfumeResponseDto) {
         return surveyUtil.addList(extractFirstFeature(perfumeResponseDto), surveyRepository.findByGenderAnswer("젠더리스"));
     }
 

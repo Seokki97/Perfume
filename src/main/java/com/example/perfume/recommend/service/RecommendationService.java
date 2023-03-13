@@ -37,7 +37,7 @@ public class RecommendationService {
         this.perfumeService = perfumeService;
     }
 
-    public SurveyResponseDto createSurveyResponseDto(RecommendRequestDto recommendRequestDto) {
+    private SurveyResponseDto createSurveyResponseDto(RecommendRequestDto recommendRequestDto) {
         SurveyResponseDto surveyResponseDto = SurveyResponseDto.builder()
                 .genderAnswer(recommendRequestDto.getGenderAnswer())
                 .moodAnswer(recommendRequestDto.getMoodAnswer())
@@ -54,18 +54,19 @@ public class RecommendationService {
                 .perfume(findPerfumeBySurvey(recommendRequestDto))
                 .recommender(recommendRequestDto.getRecommender())
                 .comment(recommendRequestDto.getComment())
+                .scentAnswer(recommendRequestDto.getScentAnswer())
                 .build();
         recommendRepository.save(recommendation);
         return recommendation;
     }
 
-    public Perfume findPerfumeBySurvey(RecommendRequestDto recommendRequestDto){
+    private Perfume findPerfumeBySurvey(RecommendRequestDto recommendRequestDto){
      List<Perfume> surveyResultList = surveyService.compareData(createSurveyResponseDto(recommendRequestDto));
      int randomNumber = createRandomPerfumeFromList(surveyResultList);
      return perfumeService.findPerfumeById(surveyResultList.get(randomNumber).getId());
     }
 
-    public int createRandomPerfumeFromList(List<Perfume> surveyResultList){
+    private int createRandomPerfumeFromList(List<Perfume> surveyResultList){
         Random random = new Random();
         return random.nextInt(surveyResultList.size());
     }

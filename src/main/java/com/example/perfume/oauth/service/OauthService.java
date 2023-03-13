@@ -27,7 +27,7 @@ public class OauthService {
     private final JwtProvider jwtProvider;
     private final MemberRepository memberRepository;
 
-    public OauthService(MemberService memberService, JwtProvider jwtProvider,
+    private OauthService(MemberService memberService, JwtProvider jwtProvider,
                         MemberRepository memberRepository) {
         this.memberService = memberService;
         this.jwtProvider = jwtProvider;
@@ -35,7 +35,7 @@ public class OauthService {
         this.memberRepository = memberRepository;
     }
 
-    public HttpHeaders setHttpHeaders() {
+    private HttpHeaders setHttpHeaders() {
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -43,7 +43,7 @@ public class OauthService {
         return httpHeaders;
     }
 
-    public LinkedMultiValueMap<String, String> setHttpBody(String code) {
+    private LinkedMultiValueMap<String, String> setHttpBody(String code) {
 
         LinkedMultiValueMap<String, String> accessTokenParams = new LinkedMultiValueMap<>();
         accessTokenParams.add(OauthType.GRANT_TYPE.getName(), OauthType.GRANT_TYPE.getType());
@@ -53,7 +53,7 @@ public class OauthService {
         return accessTokenParams;
     }
 
-    public RestTemplate createRestTemplate() {
+    private RestTemplate createRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate;
     }
