@@ -1,6 +1,6 @@
-package com.example.perfume.survey.domain.post.dto;
+package com.example.perfume.post.dto;
 
-import com.example.perfume.survey.domain.post.domain.Post;
+import com.example.perfume.post.domain.Post;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,9 +1,9 @@
-package com.example.perfume.survey.domain.post.service;
+package com.example.perfume.post.service;
 
-import com.example.perfume.survey.domain.post.domain.Post;
-import com.example.perfume.survey.domain.post.dto.PostRequestDto;
-import com.example.perfume.survey.domain.post.exception.PostNotFoundException;
-import com.example.perfume.survey.domain.post.repository.PostRepository;
+import com.example.perfume.post.domain.Post;
+import com.example.perfume.post.dto.PostRequestDto;
+import com.example.perfume.post.exception.PostNotFoundException;
+import com.example.perfume.post.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

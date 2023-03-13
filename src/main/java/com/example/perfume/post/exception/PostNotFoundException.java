@@ -1,4 +1,4 @@
-package com.example.perfume.survey.domain.post.exception;
+package com.example.perfume.post.exception;
 
 import com.example.perfume.advice.BadRequestException;
 
