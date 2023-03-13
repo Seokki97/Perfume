@@ -5,6 +5,7 @@ import com.example.perfume.member.exception.TokenInvalidException;
 import com.example.perfume.member.service.LoginService;
 import com.example.perfume.member.service.jwt.JwtInterceptor;
 import com.example.perfume.member.service.jwt.JwtProvider;
+import com.example.perfume.member.service.jwt.LoginCheck;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +30,9 @@ public class LoginController {
         this.jwtProvider = jwtProvider;
     }
 
+    @LoginCheck
     @PostMapping("/response")
-    public ResponseEntity responseEntity(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws IOException {
-
-        if (!jwtInterceptor.preHandle(httpServletRequest, httpServletResponse, handler)) {
-            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return ResponseEntity.status(httpServletResponse.SC_UNAUTHORIZED).body("토큰이 만료되었습니다.");
-        }
+    public ResponseEntity responseEntity(HttpServletRequest httpServletRequest) {
         String accessToken = jwtProvider.resolveToken(httpServletRequest);
 
         return ResponseEntity.ok(loginService.permitClientRequest(accessToken));
