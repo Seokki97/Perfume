@@ -1,6 +1,7 @@
 package com.example.perfume.exception;
 
-import com.example.perfume.member.exception.RecommendNotFoundException;
+import com.example.perfume.member.exception.TokenExpiredException;
+import com.example.perfume.recommend.exception.RecommendNotFoundException;
 import com.example.perfume.member.exception.TokenInvalidException;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.oauth.exception.EmailNotFoundException;
@@ -74,4 +75,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
     }
 
+    @ExceptionHandler
+    public ResponseEntity<?> handleTokenExpiredException(TokenExpiredException e){
+        return ResponseEntity.status(UNAUTHORIZED_ERROR).body(e.getMessage());
+    }
 }
