@@ -33,13 +33,16 @@ public class Recommendation {
     @Column(length = 500)
     private String comment;
 
+    private String scentAnswer;
+
     @Builder
-    public Recommendation(Long id, Member member, Perfume perfume, String recommender, String comment) {
+    public Recommendation(Long id, Member member, Perfume perfume, String recommender, String comment, String scentAnswer) {
         this.id = id;
         this.member = member;
         this.perfume = perfume;
         this.recommender = recommender;
         this.comment = comment;
+        this.scentAnswer = scentAnswer;
     }
 
 }
