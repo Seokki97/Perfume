@@ -1,8 +1,11 @@
 package com.example.perfume.oauth.service;
 
 import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.dto.loginDto.LoginResponse;
 import com.example.perfume.member.dto.memberDto.MemberRequestDto;
+import com.example.perfume.member.dto.memberDto.MemberResponseDto;
 import com.example.perfume.member.repository.MemberRepository;
+import com.example.perfume.member.service.LoginService;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.member.service.jwt.JwtProvider;
 import com.example.perfume.oauth.OauthType;
@@ -24,14 +27,13 @@ public class OauthService {
 
     private final MemberService memberService;
 
-    private final JwtProvider jwtProvider;
+    private final LoginService loginService;
     private final MemberRepository memberRepository;
 
-    private OauthService(MemberService memberService, JwtProvider jwtProvider,
-                        MemberRepository memberRepository) {
+    private OauthService(MemberService memberService, LoginService loginService,
+                         MemberRepository memberRepository) {
         this.memberService = memberService;
-        this.jwtProvider = jwtProvider;
-
+        this.loginService = loginService;
         this.memberRepository = memberRepository;
     }
 
@@ -97,20 +99,19 @@ public class OauthService {
         }
     }
 
-    public void saveUserProfile(MemberRequestDto memberRequestDto) {
+    public LoginResponse saveUserProfile(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
                 .memberId(memberRequestDto.getMemberId())
                 .email(memberRequestDto.getEmail())
                 .nickname(memberRequestDto.getNickname())
                 .thumbnailImage(memberRequestDto.getThumbnailImage())
                 .build();
-
         isAgreeEmailUsing(memberRequestDto.getEmail());
 
-        if (memberService.isAlreadyExistMember(memberRequestDto)) {
-            throw new MemberAlreadyExistException();
+        if (!memberService.isAlreadyExistMember(memberRequestDto)) {
+            memberService.saveMemberProfile(member);
         }
-        memberService.saveMemberProfile(member);
+        return loginService.generateToken(member.getMemberId());
     }
 
     public boolean isAgreeEmailUsing(String email) {
