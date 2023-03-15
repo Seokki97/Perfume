@@ -1,5 +1,6 @@
 package com.example.perfume.exception;
 
+import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.exception.TokenExpiredException;
 import com.example.perfume.recommend.exception.RecommendNotFoundException;
 import com.example.perfume.member.exception.TokenInvalidException;
@@ -8,7 +9,8 @@ import com.example.perfume.oauth.exception.EmailNotFoundException;
 import com.example.perfume.oauth.exception.MemberAlreadyExistException;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
-import com.example.perfume.survey.domain.post.exception.PostNotFoundException;
+import com.example.perfume.post.exception.PostNotFoundException;
+import com.example.perfume.survey.exception.MoodNotFoundException;
 import com.example.perfume.survey.exception.ScentNotFoundException;
 import com.example.perfume.survey.exception.SeasonNotFoundException;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
@@ -27,6 +29,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(SeasonNotFoundException.class)
     public ResponseEntity<?> handleSeasonNotFoundException(SeasonNotFoundException e){
+        return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
+    }
+
+    @ExceptionHandler(MoodNotFoundException.class)
+    public ResponseEntity<?> handleMoodNotFoundException(MoodNotFoundException e){
         return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
     }
 
