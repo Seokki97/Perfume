@@ -4,6 +4,7 @@ import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.survey.domain.Survey;
+import com.example.perfume.survey.domain.SurveyType;
 import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.repository.SurveyRepository;
@@ -14,9 +15,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class SurveyService {
-    private static final String GENDERLESS = "젠더리스";
-    private static final String DEFAULT = "디폴트";
-    private static final String FOUR_SEASON = "무관";
     private final SurveyRepository surveyRepository;
     private final SurveyUtil surveyUtil;
     private final PerfumeService perfumeService;
@@ -38,41 +36,9 @@ public class SurveyService {
         return surveyRepository.save(survey);
     }
 
-    private List<Survey> isEmptyMoodColumn(SurveyResponseDto surveyResponseDto, List<Survey> secondAnswer) {
-        if (secondAnswer.isEmpty()) {
-            return retrySecondFiltering(surveyResponseDto);
-        }
-        return secondAnswer;
-    }
-
-    private List<Survey> filterScentAnswer(SurveyResponseDto surveyResponseDto) {
-        if (!surveyRepository.existsByScentAnswer(surveyResponseDto.getScentAnswer())) {
-            throw new SurveyNotFoundException();
-        }
-        return surveyRepository.findByScentAnswer(surveyResponseDto.getScentAnswer());
-    }
-
-    private List<Survey> filterMoodAnswer(SurveyResponseDto surveyResponseDto) {
-        if (!surveyRepository.existsByMoodAnswer(surveyResponseDto.getMoodAnswer())) {
-            throw new SurveyNotFoundException();
-        }
-        return surveyRepository.findByMoodAnswerContaining(surveyResponseDto.getMoodAnswer());
-    }
-
-    private List<Survey> compareFilteredData(SurveyResponseDto surveyResponseDto) {
-        return surveyUtil.compareTwoFilteredSurveyData(
-                surveyRepository.findByGenderAnswerOrGenderAnswer(
-                        surveyResponseDto.getGenderAnswer(), GENDERLESS), filterScentAnswer(surveyResponseDto));
-    }
-
-    private List<Survey> retrySecondFiltering(SurveyResponseDto surveyResponseDto) {
-        return surveyUtil.compareTwoFilteredSurveyData
-                (compareFilteredData(surveyResponseDto), surveyRepository.findByMoodAnswerNotContaining(surveyResponseDto.getMoodAnswer()));
-    }
-
     public List<Perfume> showPerfumeListBySurvey(SurveyResponseDto surveyResponseDto) {
         List<Survey> surveyList = surveyRepository.findByGenderAnswerOrGenderAnswerAndScentAnswer
-                (surveyResponseDto.getGenderAnswer(), GENDERLESS, surveyResponseDto.getScentAnswer());
+                (surveyResponseDto.getGenderAnswer(), SurveyType.GENDERLESS.getValue(), surveyResponseDto.getScentAnswer());
         List<Survey> filteredSurveys = filterByMood(surveyResponseDto, surveyList);
         filteredSurveys = filterBySeason(surveyResponseDto, filteredSurveys);
         filteredSurveys = filterByStyle(surveyResponseDto, filteredSurveys);
@@ -88,16 +54,15 @@ public class SurveyService {
     public List<Survey> filterBySeason(SurveyResponseDto surveyResponseDto, List<Survey> surveyList) {
         return surveyUtil.compareTwoFilteredSurveyData(
                 surveyList,
-                surveyRepository.findBySeasonAnswerContainingOrSeasonAnswer(surveyResponseDto.getSeasonAnswer(), FOUR_SEASON));
+                surveyRepository.findBySeasonAnswerContainingOrSeasonAnswer(surveyResponseDto.getSeasonAnswer(), SurveyType.FOUR_SEASON.getValue()));
     }
 
     public List<Survey> filterByStyle(SurveyResponseDto surveyResponseDto, List<Survey> surveyList) {
         return surveyUtil.compareTwoFilteredSurveyData(
                 surveyList,
-                surveyRepository.findByStyleAnswerContainingOrStyleAnswer(surveyResponseDto.getStyleAnswer(), DEFAULT));
+                surveyRepository.findByStyleAnswerContainingOrStyleAnswer(surveyResponseDto.getStyleAnswer(), SurveyType.DEFAULT.getValue()));
 
     }
-
 
     private List<Perfume> findPerfumeData(List<Survey> finalDataList, List<Survey> thirdComparedList) {
         return surveyUtil.isEmptyFinalResult(finalDataList, thirdComparedList).stream()
