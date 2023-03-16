@@ -26,7 +26,8 @@ public class SurveyService {
     public Survey findSurveyById(Long id) {
         return surveyRepository.findById(id).orElseThrow(SurveyNotFoundException::new);
     }
-    public Survey saveSurveyData(Survey survey){
+
+    public Survey saveSurveyData(Survey survey) {
         return surveyRepository.save(survey);
     }
 
@@ -84,11 +85,10 @@ public class SurveyService {
 
     private List<Survey> compareGenderAndScentAnswer(SurveyResponseDto surveyResponseDto) {
         return surveyUtil.compareTwoFilteredSurveyData(
-                surveyUtil.addAnswerListByType(
-                        filterGenderAnswer(surveyResponseDto),
-                        surveyRepository.findByGenderAnswer("젠더리스")),
+                surveyRepository.findByGenderAnswerOrGenderAnswer(surveyResponseDto.getGenderAnswer(),"젠더리스"),
                 filterScentAnswer(surveyResponseDto));
     }
+
 
     private List<Perfume> findPerfumeData(List<Survey> finalDataList, List<Survey> thirdComparedList) {
         return surveyUtil.isEmptyFinalResult(finalDataList, thirdComparedList).stream()
