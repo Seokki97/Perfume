@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +31,7 @@ public class SimilarPerfumeRecommend {
     }
 
     private List<Survey> extractFirstFeature(PerfumeResponseDto perfumeResponseDto) {
-        return surveyRepository.findByGenderAnswer(surveyService.findSurveyById(perfumeResponseDto.getId()).getGenderAnswer());
+        return surveyRepository.findByGenderAnswerOrGenderAnswer(surveyService.findSurveyById(perfumeResponseDto.getId()).getGenderAnswer(),"젠더리스");
     }
 
     private List<Survey> extractSecondFeature(PerfumeResponseDto perfumeResponseDto) {
@@ -41,20 +42,26 @@ public class SimilarPerfumeRecommend {
         return surveyRepository.findByMoodAnswerContaining(surveyService.findSurveyById(perfumeResponseDto.getId()).getMoodAnswer());
     }
 
-    private List<Survey> addFirstFeatureAndGenderless(PerfumeResponseDto perfumeResponseDto) {
+    private List<Survey> filterGenderFeature(PerfumeResponseDto perfumeResponseDto) {
         return surveyUtil.addList(extractFirstFeature(perfumeResponseDto), surveyRepository.findByGenderAnswer("젠더리스"));
     }
 
     public List<Perfume> showSimilarPerfume(PerfumeResponseDto perfumeResponseDto) {
         List<Survey> firstComparedList = surveyUtil.compareTwoFilteredSurveyData
-                (addFirstFeatureAndGenderless(perfumeResponseDto), extractSecondFeature(perfumeResponseDto));
+                (filterGenderFeature(perfumeResponseDto), extractSecondFeature(perfumeResponseDto));
         List<Survey> result = surveyUtil.compareTwoFilteredSurveyData(firstComparedList, extractThirdFeature(perfumeResponseDto));
-        List<Perfume> perfumeList = new ArrayList<>();
-        for (int i = 0; i < result.size(); i++) {
-            perfumeList.add(perfumeRepository.findById(result.get(i).getId()).orElseThrow(PerfumeNotFoundException::new));
-        }
+
+        return findPerfumeData(result).stream()
+                .filter(x -> x.getId() != perfumeResponseDto.getId())
+                .collect(Collectors.toList());
+    }
+
+    public List<Perfume> findPerfumeData(List<Survey> surveyList){
+       List<Perfume> perfumeList = new ArrayList<>();
+       for(Survey survey : surveyList){
+           perfumeList.add(perfumeRepository.findById(survey.getId()).orElseThrow(PerfumeNotFoundException::new));
+       }
         return perfumeList;
-        //return surveyUtil.compareTwoFilteredSurveyData(firstComparedList, extractThirdFeature(perfumeResponseDto));
     }
 
 }
