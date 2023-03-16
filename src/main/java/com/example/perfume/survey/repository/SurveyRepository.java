@@ -30,4 +30,5 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     List<Survey> findByGenderAnswerOrGenderAnswer(String genderAnswer,String genderLess);
     List<Survey> findBySeasonAnswerContainingOrSeasonAnswer(String seasonAnswer, String fourSeason);
+    List<Survey> findByStyleAnswerContainingOrStyleAnswer(String styleAnswer, String defaultValue);
 }
