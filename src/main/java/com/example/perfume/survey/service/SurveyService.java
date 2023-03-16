@@ -5,6 +5,7 @@ import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.domain.SurveyType;
+import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.repository.SurveyRepository;
@@ -33,31 +34,31 @@ public class SurveyService {
         return surveyRepository.save(survey);
     }
 
-    public List<Perfume> showPerfumeListBySurvey(SurveyResponseDto surveyResponseDto) {
+    public List<Perfume> showPerfumeListBySurvey(SurveyRequestDto surveyRequestDto) {
         List<Survey> surveyList = surveyRepository.findByGenderAnswerOrGenderAnswerAndScentAnswer
-                (surveyResponseDto.getGenderAnswer(), SurveyType.GENDERLESS.getValue(), surveyResponseDto.getScentAnswer());
-        List<Survey> filteredSurveys = filterByMood(surveyResponseDto, surveyList);
-        filteredSurveys = filterBySeason(surveyResponseDto, filteredSurveys);
-        filteredSurveys = filterByStyle(surveyResponseDto, filteredSurveys);
+                (surveyRequestDto.getGenderAnswer(), SurveyType.GENDERLESS.getValue(), surveyRequestDto.getScentAnswer());
+        List<Survey> filteredSurveys = filterByMood(surveyRequestDto, surveyList);
+        filteredSurveys = filterBySeason(surveyRequestDto, filteredSurveys);
+        filteredSurveys = filterByStyle(surveyRequestDto, filteredSurveys);
         return findPerfumeData(filteredSurveys, surveyList);
     }
 
-    public List<Survey> filterByMood(SurveyResponseDto surveyResponseDto, List<Survey> surveyList) {
+    public List<Survey> filterByMood(SurveyRequestDto surveyRequestDto, List<Survey> surveyList) {
         return surveyUtil.compareTwoFilteredSurveyData(
                 surveyList,
-                surveyRepository.findByMoodAnswerContaining(surveyResponseDto.getMoodAnswer()));
+                surveyRepository.findByMoodAnswerContaining(surveyRequestDto.getMoodAnswer()));
     }
 
-    public List<Survey> filterBySeason(SurveyResponseDto surveyResponseDto, List<Survey> surveyList) {
+    public List<Survey> filterBySeason(SurveyRequestDto surveyRequestDto, List<Survey> surveyList) {
         return surveyUtil.compareTwoFilteredSurveyData(
                 surveyList,
-                surveyRepository.findBySeasonAnswerContainingOrSeasonAnswer(surveyResponseDto.getSeasonAnswer(), SurveyType.FOUR_SEASON.getValue()));
+                surveyRepository.findBySeasonAnswerContainingOrSeasonAnswer(surveyRequestDto.getSeasonAnswer(), SurveyType.FOUR_SEASON.getValue()));
     }
 
-    public List<Survey> filterByStyle(SurveyResponseDto surveyResponseDto, List<Survey> surveyList) {
+    public List<Survey> filterByStyle(SurveyRequestDto surveyRequestDto, List<Survey> surveyList) {
         return surveyUtil.compareTwoFilteredSurveyData(
                 surveyList,
-                surveyRepository.findByStyleAnswerContainingOrStyleAnswer(surveyResponseDto.getStyleAnswer(), SurveyType.DEFAULT.getValue()));
+                surveyRepository.findByStyleAnswerContainingOrStyleAnswer(surveyRequestDto.getStyleAnswer(), SurveyType.DEFAULT.getValue()));
 
     }
 
