@@ -18,14 +18,11 @@ public class SurveyService {
     private final SurveyRepository surveyRepository;
     private final SurveyUtil surveyUtil;
     private final PerfumeService perfumeService;
-    private final PerfumeRepository perfumeRepository;
 
-    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil, PerfumeService perfumeService,
-                         PerfumeRepository perfumeRepository) {
+    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil, PerfumeService perfumeService) {
         this.surveyRepository = surveyRepository;
         this.surveyUtil = surveyUtil;
         this.perfumeService = perfumeService;
-        this.perfumeRepository = perfumeRepository;
     }
 
     public Survey findSurveyById(Long id) {
