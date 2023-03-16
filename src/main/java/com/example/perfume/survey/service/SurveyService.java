@@ -74,9 +74,7 @@ public class SurveyService {
         List<Survey> secondComparedList = surveyUtil.compareTwoFilteredSurveyData(firstComparedList, filterMoodAnswer(surveyResponseDto));
         List<Survey> thirdComparedList = surveyUtil.compareTwoFilteredSurveyData(
                 isEmptyMoodColumn(surveyResponseDto, secondComparedList),
-                surveyUtil.addAnswerListByType(
-                        surveyRepository.findBySeasonAnswerContaining(surveyResponseDto.getSeasonAnswer()),
-                        surveyRepository.findBySeasonAnswer("무관")));
+                surveyRepository.findBySeasonAnswerContainingOrSeasonAnswer(surveyResponseDto.getSeasonAnswer(), "무관"));
         List<Survey> finalDataList = surveyUtil.compareTwoFilteredSurveyData(thirdComparedList, surveyUtil.addAnswerListByType(surveyRepository.findByStyleAnswer(
                 surveyResponseDto.getStyleAnswer()), surveyRepository.findByStyleAnswer("디폴트")));
 
@@ -85,7 +83,7 @@ public class SurveyService {
 
     private List<Survey> compareGenderAndScentAnswer(SurveyResponseDto surveyResponseDto) {
         return surveyUtil.compareTwoFilteredSurveyData(
-                surveyRepository.findByGenderAnswerOrGenderAnswer(surveyResponseDto.getGenderAnswer(),"젠더리스"),
+                surveyRepository.findByGenderAnswerOrGenderAnswer(surveyResponseDto.getGenderAnswer(), "젠더리스"),
                 filterScentAnswer(surveyResponseDto));
     }
 

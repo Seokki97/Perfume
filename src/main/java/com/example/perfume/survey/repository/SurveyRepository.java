@@ -20,10 +20,6 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     List<Survey> findByMoodAnswerNotContaining(String moodAnswer);
 
-    List<Survey> findBySeasonAnswerContaining(String seasonAnswer);
-
-    List<Survey> findBySeasonAnswer(String seasonAnswer);
-
     List<Survey> findByStyleAnswer(String styleAnswer);
 
     boolean existsByScentAnswer(String scentAnswer);
@@ -32,4 +28,6 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     boolean existsByMoodAnswer(String moodAnswer);
 
+    List<Survey> findByGenderAnswerOrGenderAnswer(String genderAnswer,String genderLess);
+    List<Survey> findBySeasonAnswerContainingOrSeasonAnswer(String seasonAnswer, String fourSeason);
 }
