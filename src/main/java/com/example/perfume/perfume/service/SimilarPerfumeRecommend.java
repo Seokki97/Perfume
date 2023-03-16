@@ -31,7 +31,7 @@ public class SimilarPerfumeRecommend {
     }
 
     private List<Survey> extractFirstFeature(PerfumeResponseDto perfumeResponseDto) {
-        return surveyRepository.findByGenderAnswerOrGenderAnswer(surveyService.findSurveyById(perfumeResponseDto.getId()).getGenderAnswer(),"젠더리스");
+        return surveyRepository.findByGenderAnswerOrGenderAnswer(surveyService.findSurveyById(perfumeResponseDto.getId()).getGenderAnswer(), "젠더리스");
     }
 
     private List<Survey> extractSecondFeature(PerfumeResponseDto perfumeResponseDto) {
@@ -51,17 +51,21 @@ public class SimilarPerfumeRecommend {
                 (filterGenderFeature(perfumeResponseDto), extractSecondFeature(perfumeResponseDto));
         List<Survey> result = surveyUtil.compareTwoFilteredSurveyData(firstComparedList, extractThirdFeature(perfumeResponseDto));
 
-        return findPerfumeData(result).stream()
-                .filter(x -> x.getId() != perfumeResponseDto.getId())
-                .collect(Collectors.toList());
+        return findExceptRequestedPerfume(findPerfumeData(result),perfumeResponseDto);
     }
 
-    public List<Perfume> findPerfumeData(List<Survey> surveyList){
-       List<Perfume> perfumeList = new ArrayList<>();
-       for(Survey survey : surveyList){
-           perfumeList.add(perfumeRepository.findById(survey.getId()).orElseThrow(PerfumeNotFoundException::new));
-       }
+    public List<Perfume> findPerfumeData(List<Survey> surveyList) {
+        List<Perfume> perfumeList = new ArrayList<>();
+        for (Survey survey : surveyList) {
+            perfumeList.add(perfumeRepository.findById(survey.getId()).orElseThrow(PerfumeNotFoundException::new));
+        }
         return perfumeList;
+    }
+
+    private List<Perfume> findExceptRequestedPerfume(List<Perfume> perfumeList, PerfumeResponseDto perfumeResponseDto) {
+        return perfumeList.stream()
+                .filter(x -> x.getId() != perfumeResponseDto.getId())
+                .collect(Collectors.toList());
     }
 
 }
