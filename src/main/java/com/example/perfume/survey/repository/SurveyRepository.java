@@ -18,17 +18,15 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     List<Survey> findByMoodAnswerContaining(String moodAnswer);
 
-    List<Survey> findByMoodAnswerNotContaining(String moodAnswer);
 
     List<Survey> findByStyleAnswer(String styleAnswer);
 
-    boolean existsByScentAnswer(String scentAnswer);
 
-    boolean existsByGenderAnswer(String genderAnswer);
+    List<Survey> findByGenderAnswerOrGenderAnswer(String genderAnswer, String genderLess);
 
-    boolean existsByMoodAnswer(String moodAnswer);
-
-    List<Survey> findByGenderAnswerOrGenderAnswer(String genderAnswer,String genderLess);
     List<Survey> findBySeasonAnswerContainingOrSeasonAnswer(String seasonAnswer, String fourSeason);
+
     List<Survey> findByStyleAnswerContainingOrStyleAnswer(String styleAnswer, String defaultValue);
+
+    List<Survey> findByGenderAnswerOrGenderAnswerAndScentAnswer(String genderAnswer, String genderLess, String scentAnswer);
 }
