@@ -1,5 +1,6 @@
 package com.example.perfume.survey.domain;
 
+import com.example.perfume.perfume.domain.Perfume;
 import com.sun.istack.NotNull;
 import lombok.*;
 
@@ -33,14 +34,18 @@ public class Survey {
     @Column(nullable = false, length = 10)
     private String styleAnswer;
 
+    @ManyToOne
+    private Perfume perfume;
+
     @Builder
-    public Survey(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer) {
+    public Survey(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer,Perfume perfume) {
         this.id = id;
         this.genderAnswer = genderAnswer;
         this.scentAnswer = scentAnswer;
         this.moodAnswer = moodAnswer;
         this.seasonAnswer = seasonAnswer;
         this.styleAnswer = styleAnswer;
+        this.perfume= perfume;
     }
 
 }

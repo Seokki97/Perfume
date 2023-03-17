@@ -16,17 +16,20 @@ public class SurveyResponseDto {
     private String seasonAnswer;
     private String styleAnswer;
 
+    private Perfume perfume;
+
     public SurveyResponseDto() {
     }
 
     @Builder
-    public SurveyResponseDto(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer) {
+    public SurveyResponseDto(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer,Perfume perfume) {
         this.id = id;
         this.genderAnswer = genderAnswer;
         this.scentAnswer = scentAnswer;
         this.moodAnswer = moodAnswer;
         this.seasonAnswer = seasonAnswer;
         this.styleAnswer = styleAnswer;
+        this.perfume= perfume;
 
     }
 
@@ -38,6 +41,7 @@ public class SurveyResponseDto {
                 .moodAnswer(moodAnswer)
                 .seasonAnswer(seasonAnswer)
                 .styleAnswer(styleAnswer)
+                .perfume(perfume)
                 .build();
     }
 }
