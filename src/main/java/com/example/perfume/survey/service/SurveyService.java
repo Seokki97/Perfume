@@ -1,12 +1,10 @@
 package com.example.perfume.survey.service;
 
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.repository.PerfumeRepository;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.domain.SurveyType;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
-import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
@@ -34,15 +32,6 @@ public class SurveyService {
         return surveyRepository.save(survey);
     }
 
-    public List<Perfume> showPerfumeListBySurvey(SurveyRequestDto surveyRequestDto) {
-        List<Survey> surveyList = surveyRepository.findByGenderAnswerOrGenderAnswerAndScentAnswer
-                (surveyRequestDto.getGenderAnswer(), SurveyType.GENDERLESS.getValue(), surveyRequestDto.getScentAnswer());
-        List<Survey> filteredSurveys = filterByMood(surveyRequestDto, surveyList);
-        filteredSurveys = filterBySeason(surveyRequestDto, filteredSurveys);
-        filteredSurveys = filterByStyle(surveyRequestDto, filteredSurveys);
-        return findPerfumeData(filteredSurveys, surveyList);
-    }
-
     public List<Survey> filterByMood(SurveyRequestDto surveyRequestDto, List<Survey> surveyList) {
         return surveyUtil.compareTwoFilteredSurveyData(
                 surveyList,
@@ -59,13 +48,19 @@ public class SurveyService {
         return surveyUtil.compareTwoFilteredSurveyData(
                 surveyList,
                 surveyRepository.findByStyleAnswerContainingOrStyleAnswer(surveyRequestDto.getStyleAnswer(), SurveyType.DEFAULT.getValue()));
-
     }
 
     private List<Perfume> findPerfumeData(List<Survey> finalDataList, List<Survey> thirdComparedList) {
         return surveyUtil.isEmptyFinalResult(finalDataList, thirdComparedList).stream()
-                .map(data -> perfumeService.findPerfumeById(data.getId()))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
+                .map(data -> data.getPerfume()).collect(Collectors.toList());
+    }
+
+    public List<Perfume> showPerfumeListBySurvey(SurveyRequestDto surveyRequestDto) {
+        List<Survey> surveyList = surveyRepository.findByGenderAnswerOrGenderAnswerAndScentAnswer
+                (surveyRequestDto.getGenderAnswer(), SurveyType.GENDERLESS.getValue(), surveyRequestDto.getScentAnswer());
+        List<Survey> filteredSurveys = filterByMood(surveyRequestDto, surveyList);
+        filteredSurveys = filterBySeason(surveyRequestDto, filteredSurveys);
+        filteredSurveys = filterByStyle(surveyRequestDto, filteredSurveys);
+        return findPerfumeData(filteredSurveys, surveyList);
     }
 }
