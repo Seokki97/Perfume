@@ -18,12 +18,12 @@ import java.util.stream.Collectors;
 public class SurveyService {
     private final SurveyRepository surveyRepository;
     private final SurveyUtil surveyUtil;
-    private final PerfumeService perfumeService;
 
-    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil, PerfumeService perfumeService) {
+
+    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil) {
         this.surveyRepository = surveyRepository;
         this.surveyUtil = surveyUtil;
-        this.perfumeService = perfumeService;
+
     }
 
     public Survey findSurveyById(Long id) {
@@ -56,7 +56,7 @@ public class SurveyService {
         return surveyRepository.findByGenderAnswerOrGenderAnswerAndScentAnswer(gender, genderless, scent);
     }
 
-    public List<Perfume> findPerfumeData(List<Survey> surveyList) {
+    public List<Perfume> convertToPerfumeData(List<Survey> surveyList) {
         return surveyList.stream()
                 .map(data -> data.getPerfume()).collect(Collectors.toList());
     }
@@ -69,8 +69,7 @@ public class SurveyService {
         List<Survey> filteredBySeasonList = filteredSurveys;
         filteredSurveys = filterByStyle(surveyRequestDto, filteredSurveys);
 
-
-        return findPerfumeData(surveyUtil.isEmptyFinalResult(filteredSurveys, filteredBySeasonList));
+        return convertToPerfumeData(surveyUtil.isEmptyFinalResult(filteredSurveys, filteredBySeasonList));
     }
 
 
