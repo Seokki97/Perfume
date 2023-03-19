@@ -18,10 +18,9 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     List<Survey> findByMoodAnswerContaining(String moodAnswer);
 
-
     List<Survey> findByStyleAnswer(String styleAnswer);
 
-
+    List<Survey> findByGenderAnswerAndScentAnswer(String genderAnswer, String scentAnswer);
     List<Survey> findByGenderAnswerOrGenderAnswer(String genderAnswer, String genderLess);
 
     List<Survey> findBySeasonAnswerContainingOrSeasonAnswer(String seasonAnswer, String fourSeason);
@@ -29,4 +28,5 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
     List<Survey> findByStyleAnswerContainingOrStyleAnswer(String styleAnswer, String defaultValue);
 
     List<Survey> findByGenderAnswerOrGenderAnswerAndScentAnswer(String genderAnswer, String genderLess, String scentAnswer);
+
 }
