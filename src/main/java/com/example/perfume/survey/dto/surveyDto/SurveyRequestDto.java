@@ -30,7 +30,15 @@ public class SurveyRequestDto {
         this.styleAnswer = styleAnswer;
 
     }
-
+    public static SurveyRequestDto makeDto(Survey survey){
+        return  SurveyRequestDto.builder().id(survey.getId())
+                .genderAnswer(survey.getGenderAnswer())
+                .scentAnswer(survey.getScentAnswer())
+                .seasonAnswer(survey.getSeasonAnswer())
+                .moodAnswer(survey.getMoodAnswer())
+                .styleAnswer(survey.getStyleAnswer())
+                .build();
+    }
     public Survey toEntity(Perfume perfume) {
         return Survey.builder()
                 .id(id)

@@ -55,11 +55,4 @@ public class SimilarPerfumeService {
         return SurveyRequestDto.builder().moodAnswer(moodAnswerArray[FIRST_MOOD]).build();
     }
 
-    //만약 비어있을경우에 mood를 split해서 사용
-    public String isEmptyMood(List<Survey> perfumeList, Survey survey) {
-        if (perfumeList.isEmpty()) {
-            return survey.getMoodAnswer().split(" ")[FIRST_MOOD];
-        }
-        return survey.getMoodAnswer();
-    }
 }
