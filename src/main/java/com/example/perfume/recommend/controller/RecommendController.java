@@ -1,5 +1,6 @@
 package com.example.perfume.recommend.controller;
 
+import com.example.perfume.member.service.jwt.LoginCheck;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.RecommendRequestDto;
 import com.example.perfume.recommend.dto.RecommendResponseDto;
@@ -22,6 +23,7 @@ public class RecommendController {
        return recommendationService.recommendByOtherGuest(id, recommendRequestDto);
     }
 
+    @LoginCheck
     @GetMapping("/show-recommended-perfume/{id}")
     public ResponseEntity<RecommendResponseDto> showRecommendedPerfume(@PathVariable("id") Long id) {
         return ResponseEntity.ok(recommendationService.showRecommendedPerfume(id));

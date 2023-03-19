@@ -1,5 +1,6 @@
 package com.example.perfume.recommend.controller;
 
+import com.example.perfume.member.service.jwt.LoginCheck;
 import com.example.perfume.recommend.dto.PerfumeAnalyzeResponse;
 import com.example.perfume.recommend.dto.ScentAnalyzeResponse;
 import com.example.perfume.recommend.service.AnalyzeService;
@@ -24,6 +25,7 @@ public class AnalyzeController {
         this.analyzeService = analyzeService;
     }
 
+    @LoginCheck
     @GetMapping("/show-result/{id}")
     public ResponseEntity<Map<String,Long>> showMostRecommendedPerfume(@PathVariable("id") Long memberId) {
 
