@@ -1,15 +1,11 @@
 package com.example.perfume.crawling.domain.perfume;
 
-import com.example.perfume.crawling.service.PerfumeCSVFileLoading;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import java.util.ArrayList;
 import java.util.List;
-
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter

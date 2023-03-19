@@ -16,7 +16,6 @@ public class MemberRequestDto {
 
     public MemberRequestDto() {
     }
-
     @Builder
     public MemberRequestDto(Long id, Long memberId ,String nickname, String email,String thumbnailImage) {
         this.id = id;

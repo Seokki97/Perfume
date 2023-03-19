@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +24,7 @@ public class JwtProvider {
     @Value("${jwt.secret}")
     private String secretKey;
     // 토큰 유효시간 168 시간(7일)
-    private long tokenValidTime =60000L;
+    private long tokenValidTime =1800000L;
 
     private final LoginService loginService;
 
@@ -49,6 +50,19 @@ public class JwtProvider {
                 .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
                 .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘
                 // signature 에 들어갈 secret 값 세팅
+                .compact();
+        return accessToken;
+    }
+
+    public String createExpiredToken(String userPk){
+        Claims claims = Jwts.claims().setSubject(userPk);
+
+        Date now = new Date();
+        String accessToken = Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime()))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
         return accessToken;
     }

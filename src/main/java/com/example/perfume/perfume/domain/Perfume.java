@@ -1,11 +1,9 @@
 package com.example.perfume.perfume.domain;
 
-import com.example.perfume.member.domain.Recommendation;
 import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -40,9 +38,4 @@ public class Perfume {
         this.perfumeFeature = perfumeFeature;
         this.perfumeImageUrl = perfumeImageUrl;
     }
-
-    public Long deliverPerfumeId() {
-        return id;
-    }
-
 }

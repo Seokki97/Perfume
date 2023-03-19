@@ -39,14 +39,14 @@ public class Survey {
     private Perfume perfume;
 
     @Builder
-    public Survey(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer,Perfume perfume) {
+    public Survey(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer, Perfume perfume) {
         this.id = id;
         this.genderAnswer = genderAnswer;
         this.scentAnswer = scentAnswer;
         this.moodAnswer = moodAnswer;
         this.seasonAnswer = seasonAnswer;
         this.styleAnswer = styleAnswer;
-        this.perfume= perfume;
+        this.perfume = perfume;
     }
 
 }

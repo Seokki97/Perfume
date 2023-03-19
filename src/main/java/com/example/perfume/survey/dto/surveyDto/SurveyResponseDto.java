@@ -22,15 +22,14 @@ public class SurveyResponseDto {
     }
 
     @Builder
-    public SurveyResponseDto(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer,Perfume perfume) {
+    public SurveyResponseDto(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer, Perfume perfume) {
         this.id = id;
         this.genderAnswer = genderAnswer;
         this.scentAnswer = scentAnswer;
         this.moodAnswer = moodAnswer;
         this.seasonAnswer = seasonAnswer;
         this.styleAnswer = styleAnswer;
-        this.perfume= perfume;
-
+        this.perfume = perfume;
     }
 
     public Survey toEntity(Perfume perfume) {

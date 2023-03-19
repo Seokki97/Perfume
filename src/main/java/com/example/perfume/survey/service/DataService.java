@@ -19,16 +19,17 @@ public class DataService {
         this.surveyService = surveyService;
         this.surveyCSVFileLoading = surveyCSVFileLoading;
         this.perfumeService = perfumeService;
-
     }
 
     private SurveyResponseDto makeList(Long id, int firstIndex, SurveyList surveyList) {
-        return new SurveyResponseDto(id,
-                surveyList.getFirstAnswer().get(firstIndex),
-                surveyList.getSecondAnswer().get(firstIndex),
-                surveyList.getThirdAnswer().get(firstIndex),
-                surveyList.getFourthAnswer().get(firstIndex),
-                surveyList.getFifthAnswer().get(firstIndex));
+        return SurveyResponseDto.builder()
+                .id(id)
+                .genderAnswer(surveyList.getFirstAnswer().get(firstIndex))
+                .scentAnswer(surveyList.getSecondAnswer().get(firstIndex))
+                .moodAnswer(surveyList.getThirdAnswer().get(firstIndex))
+                .seasonAnswer(surveyList.getFourthAnswer().get(firstIndex))
+                .styleAnswer(surveyList.getFifthAnswer().get(firstIndex))
+                .build();
     }
 
     public void saveSurveyData(Long id, SurveyList surveyList) throws IOException {
@@ -39,5 +40,4 @@ public class DataService {
             surveyService.saveSurveyData(surveyDataSet);
         }
     }
-
 }

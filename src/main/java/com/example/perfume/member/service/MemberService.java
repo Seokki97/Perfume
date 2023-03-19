@@ -5,6 +5,7 @@ import com.example.perfume.member.dto.memberDto.MemberRequestDto;
 import com.example.perfume.member.dto.loginDto.SecessionRequest;
 import com.example.perfume.member.exception.TokenInvalidException;
 import com.example.perfume.member.exception.UserNotFoundException;
+import com.example.perfume.member.repository.BlacklistRepository;
 import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.member.repository.TokenRepository;
 import org.springframework.stereotype.Service;
@@ -12,14 +13,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class MemberService {
 
-
     private final MemberRepository memberRepository;
     private final TokenRepository tokenRepository;
+    private final BlacklistRepository blacklistRepository;
 
     public MemberService(MemberRepository memberRepository,
-                         TokenRepository tokenRepository) {
+                         TokenRepository tokenRepository,
+                         BlacklistRepository blacklistRepository) {
         this.memberRepository = memberRepository;
         this.tokenRepository = tokenRepository;
+        this.blacklistRepository = blacklistRepository;
     }
 
     public Member findMemberById(Long id) {
@@ -42,13 +45,19 @@ public class MemberService {
         return false;
     }
 
-    public void saveMemberProfile(Member member){
+    public void saveMemberProfile(Member member) {
         memberRepository.save(member);
     }
 
-    public void deleteMemberId(SecessionRequest secessionRequest){
-        //회원 삭제, 토큰 삭제
+    public void deleteMemberId(SecessionRequest secessionRequest) {
         memberRepository.deleteByMemberId(secessionRequest.getMemberId()).orElseThrow(UserNotFoundException::new);
         tokenRepository.deleteByRefreshToken(secessionRequest.getRefreshToken()).orElseThrow(TokenInvalidException::new);
+    }
+
+    public boolean isMemberLogout(String accessToken) {
+        if (blacklistRepository.existsByAccessToken(accessToken)) {
+            return false;
+        }
+        return true;
     }
 }

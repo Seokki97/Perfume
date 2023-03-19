@@ -18,7 +18,6 @@ public class FeatureService {
         this.perfumeService = perfumeService;
     }
 
-
     public FeatureResponseDto showFeatureDetails(Long id) {
         return  FeatureResponseDto.builder()
                 .perfume(perfumeService.findPerfumeById(id))
@@ -28,19 +27,17 @@ public class FeatureService {
                 .build();
     }
 
-
-    public String selectScent(Long id) {
+    private String selectScent(Long id) {
         Survey survey = surveyService.findSurveyById(id);
         return ScentType.getFeature(survey);
     }
 
-    public String selectSeason(Long id) {
+    private String selectSeason(Long id) {
         Survey survey = surveyService.findSurveyById(id);
-
         return SeasonType.getFeature(survey);
     }
 
-    public String selectMood(Long id) {
+    private String selectMood(Long id) {
         Survey survey = surveyService.findSurveyById(id);
         return MoodType.getMessage(survey);
     }

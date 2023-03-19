@@ -16,5 +16,4 @@ public interface RecommendRepository extends JpaRepository<Recommendation, Long>
     List<Recommendation> findByMemberId(@Param("memberId") Long memberId);
 
     Optional<Recommendation> findById(Long memberId);
-
 }

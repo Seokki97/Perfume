@@ -28,7 +28,7 @@ public class Member {
     private String thumbnailImage;
 
     @Builder
-    public Member(Long id, Long memberId, String nickname, String email,String thumbnailImage) {
+    public Member(Long id, Long memberId, String nickname, String email, String thumbnailImage) {
         this.id = id;
         this.memberId = memberId;
         this.nickname = nickname;

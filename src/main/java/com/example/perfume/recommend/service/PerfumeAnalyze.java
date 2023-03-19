@@ -2,7 +2,6 @@ package com.example.perfume.recommend.service;
 
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.PerfumeAnalyzeResponse;
-import com.example.perfume.recommend.exception.RecommendNotFoundException;
 import com.example.perfume.recommend.repository.RecommendRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +16,7 @@ public class PerfumeAnalyze {
 
         this.recommendRepository = recommendRepository;
     }
+
     private List<String> extractRecommendedPerfume(Long memberId) { //추천된 향수 리스트에서 향수 id를 추출해 List 생성
         List<Recommendation> recommendationList = recommendRepository.findByMemberId(memberId);
         List<String> perfumeList = new ArrayList<>();

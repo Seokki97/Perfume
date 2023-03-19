@@ -19,7 +19,6 @@ import java.io.PrintWriter;
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
 
-
     private final JwtProvider jwtProvider;
 
     public JwtInterceptor(JwtProvider jwtProvider) {

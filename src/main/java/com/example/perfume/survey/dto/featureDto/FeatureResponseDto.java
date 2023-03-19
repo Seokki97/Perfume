@@ -24,6 +24,4 @@ public class FeatureResponseDto {
         this.perfume = perfume;
 
     }
-
-
 }

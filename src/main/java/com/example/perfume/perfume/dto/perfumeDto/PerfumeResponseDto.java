@@ -13,6 +13,9 @@ public class PerfumeResponseDto {
     private String perfumeFeature;
     private String perfumeImageUrl;
 
+    public PerfumeResponseDto() {
+
+    }
     @Builder
     public PerfumeResponseDto(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
         this.id = id;
@@ -22,9 +25,6 @@ public class PerfumeResponseDto {
         this.perfumeImageUrl = perfumeImageUrl;
     }
 
-    public PerfumeResponseDto() {
-
-    }
 
     public Perfume toEntity() {
         return Perfume.builder()

@@ -16,6 +16,5 @@ public interface PerfumeRepository extends JpaRepository<Perfume, Long> {
 
     List<Perfume> findByBrandNameContaining(String perfumeBrand);
 
-    boolean existsByPerfumeName(String perfumeName);
 
 }

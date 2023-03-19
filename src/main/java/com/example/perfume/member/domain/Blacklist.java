@@ -25,7 +25,7 @@ public class Blacklist {
     private String accessToken;
 
     @Builder
-    public Blacklist(Long id, Member member, String accessToken){
+    public Blacklist(Long id, Member member, String accessToken) {
         this.id = id;
         this.member = member;
         this.accessToken = accessToken;

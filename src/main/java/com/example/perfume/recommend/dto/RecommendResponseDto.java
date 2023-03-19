@@ -12,9 +12,6 @@ public class RecommendResponseDto {
 
     private Long id;
 
-    private String recommender;
-
-    private String comment;
 
     private List<Recommendation> recommendationList;
 
@@ -22,10 +19,8 @@ public class RecommendResponseDto {
     }
 
     @Builder
-    public RecommendResponseDto(Long id, String recommender,String comment, List<Recommendation> recommendationList) {
+    public RecommendResponseDto(Long id, List<Recommendation> recommendationList) {
         this.id = id;
-        this.recommender = recommender;
-        this.comment = comment;
         this.recommendationList = recommendationList;
     }
 

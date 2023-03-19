@@ -3,12 +3,11 @@ package com.example.perfume.recommend.service;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.RecommendRequestDto;
 import com.example.perfume.recommend.dto.RecommendResponseDto;
-import com.example.perfume.recommend.exception.RecommendNotFoundException;
 import com.example.perfume.recommend.repository.RecommendRepository;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.service.PerfumeService;
-import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
+import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.service.SurveyService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,15 +36,15 @@ public class RecommendationService {
         this.perfumeService = perfumeService;
     }
 
-    private SurveyResponseDto createSurveyResponseDto(RecommendRequestDto recommendRequestDto) {
-        SurveyResponseDto surveyResponseDto = SurveyResponseDto.builder()
+    private SurveyRequestDto createSurveyResponseDto(RecommendRequestDto recommendRequestDto) {
+        SurveyRequestDto surveyRequestDto = SurveyRequestDto.builder()
                 .genderAnswer(recommendRequestDto.getGenderAnswer())
                 .moodAnswer(recommendRequestDto.getMoodAnswer())
                 .scentAnswer(recommendRequestDto.getScentAnswer())
                 .seasonAnswer(recommendRequestDto.getSeasonAnswer())
                 .styleAnswer(recommendRequestDto.getStyleAnswer())
                 .build();
-        return surveyResponseDto;
+        return surveyRequestDto;
     }
 
     public Recommendation recommendByOtherGuest(Long id, RecommendRequestDto recommendRequestDto) {
@@ -60,18 +59,17 @@ public class RecommendationService {
         return recommendation;
     }
 
-    private Perfume findPerfumeBySurvey(RecommendRequestDto recommendRequestDto){
-     List<Perfume> surveyResultList = surveyService.compareData(createSurveyResponseDto(recommendRequestDto));
-     int randomNumber = createRandomPerfumeFromList(surveyResultList);
-     return perfumeService.findPerfumeById(surveyResultList.get(randomNumber).getId());
+    private Perfume findPerfumeBySurvey(RecommendRequestDto recommendRequestDto) {
+        List<Perfume> surveyResultList = surveyService.showPerfumeListBySurvey(createSurveyResponseDto(recommendRequestDto));
+        int randomNumber = createRandomPerfumeFromList(surveyResultList);
+        return perfumeService.findPerfumeById(surveyResultList.get(randomNumber).getId());
     }
 
-    private int createRandomPerfumeFromList(List<Perfume> surveyResultList){
+    private int createRandomPerfumeFromList(List<Perfume> surveyResultList) {
         Random random = new Random();
         return random.nextInt(surveyResultList.size());
     }
 
-    //추천받은 향수 조회 (토큰 인증 기능 추가해야함!!)
     @Transactional
     public RecommendResponseDto showRecommendedPerfume(Long id) {
         Long memberId = memberService.findMemberById(id).getId();
@@ -82,6 +80,5 @@ public class RecommendationService {
                 .build();
         return recommendResponseDto;
     }
-    //추천받은 향수 세부 조회
 }
 

@@ -3,6 +3,7 @@ package com.example.perfume.member.service;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.domain.Token;
 import com.example.perfume.member.dto.loginDto.LoginResponse;
+import com.example.perfume.member.exception.MemberAlreadyLogoutException;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.repository.TokenRepository;
 import com.example.perfume.member.service.jwt.JwtProvider;
@@ -11,8 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.servlet.http.Cookie;
 
 @Service
 public class LoginService implements UserDetailsService {
@@ -61,9 +60,11 @@ public class LoginService implements UserDetailsService {
         return loginResponse;
     }
 
-    public LoginResponse permitClientRequest(String accessToken) { // 요청 보내는 부분
+    public LoginResponse permitClientRequest(String accessToken) {
         Member member = memberService.findByMemberPk(Long.valueOf(jwtProvider.getUserPk(accessToken)));
-
+        if (!memberService.isMemberLogout(accessToken)) {
+            throw new MemberAlreadyLogoutException();
+        }
         return LoginResponse.builder()
                 .id(member.getId())
                 .email(member.getEmail())
@@ -88,13 +89,4 @@ public class LoginService implements UserDetailsService {
         return jwtProvider.createToken(userPk);
     }
 
-    public Cookie createCookie(String refreshToken) {
-
-        Cookie cookie = new Cookie("refreshToken", refreshToken);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setMaxAge(7*24*60*60);
-
-        return cookie;
-    }
 }

@@ -20,7 +20,7 @@ public class RecommendController {
 
     @PostMapping("/recommend/{id}")
     public Recommendation recommendPerfume(@PathVariable("id") Long id, @RequestBody RecommendRequestDto recommendRequestDto) {
-       return recommendationService.recommendByOtherGuest(id, recommendRequestDto);
+        return recommendationService.recommendByOtherGuest(id, recommendRequestDto);
     }
 
     @LoginCheck

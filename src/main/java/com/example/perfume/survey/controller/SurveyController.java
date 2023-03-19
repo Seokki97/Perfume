@@ -2,13 +2,13 @@ package com.example.perfume.survey.controller;
 
 import com.example.perfume.crawling.domain.survey.SurveyList;
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
-import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
 import com.example.perfume.survey.repository.SurveyRepository;
 import com.example.perfume.survey.service.DataService;
+import com.example.perfume.survey.service.SimilarPerfumeService;
 import com.example.perfume.survey.service.SurveyService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +22,14 @@ public class SurveyController {
     private final SurveyService surveyService;
     private final DataService dataService;
     private final SurveyRepository surveyRepository;
+    private final SimilarPerfumeService similarPerfumeService;
 
     public SurveyController(SurveyService surveyService, DataService dataService,
-                            SurveyRepository surveyRepository) {
+                            SurveyRepository surveyRepository, SimilarPerfumeService similarPerfumeService) {
         this.surveyService = surveyService;
         this.dataService = dataService;
         this.surveyRepository = surveyRepository;
+        this.similarPerfumeService = similarPerfumeService;
     }
 
     @GetMapping("/save")
@@ -36,13 +38,18 @@ public class SurveyController {
     }
 
     @PostMapping("/show-perfume-by-survey")
-    public ResponseEntity<List<Perfume>> showPerfumeDataBySurvey(@RequestBody SurveyResponseDto surveyResponseDto) {
-        return ResponseEntity.ok(surveyService.compareData(surveyResponseDto));
+    public ResponseEntity<List<Perfume>> showPerfumeDataBySurvey(@RequestBody SurveyRequestDto surveyRequestDto) {
+        return ResponseEntity.ok(surveyService.showPerfumeListBySurvey(surveyRequestDto));
     }
 
     @PostMapping("/show")
     public ResponseEntity<List<Survey>> showSelectedData(@RequestBody SurveyRequestDto surveyRequestDto) {
         return ResponseEntity.ok(surveyRepository.findByScentAnswer(surveyRequestDto.getScentAnswer()));
+    }
+
+    @GetMapping("/show-similar-perfume")
+    public ResponseEntity<List<Perfume>> showSimilarData(@RequestBody PerfumeRequestDto perfumeRequestDto) {
+        return ResponseEntity.ok(similarPerfumeService.showSimilarPerfume(perfumeRequestDto));
     }
 
 }

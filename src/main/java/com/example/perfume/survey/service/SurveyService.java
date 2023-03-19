@@ -1,12 +1,9 @@
 package com.example.perfume.survey.service;
 
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
-import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.domain.SurveyType;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
-import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
@@ -60,7 +57,6 @@ public class SurveyService {
         return surveyList.stream()
                 .map(data -> data.getPerfume()).collect(Collectors.toList());
     }
-
 
     public List<Perfume> showPerfumeListBySurvey(SurveyRequestDto surveyRequestDto) {
         List<Survey> surveyList = filterByGenderAndScent(surveyRequestDto.getGenderAnswer(), SurveyType.GENDERLESS.getValue(), surveyRequestDto.getScentAnswer());
