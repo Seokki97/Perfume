@@ -6,8 +6,6 @@ import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.perfume.service.PerfumeService;
-import com.example.perfume.perfume.service.SimilarPerfumeRecommend;
-import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
 import com.example.perfume.survey.service.FeatureService;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +19,12 @@ import java.util.List;
 public class PerfumeDataController {
 
     private final PerfumeService perfumeService;
-    private final SimilarPerfumeRecommend similarPerfumeRecommend;
+
 
     private final FeatureService featureService;
 
-    public PerfumeDataController(PerfumeService perfumeService, SimilarPerfumeRecommend similarPerfumeRecommend, FeatureService featureService) {
+    public PerfumeDataController(PerfumeService perfumeService, FeatureService featureService) {
         this.perfumeService = perfumeService;
-        this.similarPerfumeRecommend = similarPerfumeRecommend;
         this.featureService = featureService;
     }
 
@@ -54,11 +51,6 @@ public class PerfumeDataController {
     @GetMapping("/show-all-data")
     public ResponseEntity<List<Perfume>> showAllData() {
         return ResponseEntity.ok(perfumeService.showAllPerfumeData());
-    }
-
-    @PostMapping("/select-similar-perfume")
-    public ResponseEntity<List<Perfume>> selectSimilarPerfume(@RequestBody PerfumeResponseDto perfumeResponseDto) {
-        return ResponseEntity.ok(similarPerfumeRecommend.showSimilarPerfume(perfumeResponseDto));
     }
 
     @GetMapping("/show-perfume/{id}")
