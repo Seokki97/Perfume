@@ -22,15 +22,10 @@ public class SurveyUtil {
         return addedList;
     }
 
-    public List<Survey> addAnswerListByType(List<Survey> firstList, List<Survey> secondList) {
-        return addList(firstList, secondList);
-    }
-
     public List<Survey> isEmptyFinalResult(List<Survey> finalResult, List<Survey> beforeResult) {
         if (finalResult.isEmpty()) {
             return beforeResult;
         }
         return finalResult;
     }
-
 }
