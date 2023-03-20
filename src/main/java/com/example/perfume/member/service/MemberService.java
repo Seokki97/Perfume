@@ -39,10 +39,10 @@ public class MemberService {
     }
 
     public boolean isAlreadyExistMember(MemberRequestDto memberRequestDto) {
-        if (memberRepository.existsByMemberId(memberRequestDto.getMemberId())) {
-            return true;
+        if (!memberRepository.existsByMemberId(memberRequestDto.getMemberId())) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     public void saveMemberProfile(Member member) {
