@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 public class FeatureService {
     private final SurveyService surveyService;
     private final PerfumeService perfumeService;
+    private final SurveyUtil surveyUtil;
 
-    public FeatureService(SurveyService surveyService, PerfumeService perfumeService) {
+    public FeatureService(SurveyService surveyService, PerfumeService perfumeService,SurveyUtil surveyUtil) {
         this.surveyService = surveyService;
         this.perfumeService = perfumeService;
+        this.surveyUtil = surveyUtil;
     }
 
     public FeatureResponseDto showFeatureDetails(Long id) {
@@ -38,7 +40,12 @@ public class FeatureService {
     }
 
     private String selectMood(Long id) {
-        Survey survey = surveyService.findSurveyById(id);
+        Survey surveyId = surveyService.findSurveyById(id);
+        surveyUtil.splitMoodAnswer(surveyService.findSurveyById(id));
+
+        Survey survey = Survey.builder()
+                .moodAnswer(surveyUtil.splitMoodAnswer(surveyId).getMoodAnswer())
+                .build();
         return MoodType.getMessage(survey);
     }
 }
