@@ -27,6 +27,9 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) {
+       if(!(handler instanceof HandlerMethod)){
+           return true;
+       }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
 
         LoginCheck loginCheck = handlerMethod.getMethodAnnotation(LoginCheck.class);
