@@ -49,6 +49,7 @@ public class LoginService implements UserDetailsService {
 
         LoginResponse loginResponse = LoginResponse.builder()
                 .id(member.getId())
+                .memberId(memberId)
                 .email(member.getEmail())
                 .nickname(member.getNickname())
                 .thumbnailImage(member.getThumbnailImage())
