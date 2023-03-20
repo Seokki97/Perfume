@@ -21,7 +21,6 @@ import javax.servlet.http.HttpSession;
 
 @Service
 public class OauthService {
-
     private final MemberService memberService;
 
     private final LoginService loginService;
@@ -35,7 +34,6 @@ public class OauthService {
     }
 
     private HttpHeaders setHttpHeaders() {
-
         HttpHeaders httpHeaders = new HttpHeaders();
 
         httpHeaders.add(OauthType.CONTENT_TYPE.getName(), OauthType.CONTENT_TYPE.getType());
@@ -60,7 +58,6 @@ public class OauthService {
     //여기까지 토큰 값 받기
     public ResponseEntity<String> getResponseFromServer(String url, String code, HttpHeaders httpHeaders) {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>((setHttpBody(code)), httpHeaders);
-
 
         ResponseEntity<String> response = createRestTemplate().exchange(url, HttpMethod.POST, request, String.class);
 
@@ -96,10 +93,11 @@ public class OauthService {
         }
     }
 
-    public LoginResponse saveUserProfile(MemberRequestDto memberRequestDto) {
+    public void saveUserProfile(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
                 .memberId(memberRequestDto.getMemberId())
                 .email(memberRequestDto.getEmail())
+                .memberId(memberRequestDto.getMemberId())
                 .nickname(memberRequestDto.getNickname())
                 .thumbnailImage(memberRequestDto.getThumbnailImage())
                 .build();
@@ -108,7 +106,6 @@ public class OauthService {
         if (!memberService.isAlreadyExistMember(memberRequestDto)) {
             memberService.saveMemberProfile(member);
         }
-        return loginService.generateToken(member.getMemberId());
     }
 
     public boolean isAgreeEmailUsing(String email) {
