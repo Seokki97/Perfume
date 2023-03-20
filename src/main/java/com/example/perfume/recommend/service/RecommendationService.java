@@ -80,5 +80,10 @@ public class RecommendationService {
                 .build();
         return recommendResponseDto;
     }
+
+    @Transactional
+    public void deleteRecommendedData(){
+        recommendRepository.deleteAll();
+    }
 }
 
