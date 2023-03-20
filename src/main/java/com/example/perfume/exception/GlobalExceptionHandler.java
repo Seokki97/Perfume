@@ -88,7 +88,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(UNAUTHORIZED_ERROR).body(e.getMessage());
     }
     @ExceptionHandler
-    public ResponseEntity<?> handleTokenExpiredException(MemberAlreadyLogoutException e){
+    public ResponseEntity<?> handleMemberAlreadyLogoutException(MemberAlreadyLogoutException e){
         return ResponseEntity.status(UNAUTHORIZED_ERROR).body(e.getMessage());
     }
 }
