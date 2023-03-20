@@ -2,6 +2,7 @@ package com.example.perfume.member.service;
 
 import com.example.perfume.member.domain.Blacklist;
 import com.example.perfume.member.dto.logoutDto.LogoutRequestDto;
+import com.example.perfume.member.exception.MemberAlreadyLogoutException;
 import com.example.perfume.member.repository.BlacklistRepository;
 import com.example.perfume.member.repository.TokenRepository;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,10 @@ public class LogoutService {
         tokenRepository.deleteByMemberId(logoutRequestDto.getMemberId());
     }
 
+    public void isUserLogout(String accessToken){
+        if(blacklistRepository.existsByAccessToken(accessToken)){
+            throw new MemberAlreadyLogoutException();
+        }
+    }
 
 }
