@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,9 +36,17 @@ public class SurveyUtil {
     }
     public SurveyRequestDto splitMoodAnswer(Survey survey) {
         String[] moodAnswerArray = survey.getMoodAnswer().split(BLANK);
+        int randomMoodAnswer = getRandomMoodAnswer(moodAnswerArray);
         if (moodAnswerArray.length == MOOD_COLUMN_SIZE) {
             return SurveyRequestDto.builder().moodAnswer(survey.getMoodAnswer()).build();
         }
-        return SurveyRequestDto.builder().moodAnswer(moodAnswerArray[FIRST_MOOD]).build();
+        return SurveyRequestDto.builder().moodAnswer(moodAnswerArray[randomMoodAnswer]).build();
     }
+
+    public int getRandomMoodAnswer(String[] moodAnswerArray){
+        Random random = new Random();
+        return random.nextInt(moodAnswerArray.length);
+
+    }
+
 }
