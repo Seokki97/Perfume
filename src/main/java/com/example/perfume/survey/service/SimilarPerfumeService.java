@@ -13,10 +13,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class SimilarPerfumeService {
-
-    private static final String BLANK = "\\s";
-    private static final int FIRST_MOOD = 0;
-    private static final int MOOD_COLUMN_SIZE = 1;
     private final SurveyService surveyService;
     private final SurveyRepository surveyRepository;
     private final SurveyUtil surveyUtil;
@@ -34,22 +30,20 @@ public class SimilarPerfumeService {
                 .collect(Collectors.toList());
     }
 
-    public List<Perfume> showSimilarPerfume(PerfumeRequestDto perfumeRequestDto) {
-        Survey survey = surveyService.findSurveyById(perfumeRequestDto.getId());
-        List<Survey> surveyList = surveyRepository.findByGenderAnswerAndScentAnswer(survey.getGenderAnswer(), survey.getScentAnswer());
-        surveyList = surveyUtil.addList(surveyList, surveyRepository.findByGenderAnswerAndScentAnswer(SurveyType.GENDERLESS.getValue(), survey.getScentAnswer()));
-        List<Survey> filteredSurveys = surveyService.filterByMood(splitMoodAnswer(survey), surveyList);
-        filteredSurveys = findExceptRequestedPerfume(filteredSurveys, SurveyRequestDto.makeDto(survey));
+    public List<Perfume> showSimilarPerfume(Long id) {
+        Survey survey = surveyService.findSurveyById(id);
+        List<Survey> filteredSurveyList = surveyRepository.findByGenderAnswerAndScentAnswer(survey.getGenderAnswer(), survey.getScentAnswer());
+        filteredSurveyList = isGenderlessPerfume(survey,filteredSurveyList);
+        filteredSurveyList = surveyService.filterByMood(surveyUtil.showMoodAnswer(survey), filteredSurveyList);
+        filteredSurveyList = findExceptRequestedPerfume(filteredSurveyList, SurveyRequestDto.makeDto(survey));
 
-        return surveyService.convertToPerfumeData(filteredSurveys);
+        return surveyService.convertToPerfumeData(filteredSurveyList);
     }
 
-    public SurveyRequestDto splitMoodAnswer(Survey survey) {
-        String[] moodAnswerArray = survey.getMoodAnswer().split(BLANK);
-        if (moodAnswerArray.length == MOOD_COLUMN_SIZE) {
-            return SurveyRequestDto.builder().moodAnswer(survey.getMoodAnswer()).build();
+    public List<Survey> isGenderlessPerfume(Survey survey,List<Survey> filteredSurveyList){
+        if(!survey.getGenderAnswer().matches(SurveyType.GENDERLESS.getValue())){
+            filteredSurveyList = surveyUtil.addList(filteredSurveyList, surveyRepository.findByGenderAnswerAndScentAnswer(SurveyType.GENDERLESS.getValue(), survey.getScentAnswer()));
         }
-        return SurveyRequestDto.builder().moodAnswer(moodAnswerArray[FIRST_MOOD]).build();
+        return filteredSurveyList;
     }
-
 }
