@@ -18,12 +18,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry corsRegistry) {
         corsRegistry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
-                .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE");
-    }
+                .allowedOrigins("https://inhyang.netlify.app")
+                .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*","Authorization")
+                .allowCredentials(true)
+                .maxAge(3600);
+}
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor).excludePathPatterns("/member/logout/**");
+        registry.addInterceptor(jwtInterceptor).excludePathPatterns("/member/logout/**")
+                .addPathPatterns("/**");
     }
 }
