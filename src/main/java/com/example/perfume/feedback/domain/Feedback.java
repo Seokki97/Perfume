@@ -16,10 +16,10 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(nullable = false)
+    @Column(length = 100)
     private String serviceName;
 
-    @Column(nullable = false, length = 1000)
+    @Column(length = 1000)
     private String comment;
 
     @Builder
