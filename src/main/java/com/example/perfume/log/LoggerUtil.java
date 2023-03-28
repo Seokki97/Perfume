@@ -10,17 +10,17 @@ public final class LoggerUtil {
     private static int SECOND_API_COUNT = 0;
     private static int THIRD_API_COUNT = 0;
 
-    public static void firstApiCounter(String message) {
+    public static void countFirstApi(String message) {
         FIRST_API_COUNT += 1;
         LOGGER_UTIL.info(message + FIRST_API_COUNT);
     }
 
-    public static void secondApiCounter(String message) {
+    public static void countSecondApi(String message) {
         SECOND_API_COUNT += 1;
         LOGGER_UTIL.info(message + SECOND_API_COUNT);
     }
 
-    public static void thirdApiCounter(String message) {
+    public static void countThirdApi(String message) {
         THIRD_API_COUNT += 1;
         LOGGER_UTIL.info(message + THIRD_API_COUNT);
     }

@@ -39,7 +39,7 @@ public class SurveyController {
 
     @PostMapping("/show-perfume-by-survey")
     public ResponseEntity<List<Perfume>> showPerfumeDataBySurvey(@RequestBody SurveyRequestDto surveyRequestDto) {
-        LoggerUtil.firstApiCounter("나에게 잘 어울리는 향수 (첫번째 기능) API 호출 횟수 : ");
+        LoggerUtil.countFirstApi("나에게 잘 어울리는 향수 (첫번째 기능) API 호출 횟수 : ");
         return ResponseEntity.ok(surveyService.showPerfumeListBySurvey(surveyRequestDto));
     }
 
@@ -50,7 +50,7 @@ public class SurveyController {
 
     @GetMapping("/show-similar-perfume/{id}")
     public ResponseEntity<List<Perfume>> showSimilarData(@PathVariable("id") Long id) {
-        LoggerUtil.secondApiCounter("비슷한 향수 추천 (두번째 기능) API 호출 횟수: ");
+        LoggerUtil.countSecondApi("비슷한 향수 추천 (두번째 기능) API 호출 횟수: ");
         return ResponseEntity.ok(similarPerfumeService.showSimilarPerfume(id));
     }
 

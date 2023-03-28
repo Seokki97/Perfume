@@ -33,7 +33,7 @@ public class RecommendController {
     @LoginCheck
     @GetMapping("/show-recommended-perfume/{id}")
     public ResponseEntity<RecommendResponseDto> showRecommendedPerfume(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
-        LoggerUtil.thirdApiCounter("타인이 보는 나의 향수 (세번째 기능) API 호출 횟수 :");
+        LoggerUtil.countThirdApi("타인이 보는 나의 향수 (세번째 기능) API 호출 횟수 :");
         logoutService.isUserAlreadyLogout(httpServletRequest.getHeader("Authorization"));
         return ResponseEntity.ok(recommendationService.showRecommendedPerfume(id));
     }
