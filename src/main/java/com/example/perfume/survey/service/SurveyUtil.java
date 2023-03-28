@@ -34,7 +34,13 @@ public class SurveyUtil {
         }
         return finalResult;
     }
-    public SurveyRequestDto splitMoodAnswer(Survey survey) {
+
+    public int getRandomMoodAnswer(String[] moodAnswerArray){
+        Random random = new Random();
+        return random.nextInt(moodAnswerArray.length);
+    }
+
+    public SurveyRequestDto showMoodAnswer(Survey survey) {
         String[] moodAnswerArray = survey.getMoodAnswer().split(BLANK);
         int randomMoodAnswer = getRandomMoodAnswer(moodAnswerArray);
         if (moodAnswerArray.length == MOOD_COLUMN_SIZE) {
@@ -42,11 +48,4 @@ public class SurveyUtil {
         }
         return SurveyRequestDto.builder().moodAnswer(moodAnswerArray[randomMoodAnswer]).build();
     }
-
-    public int getRandomMoodAnswer(String[] moodAnswerArray){
-        Random random = new Random();
-        return random.nextInt(moodAnswerArray.length);
-
-    }
-
 }
