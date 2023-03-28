@@ -1,16 +1,14 @@
 package com.example.perfume.survey.controller;
 
 import com.example.perfume.crawling.domain.survey.SurveyList;
+import com.example.perfume.log.LoggerUtil;
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.repository.SurveyRepository;
 import com.example.perfume.survey.service.DataService;
 import com.example.perfume.survey.service.SimilarPerfumeService;
 import com.example.perfume.survey.service.SurveyService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +23,6 @@ public class SurveyController {
     private final DataService dataService;
     private final SurveyRepository surveyRepository;
     private final SimilarPerfumeService similarPerfumeService;
-
-    private final Logger logger = LoggerFactory.getLogger("첫번째 기능 로그");
 
     public SurveyController(SurveyService surveyService, DataService dataService,
                             SurveyRepository surveyRepository, SimilarPerfumeService similarPerfumeService) {
@@ -43,7 +39,7 @@ public class SurveyController {
 
     @PostMapping("/show-perfume-by-survey")
     public ResponseEntity<List<Perfume>> showPerfumeDataBySurvey(@RequestBody SurveyRequestDto surveyRequestDto) {
-        logger.info("api 호출");
+        LoggerUtil.firstApiCounter("나에게 잘 어울리는 향수 (첫번째 기능) API 호출 횟수 : ");
         return ResponseEntity.ok(surveyService.showPerfumeListBySurvey(surveyRequestDto));
     }
 
@@ -54,6 +50,7 @@ public class SurveyController {
 
     @GetMapping("/show-similar-perfume/{id}")
     public ResponseEntity<List<Perfume>> showSimilarData(@PathVariable("id") Long id) {
+        LoggerUtil.secondApiCounter("비슷한 향수 추천 (두번째 기능) API 호출 횟수: ");
         return ResponseEntity.ok(similarPerfumeService.showSimilarPerfume(id));
     }
 

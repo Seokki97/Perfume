@@ -6,11 +6,27 @@ import org.slf4j.LoggerFactory;
 public final class LoggerUtil {
     private static final Logger LOGGER_UTIL = LoggerFactory.getLogger(LoggerUtil.class);
 
-    public static void logInfo(String message){
-        LOGGER_UTIL.info(message);
+    private static int FIRST_API_COUNT = 0;
+    private static int SECOND_API_COUNT = 0;
+    private static int THIRD_API_COUNT = 0;
+
+    public static void firstApiCounter(String message) {
+        FIRST_API_COUNT += 1;
+        LOGGER_UTIL.info(message + FIRST_API_COUNT);
     }
 
-    public static void logError(String message, Throwable throwable){
-        LOGGER_UTIL.error(message,throwable);
+    public static void secondApiCounter(String message) {
+        SECOND_API_COUNT += 1;
+        LOGGER_UTIL.info(message + SECOND_API_COUNT);
+    }
+
+    public static void thirdApiCounter(String message) {
+        THIRD_API_COUNT += 1;
+        LOGGER_UTIL.info(message + THIRD_API_COUNT);
+    }
+
+
+    public static void logError(String message, Throwable throwable) {
+        LOGGER_UTIL.error(message, throwable);
     }
 }

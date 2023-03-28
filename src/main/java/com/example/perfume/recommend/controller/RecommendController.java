@@ -1,5 +1,6 @@
 package com.example.perfume.recommend.controller;
 
+import com.example.perfume.log.LoggerUtil;
 import com.example.perfume.member.service.LogoutService;
 import com.example.perfume.member.service.jwt.LoginCheck;
 import com.example.perfume.recommend.domain.Recommendation;
@@ -32,7 +33,8 @@ public class RecommendController {
     @LoginCheck
     @GetMapping("/show-recommended-perfume/{id}")
     public ResponseEntity<RecommendResponseDto> showRecommendedPerfume(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
-        logoutService.isUserLogout(httpServletRequest.getHeader("Authorization"));
+        LoggerUtil.thirdApiCounter("타인이 보는 나의 향수 (세번째 기능) API 호출 횟수 :");
+        logoutService.isUserAlreadyLogout(httpServletRequest.getHeader("Authorization"));
         return ResponseEntity.ok(recommendationService.showRecommendedPerfume(id));
     }
 
