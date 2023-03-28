@@ -9,6 +9,8 @@ import com.example.perfume.survey.repository.SurveyRepository;
 import com.example.perfume.survey.service.DataService;
 import com.example.perfume.survey.service.SimilarPerfumeService;
 import com.example.perfume.survey.service.SurveyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,8 @@ public class SurveyController {
     private final DataService dataService;
     private final SurveyRepository surveyRepository;
     private final SimilarPerfumeService similarPerfumeService;
+
+    private final Logger logger = LoggerFactory.getLogger("첫번째 기능 로그");
 
     public SurveyController(SurveyService surveyService, DataService dataService,
                             SurveyRepository surveyRepository, SimilarPerfumeService similarPerfumeService) {
@@ -39,6 +43,7 @@ public class SurveyController {
 
     @PostMapping("/show-perfume-by-survey")
     public ResponseEntity<List<Perfume>> showPerfumeDataBySurvey(@RequestBody SurveyRequestDto surveyRequestDto) {
+        logger.info("api 호출");
         return ResponseEntity.ok(surveyService.showPerfumeListBySurvey(surveyRequestDto));
     }
 
@@ -47,9 +52,9 @@ public class SurveyController {
         return ResponseEntity.ok(surveyRepository.findByScentAnswer(surveyRequestDto.getScentAnswer()));
     }
 
-    @GetMapping("/show-similar-perfume")
-    public ResponseEntity<List<Perfume>> showSimilarData(@RequestBody PerfumeRequestDto perfumeRequestDto) {
-        return ResponseEntity.ok(similarPerfumeService.showSimilarPerfume(perfumeRequestDto));
+    @GetMapping("/show-similar-perfume/{id}")
+    public ResponseEntity<List<Perfume>> showSimilarData(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(similarPerfumeService.showSimilarPerfume(id));
     }
 
 }
