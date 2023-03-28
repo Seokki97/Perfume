@@ -29,8 +29,8 @@ public class ScentAnalyze {
         List<String> scentList = extractScentAnswer(memberId);
         Long maxCount = 0L;
         String scentAnswer = "";
-
-        for (int i = 0; i < scentList.size(); i++) {
+        int scentListSize = scentList.size();
+        for (int i = 0; i < scentListSize; i++) {
             Long count = countScent(scentList, i);
             if (count > maxCount) {
                 scentAnswer = scentList.get(i);

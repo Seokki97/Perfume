@@ -30,8 +30,8 @@ public class PerfumeAnalyze {
         List<String> perfumeNameList = extractRecommendedPerfume(memberId);
         Long maxCount = 0L;
         String perfumeName = "";
-
-        for (int i = 0; i < perfumeNameList.size(); i++) {
+        int perfumeNameListSize = perfumeNameList.size();
+        for (int i = 0; i < perfumeNameListSize; i++) {
             Long count = countPerfume(perfumeNameList, i);
             if (count > maxCount) {
                 perfumeName = perfumeNameList.get(i);
@@ -47,6 +47,4 @@ public class PerfumeAnalyze {
     private Long countPerfume(List<String> perfumeNameList, int i) {
         return perfumeNameList.stream().filter(x -> perfumeNameList.get(i).matches(x)).count();
     }
-
-
 }

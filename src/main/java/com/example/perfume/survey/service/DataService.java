@@ -34,7 +34,8 @@ public class DataService {
 
     public void saveSurveyData(Long id, SurveyList surveyList) throws IOException {
         surveyList = surveyCSVFileLoading.extractAllSurveyData(surveyList);
-        for (int firstIndex = 0; firstIndex < surveyList.getMaxSize(); firstIndex++) {
+        int surveyListSize = surveyList.getMaxSize();
+        for (int firstIndex = 0; firstIndex < surveyListSize; firstIndex++) {
             Long secondIndex = (long) firstIndex + 1;
             Survey surveyDataSet = makeList(id, firstIndex, surveyList).toEntity(perfumeService.findPerfumeById(secondIndex));
             surveyService.saveSurveyData(surveyDataSet);
