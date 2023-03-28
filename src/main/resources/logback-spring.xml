@@ -50,13 +50,9 @@
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="INFO_LOG"/>
+        <appender-ref ref="WARN_LOG"/>
     </root>
-
-    <logger name="LogController" additivity="false">
-        <level value = "DEBUG" />
-        <appender-ref ref="INFO_LOG" />
-        <appender-ref ref="WARN_LOG" />
-    </logger>
 
     <logger name="org.hibernate.SQL" additivity="false">
         <level value = "DEBUG" />
