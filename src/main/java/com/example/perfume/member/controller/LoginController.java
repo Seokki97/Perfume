@@ -32,7 +32,7 @@ public class LoginController {
 
     @LoginCheck
     @PostMapping("/response")
-    public ResponseEntity responseEntity(HttpServletRequest httpServletRequest) {
+    public ResponseEntity resolveToken(HttpServletRequest httpServletRequest) {
         String accessToken = jwtProvider.resolveToken(httpServletRequest);
 
         return ResponseEntity.ok(loginService.permitClientRequest(accessToken));
