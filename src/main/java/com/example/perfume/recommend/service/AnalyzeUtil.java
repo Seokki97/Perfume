@@ -11,7 +11,7 @@ import java.util.Map;
 @Service
 public class AnalyzeUtil {
 
-    public static void isCountingNumberExist(Long maxCount) {
+    public void isCountingNumberExist(Long maxCount) {
         if (maxCount < 1) {
             throw new RecommendNotFoundException();
         }
@@ -32,7 +32,7 @@ public class AnalyzeUtil {
                 maxCount = count;
             }
         }
-        AnalyzeUtil.isCountingNumberExist(maxCount);
+        isCountingNumberExist(maxCount);
 
         return AnalyzeResponse.builder()
                 .elementName(elementName)
