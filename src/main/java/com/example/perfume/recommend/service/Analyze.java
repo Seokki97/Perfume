@@ -7,5 +7,4 @@ import java.util.List;
 public interface Analyze {
     List<String> extractRecommendedElement(Long memberId);
 
-    Long countElement(List<String> elementList, int i);
 }

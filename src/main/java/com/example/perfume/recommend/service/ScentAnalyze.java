@@ -12,8 +12,11 @@ import java.util.List;
 public class ScentAnalyze implements Analyze {
     private final RecommendRepository recommendRepository;
 
-    public ScentAnalyze(RecommendRepository recommendRepository) {
+    private final AnalyzeUtil analyzeUtil;
+
+    public ScentAnalyze(RecommendRepository recommendRepository, AnalyzeUtil analyzeUtil) {
         this.recommendRepository = recommendRepository;
+        this.analyzeUtil = analyzeUtil;
     }
 
 
@@ -23,7 +26,7 @@ public class ScentAnalyze implements Analyze {
         String scentAnswer = "";
         int scentListSize = scentList.size();
         for (int i = 0; i < scentListSize; i++) {
-            Long count = countElement(scentList, i);
+            Long count = analyzeUtil.countElement(scentList, i);
             if (count > maxCount) {
                 scentAnswer = scentList.get(i);
                 maxCount = count;
@@ -44,10 +47,5 @@ public class ScentAnalyze implements Analyze {
             perfumeList.add(recommendation.getScentAnswer());
         }
         return perfumeList;
-    }
-
-    @Override
-    public Long countElement(List<String> elementList, int i) {
-        return elementList.stream().filter(x -> elementList.get(i).matches(x)).count();
     }
 }
