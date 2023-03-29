@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public enum SurveyType {
 
-    GENDERLESS("젠더리스"),
-    DEFAULT("디폴트"),
-    FOUR_SEASON("무관");
+    GENDERLESS("남자 여자"),
+    DEFAULT("캐쥬얼 포멀"),
+    FOUR_SEASON("봄 여름 가을 겨울");
 
     private final String value;
 
