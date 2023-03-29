@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PerfumeAnalyze {
+public class PerfumeAnalyze implements Analyze {
     private final RecommendRepository recommendRepository;
 
     public PerfumeAnalyze(RecommendRepository recommendRepository) {
@@ -17,7 +17,8 @@ public class PerfumeAnalyze {
         this.recommendRepository = recommendRepository;
     }
 
-    private List<String> extractRecommendedPerfume(Long memberId) { //추천된 향수 리스트에서 향수 id를 추출해 List 생성
+    @Override
+    public List<String> extractRecommendedElement(Long memberId) {
         List<Recommendation> recommendationList = recommendRepository.findByMemberId(memberId);
         List<String> perfumeList = new ArrayList<>();
         for (Recommendation recommendation : recommendationList) {
@@ -26,13 +27,18 @@ public class PerfumeAnalyze {
         return perfumeList;
     }
 
+    @Override
+    public Long countElement(List<String> elementList, int i) {
+        return elementList.stream().filter(x -> elementList.get(i).matches(x)).count();
+    }
+
     public PerfumeAnalyzeResponse filterMostRecommendedPerfumeName(Long memberId) {
-        List<String> perfumeNameList = extractRecommendedPerfume(memberId);
+        List<String> perfumeNameList = extractRecommendedElement(memberId);
         Long maxCount = 0L;
         String perfumeName = "";
         int perfumeNameListSize = perfumeNameList.size();
         for (int i = 0; i < perfumeNameListSize; i++) {
-            Long count = countPerfume(perfumeNameList, i);
+            Long count = countElement(perfumeNameList, i);
             if (count > maxCount) {
                 perfumeName = perfumeNameList.get(i);
                 maxCount = count;
@@ -44,7 +50,4 @@ public class PerfumeAnalyze {
                 .countNumber(maxCount).build();
     }
 
-    private Long countPerfume(List<String> perfumeNameList, int i) {
-        return perfumeNameList.stream().filter(x -> perfumeNameList.get(i).matches(x)).count();
-    }
 }

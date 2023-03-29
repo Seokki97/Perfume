@@ -9,29 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ScentAnalyze {
+public class ScentAnalyze implements Analyze {
     private final RecommendRepository recommendRepository;
 
     public ScentAnalyze(RecommendRepository recommendRepository) {
         this.recommendRepository = recommendRepository;
     }
 
-    private List<String> extractScentAnswer(Long memberId) {
-        List<Recommendation> recommendationList = recommendRepository.findByMemberId(memberId);
-        List<String> perfumeList = new ArrayList<>();
-        for (Recommendation recommendation : recommendationList) {
-            perfumeList.add(recommendation.getScentAnswer());
-        }
-        return perfumeList;
-    }
 
     public ScentAnalyzeResponse filterMostRecommendedScent(Long memberId) {
-        List<String> scentList = extractScentAnswer(memberId);
+        List<String> scentList = extractRecommendedElement(memberId);
         Long maxCount = 0L;
         String scentAnswer = "";
         int scentListSize = scentList.size();
         for (int i = 0; i < scentListSize; i++) {
-            Long count = countScent(scentList, i);
+            Long count = countElement(scentList, i);
             if (count > maxCount) {
                 scentAnswer = scentList.get(i);
                 maxCount = count;
@@ -44,7 +36,18 @@ public class ScentAnalyze {
                 .build();
     }
 
-    private Long countScent(List<String> scentList, int i) {
-        return scentList.stream().filter(x -> scentList.get(i).matches(x)).count();
+    @Override
+    public List<String> extractRecommendedElement(Long memberId) {
+        List<Recommendation> recommendationList = recommendRepository.findByMemberId(memberId);
+        List<String> perfumeList = new ArrayList<>();
+        for (Recommendation recommendation : recommendationList) {
+            perfumeList.add(recommendation.getScentAnswer());
+        }
+        return perfumeList;
+    }
+
+    @Override
+    public Long countElement(List<String> elementList, int i) {
+        return elementList.stream().filter(x -> elementList.get(i).matches(x)).count();
     }
 }
