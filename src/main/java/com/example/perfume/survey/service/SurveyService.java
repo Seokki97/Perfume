@@ -14,13 +14,10 @@ import java.util.stream.Collectors;
 @Service
 public class SurveyService {
     private final SurveyRepository surveyRepository;
-    private final SurveyUtil surveyUtil;
 
 
-    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil) {
+    public SurveyService(SurveyRepository surveyRepository) {
         this.surveyRepository = surveyRepository;
-        this.surveyUtil = surveyUtil;
-
     }
 
     public Survey findSurveyById(Long id) {
@@ -31,42 +28,28 @@ public class SurveyService {
         return surveyRepository.save(survey);
     }
 
-    public List<Survey> filterByMood(SurveyRequestDto surveyRequestDto, List<Survey> surveyList) {
-        return surveyUtil.compareTwoFilteredSurveyData(
-                surveyList,
-                surveyRepository.findByMoodAnswerContaining(surveyRequestDto.getMoodAnswer()));
-    }
-
-    public List<Survey> filterBySeason(SurveyRequestDto surveyRequestDto, List<Survey> surveyList) {
-        return surveyUtil.compareTwoFilteredSurveyData(
-                surveyList,
-                surveyRepository.findBySeasonAnswerContainingOrSeasonAnswer(surveyRequestDto.getSeasonAnswer(), SurveyType.FOUR_SEASON.getValue()));
-    }
-
-    public List<Survey> filterByStyle(SurveyRequestDto surveyRequestDto, List<Survey> surveyList) {
-        return surveyUtil.compareTwoFilteredSurveyData(
-                surveyList,
-                surveyRepository.findByStyleAnswerContainingOrStyleAnswer(surveyRequestDto.getStyleAnswer(), SurveyType.DEFAULT.getValue()));
-    }
-
-    public List<Survey> filterByGenderAndScent(String gender, String genderless, String scent) {
-        return surveyRepository.findByGenderAnswerOrGenderAnswerAndScentAnswer(gender, genderless, scent);
-    }
-
     public List<Perfume> convertToPerfumeData(List<Survey> surveyList) {
         return surveyList.stream()
                 .map(data -> data.getPerfume()).collect(Collectors.toList());
     }
 
     public List<Perfume> showPerfumeListBySurvey(SurveyRequestDto surveyRequestDto) {
-        List<Survey> surveyList = filterByGenderAndScent(surveyRequestDto.getGenderAnswer(), SurveyType.GENDERLESS.getValue(), surveyRequestDto.getScentAnswer());
-        List<Survey> filteredSurveys = filterByMood(surveyRequestDto, surveyList);
-        filteredSurveys = filterBySeason(surveyRequestDto, filteredSurveys);
-        List<Survey> filteredBySeasonList = filteredSurveys;
-        filteredSurveys = filterByStyle(surveyRequestDto, filteredSurveys);
+        List<Survey> surveyList = surveyRepository.findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContainingAndSeasonAnswerContainingAndStyleAnswerContaining
+                (surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(), surveyRequestDto.getMoodAnswer(), surveyRequestDto.getSeasonAnswer(), surveyRequestDto.getStyleAnswer());
 
-        return convertToPerfumeData(surveyUtil.isEmptyFinalResult(filteredSurveys, filteredBySeasonList));
+        if (convertToPerfumeData(surveyList).isEmpty()) {
+            List<Survey> surveyListByMood = surveyRepository.findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContaining
+                    (surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(), surveyRequestDto.getMoodAnswer());
+            return convertToPerfumeData(surveyListByMood);
+        }
+
+        return convertToPerfumeData(surveyList);
     }
 
+    public List<Perfume> showSimilarPerfumeList(Survey survey) {
+        List<Survey> findSimilarData = surveyRepository.findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContaining
+                (survey.getGenderAnswer(), survey.getScentAnswer(), survey.getMoodAnswer());
 
+        return convertToPerfumeData(findSimilarData);
+    }
 }

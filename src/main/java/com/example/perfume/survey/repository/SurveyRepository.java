@@ -2,6 +2,8 @@ package com.example.perfume.survey.repository;
 
 import com.example.perfume.survey.domain.Survey;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,16 +18,11 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     List<Survey> findByScentAnswer(String scentAnswer);
 
-    List<Survey> findByMoodAnswerContaining(String moodAnswer);
-
     List<Survey> findByStyleAnswer(String styleAnswer);
 
-    List<Survey> findByGenderAnswerAndScentAnswer(String genderAnswer, String scentAnswer);
+    List<Survey> findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContainingAndSeasonAnswerContainingAndStyleAnswerContaining
+            (String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer);
 
-    List<Survey> findBySeasonAnswerContainingOrSeasonAnswer(String seasonAnswer, String fourSeason);
-
-    List<Survey> findByStyleAnswerContainingOrStyleAnswer(String styleAnswer, String defaultValue);
-
-    List<Survey> findByGenderAnswerOrGenderAnswerAndScentAnswer(String genderAnswer, String genderLess, String scentAnswer);
-
+    List<Survey> findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContaining
+            (String genderAnswer, String scentAnswer, String moodAnswer);
 }
