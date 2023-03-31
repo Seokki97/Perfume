@@ -14,14 +14,14 @@ public class FeatureService {
     private final PerfumeService perfumeService;
     private final SurveyUtil surveyUtil;
 
-    public FeatureService(SurveyService surveyService, PerfumeService perfumeService,SurveyUtil surveyUtil) {
+    public FeatureService(SurveyService surveyService, PerfumeService perfumeService, SurveyUtil surveyUtil) {
         this.surveyService = surveyService;
         this.perfumeService = perfumeService;
         this.surveyUtil = surveyUtil;
     }
 
     public FeatureResponseDto showFeatureDetails(Long id) {
-        return  FeatureResponseDto.builder()
+        return FeatureResponseDto.builder()
                 .perfume(perfumeService.findPerfumeById(id))
                 .scentRecommend(selectScent(id))
                 .moodRecommend(selectMood(id))
@@ -41,10 +41,10 @@ public class FeatureService {
 
     private String selectMood(Long id) {
         Survey surveyId = surveyService.findSurveyById(id);
-        surveyUtil.splitMoodAnswer(surveyService.findSurveyById(id));
+        surveyUtil.showMoodAnswer(surveyService.findSurveyById(id));
 
         Survey survey = Survey.builder()
-                .moodAnswer(surveyUtil.splitMoodAnswer(surveyId).getMoodAnswer())
+                .moodAnswer(surveyUtil.showMoodAnswer(surveyId).getMoodAnswer())
                 .build();
         return MoodType.getMessage(survey);
     }

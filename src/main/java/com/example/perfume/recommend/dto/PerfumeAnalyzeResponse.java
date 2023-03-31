@@ -10,9 +10,7 @@ public class PerfumeAnalyzeResponse {
 
     @Builder
     public PerfumeAnalyzeResponse(Long countNumber, String perfumeName) {
-
         this.countNumber = countNumber;
         this.perfumeName = perfumeName;
     }
-
 }

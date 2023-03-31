@@ -31,12 +31,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/perfume/**", "/post/**", "/member/**", "/oauth/**", "/survey/**", "/feedback/**").permitAll()
                 .anyRequest().authenticated();
     }
+
     @Override
-    public void configure(WebSecurity web){
+    public void configure(WebSecurity web) {
         web.httpFirewall(defaultHttpFirewall());
     }
+
     @Bean
-    public HttpFirewall defaultHttpFirewall(){
+    public HttpFirewall defaultHttpFirewall() {
         return new DefaultHttpFirewall();
     }
 }

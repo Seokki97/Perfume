@@ -14,11 +14,7 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     Optional<Survey> findById(Long id);
 
-    List<Survey> findByGenderAnswer(String genderAnswer);
-
     List<Survey> findByScentAnswer(String scentAnswer);
-
-    List<Survey> findByStyleAnswer(String styleAnswer);
 
     List<Survey> findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContainingAndSeasonAnswerContainingAndStyleAnswerContaining
             (String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer);

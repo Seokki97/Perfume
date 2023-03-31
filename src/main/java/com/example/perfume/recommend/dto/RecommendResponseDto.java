@@ -12,7 +12,6 @@ public class RecommendResponseDto {
 
     private Long id;
 
-
     private List<Recommendation> recommendationList;
 
     public RecommendResponseDto() {
@@ -23,5 +22,4 @@ public class RecommendResponseDto {
         this.id = id;
         this.recommendationList = recommendationList;
     }
-
 }

@@ -19,7 +19,7 @@ public class Perfume {
     private String perfumeName;
 
     @NotNull
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 30)
     private String brandName;
 
     @NotNull
@@ -27,7 +27,7 @@ public class Perfume {
     private String perfumeFeature;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false,length = 255)
     private String perfumeImageUrl;
 
     @Builder

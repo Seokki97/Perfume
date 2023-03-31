@@ -26,7 +26,6 @@ public class RecommendationService {
 
     private final PerfumeService perfumeService;
 
-
     public RecommendationService(RecommendRepository recommendRepository, SurveyService surveyService,
                                  MemberService memberService,
                                  PerfumeService perfumeService) {
@@ -82,7 +81,7 @@ public class RecommendationService {
     }
 
     @Transactional
-    public void deleteRecommendedData(){
+    public void deleteRecommendedData() {
         recommendRepository.deleteAll();
     }
 }

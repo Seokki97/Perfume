@@ -14,17 +14,15 @@ public class LogoutController {
     private final LogoutService logoutService;
     private final JwtProvider jwtProvider;
 
-
-    public LogoutController(LogoutService logoutService,JwtProvider jwtProvider) {
+    public LogoutController(LogoutService logoutService, JwtProvider jwtProvider) {
         this.logoutService = logoutService;
         this.jwtProvider = jwtProvider;
     }
 
     @DeleteMapping("/logout")
-    public void permitLogout(@RequestBody LogoutRequestDto logoutRequestDto, HttpServletRequest httpServletRequest){
+    public void permitLogout(@RequestBody LogoutRequestDto logoutRequestDto, HttpServletRequest httpServletRequest) {
         String accessToken = jwtProvider.resolveToken(httpServletRequest);
 
-        logoutService.permitLogout(logoutRequestDto,accessToken);
+        logoutService.permitLogout(logoutRequestDto, accessToken);
     }
-
 }

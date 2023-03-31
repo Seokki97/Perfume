@@ -2,7 +2,6 @@ package com.example.perfume.survey.service;
 
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Survey;
-import com.example.perfume.survey.domain.SurveyType;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.repository.SurveyRepository;
@@ -14,7 +13,6 @@ import java.util.stream.Collectors;
 @Service
 public class SurveyService {
     private final SurveyRepository surveyRepository;
-
 
     public SurveyService(SurveyRepository surveyRepository) {
         this.surveyRepository = surveyRepository;

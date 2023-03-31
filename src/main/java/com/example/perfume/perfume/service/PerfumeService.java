@@ -35,7 +35,8 @@ public class PerfumeService {
 
     public void savePerfumeData(Long id, PerfumeList perfume) throws IOException {
         perfume = perfumeCsvFileLoading.extractAllPerfumeData(perfume);
-        for (int firstIndex = 0; firstIndex < perfume.getMaxSize(); firstIndex++) {
+        int perfumeListSize = perfume.getMaxSize();
+        for (int firstIndex = 0; firstIndex < perfumeListSize; firstIndex++) {
             Perfume perfumeDataSet = makePerfumeList(id, firstIndex, perfume).toEntity();
             perfumeRepository.save(perfumeDataSet);
         }
@@ -81,5 +82,10 @@ public class PerfumeService {
             throw new BrandNotFoundException();
         }
         return true;
+    }
+
+    public List<String> showBrandList() {
+        return perfumeRepository.findAll().stream().map(data -> data.getBrandName())
+                .distinct().collect(Collectors.toList());
     }
 }

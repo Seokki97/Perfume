@@ -32,7 +32,7 @@ public class OauthController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<LoginResponse> save(@RequestBody MemberRequestDto memberRequestDto){
+    public ResponseEntity<LoginResponse> save(@RequestBody MemberRequestDto memberRequestDto) {
         oauthService.saveUserProfile(memberRequestDto);
         return ResponseEntity.ok(loginService.generateToken(memberRequestDto.getMemberId()));
     }

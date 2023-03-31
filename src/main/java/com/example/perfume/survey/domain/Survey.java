@@ -3,6 +3,7 @@ package com.example.perfume.survey.domain;
 import com.example.perfume.perfume.domain.Perfume;
 import com.sun.istack.NotNull;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 

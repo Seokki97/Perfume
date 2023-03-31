@@ -20,10 +20,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
         corsRegistry.addMapping("/**")
                 .allowedOrigins("https://inhyang.netlify.app")
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE")
-                .allowedHeaders("*","Authorization")
+                .allowedHeaders("*", "Authorization")
                 .allowCredentials(true)
                 .maxAge(3600);
-}
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

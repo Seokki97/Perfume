@@ -2,15 +2,12 @@ package com.example.perfume.recommend.domain;
 
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.survey.domain.Survey;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name = "recommend")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -44,5 +41,4 @@ public class Recommendation {
         this.comment = comment;
         this.scentAnswer = scentAnswer;
     }
-
 }

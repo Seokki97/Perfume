@@ -8,6 +8,8 @@ import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
 import com.example.perfume.survey.service.FeatureService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +22,8 @@ public class PerfumeDataController {
 
     private final PerfumeService perfumeService;
 
-
     private final FeatureService featureService;
+
 
     public PerfumeDataController(PerfumeService perfumeService, FeatureService featureService) {
         this.perfumeService = perfumeService;
@@ -58,5 +60,9 @@ public class PerfumeDataController {
         return ResponseEntity.ok(featureService.showFeatureDetails(id));
     }
 
+    @GetMapping("/show-all-brand")
+    public ResponseEntity<List<String>> showAllBrandName(){
+        return ResponseEntity.ok(perfumeService.showBrandList());
+    }
 
 }
