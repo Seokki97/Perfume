@@ -30,10 +30,9 @@ public class LogoutService {
         tokenRepository.deleteByMemberId(logoutRequestDto.getMemberId());
     }
 
-    public void isUserLogout(String accessToken){
+    public void isUserAlreadyLogout(String accessToken){
         if(blacklistRepository.existsByAccessToken(accessToken)){
             throw new MemberAlreadyLogoutException();
         }
     }
-
 }
