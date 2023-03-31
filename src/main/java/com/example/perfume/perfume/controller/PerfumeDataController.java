@@ -1,6 +1,7 @@
 package com.example.perfume.perfume.controller;
 
 import com.example.perfume.crawling.domain.perfume.PerfumeList;
+import com.example.perfume.member.service.jwt.LoginCheck;
 import com.example.perfume.perfume.domain.Perfume;
 
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
@@ -64,6 +65,7 @@ public class PerfumeDataController {
         return ResponseEntity.ok(perfumeService.showBrandList());
     }
 
+    @LoginCheck
     @GetMapping("/perfume-image")
     public ResponseEntity<PerfumeResponseDto> showPerfumeImage(@RequestBody PerfumeRequestDto perfumeRequestDto){
         return ResponseEntity.ok(perfumeService.showPerfumeImage(perfumeRequestDto));
