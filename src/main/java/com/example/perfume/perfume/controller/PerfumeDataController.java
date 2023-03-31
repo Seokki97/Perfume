@@ -24,7 +24,6 @@ public class PerfumeDataController {
 
     private final FeatureService featureService;
 
-
     public PerfumeDataController(PerfumeService perfumeService, FeatureService featureService) {
         this.perfumeService = perfumeService;
         this.featureService = featureService;
@@ -65,4 +64,8 @@ public class PerfumeDataController {
         return ResponseEntity.ok(perfumeService.showBrandList());
     }
 
+    @GetMapping("/perfume-image")
+    public ResponseEntity<PerfumeResponseDto> showPerfumeImage(@RequestBody PerfumeRequestDto perfumeRequestDto){
+        return ResponseEntity.ok(perfumeService.showPerfumeImage(perfumeRequestDto));
+    }
 }

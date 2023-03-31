@@ -88,4 +88,13 @@ public class PerfumeService {
         return perfumeRepository.findAll().stream().map(data -> data.getBrandName())
                 .distinct().collect(Collectors.toList());
     }
+
+    public PerfumeResponseDto showPerfumeImage(PerfumeRequestDto perfumeRequestDto) {
+        Perfume perfume = perfumeRepository.findByPerfumeName(perfumeRequestDto.getPerfumeName())
+                .orElseThrow(PerfumeNotFoundException::new);
+
+        return PerfumeResponseDto.builder()
+                .perfumeImageUrl(perfume.getPerfumeImageUrl())
+                .build();
+    }
 }

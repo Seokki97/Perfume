@@ -16,5 +16,6 @@ public interface PerfumeRepository extends JpaRepository<Perfume, Long> {
 
     List<Perfume> findByBrandNameContaining(String perfumeBrand);
 
+    Optional<Perfume> findByPerfumeName(String perfumeName);
 
 }
