@@ -1,11 +1,7 @@
 package com.example.perfume.survey.service;
 
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.survey.domain.Survey;
-import com.example.perfume.survey.domain.SurveyType;
-import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
-import com.example.perfume.survey.repository.SurveyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +17,6 @@ public class SimilarPerfumeService {
 
     public List<Perfume> showSimilarPerfume(Long id) {
         Survey survey = surveyService.findSurveyById(id);
-        return surveyService.showSimilarPerfumeList(survey);
+        return surveyService.showSimilarPerfumeList(survey).stream().filter(perfume -> perfume.getId() != id).collect(Collectors.toList());
     }
 }
