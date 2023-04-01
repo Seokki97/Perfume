@@ -61,13 +61,13 @@ public class PerfumeDataController {
     }
 
     @GetMapping("/show-all-brand")
-    public ResponseEntity<List<String>> showAllBrandName(){
+    public ResponseEntity<List<String>> showAllBrandName() {
         return ResponseEntity.ok(perfumeService.showBrandList());
     }
 
     @LoginCheck
     @GetMapping("/perfume-image")
-    public ResponseEntity<PerfumeResponseDto> showPerfumeImage(@RequestBody PerfumeRequestDto perfumeRequestDto){
-        return ResponseEntity.ok(perfumeService.showPerfumeImage(perfumeRequestDto));
+    public ResponseEntity<PerfumeResponseDto> showPerfumeImage(@RequestParam("perfumeName") String perfumeName) {
+        return ResponseEntity.ok(perfumeService.showPerfumeImage(perfumeName));
     }
 }
