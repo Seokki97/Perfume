@@ -16,12 +16,10 @@ public class FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
 
-
     private static final String filePath = "C:/Users/wnstj/perfume/feedback.txt";
 
     private final File importedFile;
     private final BufferedWriter bufferedWriter;
-
 
     public FeedbackService(FeedbackRepository feedbackRepository) throws IOException {
         this.feedbackRepository = feedbackRepository;
@@ -44,7 +42,6 @@ public class FeedbackService {
         }
         bufferedWriter.flush();
         bufferClose();
-
     }
 
     public void bufferClose() throws IOException {
