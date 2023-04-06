@@ -35,12 +35,11 @@ public class SurveyService {
         List<Survey> surveyList = surveyRepository.findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContainingAndSeasonAnswerContainingAndStyleAnswerContaining
                 (surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(), surveyRequestDto.getMoodAnswer(), surveyRequestDto.getSeasonAnswer(), surveyRequestDto.getStyleAnswer());
 
-        if (convertToPerfumeData(surveyList).isEmpty()) {
+        if (isEmptyRecommendedPerfumeList(surveyList)) {
             List<Survey> surveyListByMood = surveyRepository.findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContaining
                     (surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(), surveyRequestDto.getMoodAnswer());
             return convertToPerfumeData(surveyListByMood);
         }
-
         return convertToPerfumeData(surveyList);
     }
 
@@ -49,5 +48,12 @@ public class SurveyService {
                 (survey.getGenderAnswer(), survey.getScentAnswer(), survey.getMoodAnswer());
 
         return convertToPerfumeData(findSimilarData);
+    }
+
+    public boolean isEmptyRecommendedPerfumeList(List<Survey> surveyList) {
+        if (convertToPerfumeData(surveyList).isEmpty()) {
+            return true;
+        }
+        return false;
     }
 }
