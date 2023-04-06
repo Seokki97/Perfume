@@ -32,8 +32,6 @@ public class LoginController {
 
     @PostMapping("/regenerate")
     public ResponseEntity<LoginResponse> regenerateEntity(HttpServletRequest httpServletRequest) {
-
-        String accessToken = jwtProvider.resolveToken(httpServletRequest);
         String refreshToken = jwtProvider.resolveRefreshToken(httpServletRequest);
 
         return ResponseEntity.ok(loginService.generateNewAccessToken(refreshToken));
