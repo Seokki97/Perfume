@@ -89,11 +89,15 @@ public class PerfumeService {
                 .distinct().collect(Collectors.toList());
     }
 
-    public PerfumeResponseDto showPerfumeImage(PerfumeRequestDto perfumeRequestDto) {
-        Perfume perfume = perfumeRepository.findByPerfumeName(perfumeRequestDto.getPerfumeName())
+    public PerfumeResponseDto showPerfumeImage(String perfumeName) {
+        Perfume perfume = perfumeRepository.findByPerfumeName(perfumeName)
                 .orElseThrow(PerfumeNotFoundException::new);
 
         return PerfumeResponseDto.builder()
+                .id(perfume.getId())
+                .perfumeFeature(perfume.getPerfumeFeature())
+                .perfumeName(perfume.getPerfumeName())
+                .brandName(perfume.getBrandName())
                 .perfumeImageUrl(perfume.getPerfumeImageUrl())
                 .build();
     }
