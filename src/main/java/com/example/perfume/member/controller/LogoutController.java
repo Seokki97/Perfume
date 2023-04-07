@@ -3,6 +3,7 @@ package com.example.perfume.member.controller;
 import com.example.perfume.member.dto.logoutDto.LogoutRequestDto;
 import com.example.perfume.member.service.LogoutService;
 import com.example.perfume.member.service.jwt.JwtProvider;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +21,9 @@ public class LogoutController {
     }
 
     @DeleteMapping("/logout")
-    public void permitLogout(@RequestBody LogoutRequestDto logoutRequestDto, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Void> permitLogout(@RequestBody LogoutRequestDto logoutRequestDto, HttpServletRequest httpServletRequest) {
         String accessToken = jwtProvider.resolveToken(httpServletRequest);
-
         logoutService.permitLogout(logoutRequestDto, accessToken);
+        return ResponseEntity.noContent().build();
     }
 }
