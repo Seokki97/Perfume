@@ -1,4 +1,4 @@
-package com.example.perfume.recommend.service;
+package com.example.perfume.recommend.service.analyze;
 
 import com.example.perfume.recommend.dto.AnalyzeResponse;
 import com.example.perfume.recommend.dto.PerfumeAnalyzeResponse;

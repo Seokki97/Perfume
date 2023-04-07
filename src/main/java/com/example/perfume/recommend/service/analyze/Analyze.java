@@ -1,6 +1,4 @@
-package com.example.perfume.recommend.service;
-
-import com.example.perfume.recommend.dto.PerfumeAnalyzeResponse;
+package com.example.perfume.recommend.service.analyze;
 
 import java.util.List;
 
