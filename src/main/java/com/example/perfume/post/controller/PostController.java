@@ -19,8 +19,9 @@ public class PostController {
     }
 
     @PostMapping("/save-post")
-    public void savePost(@RequestBody PostRequestDto postRequestDto) {
+    public ResponseEntity<Void> savePost(@RequestBody PostRequestDto postRequestDto) {
         postService.savePost(postRequestDto);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/show-post/{id}")
