@@ -18,11 +18,9 @@ public class RecommendController {
     private final RecommendationService recommendationService;
     private final LogoutService logoutService;
 
-
-    public RecommendController(RecommendationService recommendationService,LogoutService logoutService) {
+    public RecommendController(RecommendationService recommendationService, LogoutService logoutService) {
         this.recommendationService = recommendationService;
         this.logoutService = logoutService;
-
     }
 
     @PostMapping("/recommend/{id}")
@@ -39,8 +37,9 @@ public class RecommendController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteRecommendData(){
+    public ResponseEntity<Void> deleteRecommendData() {
         recommendationService.deleteRecommendedData();
+        return ResponseEntity.noContent().build();
     }
 
 }
