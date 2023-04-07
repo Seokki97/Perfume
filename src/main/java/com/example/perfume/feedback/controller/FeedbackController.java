@@ -2,6 +2,7 @@ package com.example.perfume.feedback.controller;
 
 import com.example.perfume.feedback.dto.FeedbackRequestDto;
 import com.example.perfume.feedback.service.FeedbackService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -11,17 +12,20 @@ import java.io.IOException;
 public class FeedbackController {
     private final FeedbackService feedbackService;
 
-    public FeedbackController(FeedbackService feedbackService){
+    public FeedbackController(FeedbackService feedbackService) {
         this.feedbackService = feedbackService;
     }
+
     @PostMapping("/save")
-    public void saveFeedback(@RequestBody FeedbackRequestDto feedbackRequestDto){
+    public ResponseEntity<Void> saveFeedback(@RequestBody FeedbackRequestDto feedbackRequestDto) {
         feedbackService.saveFeedback(feedbackRequestDto);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/file")
-    public void saveFile() throws IOException {
+    public ResponseEntity<Void> saveFile() throws IOException {
         feedbackService.makeFeedbackFile();
+        return ResponseEntity.noContent().build();
     }
 
 }
