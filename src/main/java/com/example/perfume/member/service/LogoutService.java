@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LogoutService {
+    private static final int AUTO_DELETE_DELAY = 24*60*60*1000;
     private final TokenRepository tokenRepository;
     private final MemberService memberService;
     private final BlacklistRepository blacklistRepository;
@@ -32,7 +33,7 @@ public class LogoutService {
         tokenRepository.deleteByMemberId(logoutRequestDto.getMemberId());
     }
 
-    @Scheduled(fixedDelay = 86400 * 1000)
+    @Scheduled(fixedDelay =AUTO_DELETE_DELAY)
     @Transactional
     public void deleteBlackList() {
         blacklistRepository.deleteAll();
