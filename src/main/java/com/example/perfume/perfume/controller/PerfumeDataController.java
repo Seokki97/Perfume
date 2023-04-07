@@ -31,8 +31,9 @@ public class PerfumeDataController {
     }
 
     @GetMapping("/save")
-    public void saveData(Long id, PerfumeList perfumeList) throws IOException {
+    public ResponseEntity<Void> saveData(Long id, PerfumeList perfumeList) throws IOException {
         perfumeService.savePerfumeData(id, perfumeList);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/find-by-name")
@@ -46,8 +47,9 @@ public class PerfumeDataController {
     }
 
     @DeleteMapping("/delete")
-    public void deleteAllData() {
+    public ResponseEntity<Void> deleteAllData() {
         perfumeService.deleteAllData();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/show-all-data")
