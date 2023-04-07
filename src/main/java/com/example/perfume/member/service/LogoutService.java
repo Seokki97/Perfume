@@ -5,6 +5,8 @@ import com.example.perfume.member.dto.logoutDto.LogoutRequestDto;
 import com.example.perfume.member.exception.MemberAlreadyLogoutException;
 import com.example.perfume.member.repository.BlacklistRepository;
 import com.example.perfume.member.repository.TokenRepository;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +32,14 @@ public class LogoutService {
         tokenRepository.deleteByMemberId(logoutRequestDto.getMemberId());
     }
 
-    public void isUserAlreadyLogout(String accessToken){
-        if(blacklistRepository.existsByAccessToken(accessToken)){
+    @Scheduled(fixedDelay = 86400 * 1000)
+    @Transactional
+    public void deleteBlackList() {
+        blacklistRepository.deleteAll();
+    }
+
+    public void isUserAlreadyLogout(String accessToken) {
+        if (blacklistRepository.existsByAccessToken(accessToken)) {
             throw new MemberAlreadyLogoutException();
         }
     }
