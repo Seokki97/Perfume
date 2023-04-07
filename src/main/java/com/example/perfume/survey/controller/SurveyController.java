@@ -33,8 +33,9 @@ public class SurveyController {
     }
 
     @GetMapping("/save")
-    public void saveSurveyData(Long id, SurveyList surveyList) throws IOException {
+    public ResponseEntity<Void> saveSurveyData(Long id, SurveyList surveyList) throws IOException {
         dataService.saveSurveyData(id, surveyList);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/show-perfume-by-survey")
