@@ -49,7 +49,7 @@ public class LoginService implements UserDetailsService {
 
         LoginResponse loginResponse = LoginResponse.builder()
                 .id(member.getId())
-                .memberId(memberId)
+                .memberId(member.getMemberId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
                 .thumbnailImage(member.getThumbnailImage())

@@ -21,4 +21,5 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     List<Survey> findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContaining
             (String genderAnswer, String scentAnswer, String moodAnswer);
+
 }

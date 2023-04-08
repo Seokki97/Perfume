@@ -1,10 +1,7 @@
 package com.example.perfume.oauth.service;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.dto.loginDto.LoginResponse;
 import com.example.perfume.member.dto.memberDto.MemberRequestDto;
-import com.example.perfume.member.repository.MemberRepository;
-import com.example.perfume.member.service.LoginService;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.oauth.OauthType;
 import com.example.perfume.oauth.exception.EmailNotFoundException;
@@ -23,14 +20,8 @@ import javax.servlet.http.HttpSession;
 public class OauthService {
     private final MemberService memberService;
 
-    private final LoginService loginService;
-    private final MemberRepository memberRepository;
-
-    private OauthService(MemberService memberService, LoginService loginService,
-                         MemberRepository memberRepository) {
+    private OauthService(MemberService memberService) {
         this.memberService = memberService;
-        this.loginService = loginService;
-        this.memberRepository = memberRepository;
     }
 
     private HttpHeaders setHttpHeaders() {
@@ -41,12 +32,13 @@ public class OauthService {
     }
 
     private LinkedMultiValueMap<String, String> setHttpBody(String code) {
-
         LinkedMultiValueMap<String, String> accessTokenParams = new LinkedMultiValueMap<>();
+
         accessTokenParams.add(OauthType.GRANT_TYPE.getName(), OauthType.GRANT_TYPE.getType());
         accessTokenParams.add(OauthType.CLIENT_ID.getName(), OauthType.CLIENT_ID.getType());
         accessTokenParams.add(OauthType.REDIRECT_URI.getName(), OauthType.REDIRECT_URI.getType());
         accessTokenParams.add("code", code);
+
         return accessTokenParams;
     }
 
@@ -101,19 +93,10 @@ public class OauthService {
                 .nickname(memberRequestDto.getNickname())
                 .thumbnailImage(memberRequestDto.getThumbnailImage())
                 .build();
-        isAgreeEmailUsing(memberRequestDto.getEmail());
+        // isAgreeEmailUsing(memberRequestDto.getEmail());
 
         if (!memberService.isAlreadyExistMember(memberRequestDto)) {
             memberService.saveMemberProfile(member);
         }
     }
-
-    public boolean isAgreeEmailUsing(String email) {
-        if (email == null) {
-            throw new EmailNotFoundException();
-        }
-        return true;
-    }
-
-
 }

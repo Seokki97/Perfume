@@ -26,5 +26,4 @@ public class RecommendRequestDto {
         this.seasonAnswer = seasonAnswer;
         this.styleAnswer = styleAnswer;
     }
-
 }
