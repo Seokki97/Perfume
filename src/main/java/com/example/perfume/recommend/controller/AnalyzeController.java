@@ -1,11 +1,7 @@
 package com.example.perfume.recommend.controller;
 
 import com.example.perfume.member.service.jwt.LoginCheck;
-import com.example.perfume.recommend.dto.PerfumeAnalyzeResponse;
-import com.example.perfume.recommend.dto.ScentAnalyzeResponse;
-import com.example.perfume.recommend.service.AnalyzeService;
-import com.example.perfume.recommend.service.PerfumeAnalyze;
-import com.example.perfume.recommend.service.ScentAnalyze;
+import com.example.perfume.recommend.service.analyze.AnalyzeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
