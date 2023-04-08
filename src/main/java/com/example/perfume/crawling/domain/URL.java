@@ -1,22 +1,22 @@
 package com.example.perfume.crawling.domain;
 
 public class URL {
-    public static String CITRUS_URL ="https://perfumegraphy.com/category/citrus/674/";
-    public static String CITRUS_URL2="https://perfumegraphy.com/category/citrus/674/?page=2";
-    public static String CITRUS_URL3="https://perfumegraphy.com/category/citrus/674/?page=3";
-    public static String CITRUS_URL4="https://perfumegraphy.com/category/citrus/674/?page=4";
-    public static String CITRUS_URL5="https://perfumegraphy.com/category/citrus/674/?page=5";
-    public static String CITRUS_URL6="https://perfumegraphy.com/category/citrus/674/?page=6";
-    public static String CITRUS_URL7="https://perfumegraphy.com/category/citrus/674/?page=7";
-    public static String CITRUS_URL8="https://perfumegraphy.com/category/citrus/674/?page=8";
-    public static String CITRUS_URL9="https://perfumegraphy.com/category/citrus/674/?page=9";
-    public static String CITRUS_URL10="https://perfumegraphy.com/category/citrus/674/?page=10";
-    public static String CITRUS_URL11="https://perfumegraphy.com/category/citrus/674/?page=11";
-    public static String CITRUS_URL12="https://perfumegraphy.com/category/citrus/674/?page=12";
-    public static String CITRUS_URL13="https://perfumegraphy.com/category/citrus/674/?page=13";
-    public static String CITRUS_URL14="https://perfumegraphy.com/category/citrus/674/?page=14";
-    public static String CITRUS_URL15="https://perfumegraphy.com/category/citrus/674/?page=15";
 
+    public static String CITRUS_URL = "https://perfumegraphy.com/category/citrus/674/";
+    public static String CITRUS_URL2 = "https://perfumegraphy.com/category/citrus/674/?page=2";
+    public static String CITRUS_URL3 = "https://perfumegraphy.com/category/citrus/674/?page=3";
+    public static String CITRUS_URL4 = "https://perfumegraphy.com/category/citrus/674/?page=4";
+    public static String CITRUS_URL5 = "https://perfumegraphy.com/category/citrus/674/?page=5";
+    public static String CITRUS_URL6 = "https://perfumegraphy.com/category/citrus/674/?page=6";
+    public static String CITRUS_URL7 = "https://perfumegraphy.com/category/citrus/674/?page=7";
+    public static String CITRUS_URL8 = "https://perfumegraphy.com/category/citrus/674/?page=8";
+    public static String CITRUS_URL9 = "https://perfumegraphy.com/category/citrus/674/?page=9";
+    public static String CITRUS_URL10 = "https://perfumegraphy.com/category/citrus/674/?page=10";
+    public static String CITRUS_URL11 = "https://perfumegraphy.com/category/citrus/674/?page=11";
+    public static String CITRUS_URL12 = "https://perfumegraphy.com/category/citrus/674/?page=12";
+    public static String CITRUS_URL13 = "https://perfumegraphy.com/category/citrus/674/?page=13";
+    public static String CITRUS_URL14 = "https://perfumegraphy.com/category/citrus/674/?page=14";
+    public static String CITRUS_URL15 = "https://perfumegraphy.com/category/citrus/674/?page=15";
 
 
     public static String SOAPY_URL = "https://perfumegraphy.com/category/soapy/675/";
@@ -117,8 +117,6 @@ public class URL {
     public static String GENDERLESS_PERFUME7 = "http://pc.perfumegraphy.com/category/genderless/661/?page=7";
     public static String GENDERLESS_PERFUME8 = "http://pc.perfumegraphy.com/category/genderless/661/?page=8";
     public static String GENDERLESS_PERFUME9 = "http://pc.perfumegraphy.com/category/genderless/661/?page=9";
-
-
 
 
 }

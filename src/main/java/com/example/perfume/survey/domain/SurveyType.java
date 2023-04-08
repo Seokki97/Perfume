@@ -7,8 +7,8 @@ public enum SurveyType {
 
     GENDERLESS("남자 여자"),
     DEFAULT("캐쥬얼 포멀"),
-    FOUR_SEASON("봄 여름 가을 겨울");
-
+    FOUR_SEASON("봄 여름 가을 겨울"),
+    NOT_SELECT_SEASON("상관없음");
     private final String value;
 
     SurveyType(String value) {
