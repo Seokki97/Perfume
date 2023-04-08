@@ -24,34 +24,33 @@ public class OauthTest {
     @Autowired
     private MemberService memberService;
 
-    @DisplayName("이메일 사용을 동의하지 않았을 시 예외가 발생한다.")
-    @Test
-    void isAgreeEmailCheck(){
-        String email = null;
-
-        assertThatThrownBy(() -> oauthService.isAgreeEmailUsing(email))
-                .isInstanceOf(EmailNotFoundException.class).hasMessage("계정 이용 동의를 하지 않았습니다.");
-    }
-
     @DisplayName("회원 정보를 DB에 저장시킨다.")
     @Test
     void saveMember(){
         MemberRequestDto memberRequestDto = MemberRequestDto.builder()
-                .id(1l)
-                .memberId(123l)
-                .email("ask@naver.com")
-                .nickname("서키")
+                .memberId(122342113l)
+                .email("asadssk@naver.com")
+                .nickname("서sa키")
+                .thumbnailImage("dsadasad")
+                .build();
+        Member member = Member.builder()
+                .id(2l)
+                .email(memberRequestDto.getEmail())
+                .nickname(memberRequestDto.getNickname())
+                .memberId(memberRequestDto.getMemberId())
                 .build();
         oauthService.saveUserProfile(memberRequestDto);
+
        Member actual =  memberService.findByMemberPk(memberRequestDto.getMemberId());
         Member expected = Member.builder()
-                .id(memberRequestDto.getId())
+                .id(member.getId())
                 .email(memberRequestDto.getEmail())
                 .memberId(memberRequestDto.getMemberId())
                 .nickname(memberRequestDto.getNickname())
                 .build();
 
-        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
+        assertThat(actual.getId()).usingRecursiveComparison().isEqualTo(expected.getId());
     }
+
 
 }

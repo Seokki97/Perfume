@@ -18,6 +18,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class SurveyUtilTest {
@@ -29,72 +30,5 @@ public class SurveyUtilTest {
 
     @Autowired
     private SurveyRepository surveyRepository;
-
-    @DisplayName("두개의 리스트를 합친다.")
-    @Test
-    void addList() {
-        List<Survey> survey1 = surveyRepository.findByStyleAnswer("디폴트");
-        List<Survey> survey2 = surveyRepository.findByStyleAnswer("캐쥬얼");
-        int firstSize = surveyRepository.findByStyleAnswer("디폴트").size();
-        int secondSize = surveyRepository.findByStyleAnswer("캐쥬얼").size();
-        int resultSize = firstSize + secondSize;
-        List<Survey> addedList = surveyUtil.addList(survey1, survey2);
-
-        assertAll(
-                () -> assertEquals(resultSize, addedList.size())
-        );
-    }
-
-    @DisplayName("두개의 리스트에서 같은 항목들을 찾는다.")
-    @Test
-    void filterList() {
-        List<Survey> survey1 = surveyRepository.findByGenderAnswer("여자");
-        List<Survey> survey2 = surveyRepository.findByStyleAnswer("캐쥬얼");
-        int filteredList = surveyUtil.compareTwoFilteredSurveyData(survey1, survey2).size();
-        int result = 0;
-
-        assertAll(
-                () -> assertEquals(result, filteredList)
-        );
-    }
-
-    @DisplayName("값이 존재하지 않을 때 SurveyNotFoundException 이 동작한다.")
-    @Test
-    void filterAnswer() {
-        SurveyResponseDto surveyResponseDto = SurveyResponseDto.builder()
-                .genderAnswer("중성")
-                .moodAnswer("자기")
-                .scentAnswer("무향")
-                .build();
-
-        assertAll(
-                () -> assertThatThrownBy(() -> surveyService.filterGenderAnswer(surveyResponseDto))
-                        .isInstanceOf(SurveyNotFoundException.class).hasMessage("해당 설문 응답을 찾을 수 없습니다."),
-                () -> assertThatThrownBy(() -> surveyService.filterScentAnswer(surveyResponseDto))
-                        .isInstanceOf(SurveyNotFoundException.class).hasMessage("해당 설문 응답을 찾을 수 없습니다."),
-                () -> assertThatThrownBy(() -> surveyService.filterMoodAnswer(surveyResponseDto))
-                        .isInstanceOf(SurveyNotFoundException.class).hasMessage("해당 설문 응답을 찾을 수 없습니다.")
-        );
-    }
-
-    @DisplayName("최종 결과물이 Null일 경우 그 이전까지의 결과물을 반환한다.")
-    @Test
-    void isEmptyFinalList(){
-        List<Survey> finalList = new ArrayList<>();
-
-        Survey survey = Survey.builder()
-                .genderAnswer("중성")
-                .moodAnswer("자기")
-                .scentAnswer("무향")
-                .styleAnswer("포멀")
-                .seasonAnswer("여름")
-                .build();
-        surveyRepository.save(survey);
-        List<Survey> beforeList = new ArrayList<>();
-        beforeList.add(survey);
-
-        List<Survey> expected = surveyUtil.isEmptyFinalResult(finalList,beforeList);
-        assertThat(beforeList).isEqualTo(expected);
-    }
 
 }

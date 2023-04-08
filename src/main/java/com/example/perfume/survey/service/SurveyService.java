@@ -2,6 +2,7 @@ package com.example.perfume.survey.service;
 
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Survey;
+import com.example.perfume.survey.domain.SurveyType;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.repository.SurveyRepository;
@@ -31,9 +32,17 @@ public class SurveyService {
                 .map(data -> data.getPerfume()).collect(Collectors.toList());
     }
 
-    public List<Perfume> showPerfumeListBySurvey(SurveyRequestDto surveyRequestDto) {
-        List<Survey> surveyList = surveyRepository.findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContainingAndSeasonAnswerContainingAndStyleAnswerContaining
+    public List<Survey> filterSurveyResultByQuestion(SurveyRequestDto surveyRequestDto) {
+        if (isNotSelectedSeasonAnswer(surveyRequestDto)) {
+            return surveyRepository.findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContainingAndStyleAnswerContaining
+                    (surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(), surveyRequestDto.getMoodAnswer(), surveyRequestDto.getStyleAnswer());
+        }
+        return surveyRepository.findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContainingAndSeasonAnswerContainingAndStyleAnswerContaining
                 (surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(), surveyRequestDto.getMoodAnswer(), surveyRequestDto.getSeasonAnswer(), surveyRequestDto.getStyleAnswer());
+    }
+
+    public List<Perfume> showPerfumeListBySurvey(SurveyRequestDto surveyRequestDto) {
+        List<Survey> surveyList = filterSurveyResultByQuestion(surveyRequestDto);
 
         if (isEmptyRecommendedPerfumeList(surveyList)) {
             List<Survey> surveyListByMood = surveyRepository.findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContaining
@@ -42,6 +51,7 @@ public class SurveyService {
         }
         return convertToPerfumeData(surveyList);
     }
+
 
     public List<Perfume> showSimilarPerfumeList(Survey survey) {
         List<Survey> findSimilarData = surveyRepository.findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContaining
@@ -52,6 +62,13 @@ public class SurveyService {
 
     public boolean isEmptyRecommendedPerfumeList(List<Survey> surveyList) {
         if (convertToPerfumeData(surveyList).isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isNotSelectedSeasonAnswer(SurveyRequestDto surveyRequestDto) {
+        if (surveyRequestDto.getSeasonAnswer().equals(SurveyType.NOT_SELECT_SEASON.getValue())) {
             return true;
         }
         return false;
