@@ -25,15 +25,9 @@ public class OauthController {
 
     @GetMapping("/login")
     public ResponseEntity<LoginResponse> signUp(@RequestParam String code, HttpSession httpSession) {
-
         Member member = oauthService.loadUserProfile(code, httpSession);
 
         return ResponseEntity.ok(loginService.generateToken(member.getMemberId()));
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<LoginResponse> save(@RequestBody MemberRequestDto memberRequestDto) {
-        oauthService.saveUserProfile(memberRequestDto);
-        return ResponseEntity.ok(loginService.generateToken(memberRequestDto.getMemberId()));
-    }
 }
