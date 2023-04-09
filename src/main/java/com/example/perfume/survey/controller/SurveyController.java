@@ -21,15 +21,11 @@ public class SurveyController {
 
     private final SurveyService surveyService;
     private final DataService dataService;
-    private final SurveyRepository surveyRepository;
-    private final SimilarPerfumeService similarPerfumeService;
 
-    public SurveyController(SurveyService surveyService, DataService dataService,
-                            SurveyRepository surveyRepository, SimilarPerfumeService similarPerfumeService) {
+    public SurveyController(SurveyService surveyService, DataService dataService) {
         this.surveyService = surveyService;
         this.dataService = dataService;
-        this.surveyRepository = surveyRepository;
-        this.similarPerfumeService = similarPerfumeService;
+
     }
 
     @GetMapping("/save")
@@ -42,17 +38,6 @@ public class SurveyController {
     public ResponseEntity<List<Perfume>> showPerfumeDataBySurvey(@RequestBody SurveyRequestDto surveyRequestDto) {
         LoggerUtil.countFirstApi("나에게 잘 어울리는 향수 (첫번째 기능) API 호출 횟수 : ");
         return ResponseEntity.ok(surveyService.showPerfumeListBySurvey(surveyRequestDto));
-    }
-
-    @PostMapping("/show")
-    public ResponseEntity<List<Survey>> showSelectedData(@RequestBody SurveyRequestDto surveyRequestDto) {
-        return ResponseEntity.ok(surveyRepository.findByScentAnswer(surveyRequestDto.getScentAnswer()));
-    }
-
-    @GetMapping("/show-similar-perfume/{id}")
-    public ResponseEntity<List<Perfume>> showSimilarData(@PathVariable("id") Long id) {
-        LoggerUtil.countSecondApi("비슷한 향수 추천 (두번째 기능) API 호출 횟수: ");
-        return ResponseEntity.ok(similarPerfumeService.showSimilarPerfume(id));
     }
 
 }
