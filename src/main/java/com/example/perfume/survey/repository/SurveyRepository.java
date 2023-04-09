@@ -16,12 +16,13 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     List<Survey> findByScentAnswer(String scentAnswer);
 
-    List<Survey> findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContainingAndSeasonAnswerContainingAndStyleAnswerContaining
-            (String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer);
+    @Query("SELECT s FROM survey s WHERE s.genderAnswer LIKE %:genderAnswer% AND s.scentAnswer = :scentAnswer AND s.moodAnswer LIKE %:moodAnswer% AND s.seasonAnswer LIKE %:seasonAnswer% AND s.styleAnswer LIKE %:styleAnswer%")
+    List<Survey> findSurveysByAnswers(@Param("genderAnswer") String genderAnswer, @Param("scentAnswer") String scentAnswer, @Param("moodAnswer") String moodAnswer, @Param("seasonAnswer") String seasonAnswer, @Param("styleAnswer") String styleAnswer);
 
-    List<Survey> findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContaining
-            (String genderAnswer, String scentAnswer, String moodAnswer);
+    @Query("SELECT s FROM survey s WHERE s.genderAnswer LIKE %:genderAnswer% AND s.scentAnswer = :scentAnswer AND s.moodAnswer LIKE %:moodAnswer%")
+    List<Survey> findSurveysByGenderScentAndMood(@Param("genderAnswer") String genderAnswer, @Param("scentAnswer") String scentAnswer, @Param("moodAnswer") String moodAnswer);
 
-    List<Survey> findByGenderAnswerContainingAndScentAnswerAndMoodAnswerContainingAndStyleAnswerContaining
-            (String genderAnswer, String scentAnswer, String moodAnswer, String styleAnswer);
+    @Query("SELECT s FROM survey s WHERE s.genderAnswer LIKE %:genderAnswer% AND s.scentAnswer = :scentAnswer AND s.moodAnswer LIKE %:moodAnswer% AND s.styleAnswer LIKE %:styleAnswer%")
+    List<Survey> findSurveysByGenderScentMoodAndStyle(@Param("genderAnswer") String genderAnswer, @Param("scentAnswer") String scentAnswer, @Param("moodAnswer") String moodAnswer, @Param("styleAnswer") String styleAnswer);
+
 }
