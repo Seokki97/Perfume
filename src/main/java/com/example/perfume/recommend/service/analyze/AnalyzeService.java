@@ -2,7 +2,6 @@ package com.example.perfume.recommend.service.analyze;
 
 import com.example.perfume.recommend.dto.PerfumeAnalyzeResponse;
 import com.example.perfume.recommend.dto.ScentAnalyzeResponse;
-import com.example.perfume.recommend.service.PerfumeAnalyze;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
