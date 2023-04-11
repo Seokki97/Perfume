@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class RecommendationService {
@@ -60,13 +59,8 @@ public class RecommendationService {
 
     private Perfume findPerfumeBySurvey(RecommendRequestDto recommendRequestDto) {
         List<Perfume> surveyResultList = surveyService.showPerfumeListBySurvey(createSurveyResponseDto(recommendRequestDto));
-        int randomNumber = createRandomPerfumeFromList(surveyResultList);
+        int randomNumber = RecommendUtils.createRandomPerfumeFromList(surveyResultList);
         return perfumeService.findPerfumeById(surveyResultList.get(randomNumber).getId());
-    }
-
-    private int createRandomPerfumeFromList(List<Perfume> surveyResultList) {
-        Random random = new Random();
-        return random.nextInt(surveyResultList.size());
     }
 
     @Transactional
