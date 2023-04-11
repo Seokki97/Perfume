@@ -14,8 +14,6 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
     Optional<Survey> findById(Long id);
 
-    List<Survey> findByScentAnswer(String scentAnswer);
-
     @Query("SELECT s FROM survey s WHERE s.genderAnswer LIKE %:genderAnswer% AND s.scentAnswer = :scentAnswer AND s.moodAnswer LIKE %:moodAnswer% AND s.seasonAnswer LIKE %:seasonAnswer% AND s.styleAnswer LIKE %:styleAnswer%")
     List<Survey> findSurveysByAnswers(@Param("genderAnswer") String genderAnswer, @Param("scentAnswer") String scentAnswer, @Param("moodAnswer") String moodAnswer, @Param("seasonAnswer") String seasonAnswer, @Param("styleAnswer") String styleAnswer);
 
