@@ -22,13 +22,9 @@ import java.util.List;
 @RequestMapping("/perfume")
 public class PerfumeDataController {
 
-    private final PerfumeService perfumeService;
-
     private final PerfumeData perfumeData;
 
-
-    public PerfumeDataController(PerfumeService perfumeService, PerfumeData perfumeData) {
-        this.perfumeService = perfumeService;
+    public PerfumeDataController( PerfumeData perfumeData) {
         this.perfumeData = perfumeData;
     }
 
