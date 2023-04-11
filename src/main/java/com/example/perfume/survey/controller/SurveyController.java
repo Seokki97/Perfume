@@ -22,7 +22,6 @@ public class SurveyController {
     public SurveyController(SurveyService surveyService, DataService dataService) {
         this.surveyService = surveyService;
         this.dataService = dataService;
-
     }
 
     @GetMapping("/save")
