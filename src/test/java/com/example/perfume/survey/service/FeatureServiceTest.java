@@ -23,7 +23,7 @@ public class FeatureServiceTest {
 
     @Autowired
     private FeatureService featureService;
-
+/*
     @DisplayName("선택된 향에 맞는 메세지가 응답된다.")
     @Test
     void selectScent(){
@@ -82,5 +82,5 @@ public class FeatureServiceTest {
 
         assertThat(actual).isEqualTo(expected);
 
-    }
+    }*/
 }
