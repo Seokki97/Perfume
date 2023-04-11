@@ -18,32 +18,11 @@ import java.util.stream.Collectors;
 public class PerfumeService {
     private final PerfumeRepository perfumeRepository;
 
-    private final PerfumeCSVFileLoading perfumeCsvFileLoading;
-
-    public PerfumeService(PerfumeRepository perfumeRepository, PerfumeCSVFileLoading perfumeCsvFileLoading) {
+    public PerfumeService(PerfumeRepository perfumeRepository) {
         this.perfumeRepository = perfumeRepository;
-        this.perfumeCsvFileLoading = perfumeCsvFileLoading;
-    }
-
-    private PerfumeResponseDto makePerfumeList(Long id, int firstIndex, PerfumeList perfumeList) {
-        return new PerfumeResponseDto(id,
-                perfumeList.getPerfumeName().get(firstIndex),
-                perfumeList.getPerfumeFeature().get(firstIndex),
-                perfumeList.getPerfumeBrand().get(firstIndex),
-                perfumeList.getPerfumeImageUrl().get(firstIndex));
-    }
-
-    public void savePerfumeData(Long id, PerfumeList perfume) throws IOException {
-        perfume = perfumeCsvFileLoading.extractAllPerfumeData(perfume);
-        int perfumeListSize = perfume.getMaxSize();
-        for (int firstIndex = 0; firstIndex < perfumeListSize; firstIndex++) {
-            Perfume perfumeDataSet = makePerfumeList(id, firstIndex, perfume).toEntity();
-            perfumeRepository.save(perfumeDataSet);
-        }
     }
 
     public List<Perfume> findPerfumeByName(PerfumeRequestDto perfumeRequestDto) {
-
         List<Perfume> perfume = perfumeRepository.findByPerfumeNameContaining(perfumeRequestDto.getPerfumeName());
         isPerfumeListEmpty(perfume);
         return perfume;
@@ -57,10 +36,6 @@ public class PerfumeService {
 
     public Perfume findPerfumeById(Long id) {
         return perfumeRepository.findById(id).orElseThrow(PerfumeNotFoundException::new);
-    }
-
-    public void deleteAllData() {
-        perfumeRepository.deleteAll();
     }
 
     public List<Perfume> showAllPerfumeData() {
