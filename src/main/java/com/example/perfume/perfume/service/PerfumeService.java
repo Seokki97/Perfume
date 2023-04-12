@@ -3,6 +3,7 @@ package com.example.perfume.perfume.service;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
+import com.example.perfume.perfume.dto.perfumeDto.StoryResponse;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
@@ -69,6 +70,14 @@ public class PerfumeService {
                 .perfumeName(perfume.getPerfumeName())
                 .brandName(perfume.getBrandName())
                 .perfumeImageUrl(perfume.getPerfumeImageUrl())
+                .build();
+    }
+
+    public StoryResponse showPerfumeStory(Long id) {
+        Perfume perfume = perfumeRepository.findById(id).orElseThrow(PerfumeNotFoundException::new);
+
+        return StoryResponse.builder()
+                .perfumeStory(perfume.getPerfumeStory())
                 .build();
     }
 }
