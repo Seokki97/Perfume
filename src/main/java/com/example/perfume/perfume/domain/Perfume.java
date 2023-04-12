@@ -30,12 +30,16 @@ public class Perfume {
     @Column(nullable = false, length = 255)
     private String perfumeImageUrl;
 
+    @Column(nullable = false, length = 1000)
+    private String perfumeStory;
+
     @Builder
-    public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
+    public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl, String perfumeStory) {
         this.id = id;
         this.perfumeName = perfumeName;
         this.brandName = brandName;
         this.perfumeFeature = perfumeFeature;
         this.perfumeImageUrl = perfumeImageUrl;
+        this.perfumeStory = perfumeStory;
     }
 }
