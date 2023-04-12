@@ -1,6 +1,5 @@
 package com.example.perfume.feedback.domain;
 
-import com.sun.istack.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +22,7 @@ public class Feedback {
     private String comment;
 
     @Builder
-    public Feedback(Long id, String serviceName, String comment){
+    public Feedback(Long id, String serviceName, String comment) {
         this.id = id;
         this.serviceName = serviceName;
         this.comment = comment;
