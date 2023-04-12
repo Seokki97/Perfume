@@ -24,7 +24,7 @@ public class PerfumeDataController {
 
     private final PerfumeData perfumeData;
 
-    public PerfumeDataController( PerfumeData perfumeData) {
+    public PerfumeDataController(PerfumeData perfumeData) {
         this.perfumeData = perfumeData;
     }
 

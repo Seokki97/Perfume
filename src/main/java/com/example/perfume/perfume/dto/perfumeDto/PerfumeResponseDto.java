@@ -18,6 +18,7 @@ public class PerfumeResponseDto {
     public PerfumeResponseDto() {
 
     }
+
     @Builder
     public PerfumeResponseDto(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl, String perfumeStory) {
         this.id = id;

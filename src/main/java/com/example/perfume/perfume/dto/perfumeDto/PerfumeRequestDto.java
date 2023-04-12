@@ -13,7 +13,7 @@ public class PerfumeRequestDto {
     private String perfumeFeature;
     private String perfumeImageUrl;
 
-    public PerfumeRequestDto(){
+    public PerfumeRequestDto() {
 
     }
 
