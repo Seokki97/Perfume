@@ -22,11 +22,14 @@ public class PerfumeData {
     }
 
     private PerfumeResponseDto makePerfumeList(Long id, int firstIndex, PerfumeList perfumeList) {
-        return new PerfumeResponseDto(id,
-                perfumeList.getPerfumeName().get(firstIndex),
-                perfumeList.getPerfumeFeature().get(firstIndex),
-                perfumeList.getPerfumeBrand().get(firstIndex),
-                perfumeList.getPerfumeImageUrl().get(firstIndex));
+        return PerfumeResponseDto.builder()
+                .id(id)
+                .perfumeName(perfumeList.getPerfumeName().get(firstIndex))
+                .perfumeFeature(perfumeList.getPerfumeFeature().get(firstIndex))
+                .brandName(perfumeList.getPerfumeBrand().get(firstIndex))
+                .perfumeImageUrl(perfumeList.getPerfumeImageUrl().get(firstIndex))
+                .perfumeStory(perfumeList.getPerfumeStory().get(firstIndex))
+                .build();
     }
 
     public void savePerfumeData(Long id, PerfumeList perfume) throws IOException {

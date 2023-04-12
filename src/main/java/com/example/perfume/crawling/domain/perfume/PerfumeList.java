@@ -18,13 +18,16 @@ public class PerfumeList {
 
     private List<String> perfumeImageUrl;
 
+    private List<String> perfumeStory;
+
 
     @Builder
-    public PerfumeList(List<String> perfumeName, List<String> perfumeFeature, List<String> perfumeBrand, List<String> perfumeImageUrl) {
+    public PerfumeList(List<String> perfumeName, List<String> perfumeFeature, List<String> perfumeBrand, List<String> perfumeImageUrl, List<String> perfumeStory) {
         this.perfumeName = perfumeName;
         this.perfumeBrand = perfumeFeature;
         this.perfumeFeature = perfumeBrand;
         this.perfumeImageUrl = perfumeImageUrl;
+        this.perfumeStory = perfumeStory;
     }
 
 
