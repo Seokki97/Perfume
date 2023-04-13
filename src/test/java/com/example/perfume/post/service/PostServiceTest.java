@@ -3,7 +3,6 @@ package com.example.perfume.post.service;
 
 import com.example.perfume.post.domain.Post;
 import com.example.perfume.post.dto.PostRequestDto;
-import com.example.perfume.post.dto.PostResponseDto;
 import com.example.perfume.post.exception.PostNotFoundException;
 import com.example.perfume.post.repository.PostRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
