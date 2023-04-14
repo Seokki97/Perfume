@@ -17,6 +17,7 @@ public class ChatGptRequest implements Serializable {
     @JsonProperty("top_p")
     private Double topP;
 
+    public ChatGptRequest(){}
     @Builder
     public ChatGptRequest(String model, String prompt, Integer maxToken, Double temperature, Double topP) {
         this.model = model;
