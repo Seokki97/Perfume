@@ -26,8 +26,7 @@ dependencies {
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
-
-
+	implementation 'org.springframework.boot:spring-boot-devtools'
 }
 test {
 	exclude '**/*'
