@@ -52,7 +52,7 @@ public class JwtProvider {
     public String createRefreshToken(String uerPk) {
         String refreshToken = Jwts.builder()
                 .setId(uerPk)
-                .setExpiration(new Date(System.currentTimeMillis() + tokenValidTime * 5))
+                .setExpiration(new Date(System.currentTimeMillis() + tokenValidTime * 24 * 14))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
