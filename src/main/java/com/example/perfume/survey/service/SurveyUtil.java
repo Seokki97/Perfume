@@ -22,9 +22,17 @@ public class SurveyUtil {
     public SurveyRequestDto showMoodAnswer(Survey survey) {
         String[] moodAnswerArray = survey.getMoodAnswer().split(BLANK);
         int randomMoodAnswer = getRandomMoodAnswer(moodAnswerArray);
-        if (moodAnswerArray.length == MOOD_COLUMN_SIZE) {
+
+        if (isMoodAnswerUnique(moodAnswerArray.length)) {
             return SurveyRequestDto.builder().moodAnswer(survey.getMoodAnswer()).build();
         }
         return SurveyRequestDto.builder().moodAnswer(moodAnswerArray[randomMoodAnswer]).build();
+    }
+
+    private boolean isMoodAnswerUnique(int arrayLength) {
+        if (arrayLength == MOOD_COLUMN_SIZE) {
+            return true;
+        }
+        return false;
     }
 }
