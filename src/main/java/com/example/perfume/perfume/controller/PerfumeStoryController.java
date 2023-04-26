@@ -1,8 +1,12 @@
 package com.example.perfume.perfume.controller;
 
+import com.example.perfume.config.ChatGptConfig;
+import com.example.perfume.perfume.dto.story.ChatGptRequest;
 import com.example.perfume.perfume.dto.story.ChatGptResponse;
 import com.example.perfume.perfume.dto.story.PerfumeStoryRequest;
 import com.example.perfume.perfume.service.PerfumeStoryService;
+import org.apache.catalina.connector.Response;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,4 +27,5 @@ public class PerfumeStoryController {
 
         return ResponseEntity.ok(perfumeStoryService.askQuestionToChatGpt(perfumeStoryRequest));
     }
+
 }
