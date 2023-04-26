@@ -40,7 +40,7 @@ public class PerfumeStoryService {
                         ChatGptRequest.builder()
                                 .model(ChatGptConfig.MODEL)
                                 .prompt(perfumeStoryRequest.toPromptString())
-                                .maxToken(ChatGptConfig.MAX_TOKEN)
+                                .maxTokens(ChatGptConfig.MAX_TOKEN)
                                 .temperature(ChatGptConfig.TEMPERATURE)
                                 .topP(ChatGptConfig.TOP_P)
                                 .build()));
