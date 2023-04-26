@@ -13,6 +13,8 @@ public class Choice implements Serializable {
     @JsonProperty("finish_reason")
     private String finishReason;
 
+    public Choice(){}
+
     @Builder
     public Choice(String text, Integer index, String finishReason) {
         this.text = text;

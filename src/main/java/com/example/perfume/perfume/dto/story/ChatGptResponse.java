@@ -7,7 +7,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,6 +18,7 @@ public class ChatGptResponse implements Serializable {
     private LocalDate createdTime;
     private String model;
     private List<Choice> choiceList;
+
 
     @Builder
     public ChatGptResponse(String id, String object, LocalDate createdTime,String model, List<Choice> choiceList) {
