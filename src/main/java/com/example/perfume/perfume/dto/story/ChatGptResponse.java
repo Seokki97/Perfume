@@ -1,13 +1,9 @@
 package com.example.perfume.perfume.dto.story;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -15,17 +11,17 @@ import java.util.List;
 public class ChatGptResponse implements Serializable {
     private String id;
     private String object;
-    private LocalDate createdTime;
+    private LocalDate created;
     private String model;
-    private List<Choice> choiceList;
+    private List<Choice> choices;
 
 
     @Builder
-    public ChatGptResponse(String id, String object, LocalDate createdTime,String model, List<Choice> choiceList) {
+    public ChatGptResponse(String id, String object,LocalDate created, String model, List<Choice> choices) {
         this.id = id;
         this.object = object;
-        this.createdTime = createdTime;
-        this.choiceList = choiceList;
+        this.created = created;
+        this.choices = choices;
         this.model = model;
     }
 }
