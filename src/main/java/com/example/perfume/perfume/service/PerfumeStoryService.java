@@ -4,6 +4,7 @@ import com.example.perfume.config.ChatGptConfig;
 import com.example.perfume.perfume.dto.story.ChatGptRequest;
 import com.example.perfume.perfume.dto.story.ChatGptResponse;
 import com.example.perfume.perfume.dto.story.PerfumeStoryRequest;
+import com.example.perfume.perfume.exception.GptCannotMakeStoryException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Objects;
 
 @Service
 public class PerfumeStoryService {
@@ -31,6 +34,9 @@ public class PerfumeStoryService {
                 ChatGptConfig.URL,
                 chatGptRequest,
                 ChatGptResponse.class);
+        if (isGptCannotResponse(responseEntity)) {
+            throw new GptCannotMakeStoryException();
+        }
         return responseEntity.getBody();
     }
 
@@ -44,5 +50,12 @@ public class PerfumeStoryService {
                                 .temperature(ChatGptConfig.TEMPERATURE)
                                 .topP(ChatGptConfig.TOP_P)
                                 .build()));
+    }
+
+    public boolean isGptCannotResponse(HttpEntity<ChatGptResponse> chatGptResponseEntity) {
+        if (chatGptResponseEntity.getBody().getChoices().isEmpty() || chatGptResponseEntity.getBody().getChoices() == null) {
+            return true;
+        }
+        return false;
     }
 }
