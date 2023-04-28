@@ -3,7 +3,6 @@ package com.example.perfume.exception;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.exception.MemberAlreadyLogoutException;
 import com.example.perfume.member.exception.TokenExpiredException;
-import com.example.perfume.perfume.exception.GptNotResponseException;
 import com.example.perfume.recommend.exception.RecommendNotFoundException;
 import com.example.perfume.member.exception.TokenInvalidException;
 import com.example.perfume.member.exception.UserNotFoundException;
@@ -94,10 +93,4 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleMemberAlreadyLogoutException(MemberAlreadyLogoutException e) {
         return ResponseEntity.status(UNAUTHORIZED_ERROR).body(e.getMessage());
     }
-
-    @ExceptionHandler
-    public ResponseEntity<?> handleGptNotResponseException(GptNotResponseException e) {
-        return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
-    }
-
 }
