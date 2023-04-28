@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-
     private final JwtInterceptor jwtInterceptor;
 
     public WebMvcConfig(JwtInterceptor jwtInterceptor) {
@@ -27,7 +26,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor).excludePathPatterns("/member/logout/**")
-                .addPathPatterns("/**");
+        registry.addInterceptor(jwtInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/member/logout/**")
+                .excludePathPatterns("/api-docs/**");
     }
 }
