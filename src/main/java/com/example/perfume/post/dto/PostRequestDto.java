@@ -23,12 +23,4 @@ public class PostRequestDto {
         this.visitor = visitor;
         this.content = content;
     }
-
-    public Post toEntity() {
-        return Post.builder()
-                .id(id)
-                .visitor(visitor)
-                .content(content)
-                .build();
-    }
 }

@@ -1,5 +1,6 @@
 package com.example.perfume.post.service;
 
+import com.example.perfume.post.domain.Nickname;
 import com.example.perfume.post.domain.Post;
 import com.example.perfume.post.dto.PostRequestDto;
 import com.example.perfume.post.exception.PostNotFoundException;
@@ -18,8 +19,11 @@ public class PostService {
     }
 
     public void savePost(PostRequestDto postRequestDto) {
-        Post post = new Post(postRequestDto.getId(), postRequestDto.getVisitor(), postRequestDto.getContent());
-
+        Nickname nickname = new Nickname();
+        Post post = Post.builder()
+                .content(postRequestDto.getContent())
+                .nickname(nickname)
+                .build();
         postRepository.save(post);
     }
 

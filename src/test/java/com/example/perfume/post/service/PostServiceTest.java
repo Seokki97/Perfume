@@ -48,7 +48,6 @@ public class PostServiceTest {
         long id = 1l;
         Post actual = Post.builder().id(id)
                 .content("작품 너무 예뻐용 ㅋ")
-                .visitor("익명의 코끼리")
                 .build();
 
         PostRequestDto postRequestDto = PostRequestDto.builder()

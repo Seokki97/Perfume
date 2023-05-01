@@ -1,5 +1,6 @@
 package com.example.perfume.post.domain;
 
+import com.example.perfume.post.service.NicknameGenerator;
 import com.sun.istack.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,9 +25,9 @@ public class Post {
     private String content;
 
     @Builder
-    public Post(Long id, String visitor, String content) {
+    public Post(Long id, Nickname nickname, String content) {
         this.id = id;
-        this.visitor = visitor;
+        this.visitor = NicknameGenerator.generateRandomNickname(nickname);
         this.content = content;
     }
 

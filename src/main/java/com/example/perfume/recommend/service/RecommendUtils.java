@@ -11,4 +11,10 @@ public class RecommendUtils {
         Random random = new Random();
         return random.nextInt(surveyResultList.size());
     }
+
+    public static int createRandomNumber(List<String> nicknameList){
+        Random random = new Random();
+        int nicknameListSize = nicknameList.size();
+        return random.nextInt(nicknameListSize);
+    }
 }
