@@ -20,7 +20,7 @@ public class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().mvcMatchers("/perfume/**", "/post/**", "/member/**", "/oauth/**", "/survey/**", "/feedback/**", "/api-docs/**", "/api/**");
+        return (web) -> web.ignoring().mvcMatchers("/perfume/**", "/post/**", "/member/**", "/oauth/**", "/survey/**", "/feedback/**", "/api-docs/**", "/api/**", "/swagger-ui/**");
 
     }
 
@@ -30,12 +30,13 @@ public class SecurityConfiguration {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeHttpRequests((authz) -> authz
-                        .antMatchers("/perfume/**", "/post/**", "/member/**", "/oauth/**", "/survey/**", "/feedback/**", "/api-docs/**", "/api/**").permitAll()
+                .authorizeHttpRequests((authorization) -> authorization
+                        .antMatchers("/perfume/**", "/post/**", "/member/**", "/oauth/**", "/survey/**", "/feedback/**").permitAll()
+                        .antMatchers("/swagger-ui/**","/api-docs/**","/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
+
         return httpSecurity.build();
     }
-
 }

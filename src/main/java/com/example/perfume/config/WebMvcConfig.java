@@ -29,6 +29,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/member/logout/**")
-                .excludePathPatterns("/api-docs/**");
+                .excludePathPatterns("/api-docs/**")
+                .excludePathPatterns("/swagger-ui/**");
     }
 }
