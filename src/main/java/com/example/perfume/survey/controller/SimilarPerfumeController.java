@@ -2,6 +2,7 @@ package com.example.perfume.survey.controller;
 
 import com.example.perfume.log.LoggerUtil;
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.survey.controller.docs.SimilarPerfumeControllerDocs;
 import com.example.perfume.survey.service.SimilarPerfumeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/survey")
-public class SimilarPerfumeController {
+public class SimilarPerfumeController implements SimilarPerfumeControllerDocs {
 
     private final SimilarPerfumeService similarPerfumeService;
 
