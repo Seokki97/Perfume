@@ -5,6 +5,7 @@ import com.example.perfume.survey.domain.Survey;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,6 +18,6 @@ public class SimilarPerfumeService {
 
     public List<Perfume> showSimilarPerfume(Long id) {
         Survey survey = surveyService.findSurveyById(id);
-        return surveyService.showSimilarPerfumeList(survey).stream().filter(perfume -> perfume.getId() != id).collect(Collectors.toList());
+        return surveyService.showSimilarPerfumeList(survey).stream().filter(perfume -> !Objects.equals(id, perfume.getId())).collect(Collectors.toList());
     }
 }
