@@ -1,5 +1,6 @@
 package com.example.perfume.member.controller;
 
+import com.example.perfume.member.controller.docs.LoginControllerDocs;
 import com.example.perfume.member.dto.loginDto.LoginResponse;
 import com.example.perfume.member.service.LoginService;
 import com.example.perfume.member.service.jwt.JwtProvider;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/member")
-public class LoginController {
+public class LoginController implements LoginControllerDocs {
 
     private final LoginService loginService;
 
