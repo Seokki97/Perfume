@@ -3,6 +3,7 @@ package com.example.perfume.recommend.controller;
 import com.example.perfume.log.LoggerUtil;
 import com.example.perfume.member.service.LogoutService;
 import com.example.perfume.member.service.jwt.LoginCheck;
+import com.example.perfume.recommend.controller.docs.RecommendControllerDocs;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.RecommendRequestDto;
 import com.example.perfume.recommend.dto.RecommendResponseDto;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/member")
-public class RecommendController {
+public class RecommendController implements RecommendControllerDocs {
     private final RecommendationService recommendationService;
     private final LogoutService logoutService;
 
@@ -24,8 +25,8 @@ public class RecommendController {
     }
 
     @PostMapping("/recommend/{id}")
-    public Recommendation recommendPerfume(@PathVariable("id") Long id, @RequestBody RecommendRequestDto recommendRequestDto) {
-        return recommendationService.recommendByOtherGuest(id, recommendRequestDto);
+    public ResponseEntity<Recommendation> recommendPerfume(@PathVariable("id") Long id, @RequestBody RecommendRequestDto recommendRequestDto) {
+        return ResponseEntity.ok(recommendationService.recommendByOtherGuest(id, recommendRequestDto));
     }
 
     @LoginCheck

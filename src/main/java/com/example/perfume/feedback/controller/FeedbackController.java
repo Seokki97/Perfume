@@ -1,5 +1,6 @@
 package com.example.perfume.feedback.controller;
 
+import com.example.perfume.feedback.controller.docs.FeedbackControllerDocs;
 import com.example.perfume.feedback.dto.FeedbackRequestDto;
 import com.example.perfume.feedback.service.FeedbackService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +14,7 @@ import java.io.IOException;
 @Tag(name ="피드백")
 @RestController
 @RequestMapping("/feedback")
-public class FeedbackController {
+public class FeedbackController implements FeedbackControllerDocs {
     private final FeedbackService feedbackService;
 
     public FeedbackController(FeedbackService feedbackService) {

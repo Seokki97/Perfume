@@ -1,5 +1,6 @@
 package com.example.perfume.member.controller;
 
+import com.example.perfume.member.controller.docs.LogoutControllerDocs;
 import com.example.perfume.member.dto.logoutDto.LogoutRequestDto;
 import com.example.perfume.member.service.LogoutService;
 import com.example.perfume.member.service.jwt.JwtProvider;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/member")
-public class LogoutController {
+public class LogoutController implements LogoutControllerDocs {
 
     private final LogoutService logoutService;
     private final JwtProvider jwtProvider;

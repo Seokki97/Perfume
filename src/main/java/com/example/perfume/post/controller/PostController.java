@@ -1,5 +1,6 @@
 package com.example.perfume.post.controller;
 
+import com.example.perfume.post.controller.docs.PostControllerDocs;
 import com.example.perfume.post.dto.PostRequestDto;
 import com.example.perfume.post.domain.Post;
 import com.example.perfume.post.service.PostService;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/post")
-public class PostController {
+public class PostController implements PostControllerDocs {
 
     private final PostService postService;
 
