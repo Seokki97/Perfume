@@ -6,7 +6,7 @@ import com.example.perfume.perfume.controller.docs.PerfumeControllerDocs;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
-import com.example.perfume.perfume.dto.perfumeDto.StoryResponse;
+import com.example.perfume.perfume.dto.story.StoryResponse;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
 import com.example.perfume.survey.service.FeatureService;
