@@ -3,6 +3,7 @@ package com.example.perfume.survey.controller;
 import com.example.perfume.crawling.domain.survey.SurveyList;
 import com.example.perfume.log.LoggerUtil;
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.survey.controller.docs.SurveyControllerDocs;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.service.DataService;
 import com.example.perfume.survey.service.SurveyService;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/survey")
-public class SurveyController {
+public class SurveyController implements SurveyControllerDocs {
 
     private final SurveyService surveyService;
     private final DataService dataService;
