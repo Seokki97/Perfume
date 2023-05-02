@@ -1,5 +1,6 @@
 package com.example.perfume.feedback.controller;
 
+import com.example.perfume.feedback.controller.docs.FeedbackControllerDocs;
 import com.example.perfume.feedback.dto.FeedbackRequestDto;
 import com.example.perfume.feedback.service.FeedbackService;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/feedback")
-public class FeedbackController {
+public class FeedbackController implements FeedbackControllerDocs {
     private final FeedbackService feedbackService;
 
     public FeedbackController(FeedbackService feedbackService) {
