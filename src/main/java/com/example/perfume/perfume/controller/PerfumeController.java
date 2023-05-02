@@ -2,6 +2,7 @@ package com.example.perfume.perfume.controller;
 
 
 import com.example.perfume.member.service.jwt.LoginCheck;
+import com.example.perfume.perfume.controller.docs.PerfumeControllerDocs;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
 import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/perfume")
-public class PerfumeController {
+public class PerfumeController implements PerfumeControllerDocs {
 
     private final PerfumeService perfumeService;
 
