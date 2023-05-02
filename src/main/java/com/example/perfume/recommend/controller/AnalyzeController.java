@@ -1,6 +1,7 @@
 package com.example.perfume.recommend.controller;
 
 import com.example.perfume.member.service.jwt.LoginCheck;
+import com.example.perfume.recommend.controller.docs.AnalyzeControllerDocs;
 import com.example.perfume.recommend.service.analyze.AnalyzeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/member")
-public class AnalyzeController {
+public class AnalyzeController implements AnalyzeControllerDocs {
 
     private final AnalyzeService analyzeService;
 
