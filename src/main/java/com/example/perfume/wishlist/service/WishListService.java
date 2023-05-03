@@ -11,6 +11,7 @@ import com.example.perfume.wishlist.exception.WishListDuplicateException;
 import com.example.perfume.wishlist.exception.WishListNotFoundException;
 import com.example.perfume.wishlist.exception.WishListTooMuchException;
 import org.springframework.stereotype.Service;
+
 @Service
 public class WishListService {
     private final MemberService memberService;
@@ -28,7 +29,6 @@ public class WishListService {
     public WishListResponse selectLikePerfume(WishListRequest wishListRequest) {
         Member member = memberService.findMemberById(wishListRequest.getMemberId());
         Perfume perfume = perfumeService.findPerfumeById(wishListRequest.getPerfumeId());
-        WishList wishList = wishListUtil.addPerfumeToWishList(member, perfume);
 
         if (wishListUtil.isDuplicateWishItem(wishListRequest)) {
             throw new WishListDuplicateException();
@@ -36,6 +36,8 @@ public class WishListService {
         if (wishListUtil.isWishListOverMaxSize(wishListRequest)) {
             throw new WishListTooMuchException();
         }
+
+        WishList wishList = wishListUtil.addPerfumeToWishList(member, perfume);
         wishListUtil.saveWishPerfume(wishList);
 
         return wishListUtil.provideWishResponseEntity(wishList);
