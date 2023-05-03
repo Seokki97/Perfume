@@ -8,7 +8,6 @@ import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
 import com.example.perfume.wishlist.dto.WishListResponse;
 import com.example.perfume.wishlist.exception.WishListDuplicateException;
-import com.example.perfume.wishlist.repository.WishListRepository;
 import org.springframework.stereotype.Service;
 
 @Service
