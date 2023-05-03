@@ -17,6 +17,7 @@ import com.example.perfume.survey.exception.SeasonNotFoundException;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.wishlist.exception.WishListDuplicateException;
 import com.example.perfume.wishlist.exception.WishListNotFoundException;
+import com.example.perfume.wishlist.exception.WishListTooMuchException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -28,6 +29,7 @@ public class GlobalExceptionHandler {
 
     private static final int CONFLICT_ERROR = 409;
 
+    private static final int TOO_MANY_REQUEST = 429;
     @ExceptionHandler(ScentNotFoundException.class)
     public ResponseEntity<?> handleScentNotFoundException(ScentNotFoundException e) {
         return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
@@ -106,5 +108,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<?> handleWishListNotFoundException(WishListNotFoundException e){
         return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleWishListTooMuchException(WishListTooMuchException e){
+        return ResponseEntity.status(TOO_MANY_REQUEST).body(e.getMessage());
     }
 }
