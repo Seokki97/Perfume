@@ -10,17 +10,17 @@ public class WishListRequest {
 
     private Long wishListId;
 
-    private Member member;
+    private Long memberId;
 
-    private Perfume perfume;
+    private Long perfumeId;
 
     public WishListRequest() {
     }
 
     @Builder
-    public WishListRequest(Long wishListId, Member member, Perfume perfume) {
+    public WishListRequest(Long wishListId, Long memberId, Long perfumeId) {
         this.wishListId = wishListId;
-        this.member = member;
-        this.perfume = perfume;
+        this.memberId = memberId;
+        this.perfumeId = perfumeId;
     }
 }
