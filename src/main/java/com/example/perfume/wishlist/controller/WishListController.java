@@ -23,7 +23,7 @@ public class WishListController {
         this.wishListService = wishListService;
     }
 
-    @PostMapping("/select")
+    @PostMapping("/select-wish-perfume")
     public ResponseEntity<WishListResponse> selectLikePerfume(@RequestBody WishListRequest wishListRequest) {
         return ResponseEntity.ok(wishListService.selectLikePerfume(wishListRequest));
     }
