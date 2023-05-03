@@ -2,6 +2,7 @@ package com.example.perfume.wishlist.domain;
 
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.perfume.domain.Perfume;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,9 +24,11 @@ public class WishList {
     @ManyToOne
     private Perfume perfume;
 
+    @Builder
     public WishList(Long id, Member member, Perfume perfume) {
         this.id = id;
         this.member = member;
         this.perfume = perfume;
     }
+
 }
