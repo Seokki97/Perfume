@@ -59,7 +59,7 @@ public class WishListUtil {
     }
 
     public boolean isWishListOverMaxSize(WishListRequest wishListRequest) {
-        if (showWishList(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE) {
+        if (wishListRepository.findByMemberId(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE) {
             return true;
         }
         return false;
