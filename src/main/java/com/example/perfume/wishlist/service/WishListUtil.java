@@ -58,22 +58,6 @@ public class WishListUtil {
                 .anyMatch(perfume -> Objects.equals(perfume.getPerfume().getId(), wishListRequest.getPerfumeId()));
     }
 
-    @Transactional
-    public void deleteAllWishList(Long memberId) {
-        if (isEmptyWishList(memberId)) {
-            throw new WishListNotFoundException();
-        }
-        wishListRepository.deleteByMemberId(memberId);
-    }
-
-    @Transactional
-    public void deleteSelectedWishList(WishListRequest wishListRequest) {
-        if (isEmptyWishList(wishListRequest.getMemberId())) {
-            throw new WishListNotFoundException();
-        }
-        wishListRepository.deleteByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
-    }
-
     public boolean isWishListOverMaxSize(WishListRequest wishListRequest) {
         if (showWishList(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE) {
             return true;
@@ -81,4 +65,13 @@ public class WishListUtil {
         return false;
     }
 
+    @Transactional
+    public void deleteAllWishedList(Long memberId) {
+        wishListRepository.deleteByMemberId(memberId);
+    }
+
+    @Transactional
+    public void deleteSelectedWishElement(WishListRequest wishListRequest) {
+        wishListRepository.deleteByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
+    }
 }

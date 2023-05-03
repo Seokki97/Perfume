@@ -8,8 +8,10 @@ import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
 import com.example.perfume.wishlist.dto.WishListResponse;
 import com.example.perfume.wishlist.exception.WishListDuplicateException;
+import com.example.perfume.wishlist.exception.WishListNotFoundException;
 import com.example.perfume.wishlist.exception.WishListTooMuchException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class WishListService {
@@ -39,6 +41,21 @@ public class WishListService {
         wishListUtil.saveWishPerfume(wishList);
 
         return wishListUtil.provideWishResponseEntity(wishList);
+    }
+
+    public void deleteAllWishList(Long memberId) {
+        if (wishListUtil.isEmptyWishList(memberId)) {
+            throw new WishListNotFoundException();
+        }
+        wishListUtil.deleteAllWishedList(memberId);
+    }
+
+    @Transactional
+    public void deleteSelectedWishList(WishListRequest wishListRequest) {
+        if (wishListUtil.isEmptyWishList(wishListRequest.getMemberId())) {
+            throw new WishListNotFoundException();
+        }
+        wishListUtil.deleteSelectedWishElement(wishListRequest);
     }
 
 }

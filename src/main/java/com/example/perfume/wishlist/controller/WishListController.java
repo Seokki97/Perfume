@@ -35,14 +35,14 @@ public class WishListController {
 
     @DeleteMapping("/delete-all-element/{memberId}")
     public ResponseEntity<Void> deleteAllWishedPerfume(@PathVariable("memberId") Long memberId) {
-        wishListUtil.deleteAllWishList(memberId);
+        wishListService.deleteAllWishList(memberId);
 
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete-selected-perfume")
     public ResponseEntity<Void> deleteSelectedPerfume(@RequestBody WishListRequest wishListRequest) {
-        wishListUtil.deleteSelectedWishList(wishListRequest);
+        wishListService.deleteSelectedWishList(wishListRequest);
 
         return ResponseEntity.noContent().build();
     }
