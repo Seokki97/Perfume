@@ -47,13 +47,29 @@ public class WishListUtil {
         return wishListRepository.findByMemberId(memberId);
     }
 
-    public boolean isEmptyWishList(Long memberId){
+    public boolean isEmptyWishList(Long memberId) {
         return wishListRepository.findByMemberId(memberId).isEmpty();
     }
 
     public boolean isDuplicateWishItem(WishListRequest wishListRequest) {
-        return showWishList(wishListRequest.getMemberId()).stream()
+        return wishListRepository.findByMemberId(wishListRequest.getMemberId()).stream()
                 .anyMatch(perfume -> Objects.equals(perfume.getPerfume().getId(), wishListRequest.getPerfumeId()));
+    }
+
+    @Transactional
+    public void deleteAllWishList(Long memberId) {
+        if (isEmptyWishList(memberId)) {
+            throw new WishListNotFoundException();
+        }
+        wishListRepository.deleteByMemberId(memberId);
+    }
+
+    @Transactional
+    public void deleteSelectedWishList(WishListRequest wishListRequest) {
+        if (isEmptyWishList(wishListRequest.getMemberId())) {
+            throw new WishListNotFoundException();
+        }
+        wishListRepository.deleteByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
     }
 
 }
