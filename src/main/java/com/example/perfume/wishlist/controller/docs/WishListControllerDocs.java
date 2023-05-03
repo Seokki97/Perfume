@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@Tag(name = "WishList API")
+@Tag(name = "WishList API",description = "여기에 들어가는 memberId는 전부 PK 값으로 부탁해용>_< (MemberEntity의 memberId 말고 id필드 값 말하는겨)")
 public interface WishListControllerDocs {
 
     @Operation(summary = "향수 위시리스트에 담기")
