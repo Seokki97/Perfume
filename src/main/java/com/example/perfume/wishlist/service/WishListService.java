@@ -11,8 +11,6 @@ import com.example.perfume.wishlist.exception.WishListDuplicateException;
 import com.example.perfume.wishlist.exception.WishListNotFoundException;
 import com.example.perfume.wishlist.exception.WishListTooMuchException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 @Service
 public class WishListService {
     private final MemberService memberService;
@@ -50,7 +48,6 @@ public class WishListService {
         wishListUtil.deleteAllWishedList(memberId);
     }
 
-    @Transactional
     public void deleteSelectedWishList(WishListRequest wishListRequest) {
         if (wishListUtil.isEmptyWishList(wishListRequest.getMemberId())) {
             throw new WishListNotFoundException();
