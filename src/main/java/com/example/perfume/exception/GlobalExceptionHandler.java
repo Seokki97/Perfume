@@ -15,6 +15,8 @@ import com.example.perfume.survey.exception.MoodNotFoundException;
 import com.example.perfume.survey.exception.ScentNotFoundException;
 import com.example.perfume.survey.exception.SeasonNotFoundException;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
+import com.example.perfume.wishlist.exception.WishListDuplicateException;
+import com.example.perfume.wishlist.exception.WishListNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     private static final int NOT_FOUND_ERROR = 404;
     private static final int UNAUTHORIZED_ERROR = 401;
+
+    private static final int CONFLICT_ERROR = 409;
 
     @ExceptionHandler(ScentNotFoundException.class)
     public ResponseEntity<?> handleScentNotFoundException(ScentNotFoundException e) {
@@ -92,5 +96,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<?> handleMemberAlreadyLogoutException(MemberAlreadyLogoutException e) {
         return ResponseEntity.status(UNAUTHORIZED_ERROR).body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleWishListDuplicateException(WishListDuplicateException e){
+        return ResponseEntity.status(CONFLICT_ERROR).body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleWishListNotFoundException(WishListNotFoundException e){
+        return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
     }
 }
