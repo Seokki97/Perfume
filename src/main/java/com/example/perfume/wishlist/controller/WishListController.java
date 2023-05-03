@@ -1,5 +1,6 @@
 package com.example.perfume.wishlist.controller;
 
+import com.example.perfume.wishlist.controller.docs.WishListControllerDocs;
 import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
 import com.example.perfume.wishlist.dto.WishListResponse;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/member/wish")
-public class WishListController {
+public class WishListController implements WishListControllerDocs {
 
     private final WishListService wishListService;
 
