@@ -1,8 +1,14 @@
 package com.example.perfume.wishlist.controller;
 
+import com.example.perfume.wishlist.domain.WishList;
+import com.example.perfume.wishlist.dto.WishListRequest;
+import com.example.perfume.wishlist.dto.WishListResponse;
 import com.example.perfume.wishlist.service.WishListService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.perfume.wishlist.service.WishListUtil;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/member/wish")
@@ -10,8 +16,18 @@ public class WishListController {
 
     private final WishListService wishListService;
 
-    public WishListController(WishListService wishListService) {
+    private final WishListUtil wishListUtil;
+
+    public WishListController(WishListService wishListService, WishListUtil wishListUtil) {
+        this.wishListUtil = wishListUtil;
         this.wishListService = wishListService;
     }
-
+    @PostMapping("/select")
+    public ResponseEntity<WishListResponse> selectLikePerfume(@RequestBody WishListRequest wishListRequest) {
+        return ResponseEntity.ok(wishListService.selectLikePerfume(wishListRequest));
+    }
+    @GetMapping("/show-list/{memberId}")
+    public ResponseEntity<List<WishList>> showWishList(@PathVariable("memberId") Long memberId) {
+        return ResponseEntity.ok(wishListUtil.showWishList(memberId));
+    }
 }

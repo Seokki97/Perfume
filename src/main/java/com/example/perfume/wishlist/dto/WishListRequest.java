@@ -1,7 +1,5 @@
 package com.example.perfume.wishlist.dto;
 
-import com.example.perfume.member.domain.Member;
-import com.example.perfume.perfume.domain.Perfume;
 import lombok.Builder;
 import lombok.Getter;
 

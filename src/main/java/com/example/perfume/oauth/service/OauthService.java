@@ -87,7 +87,6 @@ public class OauthService {
 
     public void saveUserProfile(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
-                .memberId(memberRequestDto.getMemberId())
                 .email(memberRequestDto.getEmail())
                 .memberId(memberRequestDto.getMemberId())
                 .nickname(memberRequestDto.getNickname())
