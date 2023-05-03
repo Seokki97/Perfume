@@ -15,6 +15,8 @@ import java.util.Objects;
 
 @Service
 public class WishListUtil {
+    private static final int MAX_WISH_SIZE = 14;
+
     private final WishListRepository wishListRepository;
 
     public WishListUtil(WishListRepository wishListRepository) {
@@ -41,7 +43,7 @@ public class WishListUtil {
     }
 
     public List<WishList> showWishList(Long memberId) {
-        if(isEmptyWishList(memberId)){
+        if (isEmptyWishList(memberId)) {
             throw new WishListNotFoundException();
         }
         return wishListRepository.findByMemberId(memberId);
@@ -70,6 +72,13 @@ public class WishListUtil {
             throw new WishListNotFoundException();
         }
         wishListRepository.deleteByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
+    }
+
+    public boolean isWishListOverMaxSize(WishListRequest wishListRequest) {
+        if (showWishList(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE) {
+            return true;
+        }
+        return false;
     }
 
 }
