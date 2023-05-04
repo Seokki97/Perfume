@@ -2,6 +2,7 @@ package com.example.perfume.wishlist.service;
 
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.wishlist.domain.WishList;
+import com.example.perfume.wishlist.dto.RankingResponse;
 import com.example.perfume.wishlist.dto.WishRankingResponse;
 import com.example.perfume.wishlist.repository.WishListRepository;
 import org.springframework.stereotype.Service;
@@ -16,15 +17,31 @@ public class WishListAnalyze {
         this.wishListRepository = wishListRepository;
     }
 
-    public WishRankingResponse ShowMostPopularPerfume() {
-        List<WishList> wishLists = wishListRepository.findAll();
+    public List<RankingResponse> showTopRankedPerfume() {
+        List<WishList> wishLists = findAllWishList();
         long count;
-        Map<String, Long> mostPopularPerfume = new HashMap<>();
+        RankingResponse rankingResponse;
+        List<RankingResponse> rankingResponses = new ArrayList<>();
         for (int i = 0; i < wishLists.size(); i++) {
             int finalI = i;
-            count = wishLists.stream().filter(perfume -> perfume.getPerfume().getPerfumeName().matches(wishLists.get(finalI).getPerfume().getPerfumeName())).count();
-            mostPopularPerfume.put(wishLists.get(i).getPerfume().getPerfumeName(), count);
+            count = wishLists.stream()
+                    .filter(perfume -> getPerfumeName(perfume).matches(wishLists.get(finalI).getPerfume().getPerfumeName()))
+                    .count();
+            rankingResponse = RankingResponse.builder()
+                    .perfume(wishLists.get(i).getPerfume())
+                    .count(count)
+                    .build();
+            rankingResponses.add(rankingResponse);
+
         }
-        return WishRankingResponse.builder().rankingMap(mostPopularPerfume).build();
+        return rankingResponses;
+    }
+
+    public String getPerfumeName(WishList wishList) {
+        return wishList.getPerfume().getPerfumeName();
+    }
+
+    public List<WishList> findAllWishList() {
+        return wishListRepository.findAll();
     }
 }
