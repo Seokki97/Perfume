@@ -35,6 +35,7 @@ public class WishListAnalyze {
             rankingResponses.add(rankingResponse);
         }
         rankingResponses = rankingResponses.stream().distinct().collect(Collectors.toList());
+        rankingResponses = sortRankingListDescendingOrder(rankingResponses);
         return rankingResponses;
     }
 
@@ -44,5 +45,11 @@ public class WishListAnalyze {
 
     public List<WishList> findAllWishList() {
         return wishListRepository.findAll();
+    }
+
+    public List<RankingResponse> sortRankingListDescendingOrder(List<RankingResponse> rankingResponse) {
+        return rankingResponse.stream()
+                .sorted(Comparator.comparingLong(RankingResponse::getCount).reversed())
+                .collect(Collectors.toList());
     }
 }
