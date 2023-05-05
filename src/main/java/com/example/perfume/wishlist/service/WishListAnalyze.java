@@ -34,7 +34,7 @@ public class WishListAnalyze {
                     .build();
             rankingResponses.add(rankingResponse);
         }
-        rankingResponses = rankingResponses.stream().distinct().collect(Collectors.toList());
+        rankingResponses = deleteDuplicatedElement(rankingResponses);
         rankingResponses = sortRankingListDescendingOrder(rankingResponses);
         return rankingResponses;
     }
@@ -47,9 +47,15 @@ public class WishListAnalyze {
         return wishListRepository.findAll();
     }
 
-    public List<RankingResponse> sortRankingListDescendingOrder(List<RankingResponse> rankingResponse) {
-        return rankingResponse.stream()
+    public List<RankingResponse> sortRankingListDescendingOrder(List<RankingResponse> rankingResponses) {
+        return rankingResponses.stream()
                 .sorted(Comparator.comparingLong(RankingResponse::getCount).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<RankingResponse> deleteDuplicatedElement(List<RankingResponse> rankingResponses) {
+        return rankingResponses.stream()
+                .distinct()
                 .collect(Collectors.toList());
     }
 }
