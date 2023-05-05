@@ -23,20 +23,26 @@ public class WishListAnalyze {
         long count;
         RankingResponse rankingResponse;
         List<RankingResponse> rankingResponses = new ArrayList<>();
+
         for (int i = 0; i < wishLists.size(); i++) {
             int finalI = i;
-            count = wishLists.stream()
-                    .filter(perfume -> getPerfumeName(perfume).matches(wishLists.get(finalI).getPerfume().getPerfumeName()))
-                    .count();
+            count = countWishListObjects(wishLists, finalI);
+
             rankingResponse = RankingResponse.makeRankingResponseObject(wishLists.get(i).getPerfume(), count);
 
             rankingResponses.add(rankingResponse);
         }
+
         rankingResponses = deleteDuplicatedElement(rankingResponses);
         rankingResponses = sortRankingListDescendingOrder(rankingResponses);
         return rankingResponses;
     }
 
+    public Long countWishListObjects(List<WishList> wishLists, int index) {
+        return wishLists.stream()
+                .filter(perfume -> getPerfumeName(perfume).matches(wishLists.get(index).getPerfume().getPerfumeName()))
+                .count();
+    }
 
     public List<RankingResponse> sortRankingListDescendingOrder(List<RankingResponse> rankingResponses) {
         return rankingResponses.stream()
