@@ -41,10 +41,8 @@ public class WishListAnalyze {
         if (rankingResponses.isEmpty()) {
             throw new RankingCannotMakeException();
         }
-
         return rankingResponses;
     }
-
 
     public Long countWishListObjects(List<WishList> wishLists, int index) {
         return wishLists.stream()
