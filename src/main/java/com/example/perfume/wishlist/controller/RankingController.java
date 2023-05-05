@@ -1,5 +1,6 @@
 package com.example.perfume.wishlist.controller;
 
+import com.example.perfume.wishlist.controller.docs.RankingListDocs;
 import com.example.perfume.wishlist.dto.RankingResponse;
 import com.example.perfume.wishlist.service.WishListAnalyze;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/member/wish")
-public class RankingController {
+public class RankingController implements RankingListDocs {
     private final WishListAnalyze wishListAnalyze;
 
     public RankingController(WishListAnalyze wishListAnalyze) {
