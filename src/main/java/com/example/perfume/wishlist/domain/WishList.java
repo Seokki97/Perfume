@@ -30,5 +30,4 @@ public class WishList {
         this.member = member;
         this.perfume = perfume;
     }
-
 }
