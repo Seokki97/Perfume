@@ -13,8 +13,8 @@ import java.util.List;
 public interface RankingListDocs {
     @Operation(summary = "위시리스트 항목들의 랭킹을 매겨준다.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "성공"),
-            @ApiResponse(responseCode = "404",description = "랭킹을 산정할 수 없습니다")
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "404", description = "랭킹을 산정할 수 없습니다")
     })
     ResponseEntity<List<RankingResponse>> showRanking();
 }
