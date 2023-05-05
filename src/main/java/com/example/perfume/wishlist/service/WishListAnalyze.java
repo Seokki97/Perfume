@@ -8,6 +8,7 @@ import com.example.perfume.wishlist.repository.WishListRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class WishListAnalyze {
@@ -32,8 +33,8 @@ public class WishListAnalyze {
                     .count(count)
                     .build();
             rankingResponses.add(rankingResponse);
-
         }
+        rankingResponses = rankingResponses.stream().distinct().collect(Collectors.toList());
         return rankingResponses;
     }
 
