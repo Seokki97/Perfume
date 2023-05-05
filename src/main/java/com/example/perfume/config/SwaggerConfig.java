@@ -15,7 +15,7 @@ public class SwaggerConfig {
         Info info = new Info()
                 .title("Perfume API")
                 .version(openApiVersion)
-                .description("Global Media 2023 Graduation Exhibition Team Dandi")
+                .description("Global Media 2023 Graduation Exhibition")
                 .termsOfService("Team ParkParkKim");
 
         return new OpenAPI()
