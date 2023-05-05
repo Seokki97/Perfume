@@ -36,4 +36,10 @@ public class RankingResponse {
         return Objects.hash(perfume);
     }
 
+    public static RankingResponse makeRankingResponseObject(Perfume perfume, Long count) {
+        return RankingResponse.builder()
+                .perfume(perfume)
+                .count(count)
+                .build();
+    }
 }

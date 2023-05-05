@@ -28,10 +28,8 @@ public class WishListAnalyze {
             count = wishLists.stream()
                     .filter(perfume -> getPerfumeName(perfume).matches(wishLists.get(finalI).getPerfume().getPerfumeName()))
                     .count();
-            rankingResponse = RankingResponse.builder()
-                    .perfume(wishLists.get(i).getPerfume())
-                    .count(count)
-                    .build();
+            rankingResponse = RankingResponse.makeRankingResponseObject(wishLists.get(i).getPerfume(), count);
+
             rankingResponses.add(rankingResponse);
         }
         rankingResponses = deleteDuplicatedElement(rankingResponses);
@@ -39,13 +37,6 @@ public class WishListAnalyze {
         return rankingResponses;
     }
 
-    public String getPerfumeName(WishList wishList) {
-        return wishList.getPerfume().getPerfumeName();
-    }
-
-    public List<WishList> findAllWishList() {
-        return wishListRepository.findAll();
-    }
 
     public List<RankingResponse> sortRankingListDescendingOrder(List<RankingResponse> rankingResponses) {
         return rankingResponses.stream()
@@ -57,5 +48,13 @@ public class WishListAnalyze {
         return rankingResponses.stream()
                 .distinct()
                 .collect(Collectors.toList());
+    }
+
+    public String getPerfumeName(WishList wishList) {
+        return wishList.getPerfume().getPerfumeName();
+    }
+
+    public List<WishList> findAllWishList() {
+        return wishListRepository.findAll();
     }
 }
