@@ -1,5 +1,6 @@
 package com.example.perfume.wishlist.controller;
 
+import com.example.perfume.member.service.jwt.LoginCheck;
 import com.example.perfume.wishlist.controller.docs.WishListControllerDocs;
 import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
@@ -24,16 +25,19 @@ public class WishListController implements WishListControllerDocs {
         this.wishListService = wishListService;
     }
 
+    @LoginCheck
     @PostMapping("/select-wish-perfume")
     public ResponseEntity<WishListResponse> selectLikePerfume(@RequestBody WishListRequest wishListRequest) {
         return ResponseEntity.ok(wishListService.selectLikePerfume(wishListRequest));
     }
 
+    @LoginCheck
     @GetMapping("/show-list/{memberId}")
     public ResponseEntity<List<WishList>> showWishList(@PathVariable("memberId") Long memberId) {
         return ResponseEntity.ok(wishListUtil.showWishList(memberId));
     }
 
+    @LoginCheck
     @DeleteMapping("/delete-all-element/{memberId}")
     public ResponseEntity<Void> deleteAllWishedPerfume(@PathVariable("memberId") Long memberId) {
         wishListService.deleteAllWishList(memberId);
@@ -41,6 +45,7 @@ public class WishListController implements WishListControllerDocs {
         return ResponseEntity.noContent().build();
     }
 
+    @LoginCheck
     @DeleteMapping("/delete-selected-perfume")
     public ResponseEntity<Void> deleteSelectedPerfume(@RequestBody WishListRequest wishListRequest) {
         wishListService.deleteSelectedWishList(wishListRequest);
