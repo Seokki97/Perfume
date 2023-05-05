@@ -2,6 +2,7 @@ package com.example.perfume.wishlist.service;
 
 import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.RankingResponse;
+import com.example.perfume.wishlist.exception.RankingCannotMakeException;
 import com.example.perfume.wishlist.repository.WishListRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,11 @@ public class WishListAnalyze {
         List<RankingResponse> rankingResponses = makeCountedWishList();
         rankingResponses = deleteDuplicatedElement(rankingResponses);
         rankingResponses = sortRankingListDescendingOrder(rankingResponses);
+
+        if (rankingResponses.isEmpty()) {
+            throw new RankingCannotMakeException();
+        }
+
         return rankingResponses;
     }
 
