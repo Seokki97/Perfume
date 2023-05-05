@@ -30,9 +30,9 @@ public class WishListService {
         Member member = memberService.findMemberById(wishListRequest.getMemberId());
         Perfume perfume = perfumeService.findPerfumeById(wishListRequest.getPerfumeId());
 
-        if (wishListUtil.isDuplicateWishItem(wishListRequest)) {
+        /* if (wishListUtil.isDuplicateWishItem(wishListRequest)) {
             throw new WishListDuplicateException();
-        }
+        }*/
         if (wishListUtil.isWishListOverMaxSize(wishListRequest)) {
             throw new WishListTooMuchException();
         }
