@@ -1,5 +1,6 @@
 package com.example.perfume.member.dto.loginDto;
 
+import com.example.perfume.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -25,5 +26,17 @@ public class LoginResponse {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.memberId = memberId;
+    }
+
+    public static LoginResponse makeLoginResponseObject(Member member, String accessToken, String refreshToken){
+        return LoginResponse.builder()
+                .id(member.getId())
+                .memberId(member.getMemberId())
+                .email(member.getEmail())
+                .nickname(member.getNickname())
+                .thumbnailImage(member.getThumbnailImage())
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 }

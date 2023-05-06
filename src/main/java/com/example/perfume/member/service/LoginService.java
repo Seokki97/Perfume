@@ -47,15 +47,7 @@ public class LoginService implements UserDetailsService {
         String accessToken = jwtProvider.createToken(String.valueOf(member.getId()));
         String refreshToken = jwtProvider.createRefreshToken(String.valueOf(member.getId()));
 
-        LoginResponse loginResponse = LoginResponse.builder()
-                .id(member.getId())
-                .memberId(member.getMemberId())
-                .email(member.getEmail())
-                .nickname(member.getNickname())
-                .thumbnailImage(member.getThumbnailImage())
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
+        LoginResponse loginResponse = LoginResponse.makeLoginResponseObject(member, accessToken, refreshToken);
 
         saveToken(loginResponse, member);
         return loginResponse;
