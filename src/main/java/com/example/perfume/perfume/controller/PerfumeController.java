@@ -59,9 +59,5 @@ public class PerfumeController implements PerfumeControllerDocs {
         return ResponseEntity.ok(perfumeService.showPerfumeImage(perfumeName));
     }
 
-    @GetMapping("/show-story/{id}")
-    public ResponseEntity<StoryResponse> showPerfumeStory(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(perfumeService.showPerfumeStory(id));
-    }
 }
 

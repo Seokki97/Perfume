@@ -53,11 +53,4 @@ public interface PerfumeControllerDocs {
     })
     ResponseEntity<PerfumeResponseDto> showPerfumeImage(@Parameter(description = "향수 이름") String perfumeName);
 
-    @Operation(summary = "GPT를 이용한 이야기 생성")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "이야기 생성 성공"),
-            @ApiResponse(responseCode = "404", description = "이야기 생성 실패")
-    })
-    ResponseEntity<StoryResponse> showPerfumeStory(@Parameter(description = "향수 id") Long id);
-
 }
