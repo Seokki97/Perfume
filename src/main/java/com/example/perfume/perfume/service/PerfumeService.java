@@ -73,11 +73,4 @@ public class PerfumeService {
                 .build();
     }
 
-    public StoryResponse showPerfumeStory(Long id) {
-        Perfume perfume = perfumeRepository.findById(id).orElseThrow(PerfumeNotFoundException::new);
-
-        return StoryResponse.builder()
-                .perfumeStory(perfume.getPerfumeStory())
-                .build();
-    }
 }

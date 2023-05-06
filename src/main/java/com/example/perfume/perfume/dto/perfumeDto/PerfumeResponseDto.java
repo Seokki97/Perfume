@@ -13,20 +13,18 @@ public class PerfumeResponseDto {
     private String perfumeFeature;
     private String perfumeImageUrl;
 
-    private String perfumeStory;
 
     public PerfumeResponseDto() {
 
     }
 
     @Builder
-    public PerfumeResponseDto(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl, String perfumeStory) {
+    public PerfumeResponseDto(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
         this.id = id;
         this.perfumeName = perfumeName;
         this.brandName = brandName;
         this.perfumeFeature = perfumeFeature;
         this.perfumeImageUrl = perfumeImageUrl;
-        this.perfumeStory = perfumeStory;
     }
 
 
@@ -37,7 +35,6 @@ public class PerfumeResponseDto {
                 .brandName(brandName)
                 .perfumeFeature(perfumeFeature)
                 .perfumeImageUrl(perfumeImageUrl)
-                .perfumeStory(perfumeStory)
                 .build();
     }
 }

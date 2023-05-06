@@ -28,7 +28,6 @@ public class PerfumeData {
                 .perfumeFeature(perfumeList.getPerfumeFeature().get(firstIndex))
                 .brandName(perfumeList.getPerfumeBrand().get(firstIndex))
                 .perfumeImageUrl(perfumeList.getPerfumeImageUrl().get(firstIndex))
-                .perfumeStory(perfumeList.getPerfumeStory().get(firstIndex))
                 .build();
     }
 
