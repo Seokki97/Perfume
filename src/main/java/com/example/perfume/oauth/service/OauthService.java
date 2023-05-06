@@ -92,7 +92,6 @@ public class OauthService {
                 .nickname(memberRequestDto.getNickname())
                 .thumbnailImage(memberRequestDto.getThumbnailImage())
                 .build();
-        // isAgreeEmailUsing(memberRequestDto.getEmail());
 
         if (!memberService.isAlreadyExistMember(memberRequestDto)) {
             memberService.saveMemberProfile(member);
