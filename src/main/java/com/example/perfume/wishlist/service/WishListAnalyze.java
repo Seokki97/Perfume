@@ -17,7 +17,7 @@ public class WishListAnalyze {
         this.wishListRepository = wishListRepository;
     }
 
-    public List<RankingResponse> makeCountedWishList() {
+    private List<RankingResponse> makeCountedWishList() {
         List<WishList> wishLists = findAllWishList();
         List<RankingResponse> rankingResponses = new ArrayList<>();
 
@@ -41,29 +41,29 @@ public class WishListAnalyze {
         return rankingResponses;
     }
 
-    public Long countWishListObjects(List<WishList> wishLists, int index) {
+    private Long countWishListObjects(List<WishList> wishLists, int index) {
         return wishLists.stream()
                 .filter(perfume -> getPerfumeName(perfume).matches(wishLists.get(index).getPerfume().getPerfumeName()))
                 .count();
     }
 
-    public List<RankingResponse> sortRankingListDescendingOrder(List<RankingResponse> rankingResponses) {
+    private List<RankingResponse> sortRankingListDescendingOrder(List<RankingResponse> rankingResponses) {
         return rankingResponses.stream()
                 .sorted(Comparator.comparingLong(RankingResponse::getCount).reversed())
                 .collect(Collectors.toList());
     }
 
-    public List<RankingResponse> deleteDuplicatedElement(List<RankingResponse> rankingResponses) {
+    private List<RankingResponse> deleteDuplicatedElement(List<RankingResponse> rankingResponses) {
         return rankingResponses.stream()
                 .distinct()
                 .collect(Collectors.toList());
     }
 
-    public String getPerfumeName(WishList wishList) {
+    private String getPerfumeName(WishList wishList) {
         return wishList.getPerfume().getPerfumeName();
     }
 
-    public List<WishList> findAllWishList() {
+    private List<WishList> findAllWishList() {
         return wishListRepository.findAll();
     }
 }
