@@ -27,7 +27,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) {
-        if(!(handler instanceof HandlerMethod)){
+        if (!(handler instanceof HandlerMethod)) {
             return true;
         }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -38,8 +38,8 @@ public class JwtInterceptor implements HandlerInterceptor {
         if (loginCheck == null) {
             return true;
         }
-        if (jwtProvider.validateToken(accessToken) == false) {
-            throw new TokenExpiredException();
+        if (!jwtProvider.validateToken(accessToken) || accessToken.isEmpty()) {
+            throw new TokenInvalidException();
         }
         return true;
     }
