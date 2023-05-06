@@ -19,17 +19,14 @@ public class WishListAnalyze {
 
     public List<RankingResponse> makeCountedWishList() {
         List<WishList> wishLists = findAllWishList();
-        long count;
-        RankingResponse rankingResponse;
         List<RankingResponse> rankingResponses = new ArrayList<>();
 
         for (int i = 0; i < wishLists.size(); i++) {
-            count = countWishListObjects(wishLists, i);
+            long count = countWishListObjects(wishLists, i);
 
-            rankingResponse = RankingResponse.makeRankingResponseObject(wishLists.get(i).getPerfume(), count);
+            RankingResponse rankingResponse = RankingResponse.makeRankingResponseObject(wishLists.get(i).getPerfume(), count);
             rankingResponses.add(rankingResponse);
         }
-
         return rankingResponses;
     }
 
