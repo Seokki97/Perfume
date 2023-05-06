@@ -28,7 +28,7 @@ public class OauthController implements OauthControllerDocs {
     public ResponseEntity<LoginResponse> signUp(@RequestParam String code, HttpSession httpSession) {
         Member member = oauthService.loadUserProfile(code, httpSession);
 
-        return ResponseEntity.ok(loginService.generateToken(member.getMemberId()));
+        return ResponseEntity.ok(loginService.generateToken(member.getId()));
     }
 
 }
