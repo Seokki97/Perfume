@@ -9,6 +9,7 @@ import com.example.perfume.member.repository.BlacklistRepository;
 import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.member.repository.TokenRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MemberService {
@@ -59,5 +60,11 @@ public class MemberService {
             return false;
         }
         return true;
+    }
+
+    @Transactional
+    public void deleteAllMember() {
+        memberRepository.deleteAll();
+        tokenRepository.deleteAll();
     }
 }
