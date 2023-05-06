@@ -31,4 +31,12 @@ public class WishListResponse {
                 .perfume(perfume)
                 .build();
     }
+
+    public static WishListResponse provideWishResponseEntity(WishList wishList) {
+        return WishListResponse.builder()
+                .wishListId(wishList.getId())
+                .perfume(wishList.getPerfume())
+                .member(wishList.getMember())
+                .build();
+    }
 }

@@ -30,14 +30,6 @@ public class WishListUtil {
                 .build();
     }
 
-    public WishListResponse provideWishResponseEntity(WishList wishList) {
-        return WishListResponse.builder()
-                .wishListId(wishList.getId())
-                .perfume(wishList.getPerfume())
-                .member(wishList.getMember())
-                .build();
-    }
-
     public void saveWishPerfume(WishList wishList) {
         wishListRepository.save(wishList);
     }

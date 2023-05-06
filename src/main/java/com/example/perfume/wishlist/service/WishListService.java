@@ -40,7 +40,7 @@ public class WishListService {
         WishList wishList = wishListUtil.addPerfumeToWishList(member, perfume);
         wishListUtil.saveWishPerfume(wishList);
 
-        return wishListUtil.provideWishResponseEntity(wishList);
+        return WishListResponse.provideWishResponseEntity(wishList);
     }
 
     public void deleteAllWishList(Long memberId) {
