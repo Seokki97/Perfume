@@ -26,7 +26,7 @@ public class LogoutService {
     @Transactional
     public void permitLogout(LogoutRequestDto logoutRequestDto, String accessToken) {
         Blacklist blackList = Blacklist.builder()
-                .member(memberService.findByMemberPk(logoutRequestDto.getMemberId()))
+                .member(memberService.findMemberById(logoutRequestDto.getMemberId()))
                 .accessToken(accessToken)
                 .build();
         blacklistRepository.save(blackList);

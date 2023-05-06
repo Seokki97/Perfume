@@ -42,10 +42,10 @@ public class LoginService implements UserDetailsService {
         return token;
     }
 
-    public LoginResponse generateToken(Long memberId) {
-        Member member = memberService.findByMemberPk(memberId);
-        String accessToken = jwtProvider.createToken(String.valueOf(member.getMemberId()));
-        String refreshToken = jwtProvider.createRefreshToken(String.valueOf(member.getMemberId()));
+    public LoginResponse generateToken(Long id) {
+        Member member = memberService.findMemberById(id);
+        String accessToken = jwtProvider.createToken(String.valueOf(member.getId()));
+        String refreshToken = jwtProvider.createRefreshToken(String.valueOf(member.getId()));
 
         LoginResponse loginResponse = LoginResponse.builder()
                 .id(member.getId())
@@ -62,7 +62,7 @@ public class LoginService implements UserDetailsService {
     }
 
     public LoginResponse permitClientRequest(String accessToken) {
-        Member member = memberService.findByMemberPk(Long.valueOf(jwtProvider.getUserPk(accessToken)));
+        Member member = memberService.findMemberById(Long.valueOf(jwtProvider.getUserPk(accessToken)));
         if (!memberService.isMemberLogout(accessToken)) {
             throw new MemberAlreadyLogoutException();
         }
@@ -76,7 +76,7 @@ public class LoginService implements UserDetailsService {
     @Transactional
     public LoginResponse generateNewAccessToken(String refreshToken) {
         Token token = tokenRepository.findByRefreshToken(refreshToken).orElseThrow(UserNotFoundException::new);
-        Member member = memberService.findByMemberPk(token.getMemberId());
+        Member member = memberService.findMemberById(token.getMemberId());
 
         return LoginResponse.builder()
                 .id(member.getId())
