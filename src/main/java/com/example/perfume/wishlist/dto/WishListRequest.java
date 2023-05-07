@@ -6,8 +6,6 @@ import lombok.Getter;
 @Getter
 public class WishListRequest {
 
-    private Long wishListId;
-
     private Long memberId;
 
     private Long perfumeId;
@@ -16,8 +14,7 @@ public class WishListRequest {
     }
 
     @Builder
-    public WishListRequest(Long wishListId, Long memberId, Long perfumeId) {
-        this.wishListId = wishListId;
+    public WishListRequest(Long memberId, Long perfumeId) {
         this.memberId = memberId;
         this.perfumeId = perfumeId;
     }
