@@ -39,9 +39,6 @@ public class WishListUtil {
     }
 
     public List<WishList> showWishList(Long memberId) {
-        if (isEmptyWishList(memberId)) {
-            throw new WishListNotFoundException();
-        }
         return wishListRepository.findByMemberId(memberId);
     }
 
