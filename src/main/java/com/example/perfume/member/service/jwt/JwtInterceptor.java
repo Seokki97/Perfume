@@ -1,7 +1,9 @@
 package com.example.perfume.member.service.jwt;
 
 
+import com.example.perfume.member.exception.AuthorizationHeaderNotFoundException;
 import com.example.perfume.member.exception.TokenInvalidException;
+import org.jsoup.internal.StringUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -28,10 +30,14 @@ public class JwtInterceptor implements HandlerInterceptor {
         LoginCheck loginCheck = handlerMethod.getMethodAnnotation(LoginCheck.class);
         String accessToken = httpServletRequest.getHeader("Authorization");
 
+        if (StringUtil.isBlank(accessToken)) {
+            throw new AuthorizationHeaderNotFoundException();
+        }
+
         if (loginCheck == null) {
             return true;
         }
-        if (!jwtProvider.validateToken(accessToken) || accessToken.isEmpty()) {
+        if (!jwtProvider.validateToken(accessToken)) {
             throw new TokenInvalidException();
         }
         return true;

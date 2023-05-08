@@ -1,11 +1,8 @@
 package com.example.perfume.exception;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.exception.MemberAlreadyLogoutException;
-import com.example.perfume.member.exception.TokenExpiredException;
+import com.example.perfume.member.exception.*;
 import com.example.perfume.recommend.exception.RecommendNotFoundException;
-import com.example.perfume.member.exception.TokenInvalidException;
-import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.oauth.exception.EmailNotFoundException;
 import com.example.perfume.oauth.exception.MemberAlreadyExistException;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
@@ -119,6 +116,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<?> handleRankingCannotMakeException(RankingCannotMakeException e) {
+        return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleAuthorizationHeaderNotFoundException(AuthorizationHeaderNotFoundException e) {
         return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
     }
 }
