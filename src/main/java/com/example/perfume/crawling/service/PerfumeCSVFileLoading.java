@@ -47,7 +47,6 @@ public class PerfumeCSVFileLoading extends CSVFileLoading {
                 .perfumeFeature(extractPerfumeData(PerfumeType.FEATURE.selectTypeColumn()))
                 .perfumeBrand(extractPerfumeData(PerfumeType.BRAND.selectTypeColumn()))
                 .perfumeImageUrl(extractPerfumeData(PerfumeType.IMAGE.selectTypeColumn()))
-                .perfumeStory(extractPerfumeData(PerfumeType.STORY.selectTypeColumn()))
                 .build();
         return perfumeList;
     }
