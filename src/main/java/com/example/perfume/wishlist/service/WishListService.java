@@ -54,6 +54,9 @@ public class WishListService {
         if (wishListUtil.isEmptyWishList(wishListRequest.getMemberId())) {
             throw new WishListNotFoundException();
         }
+        if (!wishListUtil.isExistsWishList(wishListRequest)){
+            throw new WishListNotFoundException();
+        }
         wishListUtil.deleteSelectedWishElement(wishListRequest);
     }
 

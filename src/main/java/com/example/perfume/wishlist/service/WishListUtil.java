@@ -30,6 +30,10 @@ public class WishListUtil {
                 .build();
     }
 
+    public boolean isExistsWishList(WishListRequest wishListRequest) {
+        return wishListRepository.existsByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
+    }
+
     public void saveWishPerfume(WishList wishList) {
         wishListRepository.save(wishList);
     }
