@@ -27,7 +27,9 @@ public class WishListService {
     }
 
     public WishListResponse selectLikePerfume(WishListRequest wishListRequest) {
+        wishListUtil.isEmptyRequestBody(wishListRequest);
         Member member = memberService.findMemberById(wishListRequest.getMemberId());
+
         Perfume perfume = perfumeService.findPerfumeById(wishListRequest.getPerfumeId());
 
         if (wishListUtil.isDuplicateWishItem(wishListRequest)) {
@@ -51,10 +53,12 @@ public class WishListService {
     }
 
     public void deleteSelectedWishList(WishListRequest wishListRequest) {
+        wishListUtil.isEmptyRequestBody(wishListRequest);
+
         if (wishListUtil.isEmptyWishList(wishListRequest.getMemberId())) {
             throw new WishListNotFoundException();
         }
-        if (!wishListUtil.isExistsWishList(wishListRequest)){
+        if (!wishListUtil.isExistsWishList(wishListRequest)) {
             throw new WishListNotFoundException();
         }
         wishListUtil.deleteSelectedWishElement(wishListRequest);

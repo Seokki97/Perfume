@@ -1,5 +1,6 @@
 package com.example.perfume.exception;
 
+import com.example.perfume.advice.BadRequestException;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.exception.*;
 import com.example.perfume.recommend.exception.RecommendNotFoundException;
@@ -12,16 +13,14 @@ import com.example.perfume.survey.exception.MoodNotFoundException;
 import com.example.perfume.survey.exception.ScentNotFoundException;
 import com.example.perfume.survey.exception.SeasonNotFoundException;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
-import com.example.perfume.wishlist.exception.RankingCannotMakeException;
-import com.example.perfume.wishlist.exception.WishListDuplicateException;
-import com.example.perfume.wishlist.exception.WishListNotFoundException;
-import com.example.perfume.wishlist.exception.WishListTooMuchException;
+import com.example.perfume.wishlist.exception.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    private static final int BAD_REQUEST_ERROR = 400;
     private static final int NOT_FOUND_ERROR = 404;
     private static final int UNAUTHORIZED_ERROR = 401;
 
@@ -122,5 +121,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<?> handleAuthorizationHeaderNotFoundException(AuthorizationHeaderNotFoundException e) {
         return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleRequestBodyNullPointException(RequestBodyNullPointException e){
+        return ResponseEntity.status(BAD_REQUEST_ERROR).body(e.getMessage());
     }
 }

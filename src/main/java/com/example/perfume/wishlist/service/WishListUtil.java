@@ -45,6 +45,9 @@ public class WishListUtil {
     public boolean isEmptyWishList(Long memberId) {
         return wishListRepository.findByMemberId(memberId).isEmpty();
     }
+    public boolean isEmptyRequestBody(WishListRequest wishListRequest){
+        return wishListRequest.getMemberId() == null && wishListRequest.getPerfumeId() == null;
+    }
 
     public boolean isDuplicateWishItem(WishListRequest wishListRequest) {
         return wishListRepository.findByMemberId(wishListRequest.getMemberId()).stream()
