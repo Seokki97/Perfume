@@ -6,12 +6,13 @@ import com.example.perfume.feedback.service.FeedbackService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@Tag(name ="피드백")
+@Slf4j
 @RestController
 @RequestMapping("/feedback")
 public class FeedbackController implements FeedbackControllerDocs {
@@ -21,11 +22,10 @@ public class FeedbackController implements FeedbackControllerDocs {
         this.feedbackService = feedbackService;
     }
 
-    @Operation(summary = "사용자의 피드백을 저장")
-    @ApiResponse(responseCode = "200", description = "저장")
     @PostMapping("/save")
     public ResponseEntity<Void> saveFeedback(@RequestBody FeedbackRequestDto feedbackRequestDto) {
         feedbackService.saveFeedback(feedbackRequestDto);
+        log.info("피드백 저장 요청");
         return ResponseEntity.noContent().build();
     }
 
