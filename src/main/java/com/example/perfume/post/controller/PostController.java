@@ -22,14 +22,14 @@ public class PostController implements PostControllerDocs {
     }
 
     @PostMapping("/save-post")
-    public ResponseEntity<Void> savePost(@RequestBody PostRequestDto postRequestDto) {
+    public ResponseEntity<Void> savePost(@RequestBody final PostRequestDto postRequestDto) {
         log.info("방명록 작성하기 요청");
         postService.savePost(postRequestDto);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/show-post/{id}")
-    public ResponseEntity<Post> showOnePost(@PathVariable Long id) {
+    public ResponseEntity<Post> showOnePost(@PathVariable final Long id) {
         log.info("게시글 넘버 :{} 조회하기", id);
         return ResponseEntity.ok(postService.showOnePost(id));
     }

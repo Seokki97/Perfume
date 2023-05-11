@@ -27,14 +27,14 @@ public class RecommendController implements RecommendControllerDocs {
     }
 
     @PostMapping("/recommend/{id}")
-    public ResponseEntity<Recommendation> recommendPerfume(@PathVariable("id") Long id, @RequestBody RecommendRequestDto recommendRequestDto) {
+    public ResponseEntity<Recommendation> recommendPerfume(@PathVariable("id") final Long id, @RequestBody final RecommendRequestDto recommendRequestDto) {
         log.info("memberId : {}에게 향수를 추천해주는 요청",id);
         return ResponseEntity.ok(recommendationService.recommendByOtherGuest(id, recommendRequestDto));
     }
 
     @LoginCheck
     @GetMapping("/show-recommended-perfume/{id}")
-    public ResponseEntity<RecommendResponseDto> showRecommendedPerfume(@PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<RecommendResponseDto> showRecommendedPerfume(@PathVariable("id") final Long id, final HttpServletRequest httpServletRequest) {
         log.info("memberId : {}에게 추천된 향수를 조회하기", id);
         logoutService.isUserAlreadyLogout(httpServletRequest.getHeader("Authorization"));
         return ResponseEntity.ok(recommendationService.showRecommendedPerfume(id));

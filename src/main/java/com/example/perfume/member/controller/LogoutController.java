@@ -22,7 +22,7 @@ public class LogoutController implements LogoutControllerDocs {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<Void> permitLogout(@RequestBody LogoutRequestDto logoutRequestDto, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<Void> permitLogout(@RequestBody final LogoutRequestDto logoutRequestDto, final HttpServletRequest httpServletRequest) {
         String accessToken = jwtProvider.resolveToken(httpServletRequest);
         logoutService.permitLogout(logoutRequestDto, accessToken);
         return ResponseEntity.noContent().build();

@@ -30,13 +30,13 @@ public class PerfumeController implements PerfumeControllerDocs {
     }
 
     @PostMapping("/find-by-name")
-    public ResponseEntity<List<Perfume>> findByPerfumeName(@RequestBody PerfumeRequestDto perfumeRequestDto) {
+    public ResponseEntity<List<Perfume>> findByPerfumeName(@RequestBody final PerfumeRequestDto perfumeRequestDto) {
         log.info("향수 이름: {} 의 향수 조회", perfumeRequestDto.getPerfumeName());
         return ResponseEntity.ok(perfumeService.findPerfumeByName(perfumeRequestDto));
     }
 
     @PostMapping("/find-by-brand")
-    public ResponseEntity<List<Perfume>> findByBrandName(@RequestBody PerfumeRequestDto perfumeRequestDto) {
+    public ResponseEntity<List<Perfume>> findByBrandName(@RequestBody final PerfumeRequestDto perfumeRequestDto) {
         log.info("향수 브랜드 : {} 의 향수 조회",perfumeRequestDto.getBrandName());
         return ResponseEntity.ok(perfumeService.findPerfumeByBrand(perfumeRequestDto));
     }
@@ -48,7 +48,7 @@ public class PerfumeController implements PerfumeControllerDocs {
     }
 
     @GetMapping("/show-perfume/{id}")
-    public ResponseEntity<FeatureResponseDto> showPerfumeDetails(@PathVariable Long id) {
+    public ResponseEntity<FeatureResponseDto> showPerfumeDetails(@PathVariable final Long id) {
         log.info("향수 Id : {} 의 세부정보 조회하기", id);
         return ResponseEntity.ok(featureService.showFeatureDetails(id));
     }

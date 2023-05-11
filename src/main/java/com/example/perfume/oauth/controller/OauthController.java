@@ -26,7 +26,7 @@ public class OauthController implements OauthControllerDocs {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<LoginResponse> signUp(@RequestParam String code, HttpSession httpSession) {
+    public ResponseEntity<LoginResponse> signUp(@RequestParam final String code, final HttpSession httpSession) {
         Member member = oauthService.loadUserProfile(code, httpSession);
         log.info("카카오에서 받은 회원 Id : {} 회원가입 요청",member.getId());
         return ResponseEntity.ok(loginService.generateToken(member.getId()));

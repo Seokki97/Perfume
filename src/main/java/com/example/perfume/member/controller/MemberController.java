@@ -19,7 +19,7 @@ public class MemberController implements MemberControllerDocs {
 
     @LoginCheck
     @PostMapping("/delete")
-    public ResponseEntity<Void> deleteMember(@RequestBody SecessionRequest secessionRequest) {
+    public ResponseEntity<Void> deleteMember(@RequestBody final SecessionRequest secessionRequest) {
         memberService.deleteMemberId(secessionRequest);
         return ResponseEntity.noContent().build();
     }

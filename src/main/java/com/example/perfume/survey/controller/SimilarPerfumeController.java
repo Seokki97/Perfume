@@ -23,7 +23,7 @@ public class SimilarPerfumeController implements SimilarPerfumeControllerDocs {
     }
 
     @GetMapping("/show-similar-perfume/{id}")
-    public ResponseEntity<List<Perfume>> showSimilarData(@PathVariable("id") Long id) {
+    public ResponseEntity<List<Perfume>> showSimilarData(@PathVariable("id") final Long id) {
         log.info("유사한 향수 조회 Perfume Id : {}", id);
         return ResponseEntity.ok(similarPerfumeService.showSimilarPerfume(id));
     }

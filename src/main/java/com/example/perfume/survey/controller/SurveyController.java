@@ -33,7 +33,7 @@ public class SurveyController implements SurveyControllerDocs {
     }
 
     @PostMapping("/show-perfume-by-survey")
-    public ResponseEntity<List<Perfume>> showPerfumeDataBySurvey(@RequestBody SurveyRequestDto surveyRequestDto) {
+    public ResponseEntity<List<Perfume>> showPerfumeDataBySurvey(@RequestBody final SurveyRequestDto surveyRequestDto) {
         log.info("설문 기반의 향수 찾기 Gender : {}, Scent : {}, Mood : {}, Season : {}, Style : {}",
                 surveyRequestDto.getGenderAnswer(),
                 surveyRequestDto.getScentAnswer(),

@@ -25,14 +25,14 @@ public class LoginController implements LoginControllerDocs {
 
     @LoginCheck
     @PostMapping("/response")
-    public ResponseEntity<LoginResponse> resolveToken(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<LoginResponse> resolveToken(final HttpServletRequest httpServletRequest) {
         String accessToken = jwtProvider.resolveToken(httpServletRequest);
 
         return ResponseEntity.ok(loginService.permitClientRequest(accessToken));
     }
 
     @PostMapping("/regenerate")
-    public ResponseEntity<LoginResponse> regenerateEntity(HttpServletRequest httpServletRequest) {
+    public ResponseEntity<LoginResponse> regenerateEntity(final HttpServletRequest httpServletRequest) {
         String refreshToken = jwtProvider.resolveRefreshToken(httpServletRequest);
 
         return ResponseEntity.ok(loginService.generateNewAccessToken(refreshToken));

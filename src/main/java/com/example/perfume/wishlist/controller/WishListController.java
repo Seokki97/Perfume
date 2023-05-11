@@ -29,21 +29,21 @@ public class WishListController implements WishListControllerDocs {
 
     @LoginCheck
     @PostMapping("/select-wish-perfume")
-    public ResponseEntity<WishListResponse> selectLikePerfume(@RequestBody WishListRequest wishListRequest) {
+    public ResponseEntity<WishListResponse> selectLikePerfume(@RequestBody final WishListRequest wishListRequest) {
         log.info("향수 위시리스트에 담기, Member Id : {}, Perfume Id : {}", wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
         return ResponseEntity.ok(wishListService.selectLikePerfume(wishListRequest));
     }
 
     @LoginCheck
     @GetMapping("/show-list/{memberId}")
-    public ResponseEntity<List<WishList>> showWishList(@PathVariable("memberId") Long memberId) {
+    public ResponseEntity<List<WishList>> showWishList(@PathVariable("memberId") final Long memberId) {
         log.info("향수 리스트 조회하기, Member Id :{}", memberId);
         return ResponseEntity.ok(wishListUtil.showWishList(memberId));
     }
 
     @LoginCheck
     @DeleteMapping("/delete-all-element/{memberId}")
-    public ResponseEntity<Void> deleteAllWishedPerfume(@PathVariable("memberId") Long memberId) {
+    public ResponseEntity<Void> deleteAllWishedPerfume(@PathVariable("memberId") final Long memberId) {
         log.info("향수 리스트 전체 삭제하기, Member Id: {}", memberId);
         wishListService.deleteAllWishList(memberId);
         return ResponseEntity.noContent().build();

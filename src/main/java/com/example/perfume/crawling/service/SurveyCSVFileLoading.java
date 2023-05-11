@@ -17,11 +17,11 @@ public class SurveyCSVFileLoading extends CSVFileLoading {
 
     private List<String> surveyListTest;
 
-    //public final String FILE_PATH = "/home/ubuntu/data/SurveyData.csv";
-    public final String FILE_PATH = "/C:/Users/wnstj/gradu/SurveyData.csv";
+    public final String FILE_PATH = "/home/ubuntu/data/SurveyData.csv";
+    //public final String FILE_PATH = "/C:/Users/wnstj/gradu/SurveyData.csv";
     private static final int COLUMN_LENGTH = 5;
 
-    private BufferedReader bufferedReader;
+    private final BufferedReader bufferedReader;
 
     public SurveyCSVFileLoading(List<String> surveyListTest) throws FileNotFoundException, UnsupportedEncodingException {
         this.bufferedReader = new BufferedReader(importFile(FILE_PATH));

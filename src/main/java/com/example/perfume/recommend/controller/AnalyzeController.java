@@ -25,7 +25,7 @@ public class AnalyzeController implements AnalyzeControllerDocs {
 
     @LoginCheck
     @GetMapping("/show-result/{id}")
-    public ResponseEntity<Map<String, Long>> showMostRecommendedPerfume(@PathVariable("id") Long memberId) {
+    public ResponseEntity<Map<String, Long>> showMostRecommendedPerfume(@PathVariable("id") final Long memberId) {
         log.info("memberId : {} 의 추천받은 향수 결과 분석 요청", memberId);
         return ResponseEntity.ok(analyzeService.showAnalyzedData(memberId));
     }

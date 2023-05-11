@@ -23,7 +23,7 @@ public class FeedbackController implements FeedbackControllerDocs {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Void> saveFeedback(@RequestBody FeedbackRequestDto feedbackRequestDto) {
+    public ResponseEntity<Void> saveFeedback(@RequestBody final FeedbackRequestDto feedbackRequestDto) {
         feedbackService.saveFeedback(feedbackRequestDto);
         log.info("피드백 저장 요청");
         return ResponseEntity.noContent().build();
