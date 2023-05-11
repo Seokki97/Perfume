@@ -55,4 +55,5 @@ public interface WishListControllerDocs {
                     headers = @Header(name = "Authorization", description = "Access Token"))
     })
     ResponseEntity<Void> deleteSelectedPerfume(@Parameter(name = "WishListRequestDto", description = "memberId,PerfumeId, memberId는 PK값") @RequestBody WishListRequest wishListRequest);
+
 }

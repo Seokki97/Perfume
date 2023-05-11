@@ -4,8 +4,6 @@ import com.example.perfume.member.domain.Member;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
-import com.example.perfume.wishlist.dto.WishListResponse;
-import com.example.perfume.wishlist.exception.WishListNotFoundException;
 import com.example.perfume.wishlist.repository.WishListRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

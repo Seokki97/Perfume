@@ -5,7 +5,6 @@ import com.example.perfume.member.dto.logoutDto.LogoutRequestDto;
 import com.example.perfume.member.exception.MemberAlreadyLogoutException;
 import com.example.perfume.member.repository.BlacklistRepository;
 import com.example.perfume.member.repository.TokenRepository;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

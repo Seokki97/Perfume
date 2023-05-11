@@ -1,9 +1,6 @@
 package com.example.perfume.member.service.jwt;
 
-
-import com.example.perfume.member.exception.AuthorizationHeaderNotFoundException;
 import com.example.perfume.member.exception.TokenInvalidException;
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;

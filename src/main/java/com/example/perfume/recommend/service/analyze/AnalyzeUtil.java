@@ -1,12 +1,10 @@
 package com.example.perfume.recommend.service.analyze;
 
 import com.example.perfume.recommend.dto.AnalyzeResponse;
-import com.example.perfume.recommend.dto.PerfumeAnalyzeResponse;
 import com.example.perfume.recommend.exception.RecommendNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class AnalyzeUtil {

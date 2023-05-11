@@ -9,8 +9,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-@Tag(name = "위시리스트에 담긴 항목들 랭킹 산정 Api")
+@Tag(name = "위시리스트에 담긴 항목들 랭킹 매기는 API")
 public interface RankingListDocs {
+
     @Operation(summary = "위시리스트 항목들의 랭킹을 매겨준다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공"),

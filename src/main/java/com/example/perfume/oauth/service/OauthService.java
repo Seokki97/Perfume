@@ -4,7 +4,6 @@ import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.dto.memberDto.MemberRequestDto;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.oauth.OauthType;
-import com.example.perfume.oauth.exception.EmailNotFoundException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -97,4 +96,5 @@ public class OauthService {
             memberService.saveMemberProfile(member);
         }
     }
+
 }
