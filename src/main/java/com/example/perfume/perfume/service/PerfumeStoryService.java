@@ -19,7 +19,6 @@ public class PerfumeStoryService {
     private String API_KEY;
     private static RestTemplate restTemplate = new RestTemplate();
 
-
     public HttpEntity<ChatGptRequest> createHttpEntity(ChatGptRequest chatGptRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));

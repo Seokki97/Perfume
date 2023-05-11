@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WishListService {
+
     private final MemberService memberService;
 
     private final PerfumeService perfumeService;
@@ -28,8 +29,8 @@ public class WishListService {
 
     public WishListResponse selectLikePerfume(WishListRequest wishListRequest) {
         wishListUtil.isEmptyRequestBody(wishListRequest);
-        Member member = memberService.findMemberById(wishListRequest.getMemberId());
 
+        Member member = memberService.findMemberById(wishListRequest.getMemberId());
         Perfume perfume = perfumeService.findPerfumeById(wishListRequest.getPerfumeId());
 
         if (wishListUtil.isDuplicateWishItem(wishListRequest)) {
@@ -38,7 +39,6 @@ public class WishListService {
         if (wishListUtil.isWishListOverMaxSize(wishListRequest)) {
             throw new WishListTooMuchException();
         }
-
         WishList wishList = wishListUtil.addPerfumeToWishList(member, perfume);
         wishListUtil.saveWishPerfume(wishList);
 

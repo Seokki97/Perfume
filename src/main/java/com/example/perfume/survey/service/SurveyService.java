@@ -63,16 +63,10 @@ public class SurveyService {
     }
 
     public boolean isEmptyRecommendedPerfumeList(List<Survey> surveyList) {
-        if (convertToPerfumeData(surveyList).isEmpty()) {
-            return true;
-        }
-        return false;
+        return convertToPerfumeData(surveyList).isEmpty();
     }
 
     public boolean isNotSelectedSeasonAnswer(SurveyRequestDto surveyRequestDto) {
-        if (surveyRequestDto.getSeasonAnswer().equals(SurveyType.NOT_SELECT_SEASON.getValue())) {
-            return true;
-        }
-        return false;
+        return surveyRequestDto.getSeasonAnswer().equals(SurveyType.NOT_SELECT_SEASON.getValue());
     }
 }
