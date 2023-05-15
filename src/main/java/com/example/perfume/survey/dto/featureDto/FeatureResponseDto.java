@@ -12,16 +12,19 @@ public class FeatureResponseDto {
     private String seasonRecommend;
     private Perfume perfume;
 
+    private String maintenanceRecommend;
+
     public FeatureResponseDto() {
 
     }
 
     @Builder
-    public FeatureResponseDto(String scentRecommend, String moodRecommend, String seasonRecommend, Perfume perfume) {
+    public FeatureResponseDto(String scentRecommend, String moodRecommend, String seasonRecommend,String maintenanceRecommend, Perfume perfume) {
         this.scentRecommend = scentRecommend;
         this.moodRecommend = moodRecommend;
         this.seasonRecommend = seasonRecommend;
         this.perfume = perfume;
+        this.maintenanceRecommend = maintenanceRecommend;
 
     }
 }

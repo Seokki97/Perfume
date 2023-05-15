@@ -1,10 +1,7 @@
 package com.example.perfume.survey.service;
 
 import com.example.perfume.perfume.service.PerfumeService;
-import com.example.perfume.survey.domain.MoodType;
-import com.example.perfume.survey.domain.ScentType;
-import com.example.perfume.survey.domain.SeasonType;
-import com.example.perfume.survey.domain.Survey;
+import com.example.perfume.survey.domain.*;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +23,7 @@ public class FeatureService {
                 .scentRecommend(selectScent(id))
                 .moodRecommend(selectMood(id))
                 .seasonRecommend(selectSeason(id))
+                .maintenanceRecommend(selectMaintenance(id))
                 .build();
     }
 
@@ -47,5 +45,10 @@ public class FeatureService {
                 .moodAnswer(surveyUtil.showMoodAnswer(surveyId).getMoodAnswer())
                 .build();
         return MoodType.getMessage(survey);
+    }
+
+    private String selectMaintenance(Long id) {
+        String maintenanceMessage = surveyService.findSurveyById(id).getPerfume().getMaintenance();
+        return Maintenance.MAINTENANCE_FRONT.getMessage() + maintenanceMessage + Maintenance.MAINTENANCE_REAR.getMessage();
     }
 }
