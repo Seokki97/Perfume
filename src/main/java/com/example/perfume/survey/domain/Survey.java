@@ -33,7 +33,7 @@ public class Survey {
     private String seasonAnswer;
 
     @NotNull
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 30)
     private String styleAnswer;
 
     @ManyToOne
