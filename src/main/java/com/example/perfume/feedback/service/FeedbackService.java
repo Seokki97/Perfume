@@ -18,12 +18,11 @@ public class FeedbackService {
 
     private static final String filePath = "C:/Users/wnstj/perfume/feedback.txt";
     //private static final String filePath = "/home/ubuntu/data/feedback.txt";
-    private final File importedFile;
     private final BufferedWriter bufferedWriter;
 
     public FeedbackService(FeedbackRepository feedbackRepository) throws IOException {
         this.feedbackRepository = feedbackRepository;
-        this.importedFile = new File(filePath);
+        File importedFile = new File(filePath);
         this.bufferedWriter = new BufferedWriter(new FileWriter(importedFile));
     }
 
@@ -35,9 +34,9 @@ public class FeedbackService {
 
     public void makeFeedbackFile() throws IOException {
         List<Feedback> feedbackList = feedbackRepository.findAll();
-        int listSize = feedbackList.size();
-        for (int i = 0; i < listSize; i++) {
-            bufferedWriter.write(String.valueOf(feedbackList.get(i).getComment()));
+
+        for (Feedback feedback : feedbackList) {
+            bufferedWriter.write(String.valueOf(feedback.getComment()));
             bufferedWriter.newLine();
         }
         bufferedWriter.flush();
