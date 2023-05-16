@@ -49,6 +49,6 @@ public class FeatureService {
 
     private String selectMaintenance(Long id) {
         String maintenanceMessage = surveyService.findSurveyById(id).getPerfume().getMaintenance();
-        return Maintenance.MAINTENANCE_FRONT.getMessage() + maintenanceMessage + Maintenance.MAINTENANCE_REAR.getMessage();
+        return Maintenance.findMaintenance(maintenanceMessage);
     }
 }

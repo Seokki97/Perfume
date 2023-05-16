@@ -9,10 +9,7 @@ import com.example.perfume.oauth.exception.MemberAlreadyExistException;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.post.exception.PostNotFoundException;
-import com.example.perfume.survey.exception.MoodNotFoundException;
-import com.example.perfume.survey.exception.ScentNotFoundException;
-import com.example.perfume.survey.exception.SeasonNotFoundException;
-import com.example.perfume.survey.exception.SurveyNotFoundException;
+import com.example.perfume.survey.exception.*;
 import com.example.perfume.wishlist.exception.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -126,5 +123,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<?> handleRequestBodyNullPointException(RequestBodyNullPointException e){
         return ResponseEntity.status(BAD_REQUEST_ERROR).body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleMaintenanceNotFoundException(MaintenanceNotFoundException e){
+        return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
     }
 }
