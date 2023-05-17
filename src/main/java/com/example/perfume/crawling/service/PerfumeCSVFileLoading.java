@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 public class PerfumeCSVFileLoading extends CSVFileLoading {
 
-    private static final int COLUMN_LENGTH = 4;
+    private static final int COLUMN_LENGTH = 5;
     public final String FILE_PATH = "/C:/Users/wnstj/gradu/PerfumeData.csv";
     //public final String FILE_PATH = "/home/ubuntu/data/PerfumeData.csv";
     private List<String> perfumeListTest;
@@ -47,6 +47,7 @@ public class PerfumeCSVFileLoading extends CSVFileLoading {
                 .perfumeFeature(extractPerfumeData(PerfumeType.FEATURE.selectTypeColumn()))
                 .perfumeBrand(extractPerfumeData(PerfumeType.BRAND.selectTypeColumn()))
                 .perfumeImageUrl(extractPerfumeData(PerfumeType.IMAGE.selectTypeColumn()))
+                .maintenance(extractPerfumeData(PerfumeType.MAINTENANCE.selectTypeColumn()))
                 .build();
         return perfumeList;
     }

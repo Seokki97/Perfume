@@ -22,7 +22,7 @@ public class JwtProvider {
 
     @Value("${jwt.secret}")
     private String secretKey;
-    private long tokenValidTime =3600000L;
+    private final long tokenValidTime =3600000L;
 
     private final LoginService loginService;
 
