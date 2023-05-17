@@ -22,7 +22,6 @@ public class SurveyList {
 
     private List<String> fifthAnswer;
 
-
     @Builder
     public SurveyList(List<String> firstAnswer,List<String> secondAnswer,List<String> thirdAnswer, List<String> fourthAnswer, List<String> fifthAnswer){
         this.firstAnswer = firstAnswer;
