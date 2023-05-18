@@ -42,11 +42,9 @@ public class OauthService {
     }
 
     private RestTemplate createRestTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate;
+        return new RestTemplate();
     }
 
-    //여기까지 토큰 값 받기
     public ResponseEntity<String> getResponseFromServer(String url, String code, HttpHeaders httpHeaders) {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>((setHttpBody(code)), httpHeaders);
 
