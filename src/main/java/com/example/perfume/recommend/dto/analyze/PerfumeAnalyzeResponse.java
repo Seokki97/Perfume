@@ -1,16 +1,16 @@
-package com.example.perfume.recommend.dto;
+package com.example.perfume.recommend.dto.analyze;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 public class PerfumeAnalyzeResponse {
-    private Long countNumber;
+    private Long count;
     private String perfumeName;
 
     @Builder
-    public PerfumeAnalyzeResponse(Long countNumber, String perfumeName) {
-        this.countNumber = countNumber;
+    public PerfumeAnalyzeResponse(Long count, String perfumeName) {
+        this.count = count;
         this.perfumeName = perfumeName;
     }
 }

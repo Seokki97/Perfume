@@ -1,4 +1,4 @@
-package com.example.perfume.recommend.dto;
+package com.example.perfume.recommend.dto.analyze;
 
 import lombok.Builder;
 import lombok.Getter;
