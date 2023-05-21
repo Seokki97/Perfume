@@ -1,6 +1,6 @@
 package com.example.perfume.recommend.service.analyze;
 
-import com.example.perfume.recommend.dto.AnalyzeResponse;
+import com.example.perfume.recommend.dto.analyze.AnalyzeResponse;
 import com.example.perfume.recommend.exception.RecommendNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +37,5 @@ public class AnalyzeUtil {
                 .count(maxCount)
                 .build();
     }
+
 }

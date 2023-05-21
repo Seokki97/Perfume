@@ -28,7 +28,7 @@ public class RecommendController implements RecommendControllerDocs {
 
     @PostMapping("/recommend/{id}")
     public ResponseEntity<Recommendation> recommendPerfume(@PathVariable("id") final Long id, @RequestBody final RecommendRequestDto recommendRequestDto) {
-        log.info("memberId : {}에게 향수를 추천해주는 요청",id);
+        log.info("memberId : {}에게 향수를 추천해주는 요청", id);
         return ResponseEntity.ok(recommendationService.recommendByOtherGuest(id, recommendRequestDto));
     }
 

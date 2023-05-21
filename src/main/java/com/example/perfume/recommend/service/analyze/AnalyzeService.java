@@ -1,11 +1,9 @@
 package com.example.perfume.recommend.service.analyze;
 
-import com.example.perfume.recommend.dto.PerfumeAnalyzeResponse;
-import com.example.perfume.recommend.dto.ScentAnalyzeResponse;
+import com.example.perfume.recommend.dto.analyze.PerfumeAnalyzeResponse;
+import com.example.perfume.recommend.dto.analyze.RankingResponse;
+import com.example.perfume.recommend.dto.analyze.ScentAnalyzeResponse;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class AnalyzeService {
@@ -18,14 +16,14 @@ public class AnalyzeService {
         this.scentAnalyze = scentAnalyze;
     }
 
-    public Map<String, Long> showAnalyzedData(Long memberId) {
-        Map<String, Long> analyzedData = new HashMap<>();
+    public RankingResponse responseAnalyzedData(Long memberId){
         PerfumeAnalyzeResponse perfumeAnalyzeResponse = perfumeAnalyze.filterMostRecommendedPerfumeName(memberId);
         ScentAnalyzeResponse scentAnalyzeResponse = scentAnalyze.filterMostRecommendedScent(memberId);
 
-        analyzedData.put(perfumeAnalyzeResponse.getPerfumeName(), perfumeAnalyzeResponse.getCountNumber());
-        analyzedData.put(scentAnalyzeResponse.getScent(), scentAnalyzeResponse.getCount());
+        return RankingResponse.builder()
+                .perfumeAnalyzeResponse(perfumeAnalyzeResponse)
+                .scentAnalyzeResponse(scentAnalyzeResponse)
+                .build();
 
-        return analyzedData;
     }
 }

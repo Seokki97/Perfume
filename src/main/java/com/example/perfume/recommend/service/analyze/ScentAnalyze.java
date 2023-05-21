@@ -1,8 +1,8 @@
 package com.example.perfume.recommend.service.analyze;
 
 import com.example.perfume.recommend.domain.Recommendation;
-import com.example.perfume.recommend.dto.AnalyzeResponse;
-import com.example.perfume.recommend.dto.ScentAnalyzeResponse;
+import com.example.perfume.recommend.dto.analyze.AnalyzeResponse;
+import com.example.perfume.recommend.dto.analyze.ScentAnalyzeResponse;
 import com.example.perfume.recommend.repository.RecommendRepository;
 import org.springframework.stereotype.Service;
 
