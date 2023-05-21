@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class SurveyRequestDto {
 
-    private Long id;
+
     private String genderAnswer;
     private String scentAnswer;
     private String moodAnswer;
@@ -21,8 +21,7 @@ public class SurveyRequestDto {
     }
 
     @Builder
-    public SurveyRequestDto(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer) {
-        this.id = id;
+    public SurveyRequestDto(String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer) {
         this.genderAnswer = genderAnswer;
         this.scentAnswer = scentAnswer;
         this.moodAnswer = moodAnswer;
@@ -31,7 +30,7 @@ public class SurveyRequestDto {
     }
 
     public static SurveyRequestDto makeDto(Survey survey) {
-        return SurveyRequestDto.builder().id(survey.getId())
+        return SurveyRequestDto.builder()
                 .genderAnswer(survey.getGenderAnswer())
                 .scentAnswer(survey.getScentAnswer())
                 .seasonAnswer(survey.getSeasonAnswer())
@@ -42,7 +41,6 @@ public class SurveyRequestDto {
 
     public Survey toEntity(Perfume perfume) {
         return Survey.builder()
-                .id(id)
                 .genderAnswer(genderAnswer)
                 .scentAnswer(scentAnswer)
                 .moodAnswer(moodAnswer)
