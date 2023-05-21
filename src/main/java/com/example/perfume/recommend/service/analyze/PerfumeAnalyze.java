@@ -1,8 +1,8 @@
 package com.example.perfume.recommend.service.analyze;
 
 import com.example.perfume.recommend.domain.Recommendation;
-import com.example.perfume.recommend.dto.AnalyzeResponse;
-import com.example.perfume.recommend.dto.PerfumeAnalyzeResponse;
+import com.example.perfume.recommend.dto.analyze.AnalyzeResponse;
+import com.example.perfume.recommend.dto.analyze.PerfumeAnalyzeResponse;
 import com.example.perfume.recommend.repository.RecommendRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +36,7 @@ public class PerfumeAnalyze implements Analyze {
         AnalyzeResponse analyzeResponse = analyzeUtil.countPerfumeList(perfumeNameList);
         return PerfumeAnalyzeResponse.builder()
                 .perfumeName(analyzeResponse.getElementName())
-                .countNumber(analyzeResponse.getCount())
+                .count(analyzeResponse.getCount())
                 .build();
     }
 }
