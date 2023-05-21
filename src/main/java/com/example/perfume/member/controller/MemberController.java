@@ -29,4 +29,10 @@ public class MemberController implements MemberControllerDocs {
         memberService.deleteAllMember();
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/delete-select-member/{id}")
+    public ResponseEntity<Void> deleteSelectedMember(@PathVariable("id") Long memberId){
+        memberService.deleteMember(memberId);
+        return ResponseEntity.noContent().build();
+    }
 }

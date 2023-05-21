@@ -56,15 +56,18 @@ public class MemberService {
     }
 
     public boolean isMemberLogout(String accessToken) {
-        if (blacklistRepository.existsByAccessToken(accessToken)) {
-            return false;
-        }
-        return true;
+        return !blacklistRepository.existsByAccessToken(accessToken);
     }
 
     @Transactional
     public void deleteAllMember() {
         memberRepository.deleteAll();
         tokenRepository.deleteAll();
+    }
+
+    @Transactional
+    public void deleteMember(Long memberId) {
+        memberRepository.deleteByMemberId(memberId);
+        tokenRepository.deleteByMemberId(memberId);
     }
 }
