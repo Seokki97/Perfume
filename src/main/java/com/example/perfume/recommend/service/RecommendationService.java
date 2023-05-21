@@ -34,15 +34,14 @@ public class RecommendationService {
         this.perfumeService = perfumeService;
     }
 
-    private SurveyRequestDto createSurveyResponseDto(RecommendRequestDto recommendRequestDto) {
-        SurveyRequestDto surveyRequestDto = SurveyRequestDto.builder()
+    public SurveyRequestDto createSurveyResponseDto(RecommendRequestDto recommendRequestDto) {
+        return SurveyRequestDto.builder()
                 .genderAnswer(recommendRequestDto.getGenderAnswer())
                 .moodAnswer(recommendRequestDto.getMoodAnswer())
                 .scentAnswer(recommendRequestDto.getScentAnswer())
                 .seasonAnswer(recommendRequestDto.getSeasonAnswer())
                 .styleAnswer(recommendRequestDto.getStyleAnswer())
                 .build();
-        return surveyRequestDto;
     }
 
     public Recommendation recommendByOtherGuest(Long id, RecommendRequestDto recommendRequestDto) {
@@ -67,11 +66,10 @@ public class RecommendationService {
     public RecommendResponseDto showRecommendedPerfume(Long id) {
         Long memberId = memberService.findMemberById(id).getId();
 
-        RecommendResponseDto recommendResponseDto = RecommendResponseDto.builder()
+        return RecommendResponseDto.builder()
                 .id(memberId)
                 .recommendationList(recommendRepository.findByMemberId(memberId))
                 .build();
-        return recommendResponseDto;
     }
 
     @Transactional
