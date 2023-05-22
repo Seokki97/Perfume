@@ -1,10 +1,10 @@
-package com.example.perfume.perfume.service;
+package com.example.perfume.chatGpt.service;
 
 import com.example.perfume.config.ChatGptConfig;
-import com.example.perfume.perfume.dto.story.ChatGptRequest;
-import com.example.perfume.perfume.dto.story.ChatGptResponse;
-import com.example.perfume.perfume.dto.story.PerfumeStoryRequest;
-import com.example.perfume.perfume.exception.GptCannotMakeStoryException;
+import com.example.perfume.chatGpt.dto.gptDto.ChatGptRequest;
+import com.example.perfume.chatGpt.dto.gptDto.ChatGptResponse;
+import com.example.perfume.chatGpt.dto.storyDto.PerfumeStoryRequest;
+import com.example.perfume.chatGpt.exception.GptCannotMakeStoryException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
