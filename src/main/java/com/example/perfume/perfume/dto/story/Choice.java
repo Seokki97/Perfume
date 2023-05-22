@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Getter
 public class Choice implements Serializable {
-    private String text;
+    private Message message;
     private Integer index;
     @JsonProperty("finish_reason")
     private String finishReason;
@@ -16,9 +16,10 @@ public class Choice implements Serializable {
     public Choice(){}
 
     @Builder
-    public Choice(String text, Integer index, String finishReason) {
-        this.text = text;
+    public Choice(Message message, Integer index, String finishReason) {
+
         this.index = index;
         this.finishReason = finishReason;
+        this.message = message;
     }
 }

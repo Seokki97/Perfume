@@ -5,6 +5,8 @@ import com.example.perfume.perfume.dto.story.ChatGptRequest;
 import com.example.perfume.perfume.dto.story.ChatGptResponse;
 import com.example.perfume.perfume.dto.story.PerfumeStoryRequest;
 import com.example.perfume.perfume.exception.GptCannotMakeStoryException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -37,15 +39,24 @@ public class PerfumeStoryService {
         return responseEntity.getBody();
     }
 
+    public JSONArray makeMessageJSONArray(PerfumeStoryRequest perfumeStoryRequest) {
+        JSONArray messagesArray = new JSONArray();
+
+        JSONObject messageObject = new JSONObject();
+        messageObject.put("role", "user");
+        messageObject.put("content", perfumeStoryRequest.toPromptString());
+
+        messagesArray.add(messageObject);
+
+        return messagesArray;
+    }
+
     public ChatGptResponse askQuestionToChatGpt(PerfumeStoryRequest perfumeStoryRequest) {
         return this.getResponse(
                 this.createHttpEntity(
                         ChatGptRequest.builder()
                                 .model(ChatGptConfig.MODEL)
-                                .prompt(perfumeStoryRequest.toPromptString())
-                                .maxTokens(ChatGptConfig.MAX_TOKEN)
-                                .temperature(ChatGptConfig.TEMPERATURE)
-                                .topP(ChatGptConfig.TOP_P)
+                                .messages(makeMessageJSONArray(perfumeStoryRequest))
                                 .build()));
     }
 

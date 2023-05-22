@@ -8,6 +8,10 @@ public class StoryResponse {
 
     private String perfumeStory;
 
+    public StoryResponse() {
+
+    }
+
     @Builder
     public StoryResponse(String perfumeStory) {
         this.perfumeStory = perfumeStory;

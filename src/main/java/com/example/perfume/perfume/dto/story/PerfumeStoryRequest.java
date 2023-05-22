@@ -31,10 +31,9 @@ public class PerfumeStoryRequest implements Serializable {
     public String toPromptString() {
         return "제가 제시할 단어는 다음과 같습니다. " +
                 "사람 이름: " + name +
-                ", 향수 노트: " + scentAnswer +
+                ", 향기: " + scentAnswer +
                 ", 분위기: " + moodAnswer +
                 ", 계절: " + seasonAnswer +
-                ", 스타일: " + styleAnswer + "." +
-                "해당 5가지의 단어들을 조합하여 400byte 이내의 짧은 스토리를 만들어주세요";
+                "해당 5가지의 단어들을 조합하여 400byte 이내의 이야기를 만들어줘.";
     }
 }
