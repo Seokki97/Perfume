@@ -1,9 +1,9 @@
-package com.example.perfume.perfume.controller;
+package com.example.perfume.chatGpt.controller;
 
-import com.example.perfume.perfume.controller.docs.PerfumeStoryControllerDocs;
-import com.example.perfume.perfume.dto.story.ChatGptResponse;
-import com.example.perfume.perfume.dto.story.PerfumeStoryRequest;
-import com.example.perfume.perfume.service.PerfumeStoryService;
+import com.example.perfume.chatGpt.controller.docs.PerfumeStoryControllerDocs;
+import com.example.perfume.chatGpt.dto.gptDto.ChatGptResponse;
+import com.example.perfume.chatGpt.dto.storyDto.PerfumeStoryRequest;
+import com.example.perfume.chatGpt.service.PerfumeStoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

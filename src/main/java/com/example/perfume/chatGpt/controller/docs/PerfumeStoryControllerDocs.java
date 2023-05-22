@@ -1,7 +1,7 @@
-package com.example.perfume.perfume.controller.docs;
+package com.example.perfume.chatGpt.controller.docs;
 
-import com.example.perfume.perfume.dto.story.ChatGptResponse;
-import com.example.perfume.perfume.dto.story.PerfumeStoryRequest;
+import com.example.perfume.chatGpt.dto.gptDto.ChatGptResponse;
+import com.example.perfume.chatGpt.dto.storyDto.PerfumeStoryRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
