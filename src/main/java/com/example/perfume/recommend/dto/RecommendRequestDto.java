@@ -10,7 +10,6 @@ public class RecommendRequestDto {
     private String scentAnswer;
     private String seasonAnswer;
     private String styleAnswer;
-
     private String recommender;
     private String comment;
 
