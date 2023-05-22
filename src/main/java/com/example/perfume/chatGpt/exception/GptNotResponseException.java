@@ -1,4 +1,4 @@
-package com.example.perfume.perfume.exception;
+package com.example.perfume.chatGpt.exception;
 
 import com.example.perfume.advice.BadRequestException;
 
