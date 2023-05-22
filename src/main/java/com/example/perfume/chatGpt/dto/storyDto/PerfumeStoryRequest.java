@@ -1,4 +1,4 @@
-package com.example.perfume.perfume.dto.story;
+package com.example.perfume.chatGpt.dto.storyDto;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,13 +1,10 @@
-package com.example.perfume.perfume.dto.story;
+package com.example.perfume.chatGpt.dto.gptDto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 @Getter
 public class ChatGptRequest implements Serializable {

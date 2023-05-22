@@ -1,4 +1,4 @@
-package com.example.perfume.perfume.dto.story;
+package com.example.perfume.chatGpt.dto.gptDto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
