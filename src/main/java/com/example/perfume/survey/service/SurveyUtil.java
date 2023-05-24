@@ -18,17 +18,18 @@ public class SurveyUtil {
         return random.nextInt(moodAnswerArray.length);
     }
 
-    public SurveyRequestDto showMoodAnswer(Survey survey) {
+    public String showMoodAnswer(Survey survey) {
         String[] moodAnswerArray = survey.getMoodAnswer().split(BLANK);
         int randomMoodAnswer = getRandomMoodAnswer(moodAnswerArray);
 
         if (isMoodAnswerUnique(moodAnswerArray.length)) {
-            return SurveyRequestDto.builder().moodAnswer(survey.getMoodAnswer()).build();
+            return survey.getMoodAnswer();
         }
-        return SurveyRequestDto.builder().moodAnswer(moodAnswerArray[randomMoodAnswer]).build();
+        return moodAnswerArray[randomMoodAnswer];
     }
 
     private boolean isMoodAnswerUnique(int arrayLength) {
         return arrayLength == MOOD_COLUMN_SIZE;
     }
+
 }
