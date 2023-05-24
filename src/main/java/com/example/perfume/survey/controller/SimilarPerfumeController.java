@@ -27,4 +27,5 @@ public class SimilarPerfumeController implements SimilarPerfumeControllerDocs {
         log.info("유사한 향수 조회 Perfume Id : {}", id);
         return ResponseEntity.ok(similarPerfumeService.showSimilarPerfume(id));
     }
+
 }
