@@ -4,6 +4,9 @@ import com.example.perfume.member.domain.Member;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
+import com.example.perfume.wishlist.exception.WishListDuplicateException;
+import com.example.perfume.wishlist.exception.WishListNotFoundException;
+import com.example.perfume.wishlist.exception.WishListTooMuchException;
 import com.example.perfume.wishlist.repository.WishListRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,15 +24,10 @@ public class WishListUtil {
         this.wishListRepository = wishListRepository;
     }
 
-    public WishList addPerfumeToWishList(Member member, Perfume perfume) {
-        return WishList.builder()
-                .perfume(perfume)
-                .member(member)
-                .build();
-    }
-
-    public boolean isExistsWishList(WishListRequest wishListRequest) {
-        return wishListRepository.existsByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
+    public void validateExistsWishList(WishListRequest wishListRequest) {
+        if (wishListRepository.existsByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId())) {
+            throw new WishListNotFoundException();
+        }
     }
 
     public void saveWishPerfume(WishList wishList) {
@@ -40,20 +38,30 @@ public class WishListUtil {
         return wishListRepository.findByMemberId(memberId);
     }
 
-    public boolean isEmptyWishList(Long memberId) {
-        return wishListRepository.findByMemberId(memberId).isEmpty();
+    public void validateEmptyWishList(Long memberId) {
+        if (wishListRepository.findByMemberId(memberId).isEmpty()) {
+            throw new WishListNotFoundException();
+        }
     }
-    public boolean isEmptyRequestBody(WishListRequest wishListRequest){
+
+    public boolean isEmptyRequestBody(WishListRequest wishListRequest) {
         return wishListRequest.getMemberId() == null && wishListRequest.getPerfumeId() == null;
     }
 
-    public boolean isDuplicateWishItem(WishListRequest wishListRequest) {
-        return wishListRepository.findByMemberId(wishListRequest.getMemberId()).stream()
+    public void validateDuplicateWishItem(WishListRequest wishListRequest) {
+        boolean wishItemDuplicate = wishListRepository.findByMemberId(wishListRequest.getMemberId()).stream()
                 .anyMatch(perfume -> Objects.equals(perfume.getPerfume().getId(), wishListRequest.getPerfumeId()));
+
+        if (wishItemDuplicate) {
+            throw new WishListDuplicateException();
+        }
     }
 
-    public boolean isWishListOverMaxSize(WishListRequest wishListRequest) {
-        return wishListRepository.findByMemberId(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE;
+    public void validateWishListOverMaxSize(WishListRequest wishListRequest) {
+        boolean wishListOverSize = wishListRepository.findByMemberId(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE;
+        if (wishListOverSize) {
+            throw new WishListTooMuchException();
+        }
     }
 
     @Transactional

@@ -7,9 +7,6 @@ import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
 import com.example.perfume.wishlist.dto.WishListResponse;
-import com.example.perfume.wishlist.exception.WishListDuplicateException;
-import com.example.perfume.wishlist.exception.WishListNotFoundException;
-import com.example.perfume.wishlist.exception.WishListTooMuchException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,34 +39,28 @@ public class WishListService {
         Member member = memberService.findMemberById(wishListRequest.getMemberId());
         Perfume perfume = perfumeService.findPerfumeById(wishListRequest.getPerfumeId());
 
-        if (wishListUtil.isDuplicateWishItem(wishListRequest)) {
-            throw new WishListDuplicateException();
-        }
-        if (wishListUtil.isWishListOverMaxSize(wishListRequest)) {
-            throw new WishListTooMuchException();
-        }
-        WishList wishList = wishListUtil.addPerfumeToWishList(member, perfume);
+        wishListUtil.validateDuplicateWishItem(wishListRequest);
+
+        wishListUtil.validateWishListOverMaxSize(wishListRequest);
+
+        WishList wishList = WishList.addPerfumeToWishList(member, perfume);
         wishListUtil.saveWishPerfume(wishList);
 
         return WishListResponse.provideWishResponseEntity(wishList);
     }
 
     public void deleteAllWishList(Long memberId) {
-        if (wishListUtil.isEmptyWishList(memberId)) {
-            throw new WishListNotFoundException();
-        }
+        wishListUtil.validateEmptyWishList(memberId);
+
         wishListUtil.deleteAllWishedList(memberId);
     }
 
     public void deleteSelectedWishList(WishListRequest wishListRequest) {
         wishListUtil.isEmptyRequestBody(wishListRequest);
 
-        if (wishListUtil.isEmptyWishList(wishListRequest.getMemberId())) {
-            throw new WishListNotFoundException();
-        }
-        if (!wishListUtil.isExistsWishList(wishListRequest)) {
-            throw new WishListNotFoundException();
-        }
+        wishListUtil.validateEmptyWishList(wishListRequest.getMemberId());
+        wishListUtil.validateExistsWishList(wishListRequest);
+
         wishListUtil.deleteSelectedWishElement(wishListRequest);
     }
 
