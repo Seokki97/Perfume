@@ -42,7 +42,7 @@ public class FeatureService {
         surveyUtil.showMoodAnswer(surveyService.findSurveyById(id));
 
         Survey survey = Survey.builder()
-                .moodAnswer(surveyUtil.showMoodAnswer(surveyId).getMoodAnswer())
+                .moodAnswer(surveyUtil.showMoodAnswer(surveyId))
                 .build();
         return MoodType.getMessage(survey);
     }
