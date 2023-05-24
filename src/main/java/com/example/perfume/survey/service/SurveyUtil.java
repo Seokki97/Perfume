@@ -29,9 +29,6 @@ public class SurveyUtil {
     }
 
     private boolean isMoodAnswerUnique(int arrayLength) {
-        if (arrayLength == MOOD_COLUMN_SIZE) {
-            return true;
-        }
-        return false;
+        return arrayLength == MOOD_COLUMN_SIZE;
     }
 }

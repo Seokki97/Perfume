@@ -59,7 +59,10 @@ public class WishListController implements WishListControllerDocs {
     }
 
     @PostMapping("/make-mok-data/{id}")
-    public ResponseEntity<WishListResponse> makeMokData(@PathVariable("id") Long perfumeId){
-        return ResponseEntity.ok().body(wishListService.makeMokData(perfumeId));
+    public ResponseEntity<Void> makeMokData(@PathVariable("id") Long perfumeId){
+        for(int i = 0; i< 27; i++){
+            wishListService.makeMokData(perfumeId);
+        }
+        return ResponseEntity.noContent().build();
     }
 }
