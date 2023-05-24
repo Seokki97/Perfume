@@ -39,24 +39,12 @@ public class PerfumeStoryService {
         return responseEntity.getBody();
     }
 
-    public JSONArray makeMessageJSONArray(PerfumeStoryRequest perfumeStoryRequest) {
-        JSONArray messagesArray = new JSONArray();
-
-        JSONObject messageObject = new JSONObject();
-        messageObject.put("role", "user");
-        messageObject.put("content", perfumeStoryRequest.toPromptString());
-
-        messagesArray.add(messageObject);
-
-        return messagesArray;
-    }
-
     public ChatGptResponse askQuestionToChatGpt(PerfumeStoryRequest perfumeStoryRequest) {
         return this.getResponse(
                 this.createHttpEntity(
                         ChatGptRequest.builder()
                                 .model(ChatGptConfig.MODEL)
-                                .messages(makeMessageJSONArray(perfumeStoryRequest))
+                                .messages(GptMessageGenerator.makeMessageJSONArray(perfumeStoryRequest))
                                 .build()));
     }
 
