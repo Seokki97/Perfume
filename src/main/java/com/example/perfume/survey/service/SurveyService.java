@@ -15,8 +15,11 @@ import java.util.stream.Collectors;
 public class SurveyService {
     private final SurveyRepository surveyRepository;
 
-    public SurveyService(SurveyRepository surveyRepository) {
+    private final SurveyUtil surveyUtil;
+
+    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil) {
         this.surveyRepository = surveyRepository;
+        this.surveyUtil = surveyUtil;
     }
 
     public Survey findSurveyById(Long id) {
@@ -56,8 +59,9 @@ public class SurveyService {
     }
 
     public List<Perfume> showSimilarPerfumeList(Survey survey) {
+
         List<Survey> findSimilarData = surveyRepository.findSurveysByGenderScentAndMood
-                (survey.getGenderAnswer(), survey.getScentAnswer(), survey.getMoodAnswer());
+                (survey.getGenderAnswer(), survey.getScentAnswer(), surveyUtil.showMoodAnswer(survey));
 
         return convertToPerfumeData(findSimilarData);
     }
