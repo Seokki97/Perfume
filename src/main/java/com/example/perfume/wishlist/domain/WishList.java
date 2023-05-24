@@ -30,4 +30,12 @@ public class WishList {
         this.member = member;
         this.perfume = perfume;
     }
+
+    public static WishList addPerfumeToWishList(Member member, Perfume perfume) {
+        return WishList.builder()
+                .perfume(perfume)
+                .member(member)
+                .build();
+    }
+
 }
