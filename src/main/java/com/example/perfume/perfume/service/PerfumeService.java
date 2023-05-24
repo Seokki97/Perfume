@@ -1,8 +1,8 @@
 package com.example.perfume.perfume.service;
 
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.perfumeDto.PerfumeRequestDto;
-import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
+import com.example.perfume.perfume.dto.PerfumeRequestDto;
+import com.example.perfume.perfume.dto.PerfumeResponseDto;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;

@@ -1,11 +1,11 @@
-package com.example.perfume.perfume.dto.perfumeDto;
+package com.example.perfume.perfume.dto;
+
 
 import com.example.perfume.perfume.domain.Perfume;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Getter
-public class PerfumeResponseDto {
+public class PerfumeRequestDto {
 
     private Long id;
     private String perfumeName;
@@ -13,23 +13,18 @@ public class PerfumeResponseDto {
     private String perfumeFeature;
     private String perfumeImageUrl;
 
-    private String maintenance;
-
-
-    public PerfumeResponseDto() {
+    public PerfumeRequestDto() {
 
     }
 
     @Builder
-    public PerfumeResponseDto(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl, String maintenance) {
+    public PerfumeRequestDto(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
         this.id = id;
         this.perfumeName = perfumeName;
         this.brandName = brandName;
         this.perfumeFeature = perfumeFeature;
         this.perfumeImageUrl = perfumeImageUrl;
-        this.maintenance = maintenance;
     }
-
 
     public Perfume toEntity() {
         return Perfume.builder()
@@ -38,7 +33,6 @@ public class PerfumeResponseDto {
                 .brandName(brandName)
                 .perfumeFeature(perfumeFeature)
                 .perfumeImageUrl(perfumeImageUrl)
-                .maintenance(maintenance)
                 .build();
     }
 }

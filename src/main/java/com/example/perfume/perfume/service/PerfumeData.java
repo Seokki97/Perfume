@@ -3,7 +3,7 @@ package com.example.perfume.perfume.service;
 import com.example.perfume.crawling.domain.perfume.PerfumeList;
 import com.example.perfume.crawling.service.PerfumeCSVFileLoading;
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.dto.perfumeDto.PerfumeResponseDto;
+import com.example.perfume.perfume.dto.PerfumeResponseDto;
 import com.example.perfume.perfume.repository.PerfumeRepository;
 import org.springframework.stereotype.Service;
 
