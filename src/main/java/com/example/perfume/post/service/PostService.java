@@ -39,7 +39,7 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public boolean isPostExist() {
+    private boolean isPostExist() {
         if (postRepository.count() == 0) {
             return false;
         }

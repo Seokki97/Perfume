@@ -35,7 +35,7 @@ public class SurveyService {
                 .map(data -> data.getPerfume()).collect(Collectors.toList());
     }
 
-    public List<Survey> filterSurveyResultByQuestion(SurveyRequestDto surveyRequestDto) {
+    private List<Survey> filterSurveyResultByQuestion(SurveyRequestDto surveyRequestDto) {
         if (isNotSelectedSeasonAnswer(surveyRequestDto)) {
             return surveyRepository.findSurveysByGenderScentMoodAndStyle(
                     surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(),
@@ -66,11 +66,11 @@ public class SurveyService {
         return convertToPerfumeData(findSimilarData);
     }
 
-    public boolean isEmptyRecommendedPerfumeList(List<Survey> surveyList) {
+    private boolean isEmptyRecommendedPerfumeList(List<Survey> surveyList) {
         return convertToPerfumeData(surveyList).isEmpty();
     }
 
-    public boolean isNotSelectedSeasonAnswer(SurveyRequestDto surveyRequestDto) {
+    private boolean isNotSelectedSeasonAnswer(SurveyRequestDto surveyRequestDto) {
         return surveyRequestDto.getSeasonAnswer().equals(SurveyType.NOT_SELECT_SEASON.getValue());
     }
 }

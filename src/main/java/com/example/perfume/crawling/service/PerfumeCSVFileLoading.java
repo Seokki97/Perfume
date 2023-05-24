@@ -15,8 +15,8 @@ import java.util.List;
 public class PerfumeCSVFileLoading extends CSVFileLoading {
 
     private static final int COLUMN_LENGTH = 5;
-    public final String FILE_PATH = "/C:/Users/wnstj/gradu/PerfumeData.csv";
-    //public final String FILE_PATH = "/home/ubuntu/data/PerfumeData.csv";
+    //public static final String FILE_PATH = "/C:/Users/wnstj/gradu/PerfumeData.csv";
+    public static final String FILE_PATH = "/home/ubuntu/data/PerfumeData.csv";
     private List<String> perfumeListTest;
     private BufferedReader bufferedReader;
 
@@ -25,7 +25,7 @@ public class PerfumeCSVFileLoading extends CSVFileLoading {
         this.perfumeListTest = perfumeListTest;
     }
 
-    public List<String> splitPerfumeData() throws IOException {
+    private List<String> splitPerfumeData() throws IOException {
         String perfumeData;
         while ((perfumeData = bufferedReader.readLine()) != null) {
             makeList(splitData(perfumeData), perfumeListTest);

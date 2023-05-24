@@ -13,7 +13,7 @@ public class SurveyUtil {
 
     private static final int MOOD_COLUMN_SIZE = 1;
 
-    public int getRandomMoodAnswer(String[] moodAnswerArray) {
+    private int getRandomMoodAnswer(String[] moodAnswerArray) {
         Random random = new Random();
         return random.nextInt(moodAnswerArray.length);
     }

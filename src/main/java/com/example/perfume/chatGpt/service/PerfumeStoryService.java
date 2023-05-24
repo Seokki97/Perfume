@@ -21,14 +21,14 @@ public class PerfumeStoryService {
     private String API_KEY;
     private static RestTemplate restTemplate = new RestTemplate();
 
-    public HttpEntity<ChatGptRequest> createHttpEntity(ChatGptRequest chatGptRequest) {
+    private HttpEntity<ChatGptRequest> createHttpEntity(ChatGptRequest chatGptRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(ChatGptConfig.MEDIA_TYPE));
         headers.add(ChatGptConfig.AUTHORIZATION, ChatGptConfig.BEARER + API_KEY);
         return new HttpEntity<>(chatGptRequest, headers);
     }
 
-    public ChatGptResponse getResponse(HttpEntity<ChatGptRequest> chatGptRequest) {
+    private ChatGptResponse getResponse(HttpEntity<ChatGptRequest> chatGptRequest) {
         ResponseEntity<ChatGptResponse> responseEntity = restTemplate.postForEntity(
                 ChatGptConfig.URL,
                 chatGptRequest,
@@ -48,7 +48,7 @@ public class PerfumeStoryService {
                                 .build()));
     }
 
-    public boolean isGptCannotResponse(HttpEntity<ChatGptResponse> chatGptResponseEntity) {
+    private boolean isGptCannotResponse(HttpEntity<ChatGptResponse> chatGptResponseEntity) {
         if (chatGptResponseEntity.getBody().getChoices().isEmpty() || chatGptResponseEntity.getBody().getChoices() == null) {
             return true;
         }

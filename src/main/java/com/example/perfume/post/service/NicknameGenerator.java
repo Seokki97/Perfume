@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class NicknameGenerator {
 
-    public static int generateRandomAdjectiveNumber(Nickname nickname) {
+    private static int generateRandomAdjectiveNumber(Nickname nickname) {
         return RecommendUtils.createRandomNumber(nickname.getAdjectiveNickname());
     }
 
-    public static int generateRandomNounNumber(Nickname nickname) {
+    private static int generateRandomNounNumber(Nickname nickname) {
         return RecommendUtils.createRandomNumber(nickname.getNounNickname());
     }
 

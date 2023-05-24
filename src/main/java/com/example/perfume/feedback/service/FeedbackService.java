@@ -14,11 +14,11 @@ import java.util.List;
 @Service
 public class FeedbackService {
 
-    private final FeedbackRepository feedbackRepository;
-
-    private static final String filePath = "C:/Users/wnstj/perfume/feedback.txt";
-    //private static final String filePath = "/home/ubuntu/data/feedback.txt";
+    //private static final String filePath = "C:/Users/wnstj/perfume/feedback.txt";
+    private static final String filePath = "/home/ubuntu/data/feedback.txt";
     private final BufferedWriter bufferedWriter;
+
+    private final FeedbackRepository feedbackRepository;
 
     public FeedbackService(FeedbackRepository feedbackRepository) throws IOException {
         this.feedbackRepository = feedbackRepository;
@@ -40,12 +40,9 @@ public class FeedbackService {
             bufferedWriter.newLine();
         }
         bufferedWriter.flush();
-        bufferClose();
-    }
-
-    public void bufferClose() throws IOException {
         bufferedWriter.close();
     }
+
 }
 
 
