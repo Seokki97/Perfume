@@ -1,9 +1,8 @@
 package com.example.perfume.crawling.service;
 
-import com.example.perfume.crawling.domain.perfume.PerfumeList;
+
 import com.example.perfume.crawling.domain.survey.SurveyList;
 import com.example.perfume.crawling.domain.survey.SurveyType;
-import com.example.perfume.survey.domain.ScentType;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 

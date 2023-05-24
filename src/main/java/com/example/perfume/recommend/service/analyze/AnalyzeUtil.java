@@ -23,6 +23,7 @@ public class AnalyzeUtil {
         Long maxCount = 0L;
         String elementName = "";
         int perfumeNameListSize = elementList.size();
+
         for (int i = 0; i < perfumeNameListSize; i++) {
             Long count = countElement(elementList, i);
             if (count > maxCount) {

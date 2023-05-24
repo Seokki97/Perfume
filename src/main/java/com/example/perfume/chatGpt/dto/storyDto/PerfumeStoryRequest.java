@@ -34,6 +34,6 @@ public class PerfumeStoryRequest implements Serializable {
                 ", 향기: " + scentAnswer +
                 ", 분위기: " + moodAnswer +
                 ", 계절: " + seasonAnswer +
-                "해당 5가지의 단어들을 조합하여 400byte 이내의 이야기를 만들어줘.";
+                "해당 5가지의 단어들을 조합하여 5문장 분량의 이야기를 만들어줘. 문장 번호는 붙이지 말고, '\n'도 절대 나오면 안돼";
     }
 }
