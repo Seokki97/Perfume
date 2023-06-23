@@ -38,30 +38,23 @@ public class WishListUtil {
         return wishListRepository.findByMemberId(memberId);
     }
 
-    public void validateEmptyWishList(Long memberId) {
-        if (wishListRepository.findByMemberId(memberId).isEmpty()) {
-            throw new WishListNotFoundException();
-        }
+    public boolean isEmptyWishList(Long memberId) {
+        return wishListRepository.findByMemberId(memberId).isEmpty();
     }
 
     public boolean isEmptyRequestBody(WishListRequest wishListRequest) {
         return wishListRequest.getMemberId() == null && wishListRequest.getPerfumeId() == null;
     }
 
-    public void validateDuplicateWishItem(WishListRequest wishListRequest) {
-        boolean wishItemDuplicate = wishListRepository.findByMemberId(wishListRequest.getMemberId()).stream()
+    public boolean isDuplicateWishItem(WishListRequest wishListRequest) {
+        return wishListRepository.findByMemberId(wishListRequest.getMemberId()).stream()
                 .anyMatch(perfume -> Objects.equals(perfume.getPerfume().getId(), wishListRequest.getPerfumeId()));
 
-        if (wishItemDuplicate) {
-            throw new WishListDuplicateException();
-        }
     }
 
-    public void validateWishListOverMaxSize(WishListRequest wishListRequest) {
-        boolean wishListOverSize = wishListRepository.findByMemberId(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE;
-        if (wishListOverSize) {
-            throw new WishListTooMuchException();
-        }
+    public boolean isWishListOverMaxSize(WishListRequest wishListRequest) {
+        return wishListRepository.findByMemberId(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE;
+
     }
 
     @Transactional

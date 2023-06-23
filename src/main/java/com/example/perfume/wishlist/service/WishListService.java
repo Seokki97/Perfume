@@ -7,6 +7,9 @@ import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
 import com.example.perfume.wishlist.dto.WishListResponse;
+import com.example.perfume.wishlist.exception.WishListDuplicateException;
+import com.example.perfume.wishlist.exception.WishListNotFoundException;
+import com.example.perfume.wishlist.exception.WishListTooMuchException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,9 +42,13 @@ public class WishListService {
         Member member = memberService.findMemberById(wishListRequest.getMemberId());
         Perfume perfume = perfumeService.findPerfumeById(wishListRequest.getPerfumeId());
 
-        wishListUtil.validateDuplicateWishItem(wishListRequest);
+        if (wishListUtil.isDuplicateWishItem(wishListRequest)) {
+            throw new WishListDuplicateException();
+        }
 
-        wishListUtil.validateWishListOverMaxSize(wishListRequest);
+        if (wishListUtil.isWishListOverMaxSize(wishListRequest)) {
+            throw new WishListTooMuchException();
+        }
 
         WishList wishList = WishList.addPerfumeToWishList(member, perfume);
         wishListUtil.saveWishPerfume(wishList);
@@ -50,17 +57,21 @@ public class WishListService {
     }
 
     public void deleteAllWishList(Long memberId) {
-        wishListUtil.validateEmptyWishList(memberId);
-
+        if (wishListUtil.isEmptyWishList(memberId)) {
+            throw new WishListNotFoundException();
+        }
         wishListUtil.deleteAllWishedList(memberId);
     }
 
     public void deleteSelectedWishList(WishListRequest wishListRequest) {
         wishListUtil.isEmptyRequestBody(wishListRequest);
 
-        wishListUtil.validateEmptyWishList(wishListRequest.getMemberId());
-        wishListUtil.validateExistsWishList(wishListRequest);
-
+        if (wishListUtil.isEmptyWishList(wishListRequest.getMemberId())) {
+            throw new WishListNotFoundException();
+        }
+        if (wishListUtil.isEmptyWishList(wishListRequest.getMemberId())) {
+            throw new WishListDuplicateException();
+        }
         wishListUtil.deleteSelectedWishElement(wishListRequest);
     }
 
