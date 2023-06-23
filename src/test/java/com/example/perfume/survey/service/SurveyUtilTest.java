@@ -1,34 +1,33 @@
 package com.example.perfume.survey.service;
 
-import com.example.perfume.crawling.domain.survey.SurveyList;
 import com.example.perfume.survey.domain.Survey;
-import com.example.perfume.survey.dto.surveyDto.SurveyResponseDto;
-import com.example.perfume.survey.exception.SurveyNotFoundException;
-import com.example.perfume.survey.repository.SurveyRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class SurveyUtilTest {
 
-    @Autowired
-    private SurveyUtil surveyUtil;
-    @Autowired
-    private SurveyService surveyService;
+    private final SurveyUtil surveyUtil = mock(SurveyUtil.class);
 
-    @Autowired
-    private SurveyRepository surveyRepository;
+    @DisplayName("무드에 대한 답변을 랜덤으로 선택한다.")
+    @Test
+    void getRandomMoodAnswer() {
+        Survey survey = mock(Survey.class);
+        String moodAnswer = "달콤한";
+        when(surveyUtil.showMoodAnswer(survey)).thenReturn(moodAnswer);
 
+        String actualCaseOne = "달콤한";
+        String actualCaseTwo = "상큼한";
+        assertThat(surveyUtil.showMoodAnswer(survey))
+                .satisfiesAnyOf(
+                        result -> assertThat(result).isEqualTo(actualCaseOne),
+                        result -> assertThat(result).isEqualTo(actualCaseTwo)
+                );
+    }
 }
