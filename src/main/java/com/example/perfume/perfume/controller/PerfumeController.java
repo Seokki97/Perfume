@@ -31,7 +31,7 @@ public class PerfumeController implements PerfumeControllerDocs {
     @PostMapping("/find-by-name")
     public ResponseEntity<List<Perfume>> findByPerfumeName(@RequestBody final PerfumeRequestDto perfumeRequestDto) {
         log.info("향수 이름: {} 의 향수 조회", perfumeRequestDto.getPerfumeName());
-        return ResponseEntity.ok(perfumeService.findPerfumeByName(perfumeRequestDto));
+        return ResponseEntity.ok(perfumeService.findPerfumeListByName(perfumeRequestDto));
     }
 
     @PostMapping("/find-by-brand")

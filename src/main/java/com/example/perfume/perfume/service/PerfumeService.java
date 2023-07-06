@@ -19,7 +19,7 @@ public class PerfumeService {
         this.perfumeRepository = perfumeRepository;
     }
 
-    public List<Perfume> findPerfumeByName(PerfumeRequestDto perfumeRequestDto) {
+    public List<Perfume> findPerfumeListByName(PerfumeRequestDto perfumeRequestDto) {
         List<Perfume> perfume = perfumeRepository.findByPerfumeNameContaining(perfumeRequestDto.getPerfumeName());
         validatePerfumeListEmpty(perfume);
         return perfume;
@@ -33,6 +33,10 @@ public class PerfumeService {
 
     public Perfume findPerfumeById(Long id) {
         return perfumeRepository.findById(id).orElseThrow(PerfumeNotFoundException::new);
+    }
+
+    public Perfume findPerfumeByName(String perfumeName) {
+        return perfumeRepository.findByPerfumeName(perfumeName).orElseThrow(PerfumeNotFoundException::new);
     }
 
     public List<Perfume> showAllPerfumeData() {

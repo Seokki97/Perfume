@@ -47,7 +47,7 @@ public class PerfumeServiceTest {
                 .brandName("에르메스")
                 .perfumeImageUrl("//perfumegraphy.com/web/product/medium/202207/8f734a2482a65006e53da3a75a64e0a0.jpg")
                 .build();
-        List<Perfume> expectedList = perfumeService.findPerfumeByName(perfumeRequestDto);
+        List<Perfume> expectedList = perfumeService.findPerfumeListByName(perfumeRequestDto);
         Perfume expected = expectedList.get(0);
         PerfumeRequestDto exception = PerfumeRequestDto.builder()
                 .perfumeName("예외발생")
@@ -56,7 +56,7 @@ public class PerfumeServiceTest {
                 () -> assertThat(actual).usingRecursiveComparison()
                         .ignoringFields("id")
                         .isEqualTo(expected),
-                () -> assertThatThrownBy(() -> perfumeService.findPerfumeByName(exception))
+                () -> assertThatThrownBy(() -> perfumeService.findPerfumeListByName(exception))
                         .isInstanceOf(PerfumeNotFoundException.class).hasMessage("해당 향수를 찾을 수 없습니다.")
         );
     }
