@@ -20,4 +20,6 @@ public interface PerfumeRepository extends JpaRepository<Perfume, Long> {
 
     List<Perfume> findAll();
 
+
+
 }
