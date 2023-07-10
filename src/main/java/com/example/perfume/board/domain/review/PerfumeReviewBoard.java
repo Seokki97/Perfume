@@ -53,4 +53,9 @@ public class PerfumeReviewBoard {
         this.perfumeImageUrl = perfumeImageUrl;
     }
 
+    public void updatePost(String title, Content content){
+        this.title = title;
+        this.content = content;
+    }
+
 }
