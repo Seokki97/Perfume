@@ -53,6 +53,7 @@ public class ReviewBoardService {
         perfumeReviewBoard.updatePost(postUpdateRequest.getTitle(), postUpdateRequest.getContent());
 
         return ReviewBoardResponse.builder()
+                .boardId(perfumeReviewBoard.getBoardId())
                 .title(postUpdateRequest.getTitle())
                 .content(postUpdateRequest.getContent())
                 .build();

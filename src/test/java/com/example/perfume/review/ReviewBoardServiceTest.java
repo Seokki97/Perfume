@@ -6,6 +6,7 @@ import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.review.domain.Content;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
+import com.example.perfume.review.dto.requestDto.PostUpdateRequest;
 import com.example.perfume.review.dto.requestDto.ReviewBoardRequest;
 import com.example.perfume.review.dto.responseDto.ReviewBoardResponse;
 import com.example.perfume.review.repository.ReviewBoardRepository;
@@ -30,15 +31,14 @@ public class ReviewBoardServiceTest {
     @InjectMocks
     private ReviewBoardService reviewBoardService;
 
-
     @Mock
     private ReviewBoardRepository reviewBoardRepository;
 
     @Mock
-    private MemberService memberService = mock(MemberService.class);
+    private MemberService memberService;
 
     @Mock
-    private PerfumeService perfumeService = mock(PerfumeService.class);
+    private PerfumeService perfumeService;
 
 
     @DisplayName("향수 리뷰를 작성한다")
@@ -79,4 +79,35 @@ public class ReviewBoardServiceTest {
         Assertions.assertEquals(mockBoard.getBoardId(), result.getBoardId());
 
     }
+
+    @DisplayName("게시글 수정하면 수정된 내용이 반영된다.")
+    @Test
+    void updatePost() {
+        Long boardId = 1L;
+
+        Content resultContent = new Content("변경", "변경");
+
+        PostUpdateRequest postUpdateRequest = PostUpdateRequest.builder()
+                .boardId(boardId)
+                .title("변경")
+                .content(resultContent)
+                .build();
+
+        PerfumeReviewBoard mockBoard = PerfumeReviewBoard.builder()
+                .title("변경")
+                .content(resultContent)
+                .boardId(1L)
+                .build();
+
+        when(reviewBoardRepository.findByBoardId(boardId)).thenReturn(Optional.of(mockBoard));
+
+        ReviewBoardResponse result = reviewBoardService.modifyReview(postUpdateRequest);
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(result.getBoardId(), postUpdateRequest.getBoardId()),
+                () -> Assertions.assertEquals(result.getTitle(), postUpdateRequest.getTitle()),
+                () -> Assertions.assertEquals(result.getContent(), postUpdateRequest.getContent())
+        );
+    }
+
 }

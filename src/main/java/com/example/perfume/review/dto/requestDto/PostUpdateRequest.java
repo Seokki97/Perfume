@@ -22,4 +22,7 @@ public class PostUpdateRequest {
         this.content = content;
         this.memberId = memberId;
     }
+
+    public PostUpdateRequest() {
+    }
 }
