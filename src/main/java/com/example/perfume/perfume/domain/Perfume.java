@@ -27,7 +27,7 @@ public class Perfume {
     private String perfumeFeature;
 
     @NotNull
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 500)
     private String perfumeImageUrl;
 
     @NotNull
