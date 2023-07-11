@@ -1,11 +1,10 @@
-package com.example.perfume.board.domain;
+package com.example.perfume.review.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
-import java.awt.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

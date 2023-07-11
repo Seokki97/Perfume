@@ -1,4 +1,4 @@
-package com.example.perfume.board.domain.recommend;
+package com.example.perfume.review.domain.recommend;
 
 import lombok.AccessLevel;
 import lombok.Getter;

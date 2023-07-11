@@ -1,11 +1,11 @@
-package com.example.perfume.board.controller;
+package com.example.perfume.review.controller;
 
-import com.example.perfume.board.domain.review.PerfumeReviewBoard;
-import com.example.perfume.board.dto.requestDto.PostDeleteRequest;
-import com.example.perfume.board.dto.requestDto.PostUpdateRequest;
-import com.example.perfume.board.dto.requestDto.ReviewBoardRequest;
-import com.example.perfume.board.dto.responseDto.ReviewBoardResponse;
-import com.example.perfume.board.service.ReviewBoardService;
+import com.example.perfume.review.domain.review.PerfumeReviewBoard;
+import com.example.perfume.review.dto.requestDto.PostDeleteRequest;
+import com.example.perfume.review.dto.requestDto.PostUpdateRequest;
+import com.example.perfume.review.dto.requestDto.ReviewBoardRequest;
+import com.example.perfume.review.dto.responseDto.ReviewBoardResponse;
+import com.example.perfume.review.service.ReviewBoardService;
 import com.example.perfume.member.service.jwt.LoginCheck;
 
 import org.springframework.http.ResponseEntity;

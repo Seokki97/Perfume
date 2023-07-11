@@ -1,6 +1,6 @@
 package com.example.perfume.exception;
 
-import com.example.perfume.board.exception.ReviewPostNotFoundException;
+import com.example.perfume.review.exception.ReviewPostNotFoundException;
 import com.example.perfume.member.exception.*;
 import com.example.perfume.recommend.exception.RecommendNotFoundException;
 import com.example.perfume.oauth.exception.EmailNotFoundException;

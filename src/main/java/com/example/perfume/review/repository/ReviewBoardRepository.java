@@ -1,7 +1,6 @@
-package com.example.perfume.board.repository;
+package com.example.perfume.review.repository;
 
-import com.example.perfume.board.domain.review.PerfumeReviewBoard;
-import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

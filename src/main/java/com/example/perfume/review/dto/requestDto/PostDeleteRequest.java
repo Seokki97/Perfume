@@ -1,4 +1,4 @@
-package com.example.perfume.board.dto.requestDto;
+package com.example.perfume.review.dto.requestDto;
 
 import lombok.Getter;
 

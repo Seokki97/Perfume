@@ -1,6 +1,6 @@
-package com.example.perfume.board.dto.requestDto;
+package com.example.perfume.review.dto.requestDto;
 
-import com.example.perfume.board.domain.Content;
+import com.example.perfume.review.domain.Content;
 import lombok.Builder;
 import lombok.Getter;
 

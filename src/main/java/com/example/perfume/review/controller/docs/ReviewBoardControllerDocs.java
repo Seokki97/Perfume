@@ -1,11 +1,10 @@
-package com.example.perfume.board.controller.docs;
+package com.example.perfume.review.controller.docs;
 
-import com.example.perfume.board.domain.review.PerfumeReviewBoard;
-import com.example.perfume.board.dto.requestDto.PostDeleteRequest;
-import com.example.perfume.board.dto.requestDto.PostUpdateRequest;
-import com.example.perfume.board.dto.requestDto.ReviewBoardRequest;
-import com.example.perfume.board.dto.responseDto.ReviewBoardResponse;
-import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.review.domain.review.PerfumeReviewBoard;
+import com.example.perfume.review.dto.requestDto.PostDeleteRequest;
+import com.example.perfume.review.dto.requestDto.PostUpdateRequest;
+import com.example.perfume.review.dto.requestDto.ReviewBoardRequest;
+import com.example.perfume.review.dto.responseDto.ReviewBoardResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;

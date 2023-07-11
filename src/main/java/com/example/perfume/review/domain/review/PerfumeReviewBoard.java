@@ -1,8 +1,7 @@
-package com.example.perfume.board.domain.review;
+package com.example.perfume.review.domain.review;
 
-import com.example.perfume.board.domain.Content;
+import com.example.perfume.review.domain.Content;
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.perfume.domain.Perfume;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +12,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

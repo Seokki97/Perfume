@@ -1,4 +1,4 @@
-package com.example.perfume.board.exception;
+package com.example.perfume.review.exception;
 
 import com.example.perfume.advice.BadRequestException;
 
