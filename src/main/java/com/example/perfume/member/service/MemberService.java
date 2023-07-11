@@ -36,7 +36,7 @@ public class MemberService {
     }
 
     public Member findByMemberPk(Long memberId) {
-        return memberRepository.findByMemberId(memberId).orElseThrow(UserNotFoundException::new);
+        return memberRepository.findById(memberId).orElseThrow(UserNotFoundException::new);
     }
 
     public boolean isAlreadyExistMember(MemberRequestDto memberRequestDto) {
