@@ -13,7 +13,7 @@ public interface ReviewBoardRepository extends JpaRepository<PerfumeReviewBoard,
 
     Optional<PerfumeReviewBoard> findByBoardId(Long boardId);
 
-    Optional<PerfumeReviewBoard> deleteByBoardId(Long boardId);
+    void deleteByBoardId(Long boardId);
 
     List<PerfumeReviewBoard> findByTitleContainingOrContentContaining(String title, String content);
 
