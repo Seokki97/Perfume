@@ -133,4 +133,20 @@ public class ReviewBoardServiceTest {
 
     }
 
+    @DisplayName("게시글을 단일 조회한다.")
+    @Test
+    void showOnePost() {
+        Long boardId = 1L;
+
+        PerfumeReviewBoard mockBoard = PerfumeReviewBoard.builder()
+                .boardId(boardId)
+                .build();
+
+        when(reviewBoardRepository.findByBoardId(boardId)).thenReturn(Optional.of(mockBoard));
+
+        ReviewBoardResponse result = reviewBoardService.showPost(boardId);
+
+        Assertions.assertEquals(boardId, result.getBoardId());
+    }
+
 }
