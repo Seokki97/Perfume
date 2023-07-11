@@ -16,8 +16,8 @@ public class SurveyCSVFileLoading extends CSVFileLoading {
 
     private List<String> surveyListTest;
 
-    public static final String FILE_PATH = "/home/ubuntu/data/SurveyData.csv";
-    //public static final String FILE_PATH = "/C:/Users/wnstj/gradu/SurveyData.csv";
+    //public static final String FILE_PATH = "/home/ubuntu/data/SurveyData.csv";
+    public static final String FILE_PATH = "/C:/Users/wnstj/gradu/SurveyData.csv";
     private static final int COLUMN_LENGTH = 5;
 
     private final BufferedReader bufferedReader;

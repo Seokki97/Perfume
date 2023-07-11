@@ -14,8 +14,8 @@ import java.util.List;
 @Service
 public class FeedbackService {
 
-    //private static final String filePath = "C:/Users/wnstj/perfume/feedback.txt";
-    private static final String filePath = "/home/ubuntu/data/feedback.txt";
+    private static final String filePath = "C:/Users/wnstj/perfume/feedback.txt";
+    //private static final String filePath = "/home/ubuntu/data/feedback.txt";
     private final BufferedWriter bufferedWriter;
 
     private final FeedbackRepository feedbackRepository;
