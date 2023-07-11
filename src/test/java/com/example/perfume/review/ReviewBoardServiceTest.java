@@ -6,6 +6,7 @@ import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.review.domain.Content;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
+import com.example.perfume.review.dto.requestDto.PostDeleteRequest;
 import com.example.perfume.review.dto.requestDto.PostUpdateRequest;
 import com.example.perfume.review.dto.requestDto.ReviewBoardRequest;
 import com.example.perfume.review.dto.responseDto.ReviewBoardResponse;
@@ -22,8 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ReviewBoardServiceTest {
@@ -108,6 +108,29 @@ public class ReviewBoardServiceTest {
                 () -> Assertions.assertEquals(result.getTitle(), postUpdateRequest.getTitle()),
                 () -> Assertions.assertEquals(result.getContent(), postUpdateRequest.getContent())
         );
+    }
+
+    @DisplayName("리뷰를 삭제한다.")
+    @Test
+    void deleteReview() {
+        Long memberId = 1L;
+        Long boardId = 1L;
+
+        PostDeleteRequest postDeleteRequest = new PostDeleteRequest(1L, 1L);
+
+        Member mockMember = Member.builder()
+                .memberId(memberId)
+                .build();
+
+        PerfumeReviewBoard mockReviewBoard = PerfumeReviewBoard.builder()
+                .boardId(boardId)
+                .build();
+
+        when(memberService.findByMemberPk(memberId)).thenReturn(mockMember);
+        doNothing().when(reviewBoardRepository).deleteByBoardId(mockReviewBoard.getBoardId());
+
+        Assertions.assertDoesNotThrow(() -> reviewBoardService.deleteReviewPost(postDeleteRequest));
+
     }
 
 }
