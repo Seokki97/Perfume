@@ -35,7 +35,7 @@ public class ReviewBoardService {
     //리뷰 작성 // 3번사용자 -> 리뷰
     public ReviewBoardResponse writeReview(Long memberId, ReviewBoardRequest boardRequest) {
         Perfume perfume = perfumeService.findPerfumeByName(boardRequest.getPerfumeName());
-        Member member = memberService.findMemberById(memberId);
+        Member member = memberService.findByMemberPk(memberId);
         PerfumeReviewBoard perfumeReviewBoard = boardRequest.toEntity(member, boardRequest.getContent(), perfume);
 
         PerfumeReviewBoard savedBoard = reviewBoardRepository.save(perfumeReviewBoard);
