@@ -10,6 +10,7 @@ import com.example.perfume.member.service.MemberService;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.service.PerfumeService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReviewBoardService {
@@ -40,6 +41,7 @@ public class ReviewBoardService {
     }
 
     //게시글 수정
+    @Transactional
     public ReviewBoardResponse modifyReview(PostUpdateRequest postUpdateRequest) {
 
         PerfumeReviewBoard perfumeReviewBoard = boardService.findBoardById(postUpdateRequest.getBoardId());

@@ -1,7 +1,6 @@
 package com.example.perfume.exception;
 
-import com.example.perfume.advice.BadRequestException;
-import com.example.perfume.member.domain.Member;
+import com.example.perfume.board.exception.ReviewPostNotFoundException;
 import com.example.perfume.member.exception.*;
 import com.example.perfume.recommend.exception.RecommendNotFoundException;
 import com.example.perfume.oauth.exception.EmailNotFoundException;
@@ -121,12 +120,16 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<?> handleRequestBodyNullPointException(RequestBodyNullPointException e){
+    public ResponseEntity<?> handleRequestBodyNullPointException(RequestBodyNullPointException e) {
         return ResponseEntity.status(BAD_REQUEST_ERROR).body(e.getMessage());
     }
 
     @ExceptionHandler
-    public ResponseEntity<?> handleMaintenanceNotFoundException(MaintenanceNotFoundException e){
+    public ResponseEntity<?> handleMaintenanceNotFoundException(MaintenanceNotFoundException e) {
+        return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
+    }
+    @ExceptionHandler
+    public ResponseEntity<?> handleReviewPostNotFoundException(ReviewPostNotFoundException e) {
         return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
     }
 }
