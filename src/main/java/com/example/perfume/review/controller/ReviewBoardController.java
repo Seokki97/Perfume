@@ -1,10 +1,11 @@
 package com.example.perfume.review.controller;
 
+import com.example.perfume.review.controller.docs.ReviewBoardControllerDocs;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
-import com.example.perfume.review.dto.requestDto.PostDeleteRequest;
-import com.example.perfume.review.dto.requestDto.PostUpdateRequest;
-import com.example.perfume.review.dto.requestDto.ReviewBoardRequest;
-import com.example.perfume.review.dto.responseDto.ReviewBoardResponse;
+import com.example.perfume.review.dto.review.requestDto.PostDeleteRequest;
+import com.example.perfume.review.dto.review.requestDto.PostUpdateRequest;
+import com.example.perfume.review.dto.review.requestDto.ReviewBoardRequest;
+import com.example.perfume.review.dto.review.responseDto.ReviewBoardResponse;
 import com.example.perfume.review.service.ReviewBoardService;
 import com.example.perfume.member.service.jwt.LoginCheck;
 
@@ -15,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/board")
-public class ReviewBoardController {
+public class ReviewBoardController implements ReviewBoardControllerDocs {
 
     private final ReviewBoardService reviewBoardService;
 

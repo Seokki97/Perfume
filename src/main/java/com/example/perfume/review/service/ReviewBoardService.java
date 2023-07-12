@@ -1,10 +1,10 @@
 package com.example.perfume.review.service;
 
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
-import com.example.perfume.review.dto.requestDto.PostDeleteRequest;
-import com.example.perfume.review.dto.requestDto.PostUpdateRequest;
-import com.example.perfume.review.dto.requestDto.ReviewBoardRequest;
-import com.example.perfume.review.dto.responseDto.ReviewBoardResponse;
+import com.example.perfume.review.dto.review.requestDto.PostDeleteRequest;
+import com.example.perfume.review.dto.review.requestDto.PostUpdateRequest;
+import com.example.perfume.review.dto.review.requestDto.ReviewBoardRequest;
+import com.example.perfume.review.dto.review.responseDto.ReviewBoardResponse;
 import com.example.perfume.review.exception.ReviewPostNotFoundException;
 import com.example.perfume.review.repository.ReviewBoardRepository;
 import com.example.perfume.member.domain.Member;

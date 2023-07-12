@@ -6,10 +6,10 @@ import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.review.domain.Content;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
-import com.example.perfume.review.dto.requestDto.PostDeleteRequest;
-import com.example.perfume.review.dto.requestDto.PostUpdateRequest;
-import com.example.perfume.review.dto.requestDto.ReviewBoardRequest;
-import com.example.perfume.review.dto.responseDto.ReviewBoardResponse;
+import com.example.perfume.review.dto.review.requestDto.PostDeleteRequest;
+import com.example.perfume.review.dto.review.requestDto.PostUpdateRequest;
+import com.example.perfume.review.dto.review.requestDto.ReviewBoardRequest;
+import com.example.perfume.review.dto.review.responseDto.ReviewBoardResponse;
 import com.example.perfume.review.repository.ReviewBoardRepository;
 import com.example.perfume.review.service.ReviewBoardService;
 import org.junit.jupiter.api.Assertions;
@@ -20,6 +20,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -147,6 +149,33 @@ public class ReviewBoardServiceTest {
         ReviewBoardResponse result = reviewBoardService.showPost(boardId);
 
         Assertions.assertEquals(boardId, result.getBoardId());
+    }
+
+    @DisplayName("게시글 검색")
+    @Test
+    void searchPost() {
+        String title = "조말론";
+        Content content = new Content("구찌사랑해", "url");
+
+        PerfumeReviewBoard expectedCaseOne = PerfumeReviewBoard.builder()
+                .title("조말론 냄새 좋아요!")
+                .build();
+
+        PerfumeReviewBoard expectedCaseTwo = PerfumeReviewBoard.builder()
+                .content(new Content("구찌 사랑해", "url"))
+                .build();
+
+        List<PerfumeReviewBoard> mockReviewBoard = new ArrayList<>();
+
+        mockReviewBoard.add(expectedCaseOne);
+        mockReviewBoard.add(expectedCaseTwo);
+
+        when(reviewBoardRepository.findByTitleContainingOrContentContaining(title, content.getText())).thenReturn(mockReviewBoard);
+
+        List<PerfumeReviewBoard> result = reviewBoardService.showSearchedPosts("구찌");
+
+        Assertions.assertEquals();
+
     }
 
 }

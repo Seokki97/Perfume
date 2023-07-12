@@ -1,10 +1,10 @@
 package com.example.perfume.review.controller.docs;
 
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
-import com.example.perfume.review.dto.requestDto.PostDeleteRequest;
-import com.example.perfume.review.dto.requestDto.PostUpdateRequest;
-import com.example.perfume.review.dto.requestDto.ReviewBoardRequest;
-import com.example.perfume.review.dto.responseDto.ReviewBoardResponse;
+import com.example.perfume.review.dto.review.requestDto.PostDeleteRequest;
+import com.example.perfume.review.dto.review.requestDto.PostUpdateRequest;
+import com.example.perfume.review.dto.review.requestDto.ReviewBoardRequest;
+import com.example.perfume.review.dto.review.responseDto.ReviewBoardResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.headers.Header;
@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Tag(name = "향수 리뷰 게시판 Api")
 public interface ReviewBoardControllerDocs {
 
@@ -25,8 +27,8 @@ public interface ReviewBoardControllerDocs {
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
                     headers = @Header(name = "Authorization", description = "Access Token"))
     })
-    ReviewBoardResponse writeReview(@Parameter(name = "memberId", description = "Member PK값") @PathVariable Long memberId,
-                                    @Parameter(name = "BoardRequest", description = "") @RequestBody ReviewBoardRequest boardRequest);
+    ResponseEntity<ReviewBoardResponse> writeReview(@Parameter(name = "memberId", description = "Member PK값") @PathVariable Long memberId,
+                                                    @Parameter(name = "BoardRequest", description = "") @RequestBody ReviewBoardRequest boardRequest);
 
     @Operation(summary = "리뷰 게시글 수정")
     @ApiResponses(value = {
@@ -34,7 +36,7 @@ public interface ReviewBoardControllerDocs {
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
                     headers = @Header(name = "Authorization", description = "AccessToken"))
     })
-    ReviewBoardResponse modifyReview(@Parameter(name = "PostUpdateRequest", description = "수정된 글 내용") @RequestBody PostUpdateRequest postUpdateRequest);
+    ResponseEntity<ReviewBoardResponse> updatePost(@Parameter(name = "PostUpdateRequest", description = "수정된 글 내용") @RequestBody PostUpdateRequest postUpdateRequest);
 
     @Operation(summary = "리뷰 게시글 삭제")
     @ApiResponses(value = {
@@ -42,7 +44,7 @@ public interface ReviewBoardControllerDocs {
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
                     headers = @Header(name = "Authorization", description = "AccessToken"))
     })
-    Long deletePost(@Parameter(name = "PostDeleteRequest", description = "memberId, boardId") @RequestBody PostDeleteRequest postDeleteRequest);
+    ResponseEntity<Long> deletePost(@Parameter(name = "PostDeleteRequest", description = "memberId, boardId") @RequestBody PostDeleteRequest postDeleteRequest);
 
     @Operation(summary = "게시글 단일 조회")
     @ApiResponses(value = {
@@ -56,5 +58,5 @@ public interface ReviewBoardControllerDocs {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(description = "빈 객체 응답 시 -> 게시글 찾을 수 없음")
     })
-    ResponseEntity<PerfumeReviewBoard> showSearchedPosts(@Parameter(name = "content", description = "내용") @RequestParam String content);
+    ResponseEntity<List<PerfumeReviewBoard>> showSearchedPosts(@Parameter(name = "content", description = "내용") @RequestParam String content);
 }
