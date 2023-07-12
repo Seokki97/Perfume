@@ -39,21 +39,29 @@ public class PerfumeReviewBoard {
     private Content content;
 
     @NotNull
-    private String perfumeImageUrl;
+    private Long likeCount;
 
     @Builder
     public PerfumeReviewBoard(final Long boardId, final Member member, final String title,
-                              final Content content, final String perfumeImageUrl) {
+                              final Content content) {
         this.boardId = boardId;
         this.writer = member;
         this.content = content;
         this.title = title;
-        this.perfumeImageUrl = perfumeImageUrl;
+        this.likeCount = 0L;
     }
 
-    public void updatePost(String title, Content content){
+    public void updatePost(String title, Content content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void increaseLikeCount() {
+        this.likeCount += 1;
+    }
+
+    public void decreaseLikeCount() {
+        this.likeCount -= 1;
     }
 
 }
