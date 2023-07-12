@@ -31,11 +31,10 @@ public class ReviewBoardRequest {
         this.perfumeName = perfumeName;
     }
 
-    public PerfumeReviewBoard toEntity(Member member, Content content,Perfume perfume) {
+    public PerfumeReviewBoard toEntity(Member member, Content content) {
         return PerfumeReviewBoard.builder()
                 .member(member)
                 .content(content)
-                .perfumeImageUrl(perfume.getPerfumeImageUrl())
                 .title(title)
                 .build();
     }
