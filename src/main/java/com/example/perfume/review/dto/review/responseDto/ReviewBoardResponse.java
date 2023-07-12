@@ -1,4 +1,4 @@
-package com.example.perfume.review.dto.responseDto;
+package com.example.perfume.review.dto.review.responseDto;
 
 import com.example.perfume.review.domain.Content;
 import com.example.perfume.member.domain.Member;

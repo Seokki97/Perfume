@@ -1,4 +1,4 @@
-package com.example.perfume.review.dto.requestDto;
+package com.example.perfume.review.dto.review.requestDto;
 
 import com.example.perfume.review.domain.Content;
 import lombok.Builder;
