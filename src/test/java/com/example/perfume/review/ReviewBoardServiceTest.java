@@ -67,7 +67,6 @@ public class ReviewBoardServiceTest {
         PerfumeReviewBoard mockBoard = PerfumeReviewBoard.builder()
                 .boardId(1L)
                 .member(mockMember)
-                .perfumeImageUrl(content.getImageUrl())
                 .title(boardRequest.getTitle())
                 .build();
 
@@ -155,7 +154,7 @@ public class ReviewBoardServiceTest {
     @Test
     void searchPost() {
         String title = "조말론";
-        Content content = new Content("구찌사랑해", "url");
+        Content content = new Content("구찌", "url");
 
         PerfumeReviewBoard expectedCaseOne = PerfumeReviewBoard.builder()
                 .title("조말론 냄새 좋아요!")
@@ -170,12 +169,11 @@ public class ReviewBoardServiceTest {
         mockReviewBoard.add(expectedCaseOne);
         mockReviewBoard.add(expectedCaseTwo);
 
-        when(reviewBoardRepository.findByTitleContainingOrContentContaining(title, content.getText())).thenReturn(mockReviewBoard);
+        when(reviewBoardRepository.findByTitleContainingOrContentContaining(anyString(), eq("구찌"))).thenReturn(mockReviewBoard);
 
         List<PerfumeReviewBoard> result = reviewBoardService.showSearchedPosts("구찌");
 
-        Assertions.assertEquals();
-
+        Assertions.assertEquals(expectedCaseTwo.getBoardId(), result.get(1).getBoardId());
     }
 
 }

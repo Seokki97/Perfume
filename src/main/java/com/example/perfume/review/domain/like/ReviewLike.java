@@ -28,11 +28,10 @@ public class ReviewLike {
     private LikeStatus likeStatus;
 
     @Builder
-    public ReviewLike(final Long review_id, final Member member, final PerfumeReviewBoard likedPost, final LikeStatus likeStatus) {
+    public ReviewLike(final Long review_id, final Member member, final PerfumeReviewBoard likedPost) {
         this.review_id = review_id;
         this.member = member;
         this.likedPost = likedPost;
-        this.likeStatus = likeStatus;
     }
 
     public void updateLike() {
