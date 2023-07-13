@@ -1,30 +1,42 @@
 package com.example.perfume.review.service;
 
-import com.example.perfume.review.domain.like.LikeStatus;
+
 import com.example.perfume.review.domain.like.ReviewLike;
 import com.example.perfume.review.dto.like.ReviewLikeRequest;
+import com.example.perfume.review.repository.ReviewLikeRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ReviewLikeService {
 
-    public void likePost(ReviewLikeRequest reviewLikeRequest) {
-        ReviewLike reviewLike = ReviewLike.builder()
-                .likedPost(reviewLikeRequest.getPostId())
-                .member(reviewLikeRequest.getMemberId())
-                .build();
+    private final ReviewLikeRepository reviewLikeRepository;
 
-        reviewLike.updateLike();
-
+    public ReviewLikeService(ReviewLikeRepository reviewLikeRepository) {
+        this.reviewLikeRepository = reviewLikeRepository;
     }
 
-    public void unlikePost(ReviewLikeRequest reviewLikeRequest){
+    public void likePost(ReviewLikeRequest reviewLikeRequest) {
+        ReviewLike reviewLike = reviewLikeRequest.toEntity();
 
-        ReviewLike reviewLike = ReviewLike.builder()
-                .likedPost(reviewLikeRequest.getPostId())
-                .member(reviewLikeRequest.getMemberId())
-                .build();
+        reviewLike.updateLike();
+        if (!isAlreadyPushLikeOrUnlike(reviewLikeRequest)) {
+            reviewLikeRepository.save(reviewLike);
+        }
+    }
 
-        reviewLike.updateUnlike();
+    public void unlikePost(ReviewLikeRequest reviewLikeRequest) {
+        ReviewLike reviewLike = reviewLikeRequest.toEntity();
+
+        reviewLike.updateUnLike();
+
+        if (!isAlreadyPushLikeOrUnlike(reviewLikeRequest)) {
+            reviewLikeRepository.save(reviewLike);
+        }
+    }
+
+    public boolean isAlreadyPushLikeOrUnlike(ReviewLikeRequest reviewLikeRequest) {
+        Long memberId = reviewLikeRequest.getMember().getMemberId();
+        Long postId = reviewLikeRequest.getPost().getBoardId();
+        return reviewLikeRepository.existsByMemberAndReviewId(memberId, postId);
     }
 }
