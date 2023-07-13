@@ -37,6 +37,36 @@ public class ReviewLikeTest {
                 () -> Assertions.assertEquals(1L, nonStatus.getLikedPost().getLikeCount())
         );
     }
+    @DisplayName("좋아요를 취소하면 좋아요 수가 줄어든다.")
+    @Test
+    void cancelLike() {
+        PerfumeReviewBoard reviewPostOne = PerfumeReviewBoard.builder()
+                .boardId(1L)
+                .build();
 
+        ReviewLike expectedCaseOne = ReviewLike.builder()
+                .reviewId(1L)
+                .likedPost(reviewPostOne)
+                .likeStatus(LikeStatus.LIKE)
+                .build();
+
+        ReviewLike alreadyLikeStatus = ReviewLike.builder()
+                .reviewId(1L)
+                .likedPost(reviewPostOne)
+                .likeStatus(LikeStatus.LIKE)
+                .build();
+
+        alreadyLikeStatus.updateLike();
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(LikeStatus.CANCELED, alreadyLikeStatus.getLikeStatus()),
+                () -> Assertions.assertEquals(-1L, expectedCaseOne.getLikedPost().getLikeCount())
+        );
+    }
+
+    @DisplayName("싫어요 기능의 상태 벼경을 관리한다.")
+    @Test
+    public void unlikePost() {
+
+    }
 
 }
