@@ -19,14 +19,17 @@ public class ReviewBoardResponse {
 
     private Perfume perfume;
 
+    private Long likeCount;
+
 
     @Builder
     public ReviewBoardResponse(final Long boardId, final Member member, final String title,
-                              final Content content, final Perfume perfume) {
+                              final Content content, final Perfume perfume, final Long likeCount) {
         this.boardId = boardId;
         this.writer = member;
         this.content = content;
         this.title = title;
         this.perfume = perfume;
+        this.likeCount = likeCount;
     }
 }

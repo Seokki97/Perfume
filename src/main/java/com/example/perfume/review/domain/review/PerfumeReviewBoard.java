@@ -41,6 +41,9 @@ public class PerfumeReviewBoard {
     @NotNull
     private Long likeCount;
 
+    @NotNull
+    private Long unlikeCount;
+
     @Builder
     public PerfumeReviewBoard(final Long boardId, final Member member, final String title,
                               final Content content) {
@@ -61,6 +64,13 @@ public class PerfumeReviewBoard {
     }
 
     public void decreaseLikeCount() {
+        this.likeCount -= 1;
+    }
+
+    public void increaseUnlikeCount(){
+        this.unlikeCount += 1;
+    }
+    public void decreaseUnlikeCount(){
         this.likeCount -= 1;
     }
 
