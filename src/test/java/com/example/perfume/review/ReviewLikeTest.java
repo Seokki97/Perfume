@@ -18,17 +18,14 @@ public class ReviewLikeTest {
     @DisplayName("이미 좋아요가 달려있을 경우 좋아요가 취소된다.")
     @Test
     public void likePost() {
-        Member member = Member.builder()
-                .memberId(1L)
-                .build();
 
-        PerfumeReviewBoard reviewPostTwo = PerfumeReviewBoard.builder()
+        PerfumeReviewBoard reviewPost = PerfumeReviewBoard.builder()
                 .boardId(1L)
                 .build();
 
         ReviewLike nonStatus = ReviewLike.builder()
                 .reviewId(1L)
-                .likedPost(reviewPostTwo)
+                .likedPost(reviewPost)
                 .build();
 
         nonStatus.updateLike();
@@ -40,27 +37,49 @@ public class ReviewLikeTest {
     @DisplayName("좋아요를 취소하면 좋아요 수가 줄어든다.")
     @Test
     void cancelLike() {
-        PerfumeReviewBoard reviewPostOne = PerfumeReviewBoard.builder()
+        PerfumeReviewBoard reviewPost = PerfumeReviewBoard.builder()
                 .boardId(1L)
                 .build();
 
-        ReviewLike expectedCaseOne = ReviewLike.builder()
+        ReviewLike expectedCase = ReviewLike.builder()
                 .reviewId(1L)
-                .likedPost(reviewPostOne)
+                .likedPost(reviewPost)
                 .likeStatus(LikeStatus.LIKE)
                 .build();
 
         ReviewLike alreadyLikeStatus = ReviewLike.builder()
                 .reviewId(1L)
-                .likedPost(reviewPostOne)
+                .likedPost(reviewPost)
                 .likeStatus(LikeStatus.LIKE)
                 .build();
 
         alreadyLikeStatus.updateLike();
         Assertions.assertAll(
                 () -> Assertions.assertEquals(LikeStatus.CANCELED, alreadyLikeStatus.getLikeStatus()),
-                () -> Assertions.assertEquals(-1L, expectedCaseOne.getLikedPost().getLikeCount())
+                () -> Assertions.assertEquals(-1L, expectedCase.getLikedPost().getLikeCount())
         );
+    }
+
+    @DisplayName("싫어요 상태일 때 좋아요를 누르면 싫어요가 취소되고 좋아요가 반영된다.")
+    @Test
+    void displayUnlikeToLike(){
+        PerfumeReviewBoard reviewPost = PerfumeReviewBoard.builder()
+                .boardId(1L)
+                .build();
+
+        ReviewLike expectedCase = ReviewLike.builder()
+                .likedPost(reviewPost)
+                .likeStatus(LikeStatus.UNLIKE)
+                .build();
+
+        expectedCase.updateLike();
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(LikeStatus.LIKE, expectedCase.getLikeStatus()),
+                () -> Assertions.assertEquals(-1L, reviewPost.getUnlikeCount()),
+                () -> Assertions.assertEquals(1L, reviewPost.getLikeCount())
+        );
+
     }
 
     @DisplayName("싫어요 기능의 상태 벼경을 관리한다.")
