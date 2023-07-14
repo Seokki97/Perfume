@@ -77,6 +77,8 @@ public class ReviewBoardService {
                 .boardId(perfumeReviewBoard.getBoardId())
                 .title(perfumeReviewBoard.getTitle())
                 .content(perfumeReviewBoard.getContent())
+                .likeCount(perfumeReviewBoard.getLikeCount())
+                .unlikeCount(perfumeReviewBoard.getUnlikeCount())
                 .build();
 
         return reviewBoardResponse;
