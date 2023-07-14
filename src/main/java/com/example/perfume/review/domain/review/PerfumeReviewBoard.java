@@ -2,6 +2,8 @@ package com.example.perfume.review.domain.review;
 
 import com.example.perfume.review.domain.Content;
 import com.example.perfume.member.domain.Member;
+import com.example.perfume.review.domain.like.LikeStatus;
+import com.example.perfume.review.domain.like.ReviewLike;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -52,6 +54,7 @@ public class PerfumeReviewBoard {
         this.content = content;
         this.title = title;
         this.likeCount = 0L;
+        this.unlikeCount = 0L;
     }
 
     public void updatePost(String title, Content content) {
@@ -67,11 +70,33 @@ public class PerfumeReviewBoard {
         this.likeCount -= 1;
     }
 
-    public void increaseUnlikeCount(){
+    public void increaseUnlikeCount() {
         this.unlikeCount += 1;
     }
-    public void decreaseUnlikeCount(){
-        this.likeCount -= 1;
+
+    public void decreaseUnlikeCount() {
+        this.unlikeCount -= 1;
     }
 
+    public void likePost(ReviewLike like) {
+        if (like.getLikeStatus() == LikeStatus.UNLIKE) {
+            this.decreaseLikeCount();
+            this.increaseLikeCount();
+        } else if (like.getLikeStatus() == LikeStatus.CANCELED) {
+            this.increaseLikeCount();
+        } else {
+            this.decreaseLikeCount();
+        }
+    }
+
+    public void unlikePost(ReviewLike like) {
+        if (like.getLikeStatus() == LikeStatus.LIKE) {
+            this.decreaseLikeCount();
+            this.increaseUnlikeCount();
+        } else if (like.getLikeStatus() == LikeStatus.CANCELED) {
+            this.increaseUnlikeCount();
+        } else {
+            this.decreaseUnlikeCount();
+        }
+    }
 }
