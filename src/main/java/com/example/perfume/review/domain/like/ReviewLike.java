@@ -15,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "review_like")
 public class ReviewLike {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id", nullable = false)
@@ -37,33 +38,23 @@ public class ReviewLike {
         this.likeStatus = likeStatus;
     }
 
-
-    public void updateLike() {
+    public LikeStatus updateLike() {
         if (this.likeStatus == LikeStatus.UNLIKE) {
-            this.likedPost.decreaseUnlikeCount();
-
-        } else if (this.likeStatus == LikeStatus.LIKE) {
-            this.likeStatus = LikeStatus.CANCELED;
-            likedPost.decreaseLikeCount();
-
-        } else {
-            this.likeStatus = LikeStatus.LIKE;
-            this.likedPost.increaseLikeCount();
+            return this.likeStatus = LikeStatus.LIKE;
         }
+        if (this.likeStatus == LikeStatus.LIKE) {
+            return this.likeStatus = LikeStatus.CANCELED;
+        }
+        return this.likeStatus = LikeStatus.LIKE;
     }
 
     public void updateUnLike() {
         if (this.likeStatus == LikeStatus.LIKE) {
-            this.likedPost.decreaseLikeCount();
-
-        } else if (this.likeStatus == LikeStatus.UNLIKE) {
-            this.likeStatus = LikeStatus.CANCELED;
-            likedPost.decreaseUnlikeCount();
-
-        } else {
             this.likeStatus = LikeStatus.UNLIKE;
-            this.likedPost.increaseUnlikeCount();
-
         }
+        if (this.likeStatus == LikeStatus.UNLIKE) {
+            this.likeStatus = LikeStatus.CANCELED;
+        }
+        this.likeStatus = LikeStatus.UNLIKE;
     }
 }
