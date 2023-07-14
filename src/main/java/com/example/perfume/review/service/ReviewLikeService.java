@@ -1,6 +1,5 @@
 package com.example.perfume.review.service;
 
-
 import com.example.perfume.review.domain.like.ReviewLike;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.dto.like.ReviewLikeRequest;
