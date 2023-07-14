@@ -2,8 +2,6 @@ package com.example.perfume.review.domain.like;
 
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
-import com.example.perfume.review.dto.like.ReviewLikeRequest;
-import com.example.perfume.review.exception.ReviewLikeInvalidException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,13 +46,13 @@ public class ReviewLike {
         return this.likeStatus = LikeStatus.LIKE;
     }
 
-    public void updateUnLike() {
+    public LikeStatus updateUnLike() {
         if (this.likeStatus == LikeStatus.LIKE) {
-            this.likeStatus = LikeStatus.UNLIKE;
+            return this.likeStatus = LikeStatus.UNLIKE;
         }
         if (this.likeStatus == LikeStatus.UNLIKE) {
-            this.likeStatus = LikeStatus.CANCELED;
+            return this.likeStatus = LikeStatus.CANCELED;
         }
-        this.likeStatus = LikeStatus.UNLIKE;
+        return this.likeStatus = LikeStatus.UNLIKE;
     }
 }
