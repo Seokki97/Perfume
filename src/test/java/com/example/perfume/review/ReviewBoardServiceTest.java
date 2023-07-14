@@ -153,8 +153,6 @@ public class ReviewBoardServiceTest {
     @DisplayName("게시글 검색")
     @Test
     void searchPost() {
-        String title = "조말론";
-        Content content = new Content("구찌", "url");
 
         PerfumeReviewBoard expectedCaseOne = PerfumeReviewBoard.builder()
                 .title("조말론 냄새 좋아요!")
