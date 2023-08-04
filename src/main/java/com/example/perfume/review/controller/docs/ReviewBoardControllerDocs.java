@@ -59,4 +59,13 @@ public interface ReviewBoardControllerDocs {
             @ApiResponse(description = "빈 객체 응답 시 -> 게시글 찾을 수 없음")
     })
     ResponseEntity<List<PerfumeReviewBoard>> showSearchedPosts(@Parameter(name = "content", description = "내용") @RequestParam String content);
+
+    @Operation(summary = "내 리뷰글 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "200", description = "빈 리스트 들어올 시 없음"),
+            @ApiResponse(responseCode =  "401", description = "인증되지 않은 사용자의 접근",
+            headers = @Header(name = "Authorization", description = "AccessToken"))
+    })
+    ResponseEntity<List<PerfumeReviewBoard>> showMyPosts(@Parameter(name = "memberId") @PathVariable final Long memberId);
 }

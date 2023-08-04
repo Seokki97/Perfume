@@ -26,21 +26,23 @@ public class ReviewBoardController implements ReviewBoardControllerDocs {
 
     @LoginCheck
     @PostMapping("/write/{memberId}")
-    public ResponseEntity<ReviewBoardResponse> writeReview(@PathVariable final Long memberId, @RequestBody ReviewBoardRequest reviewBoardRequest) {
+    public ResponseEntity<ReviewBoardResponse> writeReview(@PathVariable final Long memberId, @RequestBody final ReviewBoardRequest reviewBoardRequest) {
 
         return ResponseEntity.ok(reviewBoardService.writeReview(memberId, reviewBoardRequest));
     }
 
+    //상태코드 200 300 400 500
+
     @LoginCheck
     @PatchMapping("/update")
-    public ResponseEntity<ReviewBoardResponse> updatePost(@RequestBody PostUpdateRequest postUpdateRequest) {
+    public ResponseEntity<ReviewBoardResponse> updatePost(@RequestBody final PostUpdateRequest postUpdateRequest) {
 
         return ResponseEntity.ok().body(reviewBoardService.modifyReview(postUpdateRequest));
     }
 
     @LoginCheck
     @DeleteMapping("/delete-post")
-    public ResponseEntity<Long> deletePost(@RequestBody PostDeleteRequest postDeleteRequest) {
+    public ResponseEntity<Long> deletePost(@RequestBody final PostDeleteRequest postDeleteRequest) {
 
         return ResponseEntity.ok(reviewBoardService.deleteReviewPost(postDeleteRequest));
     }
@@ -52,8 +54,12 @@ public class ReviewBoardController implements ReviewBoardControllerDocs {
     }
 
     @GetMapping("/show-searched-posts")
-    public ResponseEntity<List<PerfumeReviewBoard>> showSearchedPosts(@RequestParam String content) {
+    public ResponseEntity<List<PerfumeReviewBoard>> showSearchedPosts(@RequestParam final String content) {
         return ResponseEntity.ok(reviewBoardService.showSearchedPosts(content));
+    }
+    @GetMapping("/show-my-posts/{memberId}")
+    public ResponseEntity<List<PerfumeReviewBoard>> showMyPosts(@PathVariable final Long memberId){
+        return ResponseEntity.ok(reviewBoardService.showMyReviewPost(memberId));
     }
 
 }

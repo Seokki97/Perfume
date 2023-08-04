@@ -47,8 +47,7 @@ public class PerfumeReviewBoard {
     private Long unlikeCount;
 
     @Builder
-    public PerfumeReviewBoard(final Long boardId, final Member member, final String title,
-                              final Content content) {
+    public PerfumeReviewBoard(final Long boardId, final Member member, final String title, final Content content) {
         this.boardId = boardId;
         this.writer = member;
         this.content = content;
