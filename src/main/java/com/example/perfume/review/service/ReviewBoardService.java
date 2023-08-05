@@ -14,7 +14,9 @@ import com.example.perfume.perfume.service.PerfumeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReviewBoardService {
@@ -96,4 +98,5 @@ public class ReviewBoardService {
     public List<PerfumeReviewBoard> showMyReviewPost(Long memberId) {
         return reviewBoardRepository.findByWriter(memberId);
     }
+
 }
