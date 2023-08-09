@@ -2,6 +2,7 @@ package com.example.perfume.review.service;
 
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.repository.ReviewBoardRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -19,20 +20,17 @@ public class ReviewAnalyzeService {
     //라이크 많은 수 정렬
     public List<PerfumeReviewBoard> sortByMostLikeReviews() {
         List<PerfumeReviewBoard> selectedPerfume = reviewBoardRepository
-                .findAll();
+                .findAllByLikeCount(Sort.Direction.DESC,"likeCount");
 
-        return selectedPerfume.stream()
-                .sorted(Comparator.comparing(PerfumeReviewBoard::getLikeCount).reversed())
-                .collect(Collectors.toList());
+        return selectedPerfume;
     }
 
     //Unlike 많은 수 정렬
     public List<PerfumeReviewBoard> sortByMostUnlikeReviews() {
         List<PerfumeReviewBoard> selectedPerfume = reviewBoardRepository
-                .findAll();
+                .findAllByLikeCount(Sort.Direction.DESC,"unlikeCount");
 
-        return selectedPerfume.stream()
-                .sorted(Comparator.comparing(PerfumeReviewBoard::getUnlikeCount).reversed())
-                .collect(Collectors.toList());
+        return selectedPerfume;
     }
+    //선택한 향수의 LIKE 많은 수 정렬
 }

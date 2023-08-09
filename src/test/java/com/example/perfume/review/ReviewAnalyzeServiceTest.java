@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class ReviewAnalyzeServiceTest {
         mockReviewBoard.add(expectedCaseOne);
         mockReviewBoard.add(expectedCaseTwo);
 
-        when(reviewBoardRepository.findAll()).thenReturn(mockReviewBoard);
+        when(reviewBoardRepository.findAllByLikeCount(Sort.Direction.DESC,"likeCount")).thenReturn(mockReviewBoard);
 
         List<PerfumeReviewBoard> result = reviewAnalyzeService.sortByMostLikeReviews();
 
@@ -79,7 +80,7 @@ public class ReviewAnalyzeServiceTest {
         mockReviewBoard.add(expectedCaseOne);
         mockReviewBoard.add(expectedCaseTwo);
 
-        when(reviewBoardRepository.findAll()).thenReturn(mockReviewBoard);
+        when(reviewBoardRepository.findAllByLikeCount(Sort.Direction.DESC,"unlikeCount")).thenReturn(mockReviewBoard);
 
         List<PerfumeReviewBoard> result = reviewAnalyzeService.sortByMostUnlikeReviews();
 

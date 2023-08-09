@@ -1,6 +1,7 @@
 package com.example.perfume.review.repository;
 
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,4 +20,5 @@ public interface ReviewBoardRepository extends JpaRepository<PerfumeReviewBoard,
 
     List<PerfumeReviewBoard> findByWriter(Long memberId);
 
+    List<PerfumeReviewBoard> findAllByLikeCount(Sort.Direction desc, String likeCount);
 }
