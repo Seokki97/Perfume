@@ -20,7 +20,6 @@ public class ReviewAnalyzeController implements ReviewAnalyzeControllerDocs {
         this.reviewAnalyzeService = reviewAnalyzeService;
     }
 
-
     @GetMapping("/show-like-ranking")
     public ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume(@RequestParam(value = "perfumeName", required = false) String perfumeName) {
         if (perfumeName == null) {
