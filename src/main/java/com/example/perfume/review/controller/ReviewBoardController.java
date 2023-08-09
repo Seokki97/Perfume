@@ -8,7 +8,6 @@ import com.example.perfume.review.dto.review.requestDto.ReviewBoardRequest;
 import com.example.perfume.review.dto.review.responseDto.ReviewBoardResponse;
 import com.example.perfume.review.service.ReviewBoardService;
 import com.example.perfume.member.service.jwt.LoginCheck;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

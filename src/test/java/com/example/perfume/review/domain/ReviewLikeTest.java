@@ -56,4 +56,5 @@ public class ReviewLikeTest {
                 () -> Assertions.assertEquals(LikeStatus.CANCELED, statusUnlike.updateUnLike())
         );
     }
+
 }
