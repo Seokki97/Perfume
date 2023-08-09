@@ -20,5 +20,7 @@ public interface ReviewBoardRepository extends JpaRepository<PerfumeReviewBoard,
 
     List<PerfumeReviewBoard> findByWriter(Long memberId);
 
-    List<PerfumeReviewBoard> findAllByLikeCount(Sort.Direction desc, String likeCount);
+    List<PerfumeReviewBoard> findAllByLikeCount(Sort sort);
+
+    List<PerfumeReviewBoard> findAllByTitleContainingOrContentContaining(String title, String content, Sort sort);
 }
