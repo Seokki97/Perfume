@@ -18,12 +18,12 @@ public interface ReviewAnalyzeControllerDocs {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "200", description = " 빈 객체 들어올 시 데이터가 없음")
     })
-    ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume();
+    ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume(String perfumeName);
 
     @Operation(summary = "리뷰 좋아요 적은 순 정렬")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "200", description = " 빈 객체 들어올 시 데이터가 없음")
     })
-    ResponseEntity<List<PerfumeReviewBoard>> showMostUnlikedPerfume();
+    ResponseEntity<List<PerfumeReviewBoard>> showMostUnlikedPerfume(String perfumeName);
 }

@@ -6,6 +6,7 @@ import com.example.perfume.review.service.ReviewAnalyzeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,15 +21,20 @@ public class ReviewAnalyzeController implements ReviewAnalyzeControllerDocs {
     }
 
 
-    @GetMapping("/show-most-liked-perfume")
-    public ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume() {
-
-        return ResponseEntity.ok(reviewAnalyzeService.sortByMostLikeReviews());
+    @GetMapping("/show-like-ranking")
+    public ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume(@RequestParam(value = "perfumeName", required = false) String perfumeName) {
+        if (perfumeName == null) {
+            return ResponseEntity.ok(reviewAnalyzeService.sortLikeReviews());
+        }
+        return ResponseEntity.ok(reviewAnalyzeService.sortLikeReviewsFromSelectedPerfume(perfumeName));
     }
 
-    @GetMapping("/show-most-unliked-perfume")
-    public ResponseEntity<List<PerfumeReviewBoard>> showMostUnlikedPerfume(){
-
-        return ResponseEntity.ok(reviewAnalyzeService.sortByMostUnlikeReviews());
+    @GetMapping("/show-unlike-ranking")
+    public ResponseEntity<List<PerfumeReviewBoard>> showMostUnlikedPerfume(@RequestParam(value = "perfumeName", required = false) String perfumeName) {
+        if (perfumeName == null) {
+            return ResponseEntity.ok(reviewAnalyzeService.sortUnlikeReviews());
+        }
+        return ResponseEntity.ok(reviewAnalyzeService.sortLikeReviewsFromSelectedPerfume(perfumeName));
     }
+
 }
