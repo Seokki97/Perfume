@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,9 +49,9 @@ public class ReviewAnalyzeServiceTest {
         mockReviewBoard.add(expectedCaseOne);
         mockReviewBoard.add(expectedCaseTwo);
 
-        when(reviewBoardRepository.findAllByLikeCount(Sort.Direction.DESC,"likeCount")).thenReturn(mockReviewBoard);
+        when(reviewBoardRepository.findAllByLikeCount(any())).thenReturn(mockReviewBoard);
 
-        List<PerfumeReviewBoard> result = reviewAnalyzeService.sortByMostLikeReviews();
+        List<PerfumeReviewBoard> result = reviewAnalyzeService.sortLikeReviews();
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(result.get(0).getBoardId(), expectedCaseOne.getBoardId()),
@@ -80,9 +81,9 @@ public class ReviewAnalyzeServiceTest {
         mockReviewBoard.add(expectedCaseOne);
         mockReviewBoard.add(expectedCaseTwo);
 
-        when(reviewBoardRepository.findAllByLikeCount(Sort.Direction.DESC,"unlikeCount")).thenReturn(mockReviewBoard);
+        when(reviewBoardRepository.findAllByLikeCount(any())).thenReturn(mockReviewBoard);
 
-        List<PerfumeReviewBoard> result = reviewAnalyzeService.sortByMostUnlikeReviews();
+        List<PerfumeReviewBoard> result = reviewAnalyzeService.sortUnlikeReviews();
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(result.get(0).getBoardId(), expectedCaseOne.getBoardId()),
