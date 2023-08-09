@@ -2,7 +2,6 @@ package com.example.perfume.review.controller;
 
 import com.example.perfume.member.service.jwt.LoginCheck;
 import com.example.perfume.review.controller.docs.ReviewLikeControllerDocs;
-import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.dto.like.ReviewLikeRequest;
 import com.example.perfume.review.service.ReviewLikeService;
 import org.springframework.http.ResponseEntity;
@@ -36,15 +35,4 @@ public class ReviewLikeController implements ReviewLikeControllerDocs {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/show-most-liked-perfume")
-    public ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume(@RequestParam final String content) {
-
-        return ResponseEntity.ok(reviewLikeService.sortByMostLikeReviews(content));
-    }
-
-    @GetMapping("/show-most-unliked-perfume")
-    public ResponseEntity<List<PerfumeReviewBoard>> showMostUnlikedPerfume(@RequestParam final String content){
-
-        return ResponseEntity.ok(reviewLikeService.sortByMostUnlikeReviews(content));
-    }
 }

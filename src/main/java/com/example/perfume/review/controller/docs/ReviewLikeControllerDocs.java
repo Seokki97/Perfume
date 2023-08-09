@@ -32,17 +32,4 @@ public interface ReviewLikeControllerDocs {
     })
     ResponseEntity<Void> unlikePost(@Parameter(name = "memberId, boardId") @RequestBody ReviewLikeRequest reviewLikeRequest);
 
-    @Operation(summary = "리뷰 좋아요 많은 순 정렬")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "성공"),
-            @ApiResponse(responseCode = "200", description = " 빈 객체 들어올 시 데이터가 없음")
-    })
-    ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume(@RequestParam final String content);
-
-    @Operation(summary = "리뷰 좋아요 적은 순 정렬")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "성공"),
-            @ApiResponse(responseCode = "200", description = " 빈 객체 들어올 시 데이터가 없음")
-    })
-    ResponseEntity<List<PerfumeReviewBoard>> showMostUnlikedPerfume(@RequestParam final String content);
 }

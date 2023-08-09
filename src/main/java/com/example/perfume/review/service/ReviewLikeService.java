@@ -7,6 +7,7 @@ import com.example.perfume.review.exception.ReviewPostNotFoundException;
 import com.example.perfume.review.repository.ReviewBoardRepository;
 import com.example.perfume.review.repository.ReviewLikeRepository;
 import org.springframework.boot.convert.PeriodUnit;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,23 +63,5 @@ public class ReviewLikeService {
         return reviewLikeRepository.existsByMemberAndReviewId(memberId, postId);
     }
 
-    //라이크 많은 수 정렬
-    public List<PerfumeReviewBoard> sortByMostLikeReviews(String content) {
-        List<PerfumeReviewBoard> selectedPerfume = reviewBoardRepository
-                .findByTitleContainingOrContentContaining(content, content);
 
-        return selectedPerfume.stream()
-                .sorted(Comparator.comparing(PerfumeReviewBoard::getLikeCount).reversed())
-                .collect(Collectors.toList());
-    }
-
-    //Unlike 많은 수 정렬
-    public List<PerfumeReviewBoard> sortByMostUnlikeReviews(String content) {
-        List<PerfumeReviewBoard> selectedPerfume = reviewBoardRepository
-                .findByTitleContainingOrContentContaining(content, content);
-
-        return selectedPerfume.stream()
-                .sorted(Comparator.comparing(PerfumeReviewBoard::getUnlikeCount).reversed())
-                .collect(Collectors.toList());
-    }
 }
