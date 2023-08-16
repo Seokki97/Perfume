@@ -33,7 +33,7 @@ public class ReviewAnalyzeController implements ReviewAnalyzeControllerDocs {
         if (perfumeName == null) {
             return ResponseEntity.ok(reviewAnalyzeService.sortUnlikeReviews());
         }
-        return ResponseEntity.ok(reviewAnalyzeService.sortLikeReviewsFromSelectedPerfume(perfumeName));
+        return ResponseEntity.ok(reviewAnalyzeService.sortUnlikeReviewsFromSelectedPerfume(perfumeName));
     }
 
 }
