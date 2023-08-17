@@ -44,7 +44,7 @@ public class Report {
         this.reportStatus = reportStatus;
         this.reportDetail = reportDetail;
     }
-    
+
     public static Report receiveReport(ReportRequest reportRequest) {
         return Report.builder()
                 .description(reportRequest.getDescription())
