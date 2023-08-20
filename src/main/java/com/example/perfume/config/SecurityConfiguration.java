@@ -20,7 +20,9 @@ public class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().mvcMatchers("/perfume/**", "/post/**", "/member/**", "/oauth/**", "/survey/**", "/feedback/**", "/api-docs/**", "/api/**", "/swagger-ui/**", "/board/**");
+        return (web) -> web.ignoring().mvcMatchers("/perfume/**", "/post/**", "/member/**", "/oauth/**",
+                "/survey/**", "/feedback/**", "/api-docs/**", "/api/**",
+                "/swagger-ui/**", "/board/**","/report/**");
 
     }
 
@@ -32,7 +34,7 @@ public class SecurityConfiguration {
                 .and()
                 .authorizeHttpRequests((authorization) -> authorization
                         .antMatchers("/perfume/**", "/post/**", "/member/**", "/oauth/**", "/survey/**", "/feedback/**").permitAll()
-                        .antMatchers("/swagger-ui/**", "/api-docs/**", "/v3/api-docs/**", "/board/**").permitAll()
+                        .antMatchers("/swagger-ui/**", "/api-docs/**", "/v3/api-docs/**", "/board/**","/report/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults());
