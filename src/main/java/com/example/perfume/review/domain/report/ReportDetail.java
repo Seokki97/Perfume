@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 public class ReportDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member reporter;
+    private Member admin;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private PerfumeReviewBoard reportedPost;
@@ -25,8 +25,8 @@ public class ReportDetail {
 
     private Member reportedPostUser;
 
-    public ReportDetail(Member reporter, PerfumeReviewBoard reportedPost, Member reportedPostUser) {
-        this.reporter = reporter;
+    public ReportDetail(Member admin, PerfumeReviewBoard reportedPost, Member reportedPostUser) {
+        this.admin = admin;
         this.reportedPost = reportedPost;
         this.reportedPostUser = reportedPostUser;
     }

@@ -1,17 +1,17 @@
 package com.example.perfume.review.service.report;
 
+import com.example.perfume.email.EmailSender;
+import com.example.perfume.email.MailDto;
 import com.example.perfume.review.domain.report.Report;
 import com.example.perfume.review.domain.report.ReportStatus;
-import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.dto.report.requestDto.ReportRequest;
 import com.example.perfume.review.dto.report.responseDto.ReportResponse;
-import com.example.perfume.review.dto.review.requestDto.PostDeleteRequest;
 import com.example.perfume.review.exception.ReportNotFoundException;
 import com.example.perfume.review.repository.ReportRepository;
 import com.example.perfume.review.repository.ReviewBoardRepository;
-import com.example.perfume.review.service.ReviewBoardService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 public class ReportService {
@@ -19,9 +19,13 @@ public class ReportService {
 
     private final ReviewBoardRepository reviewBoardRepository;
 
-    public ReportService(ReportRepository reportRepository, ReviewBoardRepository reviewBoardRepository) {
+    private final EmailSender emailSender;
+
+    public ReportService(ReportRepository reportRepository, ReviewBoardRepository reviewBoardRepository,
+                         EmailSender emailSender) {
         this.reportRepository = reportRepository;
         this.reviewBoardRepository = reviewBoardRepository;
+        this.emailSender = emailSender;
     }
 
     //신고 등록
@@ -30,6 +34,9 @@ public class ReportService {
         Report report = Report.receiveReport(reportRequest);
 
         reportRepository.save(report);
+        MailDto reportDetail = MailDto.generateReportMail(reportRequest);
+
+        emailSender.sendMail(reportDetail);
 
         return ReportResponse.convertToResponse(report);
     }
