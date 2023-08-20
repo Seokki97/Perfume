@@ -46,7 +46,7 @@ public class ReportService {
     public ReportResponse processReport(Long reportId) {
         Report report = reportRepository.findByReportId(reportId).orElseThrow(ReportNotFoundException::new);
 
-        reviewBoardRepository.deleteByBoardId(report.getReportDetail().getReportedPost().getBoardId());
+        reviewBoardRepository.deleteByBoardId(report.getReportDetail().getPostId());
 
         report.updateStatus(ReportStatus.PROCESSED);
 

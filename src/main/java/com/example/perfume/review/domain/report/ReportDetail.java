@@ -15,20 +15,16 @@ import javax.persistence.ManyToOne;
 @Embeddable
 public class ReportDetail {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member admin;
+    private Long administrator;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private PerfumeReviewBoard reportedPost;
+    private Long postId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    private Long reportedPostUserId;
 
-    private Member reportedPostUser;
-
-    public ReportDetail(Member admin, PerfumeReviewBoard reportedPost, Member reportedPostUser) {
-        this.admin = admin;
-        this.reportedPost = reportedPost;
-        this.reportedPostUser = reportedPostUser;
+    public ReportDetail(Long administrator, Long postId, Long reportedPostUserId) {
+        this.administrator = administrator;
+        this.postId = postId;
+        this.reportedPostUserId = reportedPostUserId;
     }
 
 }
