@@ -62,6 +62,4 @@ public class ReviewLikeService {
         Long postId = reviewLikeRequest.getPost().getBoardId();
         return reviewLikeRepository.existsByMemberAndReviewId(memberId, postId);
     }
-
-
 }
