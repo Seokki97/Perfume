@@ -19,16 +19,14 @@ public class ReviewAnalyzeService {
 
     //라이크 많은 수 정렬
     public List<PerfumeReviewBoard> sortLikeReviews() {
-        Sort sort = Sort.by(Sort.Direction.DESC, "likeCount");
 
-        return reviewBoardRepository.findAllByLikeCount(sort);
+        return reviewBoardRepository.findAllByOrderByLikeCountDesc();
     }
 
     //Unlike 많은 수 정렬
     public List<PerfumeReviewBoard> sortUnlikeReviews() {
-        Sort sort = Sort.by(Sort.Direction.DESC, "unlikeCount");
 
-        return reviewBoardRepository.findAllByLikeCount(sort);
+        return reviewBoardRepository.findAllByOrderByUnlikeCountDesc();
 
     }
 
@@ -39,7 +37,7 @@ public class ReviewAnalyzeService {
     }
 
     public List<PerfumeReviewBoard> sortUnlikeReviewsFromSelectedPerfume(String perfumeName) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "likeCount");
+        Sort sort = Sort.by(Sort.Direction.DESC, "unlikeCount");
 
         return reviewBoardRepository.findAllByTitleContainingOrContentContaining(perfumeName, perfumeName, sort);
     }

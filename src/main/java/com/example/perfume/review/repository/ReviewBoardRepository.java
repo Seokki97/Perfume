@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface ReviewBoardRepository extends JpaRepository<PerfumeReviewBoard, Long> {
-    boolean existsByBoardId(Long boardId);
 
     Optional<PerfumeReviewBoard> findByBoardId(Long boardId);
 
@@ -20,7 +19,9 @@ public interface ReviewBoardRepository extends JpaRepository<PerfumeReviewBoard,
 
     List<PerfumeReviewBoard> findByWriter(Long memberId);
 
-    List<PerfumeReviewBoard> findAllByLikeCount(Sort sort);
+    List<PerfumeReviewBoard> findAllByOrderByLikeCountDesc();
+
+    List<PerfumeReviewBoard> findAllByOrderByUnlikeCountDesc();
 
     List<PerfumeReviewBoard> findAllByTitleContainingOrContentContaining(String title, String content, Sort sort);
 }
