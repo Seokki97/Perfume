@@ -45,7 +45,7 @@ public class Report {
         this.reportDetail = reportDetail;
     }
 
-    public static Report receiveReport(ReportRequest reportRequest) {
+    public static Report createReportObject(ReportRequest reportRequest) {
         return Report.builder()
                 .description(reportRequest.getDescription())
                 .reportStatus(ReportStatus.PENDING)
