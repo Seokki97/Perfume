@@ -28,17 +28,14 @@ public class ReportService {
         this.emailSender = emailSender;
     }
 
-    //신고 등록
     public ReportResponse receiveReport(ReportRequest reportRequest) {
 
-        Report report = Report.receiveReport(reportRequest);
+        Report savedReport = reportRepository.save(Report.createReportObject(reportRequest));
 
-        reportRepository.save(report);
         MailDto reportDetail = MailDto.generateReportMail(reportRequest);
-
         emailSender.sendMail(reportDetail);
 
-        return ReportResponse.convertToResponse(report);
+        return ReportResponse.convertToResponse(savedReport);
     }
 
     //처리됨
