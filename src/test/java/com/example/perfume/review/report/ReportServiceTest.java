@@ -89,11 +89,27 @@ public class ReportServiceTest {
         when(reportRepository.findByReportId(any())).thenReturn(Optional.of(mockReport));
         doNothing().when(reviewBoardRepository).deleteByBoardId(any());
 
-        ReportResponse reviewBoardResponse = reportService.processReport(1l);
+        ReportResponse reportResponse = reportService.processReport(1l);
 
         Assertions.assertAll(
-                ()-> Assertions.assertEquals(reviewBoardResponse.getReportStatus(),ReportStatus.PROCESSED)
+                () -> Assertions.assertEquals(reportResponse.getReportStatus(), ReportStatus.PROCESSED)
         );
+    }
 
+    @Test
+    @DisplayName("신고가 거절 상태로 바뀐다. 이를 사용자에게 응답한다.")
+    void rejectReport() {
+
+        Report mockReport = Report.builder()
+                .reportStatus(ReportStatus.PENDING)
+                .reportId(1l)
+                .build();
+
+        when(reportRepository.findByReportId(any())).thenReturn(Optional.of(mockReport));
+        ReportResponse reportResponse = reportService.rejectReport(1l);
+
+        Assertions.assertAll(
+                ()->Assertions.assertEquals(reportResponse.getReportStatus(), ReportStatus.REJECTED)
+        );
     }
 }
