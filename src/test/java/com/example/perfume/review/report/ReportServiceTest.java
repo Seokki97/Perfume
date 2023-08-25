@@ -4,9 +4,11 @@ import com.example.perfume.email.EmailSender;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.review.domain.report.Report;
 import com.example.perfume.review.domain.report.ReportDetail;
+import com.example.perfume.review.domain.report.ReportStatus;
 import com.example.perfume.review.domain.report.ReportType;
 import com.example.perfume.review.dto.report.requestDto.ReportRequest;
 import com.example.perfume.review.dto.report.responseDto.ReportResponse;
+import com.example.perfume.review.dto.review.responseDto.ReviewBoardResponse;
 import com.example.perfume.review.repository.ReportRepository;
 import com.example.perfume.review.repository.ReviewBoardRepository;
 import com.example.perfume.review.service.report.ReportService;
@@ -18,7 +20,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -66,5 +71,29 @@ public class ReportServiceTest {
         Assertions.assertAll(
                 () -> Assertions.assertEquals(mockReport.getReportId(), expected.getReportId())
         );
+    }
+
+    @DisplayName("신고한 내용이 처리 상태로 바뀐다. 이를 사용자에게 응답한다")
+    @Test
+    void processReport() {
+        ReportDetail reportDetail = ReportDetail.builder()
+                .reportedPostUserId(1l)
+                .postId(1l)
+                .build();
+        Report mockReport = Report.builder()
+                .reportStatus(ReportStatus.PENDING)
+                .reportId(1l)
+                .reportDetail(reportDetail)
+                .build();
+
+        when(reportRepository.findByReportId(any())).thenReturn(Optional.of(mockReport));
+        doNothing().when(reviewBoardRepository).deleteByBoardId(any());
+
+        ReportResponse reviewBoardResponse = reportService.processReport(1l);
+
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(reviewBoardResponse.getReportStatus(),ReportStatus.PROCESSED)
+        );
+
     }
 }
