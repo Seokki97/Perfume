@@ -16,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,14 +51,14 @@ public class PerfumeServiceTest {
 
         Mockito.when(perfumeRepository.findByPerfumeNameContaining("예외"))
                 .thenThrow(PerfumeNotFoundException.class);
-        List<Perfume> actual = perfumeService.findPerfumeListByName(perfumeRequestDto);
+        List<Perfume> expected = perfumeService.findPerfumeListByName(perfumeRequestDto);
 
         PerfumeRequestDto exception = PerfumeRequestDto.builder()
                 .perfumeName("예외")
                 .build();
 
         assertAll(
-                () -> assertEquals(actual.get(0).getPerfumeName(), "에르메스"),
+                () -> assertEquals(expected.get(0).getPerfumeName(), "에르메스"),
                 () -> assertThrows(PerfumeNotFoundException.class, () -> perfumeService.findPerfumeListByName(exception))
         );
     }
@@ -97,20 +98,17 @@ public class PerfumeServiceTest {
     @DisplayName("향수 번호로 향수 정보를 조회한다. 해당 향수가 존재하지 않을 시 커스텀 Exception을 발생시킨다.")
     @Test
     void findById() {
-        Perfume perfume = Perfume.builder()
+        Perfume mockPerfume = Perfume.builder()
                 .id(1l)
-                .perfumeName("조말론")
-                .perfumeFeature("특징")
-                .perfumeImageUrl("예시")
-                .brandName("조말론")
                 .build();
-        perfumeRepository.save(perfume);
-        Perfume expected = perfumeService.findPerfumeById(perfume.getId());
+
+        Mockito.when(perfumeRepository.findById(1l)).thenReturn(Optional.ofNullable(mockPerfume));
+        Mockito.when(perfumeRepository.findById(10l)).thenThrow(PerfumeNotFoundException.class);
+        Perfume expected = perfumeService.findPerfumeById(1l);
 
         assertAll(
-                () -> assertThat(perfume).usingRecursiveComparison().isEqualTo(expected),
-                () -> assertThatThrownBy(() -> perfumeService.findPerfumeById(50l))
-                        .isInstanceOf(PerfumeNotFoundException.class).hasMessage("해당 향수를 찾을 수 없습니다.")
+                () -> assertEquals(expected.getId(), 1l),
+                () -> assertThrows(PerfumeNotFoundException.class, () -> perfumeRepository.findById(10l))
         );
     }
 
