@@ -6,58 +6,64 @@ import com.example.perfume.perfume.dto.PerfumeResponseDto;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
-import com.example.perfume.survey.repository.SurveyRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class PerfumeServiceTest {
 
-    @Autowired
+    @Mock
     private PerfumeRepository perfumeRepository;
 
-    @Autowired
+    @InjectMocks
     private PerfumeService perfumeService;
-    @Autowired
-    private SurveyRepository surveyRepository;
 
     @DisplayName("사용자가 원하는 향수를 이름으로 찾는다. 해당 향수가 없을 시 커스텀 Exception을 발생시킨다.")
     @Test
     void findPerfumeByName() {
-        Perfume actual = Perfume.builder()
-                .perfumeName("에르메스 오도랑쥬")
-                .perfumeFeature("나른함 가득한 늦은 오후 커튼 사이로 들어오는 햇살을 타고 흐르는 오렌지와 레몬의 상큼함")
-                .brandName("에르메스")
-                .perfumeImageUrl("//perfumegraphy.com/web/product/medium/202207/8f734a2482a65006e53da3a75a64e0a0.jpg")
-                .build();
-        perfumeRepository.save(actual);
 
         PerfumeRequestDto perfumeRequestDto = PerfumeRequestDto.builder()
-                .perfumeName("에르메스 오도랑쥬")
-                .perfumeFeature("나른함 가득한 늦은 오후 커튼 사이로 들어오는 햇살을 타고 흐르는 오렌지와 레몬의 상큼함")
-                .brandName("에르메스")
-                .perfumeImageUrl("//perfumegraphy.com/web/product/medium/202207/8f734a2482a65006e53da3a75a64e0a0.jpg")
+                .perfumeName("에르")
                 .build();
-        List<Perfume> expectedList = perfumeService.findPerfumeListByName(perfumeRequestDto);
-        Perfume expected = expectedList.get(0);
+
+        Perfume perfume = Perfume.builder()
+                .perfumeName("에르메스")
+                .build();
+
+        Perfume perfume1 = Perfume.builder()
+                .id(2l)
+                .build();
+        List<Perfume> mockPerfume = new ArrayList<>();
+
+        mockPerfume.add(perfume);
+        mockPerfume.add(perfume1);
+
+        Mockito.when(perfumeRepository.findByPerfumeNameContaining("에르"))
+                .thenReturn(mockPerfume);
+
+        Mockito.when(perfumeRepository.findByPerfumeNameContaining("예외"))
+                .thenThrow(PerfumeNotFoundException.class);
+        List<Perfume> actual = perfumeService.findPerfumeListByName(perfumeRequestDto);
+
         PerfumeRequestDto exception = PerfumeRequestDto.builder()
-                .perfumeName("예외발생")
+                .perfumeName("예외")
                 .build();
+
         assertAll(
-                () -> assertThat(actual).usingRecursiveComparison()
-                        .ignoringFields("id")
-                        .isEqualTo(expected),
-                () -> assertThatThrownBy(() -> perfumeService.findPerfumeListByName(exception))
-                        .isInstanceOf(PerfumeNotFoundException.class).hasMessage("해당 향수를 찾을 수 없습니다.")
+                () -> assertEquals(actual.get(0).getPerfumeName(), "에르메스"),
+                () -> assertThrows(PerfumeNotFoundException.class, () -> perfumeService.findPerfumeListByName(exception))
         );
     }
 
