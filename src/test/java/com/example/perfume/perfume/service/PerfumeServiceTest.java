@@ -117,29 +117,21 @@ public class PerfumeServiceTest {
     void findAllData() {
         Perfume list1 = Perfume.builder()
                 .id(1l)
-                .perfumeName("조말론")
-                .perfumeFeature("특징")
-                .perfumeImageUrl("예시")
-                .brandName("조말론")
                 .build();
+
         Perfume list2 = Perfume.builder()
                 .id(2l)
-                .perfumeName("예씨")
-                .perfumeFeature("특")
-                .perfumeImageUrl("이미")
-                .brandName("브랜드")
                 .build();
 
-        perfumeRepository.save(list1);
-        perfumeRepository.save(list2);
+        List<Perfume> mockPerfumes = new ArrayList<>();
+
+        mockPerfumes.add(list1);
+        mockPerfumes.add(list2);
+
+        Mockito.when(perfumeRepository.findAll()).thenReturn(mockPerfumes);
         List<Perfume> actual = perfumeService.showAllPerfumeData();
-        List<Perfume> expected = new ArrayList<>();
-        expected.add(list1);
-        expected.add(list2);
 
-        assertThat(actual).usingRecursiveComparison()
-                .isEqualTo(expected);
-
+        assertIterableEquals(mockPerfumes, actual);
     }
 
     @DisplayName("향수 데이터가 없을 경우에 커스텀 Exception을 발생시킨다.")
