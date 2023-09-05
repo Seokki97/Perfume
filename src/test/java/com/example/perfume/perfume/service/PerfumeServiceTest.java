@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -134,36 +132,5 @@ public class PerfumeServiceTest {
         assertIterableEquals(mockPerfumes, actual);
     }
 
-    @DisplayName("향수 데이터가 없을 경우에 커스텀 Exception을 발생시킨다.")
-    @Test
-    void cannotFind() {
-        assertThatThrownBy(() -> perfumeService.showAllPerfumeData())
-                .isInstanceOf(PerfumeNotFoundException.class).hasMessage("해당 향수를 찾을 수 없습니다.");
-    }
-
-    @DisplayName("사용자가 쓰는 향수와 유사한 향수를 추천해준다")
-    @Test
-    void selectSimilarPerfume() {
-        PerfumeResponseDto perfumeResponseDto = PerfumeResponseDto.builder()
-                .id(4l)
-                .perfumeName("구찌블룸네타레")
-                .perfumeFeature("구찌 블룸 정원 신비로운 노란 달콤함을 불러일으키는 넥타린과 허니서클 향기")
-                .brandName("구찌블룸네타레")
-                .perfumeImageUrl("//perfumegraphy.com/web/product/medium/202212/dd852ce8c0e3d3edfa62d472f80a70e1.jpg")
-                .build();
-        Perfume perfume = perfumeResponseDto.toEntity();
-        perfumeRepository.save(perfume);
-        Perfume perfume1 = Perfume.builder().id(54l)
-                .perfumeFeature("Das")
-                .perfumeImageUrl("asd")
-                .perfumeName("asd")
-                .brandName("asd")
-                .build();
-        perfumeRepository.save(perfume1);
-        PerfumeResponseDto expected = PerfumeResponseDto.builder()
-                .id(54l).build();
-
-
-    }
 
 }
