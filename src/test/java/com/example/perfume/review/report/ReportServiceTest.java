@@ -38,10 +38,8 @@ public class ReportServiceTest {
     @Mock
     private ReviewBoardRepository reviewBoardRepository;
 
-    @Mock
-    private EmailSender emailSender;
 
-    @DisplayName("신고한 내용이 저장된다. 접수된 내용은 관리자의 email로 보내진다.")
+    @DisplayName("리뷰 글이 신고되면 저장한다. 접수된 내용을 관리자의 email로 전송한다. ")
     @Test
     void receiveReport() {
 
@@ -73,13 +71,14 @@ public class ReportServiceTest {
         );
     }
 
-    @DisplayName("신고한 내용이 처리 상태로 바뀐다. 이를 사용자에게 응답한다")
+    @DisplayName("신고된 게시글의 상태가 처리중으로 변경된다. 근데 하기 싫다")
     @Test
     void processReport() {
         ReportDetail reportDetail = ReportDetail.builder()
                 .reportedPostUserId(1l)
                 .postId(1l)
                 .build();
+
         Report mockReport = Report.builder()
                 .reportStatus(ReportStatus.PENDING)
                 .reportId(1l)
