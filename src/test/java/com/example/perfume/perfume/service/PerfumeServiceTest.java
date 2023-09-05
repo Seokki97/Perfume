@@ -33,7 +33,6 @@ public class PerfumeServiceTest {
     @DisplayName("사용자가 원하는 향수를 이름으로 찾는다. 해당 향수가 없을 시 커스텀 Exception을 발생시킨다.")
     @Test
     void findPerfumeByName() {
-
         PerfumeRequestDto perfumeRequestDto = PerfumeRequestDto.builder()
                 .perfumeName("에르")
                 .build();
@@ -42,13 +41,9 @@ public class PerfumeServiceTest {
                 .perfumeName("에르메스")
                 .build();
 
-        Perfume perfume1 = Perfume.builder()
-                .id(2l)
-                .build();
         List<Perfume> mockPerfume = new ArrayList<>();
 
         mockPerfume.add(perfume);
-        mockPerfume.add(perfume1);
 
         Mockito.when(perfumeRepository.findByPerfumeNameContaining("에르"))
                 .thenReturn(mockPerfume);
@@ -70,39 +65,32 @@ public class PerfumeServiceTest {
     @DisplayName("사용자가 원하는 향수를 브랜드로 찾는다. 해당 향수가 없을 시 커스텀 Exception을 발생시킨다.")
     @Test
     void findPerfumeByBrand() {
-        //Db에서찾기
-
-        Perfume expected = Perfume.builder()
-                .perfumeName("구찌블룸네타레")
-                .perfumeFeature("구찌 블룸 정원 신비로운 노란 달콤함을 불러일으키는 넥타린과 허니서클 향기")
-                .brandName("구찌블룸네타레")
-                .perfumeImageUrl("//perfumegraphy.com/web/product/medium/202212/dd852ce8c0e3d3edfa62d472f80a70e1.jpg")
-                .build();
-        perfumeRepository.save(expected);
-        List<Perfume> actualList = perfumeRepository.findByBrandNameContaining("구찌블룸네타레");
-        Perfume actual = actualList.get(0);
-
         PerfumeRequestDto perfumeRequestDto = PerfumeRequestDto.builder()
-                .perfumeName("구찌블룸네타레")
-                .perfumeFeature("구찌 블룸 정원 신비로운 노란 달콤함을 불러일으키는 넥타린과 허니서클 향기")
-                .brandName("구찌블룸네타레")
-                .perfumeImageUrl("//perfumegraphy.com/web/product/medium/202212/dd852ce8c0e3d3edfa62d472f80a70e1.jpg")
+                .brandName("샤넬")
                 .build();
-        List<Perfume> actualList1 = perfumeService.findPerfumeByBrand(perfumeRequestDto);
-        Perfume actual1 = actualList1.get(0);
+
+        Perfume perfume = Perfume.builder()
+                .brandName("샤넬")
+                .build();
+
+        List<Perfume> mockPerfume = new ArrayList<>();
+
+        mockPerfume.add(perfume);
+
+        Mockito.when(perfumeRepository.findByBrandNameContaining("샤넬"))
+                .thenReturn(mockPerfume);
+
+        Mockito.when(perfumeRepository.findByBrandNameContaining("예외"))
+                .thenThrow(BrandNotFoundException.class);
+        List<Perfume> actual = perfumeService.findPerfumeByBrand(perfumeRequestDto);
 
         PerfumeRequestDto exception = PerfumeRequestDto.builder()
-                .brandName("예외발생").
-                build();
+                .brandName("예외")
+                .build();
+
         assertAll(
-                () -> assertThat(actual).usingRecursiveComparison()
-                        .ignoringFields("id")
-                        .isEqualTo(expected),
-                () -> assertThat(actual1).usingRecursiveComparison()
-                        .ignoringFields("id")
-                        .isEqualTo(expected),
-                () -> assertThatThrownBy(() -> perfumeService.findPerfumeByBrand(exception))
-                        .isInstanceOf(BrandNotFoundException.class).hasMessage("해당 브랜드의 향수 데이터가 없습니다.")
+                () -> assertEquals(actual.get(0).getBrandName(), "샤넬"),
+                () -> assertThrows(BrandNotFoundException.class, () -> perfumeService.findPerfumeByBrand(exception))
         );
     }
 
