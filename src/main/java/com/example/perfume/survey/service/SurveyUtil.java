@@ -1,10 +1,13 @@
 package com.example.perfume.survey.service;
 
+import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class SurveyUtil {
@@ -30,6 +33,11 @@ public class SurveyUtil {
 
     private boolean isMoodAnswerUnique(int arrayLength) {
         return arrayLength == MOOD_COLUMN_SIZE;
+    }
+
+    public List<Perfume> convertToPerfumeData(List<Survey> surveyList) {
+        return surveyList.stream()
+                .map(Survey::getPerfume).collect(Collectors.toList());
     }
 
 }
