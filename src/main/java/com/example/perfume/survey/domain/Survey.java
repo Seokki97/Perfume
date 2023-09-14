@@ -48,6 +48,4 @@ public class Survey {
         this.styleAnswer = styleAnswer;
         this.perfume = perfume;
     }
-
-
 }

@@ -2,6 +2,7 @@ package com.example.perfume.survey.service;
 
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Survey;
+import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.repository.SurveyRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -10,10 +11,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -73,7 +73,7 @@ public class SurveyServiceTest {
         List<Perfume> actual = surveyService.showSimilarPerfumeList(citrusPerfume);
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(2,actual.size())
+                () -> Assertions.assertEquals(2, actual.size())
         );
     }
 }
