@@ -9,7 +9,6 @@ import lombok.Getter;
 @Getter
 public class SurveyRequestDto {
 
-
     private String genderAnswer;
     private String scentAnswer;
     private String moodAnswer;
@@ -27,25 +26,5 @@ public class SurveyRequestDto {
         this.moodAnswer = moodAnswer;
         this.seasonAnswer = seasonAnswer;
         this.styleAnswer = styleAnswer;
-    }
-
-    public static SurveyRequestDto makeDto(Survey survey) {
-        return SurveyRequestDto.builder()
-                .genderAnswer(survey.getGenderAnswer())
-                .scentAnswer(survey.getScentAnswer())
-                .seasonAnswer(survey.getSeasonAnswer())
-                .moodAnswer(survey.getMoodAnswer())
-                .styleAnswer(survey.getStyleAnswer())
-                .build();
-    }
-
-    public Survey toEntity(Perfume perfume) {
-        return Survey.builder()
-                .genderAnswer(genderAnswer)
-                .scentAnswer(scentAnswer)
-                .moodAnswer(moodAnswer)
-                .seasonAnswer(seasonAnswer)
-                .styleAnswer(styleAnswer)
-                .build();
     }
 }
