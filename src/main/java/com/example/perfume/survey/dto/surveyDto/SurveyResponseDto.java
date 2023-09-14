@@ -1,5 +1,6 @@
 package com.example.perfume.survey.dto.surveyDto;
 
+import com.example.perfume.crawling.domain.survey.SurveyList;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.survey.domain.Survey;
 import lombok.Builder;
@@ -41,6 +42,17 @@ public class SurveyResponseDto {
                 .seasonAnswer(seasonAnswer)
                 .styleAnswer(styleAnswer)
                 .perfume(perfume)
+                .build();
+    }
+
+    public static SurveyResponseDto makeList(Long id, int firstIndex, SurveyList surveyList) {
+        return SurveyResponseDto.builder()
+                .id(id)
+                .genderAnswer(surveyList.getFirstAnswer().get(firstIndex))
+                .scentAnswer(surveyList.getSecondAnswer().get(firstIndex))
+                .moodAnswer(surveyList.getThirdAnswer().get(firstIndex))
+                .seasonAnswer(surveyList.getFourthAnswer().get(firstIndex))
+                .styleAnswer(surveyList.getFifthAnswer().get(firstIndex))
                 .build();
     }
 }
