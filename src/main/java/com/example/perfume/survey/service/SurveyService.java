@@ -30,13 +30,8 @@ public class SurveyService {
         return surveyRepository.save(survey);
     }
 
-    public List<Perfume> convertToPerfumeData(List<Survey> surveyList) {
-        return surveyList.stream()
-                .map(data -> data.getPerfume()).collect(Collectors.toList());
-    }
-
     private List<Survey> filterSurveyResultByQuestion(SurveyRequestDto surveyRequestDto) {
-        if (isNotSelectedSeasonAnswer(surveyRequestDto)) {
+        if (surveyUtil.isNotSelectedSeasonAnswer(surveyRequestDto)) {
             return surveyRepository.findSurveysByGenderScentMoodAndStyle(
                     surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(),
                     surveyRequestDto.getMoodAnswer(), surveyRequestDto.getStyleAnswer());
@@ -50,27 +45,22 @@ public class SurveyService {
     public List<Perfume> showPerfumeListBySurvey(SurveyRequestDto surveyRequestDto) {
         List<Survey> surveyList = filterSurveyResultByQuestion(surveyRequestDto);
 
-        if (isEmptyRecommendedPerfumeList(surveyList)) {
+        if (surveyUtil.isEmptyRecommendedPerfumeList(surveyList)) {
             List<Survey> surveyListByMood = surveyRepository.findSurveysByGenderScentAndMood(
                     surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(), surveyRequestDto.getMoodAnswer());
-            return convertToPerfumeData(surveyListByMood);
+
+            return surveyUtil.convertToPerfumeData(surveyListByMood);
         }
-        return convertToPerfumeData(surveyList);
+        return surveyUtil.convertToPerfumeData(surveyList);
     }
 
     public List<Perfume> showSimilarPerfumeList(Survey survey) {
+        String selectedMoodAnswer = surveyUtil.showMoodAnswer(survey);
 
         List<Survey> findSimilarData = surveyRepository.findSurveysByGenderScentAndMood
-                (survey.getGenderAnswer(), survey.getScentAnswer(), surveyUtil.showMoodAnswer(survey));
+                (survey.getGenderAnswer(), survey.getScentAnswer(), selectedMoodAnswer);
 
-        return convertToPerfumeData(findSimilarData);
+        return surveyUtil.convertToPerfumeData(findSimilarData);
     }
 
-    private boolean isEmptyRecommendedPerfumeList(List<Survey> surveyList) {
-        return convertToPerfumeData(surveyList).isEmpty();
-    }
-
-    private boolean isNotSelectedSeasonAnswer(SurveyRequestDto surveyRequestDto) {
-        return surveyRequestDto.getSeasonAnswer().equals(SurveyType.NOT_SELECT_SEASON.getValue());
-    }
 }
