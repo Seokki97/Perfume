@@ -13,16 +13,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-
-import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
 public class WishListUtilTest {
@@ -69,6 +65,22 @@ public class WishListUtilTest {
                 .memberId(2l)
                 .build();
         boolean actual = wishListUtil.isDuplicateWishItem(duplicatedPerfume);
+
+        Assertions.assertTrue(actual);
+    }
+
+    @DisplayName("위시리스트가 가득 찼는지 확인한다")
+    @Test
+    void isMaxSize() {
+        List<WishList> wishLists = new ArrayList<>();
+
+        for (int i = 0; i < 20; i++) {
+            wishLists.add(new WishList(1l, Member.builder().id(1l).build(), null));
+        }
+
+        when(wishListRepository.findByMemberId(any())).thenReturn(wishLists);
+
+        boolean actual = wishListUtil.isWishListOverMaxSize(WishListRequest.builder().memberId(1l).build());
 
         Assertions.assertTrue(actual);
     }
