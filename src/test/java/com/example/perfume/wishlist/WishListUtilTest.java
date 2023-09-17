@@ -54,4 +54,22 @@ public class WishListUtilTest {
 
         );
     }
+
+    @DisplayName("WishList의 담은 항목이 중복되었는지 검증한다.")
+    @Test
+    void isDuplicateWishObject() {
+        WishList wishList = new WishList(1l, Member.builder().id(2l).build(), Perfume.builder().id(1l).build());
+        List<WishList> wishLists = new ArrayList<>();
+        wishLists.add(wishList);
+
+        when(wishListRepository.findByMemberId(any())).thenReturn(wishLists);
+
+        WishListRequest duplicatedPerfume = WishListRequest.builder()
+                .perfumeId(1l)
+                .memberId(2l)
+                .build();
+        boolean actual = wishListUtil.isDuplicateWishItem(duplicatedPerfume);
+
+        Assertions.assertTrue(actual);
+    }
 }
