@@ -43,13 +43,12 @@ public class WishListUtil {
     }
 
     public boolean isEmptyRequestBody(WishListRequest wishListRequest) {
-        return wishListRequest.getMemberId() == null && wishListRequest.getPerfumeId() == null;
+        return wishListRequest.getMemberId() == null || wishListRequest.getPerfumeId() == null;
     }
 
     public boolean isDuplicateWishItem(WishListRequest wishListRequest) {
         return wishListRepository.findByMemberId(wishListRequest.getMemberId()).stream()
                 .anyMatch(perfume -> Objects.equals(perfume.getPerfume().getId(), wishListRequest.getPerfumeId()));
-
     }
 
     public boolean isWishListOverMaxSize(WishListRequest wishListRequest) {
