@@ -109,4 +109,26 @@ public class WishListUtilTest {
         wishListUtil.deleteSelectedWishElement(wishListRequest);
         verify(wishListRepository, times(1)).deleteByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
     }
+
+    @DisplayName("위시리스트 항목들을 조회한다. 없을 경우 빈 객체가 반환된다.")
+    @Test
+    void showAllWishList() {
+
+        List<WishList> wishLists = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            wishLists.add(new WishList(1l, Member.builder().id(1l).build(), null));
+        }
+        List<WishList> notFoundedWishList = new ArrayList<>();
+
+        when(wishListRepository.findByMemberId(eq(1l))).thenReturn(wishLists);
+        when(wishListRepository.findByMemberId(eq(2l))).thenReturn(notFoundedWishList);
+
+        int actual = wishListUtil.showWishList(1l).size();
+        int actualNotFoundedCase = wishListUtil.showWishList(2l).size();
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(10, actual),
+                () -> Assertions.assertEquals(0, actualNotFoundedCase)
+        );
+    }
 }
