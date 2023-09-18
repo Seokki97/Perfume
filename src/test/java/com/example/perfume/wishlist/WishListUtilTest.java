@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class WishListUtilTest {
@@ -83,5 +83,30 @@ public class WishListUtilTest {
         boolean actual = wishListUtil.isWishListOverMaxSize(WishListRequest.builder().memberId(1l).build());
 
         Assertions.assertTrue(actual);
+    }
+
+    @DisplayName("모든 위시리스트를 삭제한다.")
+    @Test
+    void deleteAllWishList() {
+        Long memberId = 1l;
+        doNothing().when(wishListRepository).deleteByMemberId(memberId);
+
+        wishListUtil.deleteAllWishedList(memberId);
+
+        verify(wishListRepository, times(1)).deleteByMemberId(memberId);
+    }
+
+    @DisplayName("선택한 위시 향수를 삭제한다.")
+    @Test
+    void deleteSelectedWishElement() {
+        WishListRequest wishListRequest = WishListRequest.builder()
+                .perfumeId(1l)
+                .memberId(1l)
+                .build();
+
+        doNothing().when(wishListRepository).deleteByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
+
+        wishListUtil.deleteSelectedWishElement(wishListRequest);
+        verify(wishListRepository, times(1)).deleteByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
     }
 }
