@@ -22,7 +22,7 @@ public class WishListAnalyze {
         List<RankingResponse> rankingResponses = new ArrayList<>();
 
         for (int i = 0; i < wishLists.size(); i++) {
-            long count = countWishListObjects(wishLists, i);
+            long count = countWishListObjects(wishLists).size();
 
             RankingResponse rankingResponse = RankingResponse.makeRankingResponseObject(wishLists.get(i).getPerfume(), count);
             rankingResponses.add(rankingResponse);
@@ -41,10 +41,11 @@ public class WishListAnalyze {
         return rankingResponses;
     }
 
-    private Long countWishListObjects(List<WishList> wishLists, int index) {
+    private Map<String, Long> countWishListObjects(List<WishList> wishLists) {
         return wishLists.stream()
-                .filter(perfume -> getPerfumeName(perfume).matches(wishLists.get(index).getPerfume().getPerfumeName()))
-                .count();
+                .collect(Collectors.groupingBy(
+                        wishList -> wishList.getPerfume().getPerfumeName(), Collectors.counting()
+                ));
     }
 
     private List<RankingResponse> sortRankingListDescendingOrder(List<RankingResponse> rankingResponses) {
