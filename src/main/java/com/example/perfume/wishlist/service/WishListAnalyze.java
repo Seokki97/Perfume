@@ -17,14 +17,15 @@ public class WishListAnalyze {
         this.wishListRepository = wishListRepository;
     }
 
-    private List<RankingResponse> makeCountedWishList() {
+    public List<RankingResponse> makeCountedWishList() {
         List<WishList> wishLists = findAllWishList();
         List<RankingResponse> rankingResponses = new ArrayList<>();
 
-        for (int i = 0; i < wishLists.size(); i++) {
-            long count = countWishListObjects(wishLists).size();
+        Map<String, Long> countedWishLists = countWishListObjects(wishLists);
 
-            RankingResponse rankingResponse = RankingResponse.makeRankingResponseObject(wishLists.get(i).getPerfume(), count);
+        for (WishList wishList : wishLists) {
+            long count = countedWishLists.getOrDefault(wishList.getPerfume().getPerfumeName(), 0l);
+            RankingResponse rankingResponse = RankingResponse.makeRankingResponseObject(wishList.getPerfume(), count);
             rankingResponses.add(rankingResponse);
         }
         return rankingResponses;
