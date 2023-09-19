@@ -18,7 +18,7 @@ public class WishListAnalyze {
     }
 
     public List<RankingResponse> makeCountedWishList() {
-        List<WishList> wishLists = findAllWishList();
+        List<WishList> wishLists = wishListRepository.findAll();
         List<RankingResponse> rankingResponses = new ArrayList<>();
 
         Map<String, Long> countedWishLists = countWishListObjects(wishLists);
@@ -59,13 +59,5 @@ public class WishListAnalyze {
         return rankingResponses.stream()
                 .distinct()
                 .collect(Collectors.toList());
-    }
-
-    private String getPerfumeName(WishList wishList) {
-        return wishList.getPerfume().getPerfumeName();
-    }
-
-    private List<WishList> findAllWishList() {
-        return wishListRepository.findAll();
     }
 }
