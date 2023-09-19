@@ -37,16 +37,16 @@ public class RecommendationService {
     }
 
     public Recommendation recommendByOtherGuest(RecommendRequestDto recommendRequestDto) {
-        long recommendedMemberId = recommendRequestDto.getRecommender().getRecommendedMemberId();
+        long recommendedMemberId = recommendRequestDto.getRecommendedMemberId();
         Member recommendedMember = memberService.findMemberById(recommendedMemberId);
 
-        String scentAnswer = recommendRequestDto.getSurveyRequestDto().getScentAnswer();
+        String scentAnswer = recommendRequestDto.getSurveyAnswers().getScentAnswer();
 
         Recommendation recommendation = Recommendation.builder()
                 .member(recommendedMember)
                 .perfume(findPerfumeBySurvey(recommendRequestDto))
-                .recommender(recommendRequestDto.getRecommender().getRecommender())
-                .comment(recommendRequestDto.getRecommender().getComment())
+                .recommender(recommendRequestDto.getRecommender())
+                .comment(recommendRequestDto.getComment())
                 .scentAnswer(scentAnswer)
                 .build();
         recommendRepository.save(recommendation);
@@ -54,7 +54,7 @@ public class RecommendationService {
     }
 
     private Perfume findPerfumeBySurvey(RecommendRequestDto recommendRequestDto) {
-        SurveyRequestDto surveyRequestDto = recommendRequestDto.getSurveyRequestDto();
+        SurveyRequestDto surveyRequestDto = recommendRequestDto.getSurveyAnswers();
         List<Perfume> surveyResultList = surveyService.showPerfumeListBySurvey(surveyRequestDto);
         int randomNumber = RecommendUtils.createRandomPerfumeFromList(surveyResultList);
         return perfumeService.findPerfumeById(surveyResultList.get(randomNumber).getId());

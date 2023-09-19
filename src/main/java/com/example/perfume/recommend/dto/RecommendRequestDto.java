@@ -6,15 +6,21 @@ import lombok.Getter;
 @Getter
 public class RecommendRequestDto {
 
-    private SurveyRequestDto surveyRequestDto;
+    private SurveyRequestDto surveyAnswers;
 
-    private Recommender recommender;
+    private String recommender;
+
+    private Long recommendedMemberId;
+
+    private String comment;
 
     public RecommendRequestDto() {
     }
 
-    public RecommendRequestDto(Recommender recommender, SurveyRequestDto surveyRequestDto) {
+    public RecommendRequestDto(SurveyRequestDto surveyAnswers, Long recommendedMemberId, String comment, String recommender) {
+        this.surveyAnswers = surveyAnswers;
         this.recommender = recommender;
-        this.surveyRequestDto = surveyRequestDto;
+        this.recommendedMemberId = recommendedMemberId;
+        this.comment = comment;
     }
 }
