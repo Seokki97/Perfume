@@ -1,28 +1,20 @@
 package com.example.perfume.recommend.dto;
 
+import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import lombok.Getter;
 
 @Getter
 public class RecommendRequestDto {
 
-    private String genderAnswer;
-    private String moodAnswer;
-    private String scentAnswer;
-    private String seasonAnswer;
-    private String styleAnswer;
-    private String recommender;
-    private String comment;
+    private SurveyRequestDto surveyRequestDto;
+
+    private Recommender recommender;
 
     public RecommendRequestDto() {
     }
 
-    public RecommendRequestDto(String recommender, String comment, String genderAnswer, String moodAnswer, String scentAnswer, String seasonAnswer, String styleAnswer) {
+    public RecommendRequestDto(Recommender recommender, SurveyRequestDto surveyRequestDto) {
         this.recommender = recommender;
-        this.comment = comment;
-        this.genderAnswer = genderAnswer;
-        this.moodAnswer = moodAnswer;
-        this.scentAnswer = scentAnswer;
-        this.seasonAnswer = seasonAnswer;
-        this.styleAnswer = styleAnswer;
+        this.surveyRequestDto = surveyRequestDto;
     }
 }

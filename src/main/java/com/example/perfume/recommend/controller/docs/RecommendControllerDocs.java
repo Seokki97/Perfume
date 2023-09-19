@@ -24,8 +24,7 @@ public interface RecommendControllerDocs {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "404", description = "추천할 수 없음")
     })
-    ResponseEntity<Recommendation> recommendPerfume(@Parameter(description = "회원 id") @PathVariable("id") Long id,
-                                                    @Parameter(description = "RecommendRequest 데이터") @RequestBody RecommendRequestDto recommendRequestDto);
+    ResponseEntity<Recommendation> recommendPerfume(@Parameter(description = "RecommendRequest 데이터") @RequestBody RecommendRequestDto recommendRequestDto);
 
     @Operation(summary = "타인이 추천해준 향수 조회하기")
     @ApiResponses(value = {

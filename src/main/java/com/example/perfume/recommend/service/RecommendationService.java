@@ -1,8 +1,10 @@
 package com.example.perfume.recommend.service;
 
+import com.example.perfume.member.domain.Member;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.RecommendRequestDto;
 import com.example.perfume.recommend.dto.RecommendResponseDto;
+import com.example.perfume.recommend.dto.Recommender;
 import com.example.perfume.recommend.repository.RecommendRepository;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.perfume.domain.Perfume;
@@ -34,20 +36,26 @@ public class RecommendationService {
         this.perfumeService = perfumeService;
     }
 
-    public Recommendation recommendByOtherGuest(Long id, RecommendRequestDto recommendRequestDto) {
+    public Recommendation recommendByOtherGuest(RecommendRequestDto recommendRequestDto) {
+        long recommendedMemberId = recommendRequestDto.getRecommender().getRecommendedMemberId();
+        Member recommendedMember = memberService.findMemberById(recommendedMemberId);
+
+        String scentAnswer = recommendRequestDto.getSurveyRequestDto().getScentAnswer();
+
         Recommendation recommendation = Recommendation.builder()
-                .member(memberService.findMemberById(id))
+                .member(recommendedMember)
                 .perfume(findPerfumeBySurvey(recommendRequestDto))
-                .recommender(recommendRequestDto.getRecommender())
-                .comment(recommendRequestDto.getComment())
-                .scentAnswer(recommendRequestDto.getScentAnswer())
+                .recommender(recommendRequestDto.getRecommender().getRecommender())
+                .comment(recommendRequestDto.getRecommender().getComment())
+                .scentAnswer(scentAnswer)
                 .build();
         recommendRepository.save(recommendation);
         return recommendation;
     }
 
     private Perfume findPerfumeBySurvey(RecommendRequestDto recommendRequestDto) {
-        List<Perfume> surveyResultList = surveyService.showPerfumeListBySurvey(SurveyRequestDto.createSurveyRequestDto(recommendRequestDto));
+        SurveyRequestDto surveyRequestDto = recommendRequestDto.getSurveyRequestDto();
+        List<Perfume> surveyResultList = surveyService.showPerfumeListBySurvey(surveyRequestDto);
         int randomNumber = RecommendUtils.createRandomPerfumeFromList(surveyResultList);
         return perfumeService.findPerfumeById(surveyResultList.get(randomNumber).getId());
     }

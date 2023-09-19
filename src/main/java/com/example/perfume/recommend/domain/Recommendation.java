@@ -1,7 +1,9 @@
 package com.example.perfume.recommend.domain;
 
 import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.service.MemberService;
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.recommend.dto.RecommendRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
