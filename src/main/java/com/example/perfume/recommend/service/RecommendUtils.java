@@ -8,14 +8,14 @@ import java.util.Random;
 
 public class RecommendUtils {
 
-    public static int createRandomPerfumeFromList(List<Perfume> surveyResultList) {
+    public static int createRandomPerfumeFromList(List<Perfume> recommendedPerfumeList) {
         Random random = new Random();
-        int recommendedPerfumeSize = surveyResultList.size();
+        int listSize = recommendedPerfumeList.size();
 
-        if(recommendedPerfumeSize == 0){
+        if(listSize == 0){
            throw new RecommendNotFoundException();
         }
-        return random.nextInt(recommendedPerfumeSize);
+        return random.nextInt(listSize);
     }
 
     public static int createRandomNumber(List<String> nicknameList) {
