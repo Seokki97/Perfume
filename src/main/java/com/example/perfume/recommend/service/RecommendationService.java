@@ -1,6 +1,8 @@
 package com.example.perfume.recommend.service;
 
 import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.exception.UserNotFoundException;
+import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.RecommendRequestDto;
 import com.example.perfume.recommend.dto.RecommendResponseDto;
@@ -26,14 +28,17 @@ public class RecommendationService {
     private final MemberService memberService;
 
     private final PerfumeService perfumeService;
+    private final MemberRepository memberRepository;
 
     public RecommendationService(RecommendRepository recommendRepository, SurveyService surveyService,
                                  MemberService memberService,
-                                 PerfumeService perfumeService) {
+                                 PerfumeService perfumeService,
+                                 MemberRepository memberRepository) {
         this.recommendRepository = recommendRepository;
         this.surveyService = surveyService;
         this.memberService = memberService;
         this.perfumeService = perfumeService;
+        this.memberRepository = memberRepository;
     }
 
     public Recommendation recommendByOtherGuest(RecommendRequestDto recommendRequestDto) {
@@ -62,11 +67,12 @@ public class RecommendationService {
 
     @Transactional
     public RecommendResponseDto showRecommendedPerfume(Long id) {
-        Long memberId = memberService.findMemberById(id).getId();
+        Member member = memberService.findMemberById(id);
+        List<Recommendation> recommendedList = recommendRepository.findByMemberId(member.getId());
 
         return RecommendResponseDto.builder()
-                .id(memberId)
-                .recommendationList(recommendRepository.findByMemberId(memberId))
+                .id(member.getId())
+                .recommendationList(recommendedList)
                 .build();
     }
 
