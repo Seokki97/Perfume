@@ -28,17 +28,14 @@ public class RecommendationService {
     private final MemberService memberService;
 
     private final PerfumeService perfumeService;
-    private final MemberRepository memberRepository;
 
     public RecommendationService(RecommendRepository recommendRepository, SurveyService surveyService,
                                  MemberService memberService,
-                                 PerfumeService perfumeService,
-                                 MemberRepository memberRepository) {
+                                 PerfumeService perfumeService) {
         this.recommendRepository = recommendRepository;
         this.surveyService = surveyService;
         this.memberService = memberService;
         this.perfumeService = perfumeService;
-        this.memberRepository = memberRepository;
     }
 
     public Recommendation recommendByOtherGuest(RecommendRequestDto recommendRequestDto) {
