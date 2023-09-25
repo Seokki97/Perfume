@@ -4,7 +4,9 @@ import com.example.perfume.recommend.dto.analyze.AnalyzeResponse;
 import com.example.perfume.recommend.exception.RecommendNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AnalyzeUtil {
@@ -15,28 +17,29 @@ public class AnalyzeUtil {
         }
     }
 
-    public Long countElement(List<String> elementList, int i) {
-        return elementList.stream().filter(x -> elementList.get(i).matches(x)).count();
+    public Map<String, Long> countElement(List<String> elementList) {
+        Map<String, Long> elementCountMap = new HashMap<>();
+
+        for (String element : elementList) {
+            elementCountMap.put(element, elementCountMap.getOrDefault(element, 0L) + 1);
+        }
+        return elementCountMap;
     }
 
     public AnalyzeResponse countPerfumeList(List<String> elementList) {
         Long maxCount = 0L;
         String elementName = "";
-        int perfumeNameListSize = elementList.size();
 
-        for (int i = 0; i < perfumeNameListSize; i++) {
-            Long count = countElement(elementList, i);
-            if (count > maxCount) {
-                elementName = elementList.get(i);
-                maxCount = count;
+        Map<String, Long> elementCountMap = countElement(elementList);
+
+        for (Map.Entry<String, Long> entry : elementCountMap.entrySet()) {
+            if (entry.getValue() > maxCount) {
+                elementName = entry.getKey();
+                maxCount = entry.getValue();
             }
         }
         isCountingNumberExist(maxCount);
 
-        return AnalyzeResponse.builder()
-                .elementName(elementName)
-                .count(maxCount)
-                .build();
+        return new AnalyzeResponse(elementName, maxCount);
     }
-
 }
