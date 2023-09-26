@@ -30,7 +30,7 @@ public class WishListUtil {
         }
     }
 
-    public void saveWishPerfume(WishList wishList) {
+    public void savePerfumeToWishList(WishList wishList) {
         wishListRepository.save(wishList);
     }
 

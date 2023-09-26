@@ -34,8 +34,8 @@ public class PerfumeData {
 
     public void savePerfumeData(Long id, PerfumeList perfume) throws IOException {
         perfume = perfumeCsvFileLoading.extractAllPerfumeData(perfume);
-        int perfumeListSize = perfume.getMaxSize();
-        for (int firstIndex = 0; firstIndex < perfumeListSize; firstIndex++) {
+        int listSize = perfume.getMaxSize();
+        for (int firstIndex = 0; firstIndex < listSize; firstIndex++) {
             Perfume perfumeDataSet = makePerfumeList(id, firstIndex, perfume).toEntity();
             perfumeRepository.save(perfumeDataSet);
         }

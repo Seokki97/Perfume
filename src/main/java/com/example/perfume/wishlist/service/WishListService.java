@@ -33,7 +33,7 @@ public class WishListService {
         WishList wishList = WishList.builder()
                 .perfume(perfume)
                 .build();
-        wishListUtil.saveWishPerfume(wishList);
+        wishListUtil.savePerfumeToWishList(wishList);
     }
 
     public WishListResponse selectLikePerfume(WishListRequest wishListRequest) {
@@ -51,7 +51,7 @@ public class WishListService {
         }
 
         WishList wishList = WishList.addPerfumeToWishList(member, perfume);
-        wishListUtil.saveWishPerfume(wishList);
+        wishListUtil.savePerfumeToWishList(wishList);
 
         return WishListResponse.provideWishResponseEntity(wishList);
     }
