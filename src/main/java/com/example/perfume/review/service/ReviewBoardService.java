@@ -25,7 +25,6 @@ public class ReviewBoardService {
 
     private final ReviewBoardRepository reviewBoardRepository;
 
-
     public ReviewBoardService(ReviewBoardRepository reviewBoardRepository, PerfumeService perfumeService, MemberService memberService) {
         this.reviewBoardRepository = reviewBoardRepository;
         this.perfumeService = perfumeService;
@@ -34,7 +33,7 @@ public class ReviewBoardService {
 
     //리뷰 작성 // 3번사용자 -> 리뷰
     public ReviewBoardResponse writeReview(Long memberId, ReviewBoardRequest boardRequest) {
-        Perfume perfume = perfumeService.findPerfumeByName(boardRequest.getPerfumeName());
+
         Member member = memberService.findByMemberPk(memberId);
         PerfumeReviewBoard perfumeReviewBoard = boardRequest.toEntity(member, boardRequest.getContent());
 
