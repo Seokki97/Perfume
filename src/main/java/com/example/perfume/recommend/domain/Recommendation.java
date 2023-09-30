@@ -1,9 +1,7 @@
 package com.example.perfume.recommend.domain;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.service.MemberService;
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.recommend.dto.RecommendRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,8 +15,8 @@ import javax.persistence.*;
 public class Recommendation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "recommendation_id", nullable = false)
+    private Long recommendationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Perfume perfume;
@@ -35,8 +33,8 @@ public class Recommendation {
     private String scentAnswer;
 
     @Builder
-    public Recommendation(Long id, Member member, Perfume perfume, String recommender, String comment, String scentAnswer) {
-        this.id = id;
+    public Recommendation(Long recommendationId, Member member, Perfume perfume, String recommender, String comment, String scentAnswer) {
+        this.recommendationId = recommendationId;
         this.member = member;
         this.perfume = perfume;
         this.recommender = recommender;

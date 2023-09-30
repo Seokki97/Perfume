@@ -65,7 +65,7 @@ public class RecommendationService {
         List<Recommendation> recommendedList = recommendRepository.findByMemberId(member.getMemberId());
 
         return RecommendResponseDto.builder()
-                .id(member.getMemberId())
+                .memberId(member.getMemberId())
                 .recommendationList(recommendedList)
                 .build();
     }

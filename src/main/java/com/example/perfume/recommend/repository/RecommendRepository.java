@@ -15,5 +15,5 @@ public interface RecommendRepository extends JpaRepository<Recommendation, Long>
     @Query("SELECT r FROM recommend r JOIN FETCH r.perfume WHERE r.member.id = :memberId")
     List<Recommendation> findByMemberId(@Param("memberId") Long memberId);
 
-    Optional<Recommendation> findById(Long memberId);
+    Optional<Recommendation> findByRecommendationId(Long memberId);
 }

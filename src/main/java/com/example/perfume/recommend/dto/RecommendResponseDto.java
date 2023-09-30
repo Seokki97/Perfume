@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 public class RecommendResponseDto {
 
-    private Long id;
+    private Long memberId;
 
     private List<Recommendation> recommendationList;
 
@@ -18,8 +18,8 @@ public class RecommendResponseDto {
     }
 
     @Builder
-    public RecommendResponseDto(Long id, List<Recommendation> recommendationList) {
-        this.id = id;
+    public RecommendResponseDto(Long memberId, List<Recommendation> recommendationList) {
+        this.memberId = memberId;
         this.recommendationList = recommendationList;
     }
 }
