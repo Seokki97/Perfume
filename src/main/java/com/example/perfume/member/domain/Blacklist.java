@@ -15,7 +15,7 @@ public class Blacklist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "blacklist_id", nullable = false)
-    private Long id;
+    private Long blacklistId;
 
     @ManyToOne
     @NotNull
@@ -25,8 +25,8 @@ public class Blacklist {
     private String accessToken;
 
     @Builder
-    public Blacklist(Long id, Member member, String accessToken) {
-        this.id = id;
+    public Blacklist(Long blacklistId, Member member, String accessToken) {
+        this.blacklistId = blacklistId;
         this.member = member;
         this.accessToken = accessToken;
     }

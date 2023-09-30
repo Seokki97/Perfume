@@ -61,7 +61,7 @@ public class LoginService implements UserDetailsService {
             throw new MemberAlreadyLogoutException();
         }
         return LoginResponse.builder()
-                .id(member.getMemberId())
+                .memberId(member.getMemberId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
                 .build();
@@ -73,7 +73,7 @@ public class LoginService implements UserDetailsService {
         Member member = memberService.findMemberById(token.getMemberId());
 
         return LoginResponse.builder()
-                .id(member.getMemberId())
+                .memberId(member.getMemberId())
                 .nickname(member.getNickname())
                 .email(member.getEmail())
                 .accessToken(regenerateAccessToken(String.valueOf(member.getKakaoId())))
