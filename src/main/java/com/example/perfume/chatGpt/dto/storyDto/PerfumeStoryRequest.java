@@ -1,12 +1,13 @@
 package com.example.perfume.chatGpt.dto.storyDto;
 
+import com.example.perfume.chatGpt.dto.GptRequestInterface;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.io.Serializable;
 
 @Getter
-public class PerfumeStoryRequest implements Serializable {
+public class PerfumeStoryRequest implements Serializable, GptRequestInterface {
     private String name;
 
     private String genderAnswer;

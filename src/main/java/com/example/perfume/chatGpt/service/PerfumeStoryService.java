@@ -1,5 +1,6 @@
 package com.example.perfume.chatGpt.service;
 
+import com.example.perfume.chatGpt.dto.GptRequestInterface;
 import com.example.perfume.config.ChatGptConfig;
 import com.example.perfume.chatGpt.dto.gptDto.ChatGptRequest;
 import com.example.perfume.chatGpt.dto.gptDto.ChatGptResponse;
@@ -39,12 +40,12 @@ public class PerfumeStoryService {
         return responseEntity.getBody();
     }
 
-    public ChatGptResponse askQuestionToChatGpt(PerfumeStoryRequest perfumeStoryRequest) {
+    public ChatGptResponse askQuestionToChatGpt(GptRequestInterface request) {
         return this.getResponse(
                 this.createHttpEntity(
                         ChatGptRequest.builder()
                                 .model(ChatGptConfig.MODEL)
-                                .messages(GptMessageGenerator.makeMessageJSONArray(perfumeStoryRequest))
+                                .messages(GptMessageGenerator.makeMessageJSONArray(request))
                                 .build()));
     }
 
