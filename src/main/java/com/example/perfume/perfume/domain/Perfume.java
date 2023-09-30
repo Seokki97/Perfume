@@ -11,8 +11,8 @@ import javax.persistence.*;
 public class Perfume {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "perfume_id")
+    private Long perfumeId;
 
     @NotNull
     @Column(nullable = false, length = 40)
@@ -35,8 +35,8 @@ public class Perfume {
     private String maintenance;
 
     @Builder
-    public Perfume(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl, String maintenance) {
-        this.id = id;
+    public Perfume(Long perfumeId, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl, String maintenance) {
+        this.perfumeId = perfumeId;
         this.perfumeName = perfumeName;
         this.brandName = brandName;
         this.perfumeFeature = perfumeFeature;

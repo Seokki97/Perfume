@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 public class PerfumeRequestDto {
 
-    private Long id;
+    private Long perfumeId;
     private String perfumeName;
     private String brandName;
     private String perfumeFeature;
@@ -18,8 +18,8 @@ public class PerfumeRequestDto {
     }
 
     @Builder
-    public PerfumeRequestDto(Long id, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
-        this.id = id;
+    public PerfumeRequestDto(Long perfumeId, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl) {
+        this.perfumeId = perfumeId;
         this.perfumeName = perfumeName;
         this.brandName = brandName;
         this.perfumeFeature = perfumeFeature;
@@ -28,7 +28,7 @@ public class PerfumeRequestDto {
 
     public Perfume toEntity() {
         return Perfume.builder()
-                .id(id)
+                .perfumeId(perfumeId)
                 .perfumeName(perfumeName)
                 .brandName(brandName)
                 .perfumeFeature(perfumeFeature)

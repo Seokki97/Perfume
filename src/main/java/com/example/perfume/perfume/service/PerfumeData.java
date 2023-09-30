@@ -23,7 +23,7 @@ public class PerfumeData {
 
     private PerfumeResponseDto makePerfumeList(Long id, int firstIndex, PerfumeList perfumeList) {
         return PerfumeResponseDto.builder()
-                .id(id)
+                .perfumeId(id)
                 .perfumeName(perfumeList.getPerfumeName().get(firstIndex))
                 .perfumeFeature(perfumeList.getPerfumeFeature().get(firstIndex))
                 .brandName(perfumeList.getPerfumeBrand().get(firstIndex))

@@ -31,8 +31,8 @@ public class PerfumeService {
         return perfume;
     }
 
-    public Perfume findPerfumeById(Long id) { // 1240
-        return perfumeRepository.findById(id).orElseThrow(PerfumeNotFoundException::new);
+    public Perfume findPerfumeById(Long perfumeId) { // 1240
+        return perfumeRepository.findByPerfumeId(perfumeId).orElseThrow(PerfumeNotFoundException::new);
     }
 
     public Perfume findPerfumeByName(String perfumeName) {
@@ -68,7 +68,7 @@ public class PerfumeService {
                 .orElseThrow(PerfumeNotFoundException::new);
 
         return PerfumeResponseDto.builder()
-                .id(perfume.getId())
+                .perfumeId(perfume.getPerfumeId())
                 .perfumeFeature(perfume.getPerfumeFeature())
                 .perfumeName(perfume.getPerfumeName())
                 .brandName(perfume.getBrandName())

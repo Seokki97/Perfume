@@ -1,12 +1,9 @@
 package com.example.perfume.recommend.service;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.exception.UserNotFoundException;
-import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.RecommendRequestDto;
 import com.example.perfume.recommend.dto.RecommendResponseDto;
-import com.example.perfume.recommend.dto.Recommender;
 import com.example.perfume.recommend.repository.RecommendRepository;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.perfume.domain.Perfume;
@@ -59,7 +56,7 @@ public class RecommendationService {
         SurveyRequestDto surveyRequestDto = recommendRequestDto.getSurveyAnswers();
         List<Perfume> surveyResultList = surveyService.showPerfumeListBySurvey(surveyRequestDto);
         int randomNumber = RecommendUtils.createRandomPerfumeFromList(surveyResultList);
-        return perfumeService.findPerfumeById(surveyResultList.get(randomNumber).getId());
+        return perfumeService.findPerfumeById(surveyResultList.get(randomNumber).getPerfumeId());
     }
 
     @Transactional
