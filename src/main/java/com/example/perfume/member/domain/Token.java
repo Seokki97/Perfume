@@ -13,9 +13,9 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Token {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "token_id", nullable = false)
+    private Long tokenId;
 
     @NotNull
     private String refreshToken;
@@ -24,8 +24,8 @@ public class Token {
     private Long memberId;
 
     @Builder
-    public Token(Long id, String refreshToken, Long memberId) {
-        this.id = id;
+    public Token(Long tokenId, String refreshToken, Long memberId) {
+        this.tokenId = tokenId;
         this.refreshToken = refreshToken;
         this.memberId = memberId;
     }
