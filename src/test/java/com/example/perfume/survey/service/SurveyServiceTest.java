@@ -37,11 +37,11 @@ public class SurveyServiceTest {
     void showSimilarPerfume() {
 
         Perfume perfume = Perfume.builder()
-                .id(4l)
+                .perfumeId(4l)
                 .build();
 
         Perfume perfume1 = Perfume.builder()
-                .id(3l)
+                .perfumeId(3l)
                 .build();
 
         Survey vanillaPerfume = Survey.builder()

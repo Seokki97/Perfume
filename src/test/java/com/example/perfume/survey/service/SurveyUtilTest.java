@@ -40,7 +40,7 @@ public class SurveyUtilTest {
     @Test
     void extractPerfumeData() {
         Perfume perfume = Perfume.builder()
-                .id(1l).build();
+                .perfumeId(1l).build();
 
         Survey survey = Survey.builder()
                 .perfume(perfume)
@@ -52,7 +52,7 @@ public class SurveyUtilTest {
         List<Perfume> actual = surveyUtil.convertToPerfumeData(surveyList);
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(1l, actual.get(0).getId()),
+                () -> Assertions.assertEquals(1l, actual.get(0).getPerfumeId()),
                 () -> Assertions.assertEquals(perfume, actual.get(0))
         );
     }

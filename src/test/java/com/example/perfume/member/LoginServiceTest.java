@@ -44,7 +44,7 @@ public class LoginServiceTest {
                 .nickname("seokki97")
                 .build();
         memberRepository.save(member);
-        LoginResponse actual = loginService.generateToken(member.getMemberId());
+        LoginResponse actual = loginService.generateToken(member.getKakaoId());
 
         LoginResponse expected = LoginResponse.builder()
                 .id(1l)
@@ -73,7 +73,7 @@ public class LoginServiceTest {
                 .nickname("qwe")
                 .build();
        Token actual =  loginService.saveToken(loginResponse,member);
-       Token expected = tokenRepository.findByMemberId(member.getMemberId()).orElseThrow();
+       Token expected = tokenRepository.findByMemberId(member.getKakaoId()).orElseThrow();
 
        assertThat(actual).usingRecursiveComparison().isEqualTo(expected);
     }

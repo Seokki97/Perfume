@@ -2,7 +2,6 @@ package com.example.perfume.perfume.service;
 
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.PerfumeRequestDto;
-import com.example.perfume.perfume.dto.PerfumeResponseDto;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
@@ -105,7 +104,7 @@ public class PerfumeServiceTest {
         Perfume expected = perfumeService.findPerfumeById(1l);
 
         assertAll(
-                () -> assertEquals(expected.getId(), 1l),
+                () -> assertEquals(expected.getPerfumeId(), 1l),
                 () -> assertThrows(PerfumeNotFoundException.class, () -> perfumeRepository.findById(10l))
         );
     }
