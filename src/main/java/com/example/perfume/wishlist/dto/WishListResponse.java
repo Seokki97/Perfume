@@ -34,7 +34,7 @@ public class WishListResponse {
 
     public static WishListResponse provideWishResponseEntity(WishList wishList) {
         return WishListResponse.builder()
-                .wishListId(wishList.getId())
+                .wishListId(wishList.getWishListId())
                 .perfume(wishList.getPerfume())
                 .member(wishList.getMember())
                 .build();

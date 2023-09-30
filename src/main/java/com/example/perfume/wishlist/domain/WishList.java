@@ -16,7 +16,7 @@ public class WishList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wish_list_id", nullable = false)
-    private Long id;
+    private Long wishListId;
 
     @ManyToOne
     private Member member;
@@ -25,8 +25,8 @@ public class WishList {
     private Perfume perfume;
 
     @Builder
-    public WishList(Long id, Member member, Perfume perfume) {
-        this.id = id;
+    public WishList(Long wishListId, Member member, Perfume perfume) {
+        this.wishListId = wishListId;
         this.member = member;
         this.perfume = perfume;
     }
