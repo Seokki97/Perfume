@@ -75,7 +75,7 @@ public class OauthService {
                     .thumbnailImage((String) properties.get("thumbnail_image"))
                     .build();
             saveUserProfile(memberRequestDto);
-            return memberService.findByMemberPk(memberRequestDto.getMemberId());
+            return memberService.findByMemberPk(memberRequestDto.getKakaoId());
 
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -85,7 +85,7 @@ public class OauthService {
     public void saveUserProfile(MemberRequestDto memberRequestDto) {
         Member member = Member.builder()
                 .email(memberRequestDto.getEmail())
-                .memberId(memberRequestDto.getMemberId())
+                .kakaoId(memberRequestDto.getKakaoId())
                 .nickname(memberRequestDto.getNickname())
                 .thumbnailImage(memberRequestDto.getThumbnailImage())
                 .build();

@@ -65,10 +65,10 @@ public class RecommendationService {
     @Transactional
     public RecommendResponseDto showRecommendedPerfume(Long id) {
         Member member = memberService.findMemberById(id);
-        List<Recommendation> recommendedList = recommendRepository.findByMemberId(member.getId());
+        List<Recommendation> recommendedList = recommendRepository.findByMemberId(member.getMemberId());
 
         return RecommendResponseDto.builder()
-                .id(member.getId())
+                .id(member.getMemberId())
                 .recommendationList(recommendedList)
                 .build();
     }

@@ -36,9 +36,9 @@ public class LoginService implements UserDetailsService {
     public Token saveToken(LoginResponse loginResponse, Member member) {
         Token token = Token.builder()
                 .refreshToken(loginResponse.getRefreshToken())
-                .memberId(member.getMemberId())
+                .memberId(member.getKakaoId())
                 .build();
-        if (!tokenRepository.existsByMemberId(member.getMemberId())) {
+        if (!tokenRepository.existsByMemberId(member.getKakaoId())) {
             tokenRepository.save(token);
         }
         return token;
@@ -46,8 +46,8 @@ public class LoginService implements UserDetailsService {
 
     public LoginResponse generateToken(Long id) {
         Member member = memberService.findMemberById(id);
-        String accessToken = jwtProvider.createToken(String.valueOf(member.getId()));
-        String refreshToken = jwtProvider.createRefreshToken(String.valueOf(member.getId()));
+        String accessToken = jwtProvider.createToken(String.valueOf(member.getMemberId()));
+        String refreshToken = jwtProvider.createRefreshToken(String.valueOf(member.getMemberId()));
 
         LoginResponse loginResponse = LoginResponse.makeLoginResponseObject(member, accessToken, refreshToken);
 
@@ -61,7 +61,7 @@ public class LoginService implements UserDetailsService {
             throw new MemberAlreadyLogoutException();
         }
         return LoginResponse.builder()
-                .id(member.getId())
+                .id(member.getMemberId())
                 .email(member.getEmail())
                 .nickname(member.getNickname())
                 .build();
@@ -73,10 +73,10 @@ public class LoginService implements UserDetailsService {
         Member member = memberService.findMemberById(token.getMemberId());
 
         return LoginResponse.builder()
-                .id(member.getId())
+                .id(member.getMemberId())
                 .nickname(member.getNickname())
                 .email(member.getEmail())
-                .accessToken(regenerateAccessToken(String.valueOf(member.getMemberId())))
+                .accessToken(regenerateAccessToken(String.valueOf(member.getKakaoId())))
                 .build();
     }
 

@@ -6,7 +6,6 @@ import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.oauth.exception.MemberAlreadyExistException;
 import com.example.perfume.oauth.service.OauthService;
-import com.example.perfume.survey.exception.SurveyNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class MemberServiceTest {
                 .nickname("석32키")
                 .build();
         memberService.saveMemberProfile(expected);
-        Member actual = memberService.findMemberById(expected.getId());
+        Member actual = memberService.findMemberById(expected.getMemberId());
 
         assertAll(
                 () -> assertThat(actual).usingRecursiveComparison().isEqualTo(expected),
@@ -55,7 +54,7 @@ public class MemberServiceTest {
                 .build();
 
         memberService.saveMemberProfile(expected);
-        Member actual = memberService.findByMemberPk(expected.getMemberId());
+        Member actual = memberService.findByMemberPk(expected.getKakaoId());
 
         assertAll(
                 () -> assertThat(actual).usingRecursiveComparison().isEqualTo(expected),
@@ -95,7 +94,7 @@ public class MemberServiceTest {
                 .email("ddas@m123av.com")
                 .nickname("석키123")
                 .build();
-        MemberRequestDto memberId = MemberRequestDto.builder().memberId(expected.getMemberId())
+        MemberRequestDto memberId = MemberRequestDto.builder().memberId(expected.getKakaoId())
                 .email("ddas@m123av.com")
                 .nickname("석키123").build();
         memberService.saveMemberProfile(expected);

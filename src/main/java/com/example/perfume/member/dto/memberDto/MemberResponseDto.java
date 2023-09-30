@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class MemberResponseDto {
 
-    private Long id;
+    private Long memberId;
 
     private String nickname;
 
@@ -15,8 +15,8 @@ public class MemberResponseDto {
     public MemberResponseDto() {
     }
 
-    public MemberResponseDto(Long id, String nickname, String email) {
-        this.id = id;
+    public MemberResponseDto(Long memberId, String nickname, String email) {
+        this.memberId = memberId;
         this.nickname = nickname;
         this.email = email;
 
@@ -24,7 +24,7 @@ public class MemberResponseDto {
 
     public Member toEntity() {
         return Member.builder()
-                .id(id)
+                .memberId(memberId)
                 .email(email)
                 .nickname(nickname)
                 .build();

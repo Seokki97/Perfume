@@ -6,15 +6,8 @@ import com.example.perfume.review.dto.like.ReviewLikeRequest;
 import com.example.perfume.review.exception.ReviewPostNotFoundException;
 import com.example.perfume.review.repository.ReviewBoardRepository;
 import com.example.perfume.review.repository.ReviewLikeRepository;
-import org.springframework.boot.convert.PeriodUnit;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReviewLikeService {
@@ -58,7 +51,7 @@ public class ReviewLikeService {
     }
 
     public boolean isAlreadyPushLikeOrUnlike(ReviewLikeRequest reviewLikeRequest) {
-        Long memberId = reviewLikeRequest.getMember().getMemberId();
+        Long memberId = reviewLikeRequest.getMember().getKakaoId();
         Long postId = reviewLikeRequest.getPost().getBoardId();
         return reviewLikeRepository.existsByMemberAndReviewId(memberId, postId);
     }

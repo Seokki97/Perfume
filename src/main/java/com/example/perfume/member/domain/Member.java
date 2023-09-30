@@ -15,10 +15,10 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
-    @NotNull
+    @Column(name = "member_id", nullable = false)
     private Long memberId;
+    @NotNull
+    private Long kakaoId;
     @NotNull
     private String nickname;
 
@@ -28,9 +28,9 @@ public class Member {
     private String thumbnailImage;
 
     @Builder
-    public Member(Long id, Long memberId, String nickname, String email, String thumbnailImage) {
-        this.id = id;
+    public Member(Long memberId, Long kakaoId, String nickname, String email, String thumbnailImage) {
         this.memberId = memberId;
+        this.kakaoId = kakaoId;
         this.nickname = nickname;
         this.email = email;
         this.thumbnailImage = thumbnailImage;

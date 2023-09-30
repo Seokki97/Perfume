@@ -40,7 +40,7 @@ public class MemberService {
     }
 
     public boolean isAlreadyExistMember(MemberRequestDto memberRequestDto) {
-        return memberRepository.existsByMemberId(memberRequestDto.getMemberId());
+        return memberRepository.existsByMemberId(memberRequestDto.getKakaoId());
     }
 
     public void saveMemberProfile(Member member) {
