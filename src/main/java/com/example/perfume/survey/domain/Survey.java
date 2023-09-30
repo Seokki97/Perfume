@@ -12,8 +12,8 @@ import javax.persistence.*;
 public class Survey {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "survey_id")
+    private Long surveyId;
 
     @NotNull
     @Column(nullable = false, length = 10)
@@ -39,8 +39,8 @@ public class Survey {
     private Perfume perfume;
 
     @Builder
-    public Survey(Long id, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer, Perfume perfume) {
-        this.id = id;
+    public Survey(Long surveyId, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer, Perfume perfume) {
+        this.surveyId = surveyId;
         this.genderAnswer = genderAnswer;
         this.scentAnswer = scentAnswer;
         this.moodAnswer = moodAnswer;

@@ -23,7 +23,7 @@ public class SurveyService {
     }
 
     public Survey findSurveyById(Long id) {
-        return surveyRepository.findById(id).orElseThrow(SurveyNotFoundException::new);
+        return surveyRepository.findBySurveyId(id).orElseThrow(SurveyNotFoundException::new);
     }
 
     public Survey saveSurveyData(Survey survey) {
