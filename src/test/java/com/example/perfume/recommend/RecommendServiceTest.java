@@ -48,7 +48,7 @@ public class RecommendServiceTest {
     @Test
     void showRecommendedPerfume() {
         Member member = Member.builder()
-                .id(12l)
+                .memberId(12l)
                 .build();
         Recommendation recommendation = Recommendation.builder()
                 .member(member)
@@ -63,7 +63,7 @@ public class RecommendServiceTest {
                 .getRecommendationList()
                 .get(0)
                 .getMember()
-                .getId();
+                .getMemberId();
         Assertions.assertAll(
                 () -> Assertions.assertEquals(12, actualId)
         );

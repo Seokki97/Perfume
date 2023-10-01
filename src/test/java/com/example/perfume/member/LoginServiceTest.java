@@ -47,7 +47,7 @@ public class LoginServiceTest {
         LoginResponse actual = loginService.generateToken(member.getKakaoId());
 
         LoginResponse expected = LoginResponse.builder()
-                .id(1l)
+                .memberId(1l)
                 .accessToken(actual.getAccessToken())
                 .refreshToken(actual.getRefreshToken())
                 .email("skaksdl@naver.com")

@@ -57,7 +57,7 @@ public class ReviewBoardServiceTest {
                 .build();
 
         Member mockMember = Member.builder()
-                .id(1L)
+                .memberId(1L)
                 .build();
 
         Perfume mockPerfume = Perfume.builder()

@@ -96,7 +96,7 @@ public class PerfumeServiceTest {
     @Test
     void findById() {
         Perfume mockPerfume = Perfume.builder()
-                .id(1l)
+                .perfumeId(1l)
                 .build();
 
         Mockito.when(perfumeRepository.findById(1l)).thenReturn(Optional.ofNullable(mockPerfume));
@@ -113,11 +113,11 @@ public class PerfumeServiceTest {
     @Test
     void findAllData() {
         Perfume list1 = Perfume.builder()
-                .id(1l)
+                .perfumeId(1l)
                 .build();
 
         Perfume list2 = Perfume.builder()
-                .id(2l)
+                .perfumeId(2l)
                 .build();
 
         List<Perfume> mockPerfumes = new ArrayList<>();

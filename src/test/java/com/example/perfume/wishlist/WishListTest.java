@@ -15,10 +15,10 @@ public class WishListTest {
     @Test
     void addWishList() {
         Member member = Member.builder()
-                .id(1l)
+                .memberId(1l)
                 .build();
         Perfume perfume = Perfume.builder()
-                .id(1l)
+                .perfumeId(1l)
                 .build();
         WishList actual = WishList.addPerfumeToWishList(member, perfume);
 

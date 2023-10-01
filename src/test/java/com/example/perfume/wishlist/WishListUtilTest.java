@@ -54,11 +54,11 @@ public class WishListUtilTest {
     @DisplayName("WishList의 담은 항목이 중복되었는지 검증한다.")
     @Test
     void isDuplicateWishObject() {
-        WishList wishList = new WishList(1l, Member.builder().id(2l).build(), Perfume.builder().id(1l).build());
+        WishList wishList = new WishList(1l, Member.builder().memberId(2l).build(), Perfume.builder().perfumeId(1l).build());
         List<WishList> wishLists = new ArrayList<>();
         wishLists.add(wishList);
 
-        when(wishListRepository.findByMemberId(any())).thenReturn(wishLists);
+        when(wishListRepository.findByMember(any())).thenReturn(wishLists);
 
         WishListRequest duplicatedPerfume = WishListRequest.builder()
                 .perfumeId(1l)
@@ -75,10 +75,10 @@ public class WishListUtilTest {
         List<WishList> wishLists = new ArrayList<>();
 
         for (int i = 0; i < 20; i++) {
-            wishLists.add(new WishList(1l, Member.builder().id(1l).build(), null));
+            wishLists.add(new WishList(1l, Member.builder().memberId(1l).build(), null));
         }
 
-        when(wishListRepository.findByMemberId(any())).thenReturn(wishLists);
+        when(wishListRepository.findByMember(any())).thenReturn(wishLists);
 
         boolean actual = wishListUtil.isWishListOverMaxSize(WishListRequest.builder().memberId(1l).build());
 
@@ -89,11 +89,11 @@ public class WishListUtilTest {
     @Test
     void deleteAllWishList() {
         Long memberId = 1l;
-        doNothing().when(wishListRepository).deleteByMemberId(memberId);
+        doNothing().when(wishListRepository).deleteByMember_MemberId(memberId);
 
         wishListUtil.deleteAllWishedList(memberId);
 
-        verify(wishListRepository, times(1)).deleteByMemberId(memberId);
+        verify(wishListRepository, times(1)).deleteByMember_MemberId(memberId);
     }
 
     @DisplayName("선택한 위시 향수를 삭제한다.")
@@ -104,10 +104,10 @@ public class WishListUtilTest {
                 .memberId(1l)
                 .build();
 
-        doNothing().when(wishListRepository).deleteByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
+        doNothing().when(wishListRepository).deleteByMember_MemberIdAndPerfume_PerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
 
         wishListUtil.deleteSelectedWishElement(wishListRequest);
-        verify(wishListRepository, times(1)).deleteByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
+        verify(wishListRepository, times(1)).deleteByMember_MemberIdAndPerfume_PerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
     }
 
     @DisplayName("위시리스트 항목들을 조회한다. 없을 경우 빈 객체가 반환된다.")
@@ -117,12 +117,12 @@ public class WishListUtilTest {
         List<WishList> wishLists = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            wishLists.add(new WishList(1l, Member.builder().id(1l).build(), null));
+            wishLists.add(new WishList(1l, Member.builder().memberId(1l).build(), null));
         }
         List<WishList> notFoundedWishList = new ArrayList<>();
 
-        when(wishListRepository.findByMemberId(eq(1l))).thenReturn(wishLists);
-        when(wishListRepository.findByMemberId(eq(2l))).thenReturn(notFoundedWishList);
+        when(wishListRepository.findByMember(eq(1l))).thenReturn(wishLists);
+        when(wishListRepository.findByMember(eq(2l))).thenReturn(notFoundedWishList);
 
         int actual = wishListUtil.showWishList(1l).size();
         int actualNotFoundedCase = wishListUtil.showWishList(2l).size();

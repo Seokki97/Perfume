@@ -22,10 +22,10 @@ public class RecommendUtilTest {
     void createRandomPerfume() {
         Perfume perfume = Perfume
                 .builder()
-                .id(1l)
+                .perfumeId(1l)
                 .build();
         Perfume perfume2 = Perfume.builder()
-                .id(2l)
+                .perfumeId(2l)
                 .build();
 
         List<Perfume> perfumeList = new ArrayList<>();
