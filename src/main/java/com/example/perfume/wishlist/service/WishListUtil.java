@@ -21,7 +21,7 @@ public class WishListUtil {
     }
 
     public void validateExistsWishList(WishListRequest wishListRequest) {
-        if (wishListRepository.existsByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId())) {
+        if (wishListRepository.existsByMember_MemberIdAndPerfume_PerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId())) {
             throw new WishListNotFoundException();
         }
     }
@@ -31,11 +31,11 @@ public class WishListUtil {
     }
 
     public List<WishList> showWishList(Long memberId) {
-        return wishListRepository.findByMemberId(memberId);
+        return wishListRepository.findByMember(memberId);
     }
 
     public boolean isEmptyWishList(Long memberId) {
-        return wishListRepository.findByMemberId(memberId).isEmpty();
+        return wishListRepository.findByMember(memberId).isEmpty();
     }
 
     public boolean isEmptyRequestBody(WishListRequest wishListRequest) {
@@ -43,21 +43,22 @@ public class WishListUtil {
     }
 
     public boolean isDuplicateWishItem(WishListRequest wishListRequest) {
-        return wishListRepository.findByMemberId(wishListRequest.getMemberId()).stream()
+        return wishListRepository.findByMember(wishListRequest.getMemberId()).stream()
                 .anyMatch(perfume -> Objects.equals(perfume.getPerfume().getPerfumeId(), wishListRequest.getPerfumeId()));
     }
 
     public boolean isWishListOverMaxSize(WishListRequest wishListRequest) {
-        return wishListRepository.findByMemberId(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE;
+        return wishListRepository.findByMember(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE;
     }
 
     @Transactional
     public void deleteAllWishedList(Long memberId) {
-        wishListRepository.deleteByMemberId(memberId);
+
+        wishListRepository.deleteByMember_MemberId(memberId);
     }
 
     @Transactional
     public void deleteSelectedWishElement(WishListRequest wishListRequest) {
-        wishListRepository.deleteByMemberIdAndPerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
+        wishListRepository.deleteByMember_MemberIdAndPerfume_PerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
     }
 }

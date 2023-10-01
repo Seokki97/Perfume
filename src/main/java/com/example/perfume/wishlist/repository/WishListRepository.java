@@ -8,13 +8,13 @@ import java.util.List;
 
 @Repository
 public interface WishListRepository extends JpaRepository<WishList, Long> {
-    List<WishList> findByMemberId(Long memberId);
+    List<WishList> findByMember(Long memberId);
 
-    void deleteByMemberId(Long memberId);
+    void deleteByMember_MemberId(Long memberId);
 
-    void deleteByMemberIdAndPerfumeId(Long memberId, Long perfumeId);
+    void deleteByMember_MemberIdAndPerfume_PerfumeId(Long memberId, Long perfumeId);
 
-    boolean existsByMemberIdAndPerfumeId(Long memberId, Long perfumeId);
+    boolean existsByMember_MemberIdAndPerfume_PerfumeId(Long memberId, Long perfumeId);
 
     List<WishList> findAll();
 }
