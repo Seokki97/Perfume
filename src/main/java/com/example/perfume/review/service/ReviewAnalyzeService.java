@@ -11,6 +11,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class ReviewAnalyzeService {
+
+    private static final String LIKE_COUNT = "likeCount";
+    private static final String UNLIKE_COUNT = "unlikeCount";
+
     private final ReviewBoardRepository reviewBoardRepository;
 
     public ReviewAnalyzeService(ReviewBoardRepository reviewBoardRepository) {
@@ -31,13 +35,13 @@ public class ReviewAnalyzeService {
     }
 
     public List<PerfumeReviewBoard> sortLikeReviewsFromSelectedPerfume(String perfumeName) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "likeCount");
+        Sort sort = Sort.by(Sort.Direction.DESC, LIKE_COUNT);
 
         return reviewBoardRepository.findAllByTitleContainingOrContentContaining(perfumeName, perfumeName, sort);
     }
 
     public List<PerfumeReviewBoard> sortUnlikeReviewsFromSelectedPerfume(String perfumeName) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "unlikeCount");
+        Sort sort = Sort.by(Sort.Direction.DESC, UNLIKE_COUNT);
 
         return reviewBoardRepository.findAllByTitleContainingOrContentContaining(perfumeName, perfumeName, sort);
     }
