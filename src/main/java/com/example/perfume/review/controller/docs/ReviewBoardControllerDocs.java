@@ -68,4 +68,22 @@ public interface ReviewBoardControllerDocs {
             headers = @Header(name = "Authorization", description = "AccessToken"))
     })
     ResponseEntity<List<PerfumeReviewBoard>> showMyPosts(@Parameter(name = "memberId") @PathVariable final Long memberId);
+
+    @Operation(summary = "리뷰 제목 변경")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
+            headers = @Header(name = "Authorization", description = "AccessToken"))
+    })
+    ResponseEntity<ReviewBoardResponse>  updateTitle(@Parameter(name = " ReviewBoardRequest") @RequestBody final PostUpdateRequest postUpdateRequest);
+
+
+    @Operation(summary = "리뷰 제목 변경")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
+                    headers = @Header(name = "Authorization", description = "AccessToken"))
+    })
+    ResponseEntity<ReviewBoardResponse>  updateContent(@Parameter(name = " ReviewBoardRequest") @RequestBody final PostUpdateRequest postUpdateRequest);
+
 }
