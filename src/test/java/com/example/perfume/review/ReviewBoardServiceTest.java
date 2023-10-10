@@ -78,7 +78,6 @@ public class ReviewBoardServiceTest {
 
 
         Assertions.assertEquals(mockBoard.getBoardId(), result.getBoardId());
-
     }
 
     @DisplayName("게시글 수정하면 수정된 내용이 반영된다.")

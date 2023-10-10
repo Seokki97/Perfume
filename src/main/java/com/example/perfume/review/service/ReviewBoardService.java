@@ -52,6 +52,10 @@ public class ReviewBoardService {
 
         perfumeReviewBoard.updatePost(postUpdateRequest.getTitle(), postUpdateRequest.getContent());
 
+        if (validatePostDuplication(perfumeReviewBoard.getTitle())) {
+            throw new ReviewTitleDuplicatedException();
+        }
+
         return ReviewBoardResponse.builder()
                 .boardId(perfumeReviewBoard.getBoardId())
                 .title(postUpdateRequest.getTitle())
@@ -65,6 +69,10 @@ public class ReviewBoardService {
                 .orElseThrow(ReviewPostNotFoundException::new);
 
         perfumeReviewBoard.updateTitle(postUpdateRequest.getTitle());
+
+        if (validatePostDuplication(perfumeReviewBoard.getTitle())) {
+            throw new ReviewTitleDuplicatedException();
+        }
 
         return ReviewBoardResponse.builder()
                 .boardId(perfumeReviewBoard.getBoardId())
