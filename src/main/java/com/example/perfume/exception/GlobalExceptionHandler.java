@@ -8,6 +8,7 @@ import com.example.perfume.oauth.exception.MemberAlreadyExistException;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.post.exception.PostNotFoundException;
+import com.example.perfume.review.exception.ReviewTitleDuplicatedException;
 import com.example.perfume.survey.exception.*;
 import com.example.perfume.wishlist.exception.*;
 import org.springframework.http.ResponseEntity;
@@ -128,8 +129,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleMaintenanceNotFoundException(MaintenanceNotFoundException e) {
         return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
     }
+
     @ExceptionHandler
     public ResponseEntity<?> handleReviewPostNotFoundException(ReviewPostNotFoundException e) {
+        return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handlerReviewTitleDuplicatedException(ReviewTitleDuplicatedException e){
         return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
     }
 }
