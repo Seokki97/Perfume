@@ -102,7 +102,7 @@ public class ReviewBoardServiceTest {
 
         when(reviewBoardRepository.findByBoardId(boardId)).thenReturn(Optional.of(mockBoard));
 
-        ReviewBoardResponse result = reviewBoardService.modifyReview(postUpdateRequest);
+        ReviewBoardResponse result = reviewBoardService.modifyReviewTitleAndContent(postUpdateRequest);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(result.getBoardId(), postUpdateRequest.getBoardId()),

@@ -14,7 +14,6 @@ public class Content {
     private String text;
     private String imageUrl;
 
-
     public Content(String text, String imageUrl) {
         this.text = text;
         this.imageUrl = imageUrl;
