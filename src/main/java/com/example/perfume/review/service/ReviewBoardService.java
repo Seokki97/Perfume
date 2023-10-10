@@ -62,6 +62,32 @@ public class ReviewBoardService {
                 .build();
     }
 
+    @Transactional
+    public ReviewBoardResponse modifyReviewTitle(PostUpdateRequest postUpdateRequest) {
+        PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(postUpdateRequest.getBoardId())
+                .orElseThrow(ReviewPostNotFoundException::new);
+
+        perfumeReviewBoard.updateTitle(postUpdateRequest.getTitle());
+
+        return ReviewBoardResponse.builder()
+                .boardId(perfumeReviewBoard.getBoardId())
+                .title(postUpdateRequest.getTitle())
+                .build();
+    }
+
+    @Transactional
+    public ReviewBoardResponse modifyReviewContent(PostUpdateRequest postUpdateRequest) {
+        PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(postUpdateRequest.getBoardId())
+                .orElseThrow(ReviewPostNotFoundException::new);
+
+        perfumeReviewBoard.updateContent(postUpdateRequest.getContent());
+
+        return ReviewBoardResponse.builder()
+                .boardId(perfumeReviewBoard.getBoardId())
+                .content(postUpdateRequest.getContent())
+                .build();
+    }
+
     //게시글 삭제
     @Transactional
     public Long deleteReviewPost(PostDeleteRequest postDeleteRequest) {

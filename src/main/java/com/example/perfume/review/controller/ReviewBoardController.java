@@ -36,7 +36,19 @@ public class ReviewBoardController implements ReviewBoardControllerDocs {
     @PatchMapping("/update")
     public ResponseEntity<ReviewBoardResponse> updatePost(@RequestBody final PostUpdateRequest postUpdateRequest) {
 
-        return ResponseEntity.ok().body(reviewBoardService.modifyReview(postUpdateRequest));
+        return ResponseEntity.ok().body(reviewBoardService.modifyReviewTitleAndContent(postUpdateRequest));
+    }
+
+    @LoginCheck
+    @PatchMapping("/update-title")
+    public ResponseEntity<ReviewBoardResponse> updateTitle(@RequestBody final PostUpdateRequest postUpdateRequest) {
+        return ResponseEntity.ok().body(reviewBoardService.modifyReviewTitle(postUpdateRequest));
+    }
+
+    @LoginCheck
+    @PatchMapping("/update-content")
+    public ResponseEntity<ReviewBoardResponse> updateContent(@RequestBody final PostUpdateRequest postUpdateRequest) {
+        return ResponseEntity.ok().body(reviewBoardService.modifyReviewContent(postUpdateRequest));
     }
 
     @LoginCheck
@@ -56,8 +68,9 @@ public class ReviewBoardController implements ReviewBoardControllerDocs {
     public ResponseEntity<List<PerfumeReviewBoard>> showSearchedPosts(@RequestParam final String content) {
         return ResponseEntity.ok(reviewBoardService.showSearchedPosts(content));
     }
+
     @GetMapping("/show-my-posts/{memberId}")
-    public ResponseEntity<List<PerfumeReviewBoard>> showMyPosts(@PathVariable final Long memberId){
+    public ResponseEntity<List<PerfumeReviewBoard>> showMyPosts(@PathVariable final Long memberId) {
         return ResponseEntity.ok(reviewBoardService.showMyReviewPost(memberId));
     }
 

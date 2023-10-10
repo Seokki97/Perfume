@@ -61,6 +61,14 @@ public class PerfumeReviewBoard {
         this.content = content;
     }
 
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateContent(Content content) {
+        this.content = content;
+    }
+
     public void increaseLikeCount() {
         this.likeCount += 1;
     }
