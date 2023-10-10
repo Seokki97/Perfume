@@ -6,10 +6,10 @@ import com.example.perfume.review.dto.review.requestDto.PostUpdateRequest;
 import com.example.perfume.review.dto.review.requestDto.ReviewBoardRequest;
 import com.example.perfume.review.dto.review.responseDto.ReviewBoardResponse;
 import com.example.perfume.review.exception.ReviewPostNotFoundException;
+import com.example.perfume.review.exception.ReviewTitleDuplicatedException;
 import com.example.perfume.review.repository.ReviewBoardRepository;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.service.MemberService;
-import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.service.PerfumeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,13 +31,17 @@ public class ReviewBoardService {
         this.memberService = memberService;
     }
 
-    //리뷰 작성 // 3번사용자 -> 리뷰
+    @Transactional
     public ReviewBoardResponse writeReview(Long memberId, ReviewBoardRequest boardRequest) {
 
         Member member = memberService.findByMemberPk(memberId);
         PerfumeReviewBoard perfumeReviewBoard = boardRequest.toEntity(member, boardRequest.getContent());
 
+        if (validatePostDuplication(boardRequest.getTitle())) {
+            throw new ReviewTitleDuplicatedException();
+        }
         PerfumeReviewBoard savedBoard = reviewBoardRepository.save(perfumeReviewBoard);
+
         return ReviewBoardResponse.builder()
                 .boardId(savedBoard.getBoardId())
                 .build();
@@ -45,7 +49,7 @@ public class ReviewBoardService {
 
     //게시글 수정
     @Transactional
-    public ReviewBoardResponse modifyReview(PostUpdateRequest postUpdateRequest) {
+    public ReviewBoardResponse modifyReviewTitleAndContent(PostUpdateRequest postUpdateRequest) {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(postUpdateRequest.getBoardId())
                 .orElseThrow(ReviewPostNotFoundException::new);
 
@@ -96,4 +100,7 @@ public class ReviewBoardService {
         return reviewBoardRepository.findByWriter(memberId);
     }
 
+    public boolean validatePostDuplication(String title) {
+        return reviewBoardRepository.existsByTitle(title);
+    }
 }

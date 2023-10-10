@@ -24,4 +24,6 @@ public interface ReviewBoardRepository extends JpaRepository<PerfumeReviewBoard,
     List<PerfumeReviewBoard> findAllByOrderByUnlikeCountDesc();
 
     List<PerfumeReviewBoard> findAllByTitleContainingOrContentContaining(String title, String content, Sort sort);
+
+    boolean existsByTitle(String title);
 }
