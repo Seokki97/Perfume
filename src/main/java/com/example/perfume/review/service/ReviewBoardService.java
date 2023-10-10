@@ -19,15 +19,12 @@ import java.util.List;
 @Service
 public class ReviewBoardService {
 
-    private final PerfumeService perfumeService;
-
     private final MemberService memberService;
 
     private final ReviewBoardRepository reviewBoardRepository;
 
-    public ReviewBoardService(ReviewBoardRepository reviewBoardRepository, PerfumeService perfumeService, MemberService memberService) {
+    public ReviewBoardService(ReviewBoardRepository reviewBoardRepository, MemberService memberService) {
         this.reviewBoardRepository = reviewBoardRepository;
-        this.perfumeService = perfumeService;
         this.memberService = memberService;
     }
 
