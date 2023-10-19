@@ -27,12 +27,12 @@ public class ReviewLikeTest {
 
         Assertions.assertAll(
                 //Unlike 상태일 경우 -> Like상태로
-                () -> Assertions.assertEquals(LikeStatus.LIKE, statusUnlike.updateLike()),
+                () -> Assertions.assertEquals(LikeStatus.LIKE, LikeStatus.updateLike(statusUnlike.getLikeStatus())),
                 //Like 상태일 경우 -> Canceled상태로
-                () -> Assertions.assertEquals(LikeStatus.CANCELED, statusLike.updateLike()),
+                () -> Assertions.assertEquals(LikeStatus.CANCELED, LikeStatus.updateLike(statusLike.getLikeStatus())),
                 //아무 상태도 아닐 경우 -> Like상태로
-                () -> Assertions.assertEquals(LikeStatus.LIKE, statusNothing.updateLike())
-        );
+                () -> Assertions.assertEquals(LikeStatus.LIKE, LikeStatus.updateLike(statusNothing.getLikeStatus()))
+                );
     }
 
     @DisplayName("게시글을 Unlike상태로 전환한다. 이미 Unlike 상태일 경우 Canceled상태로 전환한다")
@@ -51,9 +51,9 @@ public class ReviewLikeTest {
                 .build();
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(LikeStatus.UNLIKE, statusLike.updateUnLike()),
-                () -> Assertions.assertEquals(LikeStatus.UNLIKE, statusNothing.updateUnLike()),
-                () -> Assertions.assertEquals(LikeStatus.CANCELED, statusUnlike.updateUnLike())
+                () -> Assertions.assertEquals(LikeStatus.UNLIKE, LikeStatus.updateUnLike(statusLike.getLikeStatus())),
+                () -> Assertions.assertEquals(LikeStatus.UNLIKE, LikeStatus.updateUnLike(statusNothing.getLikeStatus())),
+                () -> Assertions.assertEquals(LikeStatus.CANCELED, LikeStatus.updateUnLike(statusUnlike.getLikeStatus()))
         );
     }
 

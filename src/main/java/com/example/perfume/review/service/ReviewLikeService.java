@@ -29,7 +29,7 @@ public class ReviewLikeService {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLike.getLikedPost().getBoardId())
                 .orElseThrow(ReviewPostNotFoundException::new);
 
-        reviewLike.updateLike();
+        reviewLike.updateStatus(reviewLike.getLikeStatus());
         if (!isAlreadyPushLikeOrUnlike(reviewLikeRequest)) {
             reviewLikeRepository.save(reviewLike);
         }
@@ -43,7 +43,7 @@ public class ReviewLikeService {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLike.getLikedPost().getBoardId())
                 .orElseThrow(ReviewPostNotFoundException::new);
 
-        reviewLike.updateUnLike();
+        reviewLike.updateStatus(reviewLike.getLikeStatus());
         if (!isAlreadyPushLikeOrUnlike(reviewLikeRequest)) {
             reviewLikeRepository.save(reviewLike);
         }

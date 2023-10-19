@@ -35,24 +35,12 @@ public class ReviewLike {
         this.likedPost = likedPost;
         this.likeStatus = likeStatus;
     }
-
-    public LikeStatus updateLike() {
-        if (this.likeStatus == LikeStatus.UNLIKE) {
-            return this.likeStatus = LikeStatus.LIKE;
+    public void updateStatus(LikeStatus status){
+        if(status == LikeStatus.LIKE){
+            this.likeStatus = LikeStatus.updateLike(status);
         }
-        if (this.likeStatus == LikeStatus.LIKE) {
-            return this.likeStatus = LikeStatus.CANCELED;
+        if(status == LikeStatus.UNLIKE){
+            this.likeStatus = LikeStatus.updateUnLike(status);
         }
-        return this.likeStatus = LikeStatus.LIKE;
-    }
-
-    public LikeStatus updateUnLike() {
-        if (this.likeStatus == LikeStatus.LIKE) {
-            return this.likeStatus = LikeStatus.UNLIKE;
-        }
-        if (this.likeStatus == LikeStatus.UNLIKE) {
-            return this.likeStatus = LikeStatus.CANCELED;
-        }
-        return this.likeStatus = LikeStatus.UNLIKE;
     }
 }
