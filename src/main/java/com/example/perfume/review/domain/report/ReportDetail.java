@@ -31,5 +31,4 @@ public class ReportDetail {
         this.postId = postId;
         this.reportedPostUserId = reportedPostUserId;
     }
-
 }

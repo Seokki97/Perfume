@@ -11,7 +11,7 @@ public class Recommender {
 
     private String comment;
 
-    public Recommender(String recommender, Long recommendedMemberId, String comment){
+    public Recommender(String recommender, Long recommendedMemberId, String comment) {
         this.recommender = recommender;
         this.recommendedMemberId = recommendedMemberId;
         this.comment = comment;

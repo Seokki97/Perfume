@@ -20,5 +20,4 @@ public interface SimilarPerfumeControllerDocs {
             @ApiResponse(responseCode = "404", description = "유사한 향수 없음")
     })
     ResponseEntity<List<Perfume>> showSimilarData(@Parameter(description = "향수 id") @PathVariable("id") Long id);
-
 }

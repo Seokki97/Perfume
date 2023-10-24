@@ -30,5 +30,4 @@ public class Post {
         this.visitor = NicknameGenerator.generateRandomNickname(nickname);
         this.content = content;
     }
-
 }

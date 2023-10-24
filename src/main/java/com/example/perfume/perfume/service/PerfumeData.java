@@ -44,5 +44,4 @@ public class PerfumeData {
     public void deleteAllData() {
         perfumeRepository.deleteAll();
     }
-
 }

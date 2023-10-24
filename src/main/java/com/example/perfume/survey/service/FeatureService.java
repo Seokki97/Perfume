@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FeatureService {
+
     private final SurveyService surveyService;
     private final PerfumeService perfumeService;
     private final SurveyUtil surveyUtil;

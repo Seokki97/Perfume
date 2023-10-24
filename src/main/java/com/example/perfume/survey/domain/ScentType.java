@@ -31,5 +31,4 @@ public enum ScentType {
                 .findAny().orElseThrow(ScentNotFoundException::new);
         return scentType.getFeature();
     }
-
 }

@@ -23,5 +23,4 @@ public class PostResponseDto {
         this.visitor = visitor;
         this.content = content;
     }
-
 }

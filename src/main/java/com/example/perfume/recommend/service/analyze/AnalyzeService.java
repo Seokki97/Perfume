@@ -16,7 +16,7 @@ public class AnalyzeService {
         this.scentAnalyze = scentAnalyze;
     }
 
-    public RankingResponse responseAnalyzedData(Long memberId){
+    public RankingResponse responseAnalyzedData(Long memberId) {
         PerfumeAnalyzeResponse perfumeAnalyzeResponse = perfumeAnalyze.filterMostRecommendedPerfumeName(memberId);
         ScentAnalyzeResponse scentAnalyzeResponse = scentAnalyze.filterMostRecommendedScent(memberId);
 
@@ -24,6 +24,5 @@ public class AnalyzeService {
                 .perfumeAnalyzeResponse(perfumeAnalyzeResponse)
                 .scentAnalyzeResponse(scentAnalyzeResponse)
                 .build();
-
     }
 }

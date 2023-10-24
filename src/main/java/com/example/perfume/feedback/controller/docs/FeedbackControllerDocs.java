@@ -16,7 +16,6 @@ public interface FeedbackControllerDocs {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "404", description = "실패")
     })
-    ResponseEntity<Void> saveFeedback(@Parameter(name = "serviceName, comment") @RequestBody FeedbackRequestDto feedbackRequestDto);
-
-
+    ResponseEntity<Void> saveFeedback(
+            @Parameter(name = "serviceName, comment") @RequestBody FeedbackRequestDto feedbackRequestDto);
 }

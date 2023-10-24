@@ -47,6 +47,7 @@ public class ReviewBoardService {
     //게시글 수정
     @Transactional
     public ReviewBoardResponse modifyReviewTitleAndContent(PostUpdateRequest postUpdateRequest) {
+
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(postUpdateRequest.getBoardId())
                 .orElseThrow(ReviewPostNotFoundException::new);
 
@@ -119,9 +120,9 @@ public class ReviewBoardService {
     }
 
     //게시글 검색 (향수 이름으로)
-    public List<PerfumeReviewBoard> showSearchedPosts(String content) {
+    public List<PerfumeReviewBoard> showSearchedPosts(String perfumeName) {
         List<PerfumeReviewBoard> perfumeReviewBoards = reviewBoardRepository
-                .findByTitleContainingOrContentContaining(content, content);
+                .findByTitleContainingOrContentContaining(perfumeName, perfumeName);
 
         return perfumeReviewBoards;
     }

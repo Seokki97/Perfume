@@ -8,11 +8,11 @@ public class LogoutRequestDto {
 
     private Long memberId;
 
-    public LogoutRequestDto(){
-    }
-    @Builder
-    public  LogoutRequestDto (Long memberId){
-        this.memberId = memberId;
+    public LogoutRequestDto() {
     }
 
+    @Builder
+    public LogoutRequestDto(Long memberId) {
+        this.memberId = memberId;
+    }
 }

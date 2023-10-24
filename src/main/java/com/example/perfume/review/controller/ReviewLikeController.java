@@ -25,7 +25,8 @@ public class ReviewLikeController implements ReviewLikeControllerDocs {
     @PatchMapping("/like")
     public ResponseEntity<Void> likePost(@RequestBody ReviewLikeRequest reviewLikeRequest) {
         reviewLikeService.likePost(reviewLikeRequest);
-        log.info("리뷰 게시글 {}의 상태를 {}로 변경하다.", reviewLikeRequest.getPost().getBoardId(), reviewLikeRequest.getLikeStatus());
+        log.info("리뷰 게시글 {}의 상태를 {}로 변경하다.", reviewLikeRequest.getPost().getBoardId(),
+                reviewLikeRequest.getLikeStatus());
         return ResponseEntity.noContent().build();
     }
 
@@ -33,8 +34,8 @@ public class ReviewLikeController implements ReviewLikeControllerDocs {
     @PatchMapping("/unlike")
     public ResponseEntity<Void> unlikePost(@RequestBody ReviewLikeRequest reviewLikeRequest) {
         reviewLikeService.unlikePost(reviewLikeRequest);
-        log.info("리뷰 게시글 {}의 상태를 {}로 변경하다.", reviewLikeRequest.getPost().getBoardId(), reviewLikeRequest.getLikeStatus());
+        log.info("리뷰 게시글 {}의 상태를 {}로 변경하다.", reviewLikeRequest.getPost().getBoardId(),
+                reviewLikeRequest.getLikeStatus());
         return ResponseEntity.noContent().build();
     }
-
 }

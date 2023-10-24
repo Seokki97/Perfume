@@ -74,5 +74,4 @@ public class WishListService {
         }
         wishListUtil.deleteSelectedWishElement(wishListRequest);
     }
-
 }

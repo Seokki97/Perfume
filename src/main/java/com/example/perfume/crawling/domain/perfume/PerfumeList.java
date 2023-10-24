@@ -13,18 +13,14 @@ public class PerfumeList {
 
     private List<String> perfumeName;
     private List<String> perfumeFeature;
-
     private List<String> perfumeBrand;
-
     private List<String> perfumeImageUrl;
-
     private List<String> perfumeStory;
-
     private List<String> maintenance;
 
-
     @Builder
-    public PerfumeList(List<String> perfumeName, List<String> perfumeFeature, List<String> perfumeBrand, List<String> perfumeImageUrl, List<String> perfumeStory, List<String> maintenance) {
+    public PerfumeList(List<String> perfumeName, List<String> perfumeFeature, List<String> perfumeBrand,
+                       List<String> perfumeImageUrl, List<String> perfumeStory, List<String> maintenance) {
         this.perfumeName = perfumeName;
         this.perfumeBrand = perfumeFeature;
         this.perfumeFeature = perfumeBrand;
@@ -33,9 +29,7 @@ public class PerfumeList {
         this.maintenance = maintenance;
     }
 
-
     public int getMaxSize() {
         return perfumeName.size();
     }
-
 }

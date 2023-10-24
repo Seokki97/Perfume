@@ -24,13 +24,14 @@ public interface RecommendControllerDocs {
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "404", description = "추천할 수 없음")
     })
-    ResponseEntity<Recommendation> recommendPerfume(@Parameter(description = "RecommendRequest 데이터") @RequestBody RecommendRequestDto recommendRequestDto);
+    ResponseEntity<Recommendation> recommendPerfume(
+            @Parameter(description = "RecommendRequest 데이터") @RequestBody RecommendRequestDto recommendRequestDto);
 
     @Operation(summary = "타인이 추천해준 향수 조회하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공", headers = @Header(name = "Authorization", description = "Access Token")),
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근")
     })
-    ResponseEntity<RecommendResponseDto> showRecommendedPerfume(@Parameter(description = "회원 id") @PathVariable("id") Long id, HttpServletRequest httpServletRequest);
-
+    ResponseEntity<RecommendResponseDto> showRecommendedPerfume(
+            @Parameter(description = "회원 id") @PathVariable("id") Long id, HttpServletRequest httpServletRequest);
 }

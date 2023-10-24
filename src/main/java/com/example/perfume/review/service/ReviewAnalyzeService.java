@@ -21,13 +21,11 @@ public class ReviewAnalyzeService {
         this.reviewBoardRepository = reviewBoardRepository;
     }
 
-    //라이크 많은 수 정렬
     public List<PerfumeReviewBoard> sortLikeReviews() {
 
         return reviewBoardRepository.findAllByOrderByLikeCountDesc();
     }
 
-    //Unlike 많은 수 정렬
     public List<PerfumeReviewBoard> sortUnlikeReviews() {
 
         return reviewBoardRepository.findAllByOrderByUnlikeCountDesc();

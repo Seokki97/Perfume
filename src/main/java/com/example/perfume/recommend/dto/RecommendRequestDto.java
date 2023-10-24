@@ -17,7 +17,8 @@ public class RecommendRequestDto {
     public RecommendRequestDto() {
     }
 
-    public RecommendRequestDto(SurveyRequestDto surveyAnswers, Long recommendedMemberId, String comment, String recommender) {
+    public RecommendRequestDto(SurveyRequestDto surveyAnswers, Long recommendedMemberId, String comment,
+                               String recommender) {
         this.surveyAnswers = surveyAnswers;
         this.recommender = recommender;
         this.recommendedMemberId = recommendedMemberId;

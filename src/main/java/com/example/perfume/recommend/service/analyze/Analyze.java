@@ -4,5 +4,4 @@ import java.util.List;
 
 public interface Analyze {
     List<String> extractRecommendedElement(Long memberId);
-
 }

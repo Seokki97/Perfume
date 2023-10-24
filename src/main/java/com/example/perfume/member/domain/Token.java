@@ -29,5 +29,4 @@ public class Token {
         this.refreshToken = refreshToken;
         this.memberId = memberId;
     }
-
 }

@@ -27,7 +27,8 @@ public interface WishListControllerDocs {
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
                     headers = @Header(name = "Authorization", description = "Access Token"))
     })
-    ResponseEntity<WishListResponse> selectLikePerfume(@Parameter(name = "WishListRequestDto", description = "memberId,PerfumeId, memberId는 PK값") @RequestBody WishListRequest wishListRequest);
+    ResponseEntity<WishListResponse> selectLikePerfume(
+            @Parameter(name = "WishListRequestDto", description = "memberId,PerfumeId, memberId는 PK값") @RequestBody WishListRequest wishListRequest);
 
     @Operation(summary = "위시리스트 조회")
     @ApiResponses(value = {
@@ -36,7 +37,8 @@ public interface WishListControllerDocs {
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
                     headers = @Header(name = "Authorization", description = "Access Token"))
     })
-    ResponseEntity<List<WishList>> showWishList(@Parameter(name = "memberId", description = "Pk값으로 주세용") @PathVariable("memberId") Long memberId);
+    ResponseEntity<List<WishList>> showWishList(
+            @Parameter(name = "memberId", description = "Pk값으로 주세용") @PathVariable("memberId") Long memberId);
 
     @Operation(summary = "모든 위시리스트 삭제")
     @ApiResponses(value = {
@@ -45,7 +47,8 @@ public interface WishListControllerDocs {
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
                     headers = @Header(name = "Authorization", description = "Access Token"))
     })
-    ResponseEntity<Void> deleteAllWishedPerfume(@Parameter(name = "memberId", description = "Pk값으로 주세용") @PathVariable("memberId") Long memberId);
+    ResponseEntity<Void> deleteAllWishedPerfume(
+            @Parameter(name = "memberId", description = "Pk값으로 주세용") @PathVariable("memberId") Long memberId);
 
     @Operation(summary = "선택한 위시리스트 삭제")
     @ApiResponses(value = {
@@ -54,6 +57,6 @@ public interface WishListControllerDocs {
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
                     headers = @Header(name = "Authorization", description = "Access Token"))
     })
-    ResponseEntity<Void> deleteSelectedPerfume(@Parameter(name = "WishListRequestDto", description = "memberId,PerfumeId, memberId는 PK값") @RequestBody WishListRequest wishListRequest);
-
+    ResponseEntity<Void> deleteSelectedPerfume(
+            @Parameter(name = "WishListRequestDto", description = "memberId,PerfumeId, memberId는 PK값") @RequestBody WishListRequest wishListRequest);
 }

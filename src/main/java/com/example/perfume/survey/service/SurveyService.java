@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class SurveyService {
+
     private final SurveyRepository surveyRepository;
 
     private final SurveyUtil surveyUtil;
@@ -47,7 +48,8 @@ public class SurveyService {
 
         if (surveyUtil.isEmptyRecommendedPerfumeList(surveyList)) {
             List<Survey> surveyListByMood = surveyRepository.findSurveysByGenderScentAndMood(
-                    surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(), surveyRequestDto.getMoodAnswer());
+                    surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(),
+                    surveyRequestDto.getMoodAnswer());
 
             return surveyUtil.convertToPerfumeData(surveyListByMood);
         }
@@ -62,5 +64,4 @@ public class SurveyService {
 
         return surveyUtil.convertToPerfumeData(findSimilarData);
     }
-
 }

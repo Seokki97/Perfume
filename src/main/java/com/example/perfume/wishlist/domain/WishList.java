@@ -37,5 +37,4 @@ public class WishList {
                 .member(member)
                 .build();
     }
-
 }

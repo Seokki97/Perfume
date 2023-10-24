@@ -17,7 +17,6 @@ public class Feedback {
     private Long id;
     @Column(length = 100)
     private String serviceName;
-
     @Column(length = 1000)
     private String comment;
 
@@ -27,6 +26,4 @@ public class Feedback {
         this.serviceName = serviceName;
         this.comment = comment;
     }
-
-
 }

@@ -38,7 +38,6 @@ public class ReportService {
         return ReportResponse.convertToResponse(savedReport);
     }
 
-    //처리됨
     @Transactional
     public ReportResponse processReport(Long reportId) {
         Report report = reportRepository.findByReportId(reportId).orElseThrow(ReportNotFoundException::new);
@@ -50,7 +49,6 @@ public class ReportService {
         return ReportResponse.convertToResponse(report);
     }
 
-    //신고 거부
     public ReportResponse rejectReport(Long reportId) {
         Report report = reportRepository.findByReportId(reportId).orElseThrow(ReportNotFoundException::new);
 

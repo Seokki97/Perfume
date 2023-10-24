@@ -14,6 +14,4 @@ public class PerfumeRecommendBoard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "perfume_recommend_board_id", nullable = false)
     private Long perfume_recommend_board_id;
-
-
 }

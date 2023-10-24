@@ -26,5 +26,4 @@ public class RankingController implements RankingListDocs {
         log.info("WishList 랭킹 조회하기 요청");
         return ResponseEntity.ok(wishListAnalyze.showTopRankedPerfumeList());
     }
-
 }

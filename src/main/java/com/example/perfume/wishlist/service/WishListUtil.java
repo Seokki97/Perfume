@@ -12,6 +12,7 @@ import java.util.Objects;
 
 @Service
 public class WishListUtil {
+
     private static final int MAX_WISH_SIZE = 14;
 
     private final WishListRepository wishListRepository;
@@ -21,7 +22,8 @@ public class WishListUtil {
     }
 
     public void validateExistsWishList(WishListRequest wishListRequest) {
-        if (wishListRepository.existsByMember_MemberIdAndPerfume_PerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId())) {
+        if (wishListRepository.existsByMember_MemberIdAndPerfume_PerfumeId(wishListRequest.getMemberId(),
+                wishListRequest.getPerfumeId())) {
             throw new WishListNotFoundException();
         }
     }
@@ -44,7 +46,8 @@ public class WishListUtil {
 
     public boolean isDuplicateWishItem(WishListRequest wishListRequest) {
         return wishListRepository.findByMember(wishListRequest.getMemberId()).stream()
-                .anyMatch(perfume -> Objects.equals(perfume.getPerfume().getPerfumeId(), wishListRequest.getPerfumeId()));
+                .anyMatch(
+                        perfume -> Objects.equals(perfume.getPerfume().getPerfumeId(), wishListRequest.getPerfumeId()));
     }
 
     public boolean isWishListOverMaxSize(WishListRequest wishListRequest) {
@@ -59,6 +62,7 @@ public class WishListUtil {
 
     @Transactional
     public void deleteSelectedWishElement(WishListRequest wishListRequest) {
-        wishListRepository.deleteByMember_MemberIdAndPerfume_PerfumeId(wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
+        wishListRepository.deleteByMember_MemberIdAndPerfume_PerfumeId(wishListRequest.getMemberId(),
+                wishListRequest.getPerfumeId());
     }
 }

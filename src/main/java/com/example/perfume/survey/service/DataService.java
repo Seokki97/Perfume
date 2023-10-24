@@ -12,11 +12,13 @@ import java.io.IOException;
 
 @Service
 public class DataService {
+
     private final SurveyCSVFileLoading surveyCSVFileLoading;
     private final PerfumeService perfumeService;
     private final SurveyService surveyService;
 
-    public DataService(SurveyService surveyService, SurveyCSVFileLoading surveyCSVFileLoading, PerfumeService perfumeService) {
+    public DataService(SurveyService surveyService, SurveyCSVFileLoading surveyCSVFileLoading,
+                       PerfumeService perfumeService) {
         this.surveyService = surveyService;
         this.surveyCSVFileLoading = surveyCSVFileLoading;
         this.perfumeService = perfumeService;
@@ -27,7 +29,8 @@ public class DataService {
         int surveyListSize = surveyList.getMaxSize();
         for (int firstIndex = 0; firstIndex < surveyListSize; firstIndex++) {
             Long secondIndex = (long) firstIndex + 1;
-            Survey surveyDataSet = SurveyResponseDto.makeList(id, firstIndex, surveyList).toEntity(perfumeService.findPerfumeById(secondIndex));
+            Survey surveyDataSet = SurveyResponseDto.makeList(id, firstIndex, surveyList)
+                    .toEntity(perfumeService.findPerfumeById(secondIndex));
             surveyService.saveSurveyData(surveyDataSet);
         }
     }

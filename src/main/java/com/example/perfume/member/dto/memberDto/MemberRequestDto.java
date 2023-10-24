@@ -16,6 +16,7 @@ public class MemberRequestDto {
 
     public MemberRequestDto() {
     }
+
     @Builder
     public MemberRequestDto(Long memberId, Long kakaoId, String nickname, String email, String thumbnailImage) {
         this.memberId = memberId;
@@ -33,5 +34,4 @@ public class MemberRequestDto {
                 .nickname(nickname)
                 .build();
     }
-
 }

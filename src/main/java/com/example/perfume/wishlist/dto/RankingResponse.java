@@ -13,7 +13,6 @@ public class RankingResponse {
 
     private Long count;
 
-
     public RankingResponse() {
     }
 
@@ -25,8 +24,12 @@ public class RankingResponse {
 
     @Override
     public boolean equals(Object o) {
-        if (o == this) return true;
-        if (!(o instanceof RankingResponse)) return false;
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof RankingResponse)) {
+            return false;
+        }
         RankingResponse r = (RankingResponse) o;
         return r.perfume.getPerfumeName().equals(this.perfume.getPerfumeName());
     }

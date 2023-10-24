@@ -29,5 +29,4 @@ public class PerfumeDataController {
         perfumeData.deleteAllData();
         return ResponseEntity.noContent().build();
     }
-
 }

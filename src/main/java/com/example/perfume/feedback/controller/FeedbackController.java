@@ -3,9 +3,6 @@ package com.example.perfume.feedback.controller;
 import com.example.perfume.feedback.controller.docs.FeedbackControllerDocs;
 import com.example.perfume.feedback.dto.FeedbackRequestDto;
 import com.example.perfume.feedback.service.FeedbackService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +31,4 @@ public class FeedbackController implements FeedbackControllerDocs {
         feedbackService.makeFeedbackFile();
         return ResponseEntity.noContent().build();
     }
-
 }

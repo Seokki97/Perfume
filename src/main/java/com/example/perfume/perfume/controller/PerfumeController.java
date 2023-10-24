@@ -36,7 +36,7 @@ public class PerfumeController implements PerfumeControllerDocs {
 
     @PostMapping("/find-by-brand")
     public ResponseEntity<List<Perfume>> findByBrandName(@RequestBody final PerfumeRequestDto perfumeRequestDto) {
-        log.info("향수 브랜드 : {} 의 향수 조회",perfumeRequestDto.getBrandName());
+        log.info("향수 브랜드 : {} 의 향수 조회", perfumeRequestDto.getBrandName());
         return ResponseEntity.ok(perfumeService.findPerfumeByBrand(perfumeRequestDto));
     }
 
@@ -62,6 +62,5 @@ public class PerfumeController implements PerfumeControllerDocs {
     public ResponseEntity<PerfumeResponseDto> showPerfumeImage(@RequestParam("perfumeName") String perfumeName) {
         return ResponseEntity.ok(perfumeService.showPerfumeImage(perfumeName));
     }
-
 }
 

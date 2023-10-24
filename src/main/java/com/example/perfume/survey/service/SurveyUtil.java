@@ -48,6 +48,4 @@ public class SurveyUtil {
     public boolean isNotSelectedSeasonAnswer(SurveyRequestDto surveyRequestDto) {
         return surveyRequestDto.getSeasonAnswer().equals(SurveyType.NOT_SELECT_SEASON.getValue());
     }
-
-
 }

@@ -11,7 +11,7 @@ public class ScentAnalyzeResponse {
     private Long count;
 
     @Builder
-    public ScentAnalyzeResponse(String scent, Long count){
+    public ScentAnalyzeResponse(String scent, Long count) {
         this.scent = scent;
         this.count = count;
     }

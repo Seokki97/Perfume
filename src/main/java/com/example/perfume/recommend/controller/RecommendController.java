@@ -34,7 +34,8 @@ public class RecommendController implements RecommendControllerDocs {
 
     @LoginCheck
     @GetMapping("/show-recommended-perfume/{id}")
-    public ResponseEntity<RecommendResponseDto> showRecommendedPerfume(@PathVariable("id") final Long id, final HttpServletRequest httpServletRequest) {
+    public ResponseEntity<RecommendResponseDto> showRecommendedPerfume(@PathVariable("id") final Long id,
+                                                                       final HttpServletRequest httpServletRequest) {
         log.info("memberId : {}에게 추천된 향수를 조회하기", id);
         logoutService.isUserAlreadyLogout(httpServletRequest.getHeader("Authorization"));
         return ResponseEntity.ok(recommendationService.showRecommendedPerfume(id));
@@ -45,5 +46,4 @@ public class RecommendController implements RecommendControllerDocs {
         recommendationService.deleteRecommendedData();
         return ResponseEntity.noContent().build();
     }
-
 }

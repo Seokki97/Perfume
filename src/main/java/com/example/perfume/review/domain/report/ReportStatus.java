@@ -10,5 +10,4 @@ public enum ReportStatus {
     PROCESSED,
 
     REJECTED;
-
 }

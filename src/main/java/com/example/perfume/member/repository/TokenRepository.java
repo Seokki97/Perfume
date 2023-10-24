@@ -16,5 +16,4 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
     Optional<Token> deleteByRefreshToken(String refreshToken);
 
     boolean existsByMemberId(Long memberId);
-
 }

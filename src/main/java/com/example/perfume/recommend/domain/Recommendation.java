@@ -33,7 +33,8 @@ public class Recommendation {
     private String scentAnswer;
 
     @Builder
-    public Recommendation(Long recommendationId, Member member, Perfume perfume, String recommender, String comment, String scentAnswer) {
+    public Recommendation(Long recommendationId, Member member, Perfume perfume, String recommender, String comment,
+                          String scentAnswer) {
         this.recommendationId = recommendationId;
         this.member = member;
         this.perfume = perfume;

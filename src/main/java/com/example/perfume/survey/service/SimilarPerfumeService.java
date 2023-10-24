@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class SimilarPerfumeService {
+
     private final SurveyService surveyService;
 
     public SimilarPerfumeService(SurveyService surveyService) {
@@ -18,6 +19,7 @@ public class SimilarPerfumeService {
 
     public List<Perfume> showSimilarPerfume(Long id) {
         Survey survey = surveyService.findSurveyById(id);
-        return surveyService.showSimilarPerfumeList(survey).stream().filter(perfume -> !Objects.equals(id, perfume.getPerfumeId())).collect(Collectors.toList());
+        return surveyService.showSimilarPerfumeList(survey).stream()
+                .filter(perfume -> !Objects.equals(id, perfume.getPerfumeId())).collect(Collectors.toList());
     }
 }

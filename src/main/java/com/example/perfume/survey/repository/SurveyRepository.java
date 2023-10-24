@@ -15,12 +15,19 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
     Optional<Survey> findBySurveyId(Long surveyId);
 
     @Query("SELECT s FROM survey s WHERE s.genderAnswer LIKE %:genderAnswer% AND s.scentAnswer = :scentAnswer AND s.moodAnswer LIKE %:moodAnswer% AND s.seasonAnswer LIKE %:seasonAnswer% AND s.styleAnswer LIKE %:styleAnswer%")
-    List<Survey> findSurveysByAnswers(@Param("genderAnswer") String genderAnswer, @Param("scentAnswer") String scentAnswer, @Param("moodAnswer") String moodAnswer, @Param("seasonAnswer") String seasonAnswer, @Param("styleAnswer") String styleAnswer);
+    List<Survey> findSurveysByAnswers(@Param("genderAnswer") String genderAnswer,
+                                      @Param("scentAnswer") String scentAnswer, @Param("moodAnswer") String moodAnswer,
+                                      @Param("seasonAnswer") String seasonAnswer,
+                                      @Param("styleAnswer") String styleAnswer);
 
     @Query("SELECT s FROM survey s WHERE s.genderAnswer LIKE %:genderAnswer% AND s.scentAnswer = :scentAnswer AND s.moodAnswer LIKE %:moodAnswer%")
-    List<Survey> findSurveysByGenderScentAndMood(@Param("genderAnswer") String genderAnswer, @Param("scentAnswer") String scentAnswer, @Param("moodAnswer") String moodAnswer);
+    List<Survey> findSurveysByGenderScentAndMood(@Param("genderAnswer") String genderAnswer,
+                                                 @Param("scentAnswer") String scentAnswer,
+                                                 @Param("moodAnswer") String moodAnswer);
 
     @Query("SELECT s FROM survey s WHERE s.genderAnswer LIKE %:genderAnswer% AND s.scentAnswer = :scentAnswer AND s.moodAnswer LIKE %:moodAnswer% AND s.styleAnswer LIKE %:styleAnswer%")
-    List<Survey> findSurveysByGenderScentMoodAndStyle(@Param("genderAnswer") String genderAnswer, @Param("scentAnswer") String scentAnswer, @Param("moodAnswer") String moodAnswer, @Param("styleAnswer") String styleAnswer);
-
+    List<Survey> findSurveysByGenderScentMoodAndStyle(@Param("genderAnswer") String genderAnswer,
+                                                      @Param("scentAnswer") String scentAnswer,
+                                                      @Param("moodAnswer") String moodAnswer,
+                                                      @Param("styleAnswer") String styleAnswer);
 }

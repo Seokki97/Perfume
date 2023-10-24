@@ -10,5 +10,4 @@ public enum ReportType {
     INAPPROPRIATE_CONTENT,
 
     ADVERTISEMENT
-
 }

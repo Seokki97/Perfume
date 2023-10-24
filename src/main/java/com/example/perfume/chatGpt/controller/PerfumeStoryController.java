@@ -22,9 +22,9 @@ public class PerfumeStoryController implements PerfumeStoryControllerDocs {
     }
 
     @PostMapping("/make-story")
-    public ResponseEntity<ChatGptResponse> makePerfumeStory(@RequestBody final PerfumeStoryRequest perfumeStoryRequest) {
-        log.info("Chat GPT에게 향수 스토리 생성 요청, 질문 내용 : {}",perfumeStoryRequest.toPromptString());
+    public ResponseEntity<ChatGptResponse> makePerfumeStory(
+            @RequestBody final PerfumeStoryRequest perfumeStoryRequest) {
+        log.info("Chat GPT에게 향수 스토리 생성 요청, 질문 내용 : {}", perfumeStoryRequest.toPromptString());
         return ResponseEntity.ok(perfumeStoryService.askQuestionToChatGpt(perfumeStoryRequest));
     }
-
 }

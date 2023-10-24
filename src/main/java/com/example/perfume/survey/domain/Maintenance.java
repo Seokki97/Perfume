@@ -26,6 +26,6 @@ public enum Maintenance {
         Maintenance maintenance = Arrays.stream(Maintenance.values())
                 .filter(x -> x.getMaintenance().matches(perfumeMaintenance))
                 .findAny().orElseThrow(MaintenanceNotFoundException::new);
-        return maintenance.getMessage() +" " + maintenance.getMaintenance() + "의 지속력을 가진 제품입니다.";
+        return maintenance.getMessage() + " " + maintenance.getMaintenance() + "의 지속력을 가진 제품입니다.";
     }
 }

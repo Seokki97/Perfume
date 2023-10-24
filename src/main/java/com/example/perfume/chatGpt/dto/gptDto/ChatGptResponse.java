@@ -18,9 +18,9 @@ public class ChatGptResponse implements Serializable {
     private List<Choice> choices;
     private Usage usage;
 
-
     @Builder
-    public ChatGptResponse(String id, String object, LocalDate created, String model, List<Choice> choices, Usage usage) {
+    public ChatGptResponse(String id, String object, LocalDate created, String model, List<Choice> choices,
+                           Usage usage) {
         this.id = id;
         this.object = object;
         this.created = created;

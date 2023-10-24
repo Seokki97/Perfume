@@ -28,5 +28,4 @@ public class AnalyzeController implements AnalyzeControllerDocs {
         log.info("memberId : {} 의 추천받은 향수 결과 분석 요청", memberId);
         return ResponseEntity.ok(analyzeService.responseAnalyzedData(memberId));
     }
-
 }

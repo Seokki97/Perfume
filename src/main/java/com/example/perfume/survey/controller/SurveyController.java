@@ -42,5 +42,4 @@ public class SurveyController implements SurveyControllerDocs {
                 surveyRequestDto.getStyleAnswer());
         return ResponseEntity.ok(surveyService.showPerfumeListBySurvey(surveyRequestDto));
     }
-
 }

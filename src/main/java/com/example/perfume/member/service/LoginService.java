@@ -83,5 +83,4 @@ public class LoginService implements UserDetailsService {
     public String regenerateAccessToken(String userPk) {
         return jwtProvider.createToken(userPk);
     }
-
 }

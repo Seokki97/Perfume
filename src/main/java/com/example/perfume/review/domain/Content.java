@@ -18,5 +18,4 @@ public class Content {
         this.text = text;
         this.imageUrl = imageUrl;
     }
-
 }

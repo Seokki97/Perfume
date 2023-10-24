@@ -22,7 +22,8 @@ public interface ReviewLikeControllerDocs {
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
                     headers = @Header(name = "Authorization", description = "Access Token"))
     })
-    ResponseEntity<Void> likePost(@Parameter(name = "memberId, boardId") @RequestBody ReviewLikeRequest reviewLikeRequest);
+    ResponseEntity<Void> likePost(
+            @Parameter(name = "memberId, boardId") @RequestBody ReviewLikeRequest reviewLikeRequest);
 
     @Operation(summary = "리뷰에 싫어요 버튼 클릭")
     @ApiResponses(value = {
@@ -30,6 +31,6 @@ public interface ReviewLikeControllerDocs {
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
                     headers = @Header(name = "Authorization", description = "Access Token"))
     })
-    ResponseEntity<Void> unlikePost(@Parameter(name = "memberId, boardId") @RequestBody ReviewLikeRequest reviewLikeRequest);
-
+    ResponseEntity<Void> unlikePost(
+            @Parameter(name = "memberId, boardId") @RequestBody ReviewLikeRequest reviewLikeRequest);
 }
