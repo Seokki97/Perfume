@@ -89,9 +89,11 @@ public class PerfumeReviewBoard {
         if (like.getLikeStatus() == LikeStatus.UNLIKE) {
             this.decreaseLikeCount();
             this.increaseLikeCount();
-        } else if (like.getLikeStatus() == LikeStatus.CANCELED) {
+        }
+        if (like.getLikeStatus() == LikeStatus.CANCELED) {
             this.increaseLikeCount();
-        } else {
+        }
+        if (like.getLikeStatus() == LikeStatus.LIKE) {
             this.decreaseLikeCount();
         }
     }
@@ -100,9 +102,11 @@ public class PerfumeReviewBoard {
         if (like.getLikeStatus() == LikeStatus.LIKE) {
             this.decreaseLikeCount();
             this.increaseUnlikeCount();
-        } else if (like.getLikeStatus() == LikeStatus.CANCELED) {
+        }
+        if (like.getLikeStatus() == LikeStatus.CANCELED) {
             this.increaseUnlikeCount();
-        } else {
+        }
+        if (like.getLikeStatus() == LikeStatus.LIKE) {
             this.decreaseUnlikeCount();
         }
     }
