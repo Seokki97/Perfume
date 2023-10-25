@@ -7,11 +7,16 @@ import com.example.perfume.wishlist.dto.WishListRequest;
 import com.example.perfume.wishlist.dto.WishListResponse;
 import com.example.perfume.wishlist.service.WishListService;
 import com.example.perfume.wishlist.service.WishListUtil;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
@@ -30,7 +35,8 @@ public class WishListController implements WishListControllerDocs {
     @LoginCheck
     @PostMapping("/select-wish-perfume")
     public ResponseEntity<WishListResponse> selectLikePerfume(@RequestBody final WishListRequest wishListRequest) {
-        log.info("향수 위시리스트에 담기, Member Id : {}, Perfume Id : {}", wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
+        log.info("향수 위시리스트에 담기, Member Id : {}, Perfume Id : {}", wishListRequest.getMemberId(),
+                wishListRequest.getPerfumeId());
         return ResponseEntity.ok(wishListService.selectLikePerfume(wishListRequest));
     }
 
@@ -52,17 +58,9 @@ public class WishListController implements WishListControllerDocs {
     @LoginCheck
     @DeleteMapping("/delete-selected-perfume")
     public ResponseEntity<Void> deleteSelectedPerfume(@RequestBody WishListRequest wishListRequest) {
-        log.info("향수 리스트 선택 삭제하기, Member Id: {}, Perfume Id: {}", wishListRequest.getMemberId(), wishListRequest.getPerfumeId());
+        log.info("향수 리스트 선택 삭제하기, Member Id: {}, Perfume Id: {}", wishListRequest.getMemberId(),
+                wishListRequest.getPerfumeId());
         wishListService.deleteSelectedWishList(wishListRequest);
-
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/make-mok-data/{id}")
-    public ResponseEntity<Void> makeMokData(@PathVariable("id") Long perfumeId){
-        for(int i = 0; i< 27; i++){
-            wishListService.makeMokData(perfumeId);
-        }
         return ResponseEntity.noContent().build();
     }
 }
