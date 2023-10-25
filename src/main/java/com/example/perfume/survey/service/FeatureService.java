@@ -1,7 +1,12 @@
 package com.example.perfume.survey.service;
 
+import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.service.PerfumeService;
-import com.example.perfume.survey.domain.*;
+import com.example.perfume.survey.domain.Maintenance;
+import com.example.perfume.survey.domain.MoodType;
+import com.example.perfume.survey.domain.ScentType;
+import com.example.perfume.survey.domain.SeasonType;
+import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.dto.featureDto.FeatureResponseDto;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +24,17 @@ public class FeatureService {
     }
 
     public FeatureResponseDto showFeatureDetails(Long id) {
+        Perfume perfume = perfumeService.findPerfumeById(id);
+
         return FeatureResponseDto.builder()
-                .perfume(perfumeService.findPerfumeById(id))
-                .scentRecommend(selectScent(id))
-                .moodRecommend(selectMood(id))
-                .seasonRecommend(selectSeason(id))
-                .maintenanceRecommend(selectMaintenance(id))
+                .perfume(perfume)
+                .scentFeature(selectScent(id))
+                .moodFeature(selectMood(id))
+                .seasonFeature(selectSeason(id))
+                .maintenanceFeature(selectMaintenance(id))
                 .build();
     }
+
 
     private String selectScent(Long id) {
         Survey survey = surveyService.findSurveyById(id);
