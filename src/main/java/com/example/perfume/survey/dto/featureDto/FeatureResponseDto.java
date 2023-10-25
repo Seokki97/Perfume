@@ -7,24 +7,25 @@ import lombok.Getter;
 @Getter
 public class FeatureResponseDto {
 
-    private String scentRecommend;
-    private String moodRecommend;
-    private String seasonRecommend;
+    private String scentFeature;
+    private String moodFeature;
+    private String seasonFeature;
     private Perfume perfume;
 
-    private String maintenanceRecommend;
+    private String maintenanceFeature;
 
     public FeatureResponseDto() {
 
     }
 
     @Builder
-    public FeatureResponseDto(String scentRecommend, String moodRecommend, String seasonRecommend,String maintenanceRecommend, Perfume perfume) {
-        this.scentRecommend = scentRecommend;
-        this.moodRecommend = moodRecommend;
-        this.seasonRecommend = seasonRecommend;
+    public FeatureResponseDto(String scentFeature, String moodFeature, String seasonFeature, String maintenanceFeature,
+                              Perfume perfume) {
+        this.scentFeature = scentFeature;
+        this.moodFeature = moodFeature;
+        this.seasonFeature = seasonFeature;
         this.perfume = perfume;
-        this.maintenanceRecommend = maintenanceRecommend;
+        this.maintenanceFeature = maintenanceFeature;
 
     }
 }
