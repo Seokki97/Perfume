@@ -2,11 +2,14 @@ package com.example.perfume.wishlist.domain;
 
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.perfume.domain.Perfume;
-import lombok.Builder;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Entity(name = "wish_list")
 @Getter
@@ -24,17 +27,19 @@ public class WishList {
     @ManyToOne
     private Perfume perfume;
 
-    @Builder
+
     public WishList(Long wishListId, Member member, Perfume perfume) {
         this.wishListId = wishListId;
         this.member = member;
         this.perfume = perfume;
     }
 
+    public WishList(Member member, Perfume perfume) {
+        this.member = member;
+        this.perfume = perfume;
+    }
+
     public static WishList addPerfumeToWishList(Member member, Perfume perfume) {
-        return WishList.builder()
-                .perfume(perfume)
-                .member(member)
-                .build();
+        return new WishList(member, perfume);
     }
 }

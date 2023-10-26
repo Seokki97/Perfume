@@ -27,15 +27,6 @@ public class WishListService {
         this.wishListUtil = wishListUtil;
     }
 
-    public void makeMokData(Long perfumeId) {
-        Perfume perfume = perfumeService.findPerfumeById(perfumeId);
-
-        WishList wishList = WishList.builder()
-                .perfume(perfume)
-                .build();
-        wishListUtil.savePerfumeToWishList(wishList);
-    }
-
     public WishListResponse selectLikePerfume(WishListRequest wishListRequest) {
         wishListUtil.isEmptyRequestBody(wishListRequest);
 

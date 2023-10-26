@@ -4,11 +4,10 @@ import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
 import com.example.perfume.wishlist.exception.WishListNotFoundException;
 import com.example.perfume.wishlist.repository.WishListRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Objects;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class WishListUtil {
@@ -56,7 +55,6 @@ public class WishListUtil {
 
     @Transactional
     public void deleteAllWishedList(Long memberId) {
-
         wishListRepository.deleteByMember_MemberId(memberId);
     }
 
