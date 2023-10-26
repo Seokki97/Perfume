@@ -30,4 +30,12 @@ public class ReviewLikeRequest {
                 .member(member)
                 .build();
     }
+
+    public Long getMemberId() {
+        return member.getMemberId();
+    }
+
+    public Long getPostId() {
+        return post.getBoardId();
+    }
 }

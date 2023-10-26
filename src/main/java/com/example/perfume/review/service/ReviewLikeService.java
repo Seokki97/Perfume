@@ -26,7 +26,8 @@ public class ReviewLikeService {
     public void likePost(ReviewLikeRequest reviewLikeRequest) {
         ReviewLike reviewLike = reviewLikeRequest.toEntity();
 
-        PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLike.getLikedPost().getBoardId())
+        PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(
+                        reviewLike.getLikedPost().getBoardId())
                 .orElseThrow(ReviewPostNotFoundException::new);
 
         reviewLike.updateStatus(reviewLike.getLikeStatus());
@@ -40,7 +41,8 @@ public class ReviewLikeService {
     public void unlikePost(ReviewLikeRequest reviewLikeRequest) {
         ReviewLike reviewLike = reviewLikeRequest.toEntity();
 
-        PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLike.getLikedPost().getBoardId())
+        PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(
+                        reviewLike.getLikedPost().getBoardId())
                 .orElseThrow(ReviewPostNotFoundException::new);
 
         reviewLike.updateStatus(reviewLike.getLikeStatus());
@@ -51,8 +53,8 @@ public class ReviewLikeService {
     }
 
     public boolean isAlreadyPushLikeOrUnlike(ReviewLikeRequest reviewLikeRequest) {
-        Long memberId = reviewLikeRequest.getMember().getKakaoId();
-        Long postId = reviewLikeRequest.getPost().getBoardId();
+        Long memberId = reviewLikeRequest.getMemberId();
+        Long postId = reviewLikeRequest.getPostId();
         return reviewLikeRepository.existsByMemberAndReviewId(memberId, postId);
     }
 }
