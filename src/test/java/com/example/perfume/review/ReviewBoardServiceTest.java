@@ -1,8 +1,13 @@
 package com.example.perfume.review;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.when;
+
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.service.MemberService;
-import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.review.domain.Content;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
@@ -12,6 +17,9 @@ import com.example.perfume.review.dto.review.requestDto.ReviewBoardRequest;
 import com.example.perfume.review.dto.review.responseDto.ReviewBoardResponse;
 import com.example.perfume.review.repository.ReviewBoardRepository;
 import com.example.perfume.review.service.ReviewBoardService;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,13 +27,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ReviewBoardServiceTest {
@@ -60,10 +61,6 @@ public class ReviewBoardServiceTest {
                 .memberId(1L)
                 .build();
 
-        Perfume mockPerfume = Perfume.builder()
-                .perfumeName("에르메스 오드시트론느와")
-                .build();
-
         PerfumeReviewBoard mockBoard = PerfumeReviewBoard.builder()
                 .boardId(1L)
                 .member(mockMember)
@@ -71,11 +68,9 @@ public class ReviewBoardServiceTest {
                 .build();
 
         when(memberService.findByMemberPk(memberId)).thenReturn(mockMember);
-        when(perfumeService.findPerfumeByName(boardRequest.getPerfumeName())).thenReturn(mockPerfume);
         when(reviewBoardRepository.save(any(PerfumeReviewBoard.class))).thenReturn(mockBoard);
 
         ReviewBoardResponse result = reviewBoardService.writeReview(memberId, boardRequest);
-
 
         Assertions.assertEquals(mockBoard.getBoardId(), result.getBoardId());
     }
@@ -166,7 +161,8 @@ public class ReviewBoardServiceTest {
         mockReviewBoard.add(expectedCaseOne);
         mockReviewBoard.add(expectedCaseTwo);
 
-        when(reviewBoardRepository.findByTitleContainingOrContentContaining(anyString(), eq("구찌"))).thenReturn(mockReviewBoard);
+        when(reviewBoardRepository.findByTitleContainingOrContentContaining(anyString(), eq("구찌"))).thenReturn(
+                mockReviewBoard);
 
         List<PerfumeReviewBoard> result = reviewBoardService.showSearchedPosts("구찌");
 

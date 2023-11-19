@@ -1,10 +1,18 @@
 package com.example.perfume.perfume.service;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.dto.PerfumeRequestDto;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,12 +20,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PerfumeServiceTest {
@@ -56,7 +58,8 @@ public class PerfumeServiceTest {
 
         assertAll(
                 () -> assertEquals(expected.get(0).getPerfumeName(), "에르메스"),
-                () -> assertThrows(PerfumeNotFoundException.class, () -> perfumeService.findPerfumeListByName(exception))
+                () -> assertThrows(PerfumeNotFoundException.class,
+                        () -> perfumeService.findPerfumeListByName(exception))
         );
     }
 
@@ -99,7 +102,7 @@ public class PerfumeServiceTest {
                 .perfumeId(1l)
                 .build();
 
-        Mockito.when(perfumeRepository.findById(1l)).thenReturn(Optional.ofNullable(mockPerfume));
+        Mockito.when(perfumeRepository.findByPerfumeId(1l)).thenReturn(Optional.ofNullable(mockPerfume));
         Mockito.when(perfumeRepository.findById(10l)).thenThrow(PerfumeNotFoundException.class);
         Perfume expected = perfumeService.findPerfumeById(1l);
 

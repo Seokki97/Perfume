@@ -1,6 +1,5 @@
 package com.example.perfume.member.dto.logoutDto;
 
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -11,7 +10,6 @@ public class LogoutRequestDto {
     public LogoutRequestDto() {
     }
 
-    @Builder
     public LogoutRequestDto(Long memberId) {
         this.memberId = memberId;
     }

@@ -3,13 +3,12 @@ package com.example.perfume.feedback.service;
 import com.example.perfume.feedback.domain.Feedback;
 import com.example.perfume.feedback.dto.FeedbackRequestDto;
 import com.example.perfume.feedback.repository.FeedbackRepository;
-import org.springframework.stereotype.Service;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class FeedbackService {
@@ -28,7 +27,6 @@ public class FeedbackService {
 
     public void saveFeedback(FeedbackRequestDto feedbackRequestDto) {
         Feedback feedback = feedbackRequestDto.toEntity();
-
         feedbackRepository.save(feedback);
     }
 

@@ -1,11 +1,13 @@
 package com.example.perfume.feedback.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Entity(name = "feedback")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,10 +22,12 @@ public class Feedback {
     @Column(length = 1000)
     private String comment;
 
-    @Builder
-    public Feedback(Long id, String serviceName, String comment) {
-        this.id = id;
+    public Feedback(String serviceName, String comment) {
         this.serviceName = serviceName;
         this.comment = comment;
+    }
+
+    public Feedback(Long id) {
+        this.id = id;
     }
 }

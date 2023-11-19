@@ -1,19 +1,24 @@
 package com.example.perfume.review.domain.review;
 
-import com.example.perfume.review.domain.Content;
 import com.example.perfume.member.domain.Member;
+import com.example.perfume.review.domain.Content;
 import com.example.perfume.review.domain.like.LikeStatus;
 import com.example.perfume.review.domain.like.ReviewLike;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -87,27 +92,27 @@ public class PerfumeReviewBoard {
 
     public void likePost(ReviewLike like) {
         if (like.getLikeStatus() == LikeStatus.UNLIKE) {
-            this.decreaseLikeCount();
-            this.increaseLikeCount();
+            decreaseLikeCount();
+            increaseUnlikeCount();
         }
         if (like.getLikeStatus() == LikeStatus.CANCELED) {
-            this.increaseLikeCount();
+            increaseLikeCount();
         }
         if (like.getLikeStatus() == LikeStatus.LIKE) {
-            this.decreaseLikeCount();
+            decreaseLikeCount();
         }
     }
 
     public void unlikePost(ReviewLike like) {
         if (like.getLikeStatus() == LikeStatus.LIKE) {
-            this.decreaseLikeCount();
-            this.increaseUnlikeCount();
+            decreaseLikeCount();
+            increaseUnlikeCount();
         }
         if (like.getLikeStatus() == LikeStatus.CANCELED) {
-            this.increaseUnlikeCount();
+            increaseUnlikeCount();
         }
         if (like.getLikeStatus() == LikeStatus.LIKE) {
-            this.decreaseUnlikeCount();
+            decreaseUnlikeCount();
         }
     }
 

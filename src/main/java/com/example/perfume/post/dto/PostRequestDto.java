@@ -1,7 +1,5 @@
 package com.example.perfume.post.dto;
 
-import com.example.perfume.post.domain.Post;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -17,7 +15,6 @@ public class PostRequestDto {
 
     }
 
-    @Builder
     public PostRequestDto(Long id, String visitor, String content) {
         this.id = id;
         this.visitor = visitor;

@@ -34,10 +34,7 @@ public class LoginService implements UserDetailsService {
 
     //토큰 저장
     public Token saveToken(LoginResponse loginResponse, Member member) {
-        Token token = Token.builder()
-                .refreshToken(loginResponse.getRefreshToken())
-                .memberId(member.getKakaoId())
-                .build();
+        Token token = new Token(loginResponse.getRefreshToken(), member.getKakaoId());
         if (!tokenRepository.existsByMemberId(member.getKakaoId())) {
             tokenRepository.save(token);
         }

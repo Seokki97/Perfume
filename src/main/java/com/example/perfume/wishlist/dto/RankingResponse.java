@@ -1,10 +1,8 @@
 package com.example.perfume.wishlist.dto;
 
 import com.example.perfume.perfume.domain.Perfume;
-import lombok.Builder;
-import lombok.Getter;
-
 import java.util.Objects;
+import lombok.Getter;
 
 @Getter
 public class RankingResponse {
@@ -16,7 +14,6 @@ public class RankingResponse {
     public RankingResponse() {
     }
 
-    @Builder
     public RankingResponse(Perfume perfume, Long count) {
         this.perfume = perfume;
         this.count = count;
@@ -40,9 +37,6 @@ public class RankingResponse {
     }
 
     public static RankingResponse makeRankingResponseObject(Perfume perfume, Long count) {
-        return RankingResponse.builder()
-                .perfume(perfume)
-                .count(count)
-                .build();
+        return new RankingResponse(perfume, count);
     }
 }

@@ -5,6 +5,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Base64;
+import java.util.Date;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,17 +16,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.Date;
-
 @Component
 public class JwtProvider {
 
     @Value("${jwt.secret}")
     private String secretKey;
-    private final long tokenValidTime =3600000L;
+    private static final long tokenValidTime = 3600000L;
 
     private final LoginService loginService;
 
@@ -57,6 +56,7 @@ public class JwtProvider {
                 .compact();
         return refreshToken;
     }
+
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = loginService.loadUserByUsername(this.getUserPk(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
@@ -65,11 +65,12 @@ public class JwtProvider {
     public String getUserPk(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
+
     public String resolveToken(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
 
-    public String resolveRefreshToken(HttpServletRequest request){
+    public String resolveRefreshToken(HttpServletRequest request) {
         return request.getHeader("X-REFRESH-TOKEN");
     }
 

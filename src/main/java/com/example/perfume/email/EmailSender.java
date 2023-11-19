@@ -6,13 +6,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailSender {
+
     private final JavaMailSender javaMailSender;
 
-    private EmailSender(JavaMailSender javaMailSender){
+    public EmailSender(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendMail(MailDto mailDto){
+    public void sendMail(MailDto mailDto) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(mailDto.getTo());
         simpleMailMessage.setSubject(mailDto.getSubject());

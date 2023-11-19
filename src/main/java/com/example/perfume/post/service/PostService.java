@@ -5,9 +5,8 @@ import com.example.perfume.post.domain.Post;
 import com.example.perfume.post.dto.PostRequestDto;
 import com.example.perfume.post.exception.PostNotFoundException;
 import com.example.perfume.post.repository.PostRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PostService {
@@ -20,10 +19,7 @@ public class PostService {
 
     public void savePost(PostRequestDto postRequestDto) {
         Nickname nickname = new Nickname();
-        Post post = Post.builder()
-                .content(postRequestDto.getContent())
-                .nickname(nickname)
-                .build();
+        Post post = new Post(nickname, postRequestDto.getContent());
         postRepository.save(post);
     }
 
@@ -40,9 +36,6 @@ public class PostService {
     }
 
     private boolean isPostExist() {
-        if (postRepository.count() == 0) {
-            return false;
-        }
-        return true;
+        return postRepository.count() != 0;
     }
 }

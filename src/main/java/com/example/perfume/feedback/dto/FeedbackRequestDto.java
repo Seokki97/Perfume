@@ -10,19 +10,17 @@ public class FeedbackRequestDto {
     private String serviceName;
     private String comment;
 
-    public FeedbackRequestDto(){
+    public FeedbackRequestDto() {
 
     }
+
     @Builder
     public FeedbackRequestDto(String serviceName, String comment) {
         this.serviceName = serviceName;
         this.comment = comment;
     }
 
-    public Feedback toEntity(){
-        return Feedback.builder()
-                .serviceName(serviceName)
-                .comment(comment)
-                .build();
+    public Feedback toEntity() {
+        return new Feedback(serviceName, comment);
     }
 }

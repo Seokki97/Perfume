@@ -2,12 +2,16 @@ package com.example.perfume.post.domain;
 
 import com.example.perfume.post.service.NicknameGenerator;
 import com.sun.istack.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.AccessLevel;
-import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "post")
 public class Post {
@@ -24,10 +28,12 @@ public class Post {
     @Column(nullable = false, length = 500)
     private String content;
 
-    @Builder
-    public Post(Long id, Nickname nickname, String content) {
-        this.id = id;
+    public Post(Nickname nickname, String content) {
         this.visitor = NicknameGenerator.generateRandomNickname(nickname);
         this.content = content;
+    }
+
+    public Post(Long id) {
+        this.id = id;
     }
 }

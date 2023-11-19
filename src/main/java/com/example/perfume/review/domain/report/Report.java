@@ -1,15 +1,22 @@
 package com.example.perfume.review.domain.report;
 
 import com.example.perfume.review.dto.report.requestDto.ReportRequest;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Getter
 @EntityListeners(AuditingEntityListener.class)
@@ -45,6 +52,10 @@ public class Report {
         this.reportDetail = reportDetail;
     }
 
+    public Report(Long reportId) {
+        this.reportId = reportId;
+    }
+
     public static Report createReportObject(ReportRequest reportRequest) {
         return Report.builder()
                 .description(reportRequest.getDescription())
@@ -54,7 +65,7 @@ public class Report {
                 .build();
     }
 
-    public void updateStatus(ReportStatus reportStatus){
+    public void updateStatus(ReportStatus reportStatus) {
         this.reportStatus = reportStatus;
     }
 }
