@@ -10,6 +10,11 @@ import org.springframework.util.MultiValueMap;
 @Service
 public class KakaoToken {
 
+    public HttpEntity<MultiValueMap<String, String>> requestTokenFromResourceServer(String code) {
+
+        return new HttpEntity<>((setHttpBody(code)), setHttpHeaders());
+    }
+
     public HttpHeaders setHttpHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(OauthType.CONTENT_TYPE.getName(), OauthType.CONTENT_TYPE.getType());
@@ -26,18 +31,10 @@ public class KakaoToken {
         return requestBody;
     }
 
-    public HttpEntity<MultiValueMap<String, String>> requestTokenFromResourceServer(String code) {
-
-        return new HttpEntity<>((setHttpBody(code)), setHttpHeaders());
-    }
-
-    public HttpHeaders requestUserProfile(String token) {
+    public HttpEntity<Void> requestUserProfileFromResourceServer(String token) {
         HttpHeaders httpHeaders = setHttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + token);
-        return httpHeaders;
+        return new HttpEntity<>(null, httpHeaders);
     }
 
-    public HttpEntity<Void> requestUserProfileFromResourceServer(String token) {
-        return new HttpEntity<>(null, requestUserProfile(token));
-    }
 }
