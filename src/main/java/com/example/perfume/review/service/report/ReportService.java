@@ -39,19 +39,14 @@ public class ReportService {
     @Transactional
     public ReportResponse processReport(Long reportId) {
         Report report = reportRepository.findByReportId(reportId).orElseThrow(ReportNotFoundException::new);
-
         reviewBoardRepository.deleteByBoardId(report.getReportDetail().getPostId());
-
         report.updateStatus(ReportStatus.PROCESSED);
-
         return ReportResponse.convertToResponse(report);
     }
 
     public ReportResponse rejectReport(Long reportId) {
         Report report = reportRepository.findByReportId(reportId).orElseThrow(ReportNotFoundException::new);
-
         report.updateStatus(ReportStatus.REJECTED);
-
         return ReportResponse.convertToResponse(report);
     }
 }
