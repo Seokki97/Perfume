@@ -97,23 +97,20 @@ public class ReviewBoardService {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(boardId)
                 .orElseThrow(ReviewPostNotFoundException::new);
 
-        ReviewBoardResponse reviewBoardResponse = ReviewBoardResponse.builder()
+        return ReviewBoardResponse.builder()
                 .boardId(perfumeReviewBoard.getBoardId())
                 .title(perfumeReviewBoard.getTitle())
                 .content(perfumeReviewBoard.getContent())
                 .likeCount(perfumeReviewBoard.getLikeCount())
                 .unlikeCount(perfumeReviewBoard.getUnlikeCount())
                 .build();
-
-        return reviewBoardResponse;
     }
 
     //게시글 검색 (향수 이름으로)
     public List<PerfumeReviewBoard> showSearchedPosts(String perfumeName) {
-        List<PerfumeReviewBoard> perfumeReviewBoards = reviewBoardRepository
-                .findByTitleContainingOrContentContaining(perfumeName, perfumeName);
 
-        return perfumeReviewBoards;
+        return reviewBoardRepository
+                .findByTitleContainingOrContentContaining(perfumeName, perfumeName);
     }
 
     //내가 남긴 게시글 조회
