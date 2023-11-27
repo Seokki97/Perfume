@@ -4,6 +4,8 @@ import com.example.perfume.member.domain.Member;
 import com.example.perfume.review.domain.Content;
 import com.example.perfume.review.domain.like.LikeStatus;
 import com.example.perfume.review.domain.like.ReviewLike;
+import com.example.perfume.review.exception.ReviewTitleDuplicatedException;
+import com.example.perfume.review.repository.ReviewBoardRepository;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -116,5 +118,10 @@ public class PerfumeReviewBoard {
         }
     }
 
+    public void validatePostDuplication(ReviewBoardRepository reviewBoardRepository) {
+        if (reviewBoardRepository.existsByTitle(title)) {
+            throw new ReviewTitleDuplicatedException();
+        }
+    }
 }
 
