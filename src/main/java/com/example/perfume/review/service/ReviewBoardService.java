@@ -1,20 +1,17 @@
 package com.example.perfume.review.service;
 
+import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.service.MemberService;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.dto.review.requestDto.PostDeleteRequest;
 import com.example.perfume.review.dto.review.requestDto.PostUpdateRequest;
 import com.example.perfume.review.dto.review.requestDto.ReviewBoardRequest;
 import com.example.perfume.review.dto.review.responseDto.ReviewBoardResponse;
 import com.example.perfume.review.exception.ReviewPostNotFoundException;
-import com.example.perfume.review.exception.ReviewTitleDuplicatedException;
 import com.example.perfume.review.repository.ReviewBoardRepository;
-import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.service.MemberService;
-import com.example.perfume.perfume.service.PerfumeService;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class ReviewBoardService {
@@ -34,9 +31,7 @@ public class ReviewBoardService {
         Member member = memberService.findByMemberPk(memberId);
         PerfumeReviewBoard perfumeReviewBoard = boardRequest.toEntity(member, boardRequest.getContent());
 
-        if (validatePostDuplication(boardRequest.getTitle())) {
-            throw new ReviewTitleDuplicatedException();
-        }
+        perfumeReviewBoard.validatePostDuplication(reviewBoardRepository);
         PerfumeReviewBoard savedBoard = reviewBoardRepository.save(perfumeReviewBoard);
 
         return ReviewBoardResponse.builder()
@@ -52,10 +47,7 @@ public class ReviewBoardService {
                 .orElseThrow(ReviewPostNotFoundException::new);
 
         perfumeReviewBoard.updatePost(postUpdateRequest.getTitle(), postUpdateRequest.getContent());
-
-        if (validatePostDuplication(perfumeReviewBoard.getTitle())) {
-            throw new ReviewTitleDuplicatedException();
-        }
+        perfumeReviewBoard.validatePostDuplication(reviewBoardRepository);
 
         return ReviewBoardResponse.builder()
                 .boardId(perfumeReviewBoard.getBoardId())
@@ -70,10 +62,7 @@ public class ReviewBoardService {
                 .orElseThrow(ReviewPostNotFoundException::new);
 
         perfumeReviewBoard.updateTitle(postUpdateRequest.getTitle());
-
-        if (validatePostDuplication(perfumeReviewBoard.getTitle())) {
-            throw new ReviewTitleDuplicatedException();
-        }
+        perfumeReviewBoard.validatePostDuplication(reviewBoardRepository);
 
         return ReviewBoardResponse.builder()
                 .boardId(perfumeReviewBoard.getBoardId())
@@ -130,9 +119,5 @@ public class ReviewBoardService {
     //내가 남긴 게시글 조회
     public List<PerfumeReviewBoard> showMyReviewPost(Long memberId) {
         return reviewBoardRepository.findByWriter(memberId);
-    }
-
-    public boolean validatePostDuplication(String title) {
-        return reviewBoardRepository.existsByTitle(title);
     }
 }
