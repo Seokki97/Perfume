@@ -36,7 +36,6 @@ public class WishListService {
         if (wishListUtil.isDuplicateWishItem(wishListRequest)) {
             throw new WishListDuplicateException();
         }
-
         if (wishListUtil.isWishListOverMaxSize(wishListRequest)) {
             throw new WishListTooMuchException();
         }
