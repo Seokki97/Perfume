@@ -1,5 +1,6 @@
 package com.example.perfume.survey.domain;
 
+import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import lombok.Getter;
 
 @Getter
@@ -13,5 +14,9 @@ public enum SurveyType {
 
     SurveyType(String value) {
         this.value = value;
+    }
+
+    public boolean isSeasonNotSelected(SurveyRequestDto surveyRequestDto) {
+        return NOT_SELECT_SEASON.value.equals(surveyRequestDto.getSeasonAnswer());
     }
 }
