@@ -31,12 +31,11 @@ public class LoginService implements UserDetailsService {
     }
 
     //토큰 저장
-    public Token saveToken(LoginResponse loginResponse, Member member) {
+    public void saveToken(LoginResponse loginResponse, Member member) {
         Token token = new Token(loginResponse.getRefreshToken(), member.getKakaoId());
         if (!tokenRepository.existsByMemberId(member.getKakaoId())) {
             tokenRepository.save(token);
         }
-        return token;
     }
 
     public LoginResponse generateToken(Long id) {

@@ -1,7 +1,9 @@
 package com.example.perfume.oauth.controller;
 
 import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.dto.loginDto.LoginResponse;
 import com.example.perfume.member.dto.memberDto.MemberRequestDto;
+import com.example.perfume.member.service.LoginService;
 import com.example.perfume.oauth.TokenUrl;
 import com.example.perfume.oauth.service.KakaoToken;
 import com.example.perfume.oauth.service.OauthService;
@@ -28,9 +30,13 @@ public class OauthController {
 
     private final OauthService oauthService;
 
-    public OauthController(KakaoToken KakaoToken, OauthService oauthService) {
+    private final LoginService loginService;
+
+
+    public OauthController(KakaoToken KakaoToken, OauthService oauthService, LoginService loginService) {
         this.kakaoToken = KakaoToken;
         this.oauthService = oauthService;
+        this.loginService = loginService;
     }
 
     @GetMapping("/response/token")
@@ -52,7 +58,8 @@ public class OauthController {
     }
 
     @PostMapping("save/profile")
-    public ResponseEntity<Member> saveUserProfile(@RequestBody MemberRequestDto memberRequestDto) {
-        return ResponseEntity.ok(oauthService.saveUserProfile(memberRequestDto));
+    public ResponseEntity<LoginResponse> saveUserProfile(@RequestBody MemberRequestDto memberRequestDto) {
+        Member member = oauthService.saveUserProfile(memberRequestDto);
+        return ResponseEntity.ok(loginService.generateToken(member.getMemberId()));
     }
 }
