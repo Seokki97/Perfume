@@ -2,9 +2,16 @@ package com.example.perfume.survey.domain;
 
 import com.example.perfume.perfume.domain.Perfume;
 import com.sun.istack.NotNull;
-import lombok.*;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -39,7 +46,8 @@ public class Survey {
     private Perfume perfume;
 
     @Builder
-    public Survey(Long surveyId, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer, Perfume perfume) {
+    public Survey(Long surveyId, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer,
+                  String styleAnswer, Perfume perfume) {
         this.surveyId = surveyId;
         this.genderAnswer = genderAnswer;
         this.scentAnswer = scentAnswer;
@@ -47,5 +55,9 @@ public class Survey {
         this.seasonAnswer = seasonAnswer;
         this.styleAnswer = styleAnswer;
         this.perfume = perfume;
+    }
+
+    public String getMaintenance() {
+        return perfume.getMaintenance();
     }
 }

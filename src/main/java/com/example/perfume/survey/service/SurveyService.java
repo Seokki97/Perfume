@@ -6,10 +6,8 @@ import com.example.perfume.survey.domain.SurveyType;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.exception.SurveyNotFoundException;
 import com.example.perfume.survey.repository.SurveyRepository;
+import java.util.List;
 import org.springframework.stereotype.Service;
-
-import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class SurveyService {
@@ -27,12 +25,12 @@ public class SurveyService {
         return surveyRepository.findBySurveyId(id).orElseThrow(SurveyNotFoundException::new);
     }
 
-    public Survey saveSurveyData(Survey survey) {
-        return surveyRepository.save(survey);
+    public void saveSurveyData(Survey survey) {
+        surveyRepository.save(survey);
     }
 
     private List<Survey> filterSurveyResultByQuestion(SurveyRequestDto surveyRequestDto) {
-        if (surveyUtil.isNotSelectedSeasonAnswer(surveyRequestDto)) {
+        if (SurveyType.NOT_SELECT_SEASON.isSeasonNotSelected(surveyRequestDto)) {
             return surveyRepository.findSurveysByGenderScentMoodAndStyle(
                     surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(),
                     surveyRequestDto.getMoodAnswer(), surveyRequestDto.getStyleAnswer());
@@ -58,7 +56,6 @@ public class SurveyService {
 
     public List<Perfume> showSimilarPerfumeList(Survey survey) {
         String selectedMoodAnswer = surveyUtil.showMoodAnswer(survey);
-
         List<Survey> findSimilarData = surveyRepository.findSurveysByGenderScentAndMood
                 (survey.getGenderAnswer(), survey.getScentAnswer(), selectedMoodAnswer);
 
