@@ -38,9 +38,9 @@ public class WishListUtilTest {
         WishListRequest nullObject = new WishListRequest(null, null);
         WishListRequest perfumeIdEmpty = new WishListRequest(1l, null);
         WishListRequest memberIdEmptyObject = new WishListRequest(null, 1l);
-        boolean emptyObject = wishListUtil.isEmptyRequestBody(nullObject);
-        boolean perfumeEmptyObject = wishListUtil.isEmptyRequestBody(perfumeIdEmpty);
-        boolean memberEmptyObject = wishListUtil.isEmptyRequestBody(memberIdEmptyObject);
+        boolean emptyObject = nullObject.isEmptyRequestBody();
+        boolean perfumeEmptyObject = perfumeIdEmpty.isEmptyRequestBody();
+        boolean memberEmptyObject = memberIdEmptyObject.isEmptyRequestBody();
 
         Assertions.assertAll(
                 () -> Assertions.assertTrue(emptyObject),

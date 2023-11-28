@@ -2,7 +2,6 @@ package com.example.perfume.wishlist.service;
 
 import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
-import com.example.perfume.wishlist.exception.WishListNotFoundException;
 import com.example.perfume.wishlist.repository.WishListRepository;
 import java.util.List;
 import java.util.Objects;
@@ -20,13 +19,6 @@ public class WishListUtil {
         this.wishListRepository = wishListRepository;
     }
 
-    public void validateExistsWishList(WishListRequest wishListRequest) {
-        if (wishListRepository.existsByMember_MemberIdAndPerfume_PerfumeId(wishListRequest.getMemberId(),
-                wishListRequest.getPerfumeId())) {
-            throw new WishListNotFoundException();
-        }
-    }
-
     public void savePerfumeToWishList(WishList wishList) {
         wishListRepository.save(wishList);
     }
@@ -39,14 +31,10 @@ public class WishListUtil {
         return wishListRepository.findByMember(memberId).isEmpty();
     }
 
-    public boolean isEmptyRequestBody(WishListRequest wishListRequest) {
-        return wishListRequest.getMemberId() == null || wishListRequest.getPerfumeId() == null;
-    }
-
     public boolean isDuplicateWishItem(WishListRequest wishListRequest) {
         return wishListRepository.findByMember(wishListRequest.getMemberId()).stream()
                 .anyMatch(
-                        perfume -> Objects.equals(perfume.getPerfume().getPerfumeId(), wishListRequest.getPerfumeId()));
+                        perfume -> Objects.equals(perfume.getPerfumeId(), wishListRequest.getPerfumeId()));
     }
 
     public boolean isWishListOverMaxSize(WishListRequest wishListRequest) {
