@@ -56,4 +56,8 @@ public class Survey {
         this.styleAnswer = styleAnswer;
         this.perfume = perfume;
     }
+
+    public String getMaintenance() {
+        return perfume.getMaintenance();
+    }
 }
