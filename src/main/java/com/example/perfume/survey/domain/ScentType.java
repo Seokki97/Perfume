@@ -1,10 +1,8 @@
 package com.example.perfume.survey.domain;
 
 import com.example.perfume.survey.exception.ScentNotFoundException;
-
-import lombok.Getter;
-
 import java.util.Arrays;
+import lombok.Getter;
 
 @Getter
 public enum ScentType {
@@ -29,6 +27,6 @@ public enum ScentType {
         ScentType scentType = Arrays.stream(ScentType.values())
                 .filter(scent -> scent.getScent().equals(expectedScent))
                 .findAny().orElseThrow(ScentNotFoundException::new);
-        return scentType.getFeature();
+        return scentType.feature;
     }
 }
