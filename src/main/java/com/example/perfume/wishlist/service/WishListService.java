@@ -56,12 +56,8 @@ public class WishListService {
 
     public void deleteSelectedWishList(WishListRequest wishListRequest) {
         wishListRequest.isEmptyRequestBody();
-
         if (wishListUtil.isEmptyWishList(wishListRequest.getMemberId())) {
             throw new WishListNotFoundException();
-        }
-        if (wishListUtil.isEmptyWishList(wishListRequest.getMemberId())) {
-            throw new WishListDuplicateException();
         }
         wishListUtil.deleteSelectedWishElement(wishListRequest);
     }
