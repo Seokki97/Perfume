@@ -28,7 +28,7 @@ public class WishListService {
     }
 
     public WishListResponse selectLikePerfume(WishListRequest wishListRequest) {
-        wishListUtil.isEmptyRequestBody(wishListRequest);
+        wishListRequest.isEmptyRequestBody();
 
         Member member = memberService.findMemberById(wishListRequest.getMemberId());
         Perfume perfume = perfumeService.findPerfumeById(wishListRequest.getPerfumeId());
@@ -55,7 +55,7 @@ public class WishListService {
     }
 
     public void deleteSelectedWishList(WishListRequest wishListRequest) {
-        wishListUtil.isEmptyRequestBody(wishListRequest);
+        wishListRequest.isEmptyRequestBody();
 
         if (wishListUtil.isEmptyWishList(wishListRequest.getMemberId())) {
             throw new WishListNotFoundException();

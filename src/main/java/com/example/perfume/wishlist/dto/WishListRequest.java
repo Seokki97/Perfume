@@ -16,4 +16,8 @@ public class WishListRequest {
         this.memberId = memberId;
         this.perfumeId = perfumeId;
     }
+
+    public boolean isEmptyRequestBody() {
+        return memberId == null || perfumeId == null;
+    }
 }

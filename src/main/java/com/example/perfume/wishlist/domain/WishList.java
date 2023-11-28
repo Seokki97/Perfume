@@ -46,4 +46,8 @@ public class WishList {
     public String getPerfumeName() {
         return perfume.getPerfumeName();
     }
+
+    public Long getPerfumeId() {
+        return perfume.getPerfumeId();
+    }
 }
