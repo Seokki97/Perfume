@@ -42,4 +42,8 @@ public class WishList {
     public static WishList addPerfumeToWishList(Member member, Perfume perfume) {
         return new WishList(member, perfume);
     }
+
+    public String getPerfumeName() {
+        return perfume.getPerfumeName();
+    }
 }

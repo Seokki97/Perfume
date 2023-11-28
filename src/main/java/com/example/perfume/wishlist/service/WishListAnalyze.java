@@ -4,10 +4,12 @@ import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.RankingResponse;
 import com.example.perfume.wishlist.exception.RankingCannotMakeException;
 import com.example.perfume.wishlist.repository.WishListRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class WishListAnalyze {
@@ -45,7 +47,7 @@ public class WishListAnalyze {
     private Map<String, Long> countWishListObjects(List<WishList> wishLists) {
         return wishLists.stream()
                 .collect(Collectors.groupingBy(
-                        wishList -> wishList.getPerfume().getPerfumeName(), Collectors.counting()
+                        WishList::getPerfumeName, Collectors.counting()
                 ));
     }
 
