@@ -5,7 +5,6 @@ import com.example.perfume.member.domain.Token;
 import com.example.perfume.member.dto.loginDto.LoginResponse;
 import com.example.perfume.member.exception.MemberAlreadyLogoutException;
 import com.example.perfume.member.exception.UserNotFoundException;
-import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.member.repository.TokenRepository;
 import com.example.perfume.member.service.jwt.JwtProvider;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,8 +19,7 @@ public class LoginService implements UserDetailsService {
     private final TokenRepository tokenRepository;
     private final MemberService memberService;
 
-    public LoginService(JwtProvider jwtProvider, TokenRepository tokenRepository, MemberService memberService,
-                        MemberRepository memberRepository) {
+    public LoginService(JwtProvider jwtProvider, TokenRepository tokenRepository, MemberService memberService) {
         this.jwtProvider = jwtProvider;
         this.tokenRepository = tokenRepository;
         this.memberService = memberService;

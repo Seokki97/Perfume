@@ -1,9 +1,15 @@
 package com.example.perfume.perfume.domain;
 
 import com.sun.istack.NotNull;
-import lombok.*;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -35,7 +41,8 @@ public class Perfume {
     private String maintenance;
 
     @Builder
-    public Perfume(Long perfumeId, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl, String maintenance) {
+    public Perfume(Long perfumeId, String perfumeName, String brandName, String perfumeFeature, String perfumeImageUrl,
+                   String maintenance) {
         this.perfumeId = perfumeId;
         this.perfumeName = perfumeName;
         this.brandName = brandName;

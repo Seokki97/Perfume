@@ -6,10 +6,9 @@ import com.example.perfume.perfume.dto.PerfumeResponseDto;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.perfume.repository.PerfumeRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PerfumeService {
@@ -35,10 +34,6 @@ public class PerfumeService {
         return perfumeRepository.findByPerfumeId(perfumeId).orElseThrow(PerfumeNotFoundException::new);
     }
 
-    public Perfume findPerfumeByName(String perfumeName) {
-        return perfumeRepository.findByPerfumeName(perfumeName).orElseThrow(PerfumeNotFoundException::new);
-    }
-
     public List<Perfume> showAllPerfumeData() {
         List<Perfume> perfumeList = perfumeRepository.findAll();
 
@@ -59,7 +54,7 @@ public class PerfumeService {
     }
 
     public List<String> showBrandList() {
-        return perfumeRepository.findAll().stream().map(data -> data.getBrandName())
+        return perfumeRepository.findAll().stream().map(Perfume::getBrandName)
                 .distinct().collect(Collectors.toList());
     }
 
