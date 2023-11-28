@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WishListAnalyze {
+
+    private static final long ZERO = 0L;
+    private static final long COUNT = 1L;
     private final WishListRepository wishListRepository;
 
     public WishListAnalyze(WishListRepository wishListRepository) {
@@ -26,7 +29,7 @@ public class WishListAnalyze {
         Map<String, Long> countedWishLists = countWishListObjects(wishLists);
 
         for (WishList wishList : wishLists) {
-            long count = countedWishLists.getOrDefault(wishList.getPerfume().getPerfumeName(), 0l);
+            long count = countedWishLists.getOrDefault(wishList.getPerfumeName(), ZERO) + COUNT;
             RankingResponse rankingResponse = RankingResponse.makeRankingResponseObject(wishList.getPerfume(), count);
             rankingResponses.add(rankingResponse);
         }
