@@ -1,6 +1,5 @@
 package com.example.perfume.member.service.jwt;
 
-import com.example.perfume.member.service.LoginService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -10,10 +9,6 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,11 +17,6 @@ public class JwtProvider {
     private static final long tokenValidTime = 3600000L;
     @Value("${jwt.secret}")
     private String secretKey;
-    private final LoginService loginService;
-
-    public JwtProvider(@Lazy LoginService loginService) {
-        this.loginService = loginService;
-    }
 
     @PostConstruct
     protected void init() {
@@ -53,11 +43,6 @@ public class JwtProvider {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
-    }
-
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = loginService.loadUserByUsername(this.getUserPk(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     public String getUserPk(String token) {

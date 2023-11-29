@@ -7,14 +7,11 @@ import com.example.perfume.member.exception.MemberAlreadyLogoutException;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.repository.TokenRepository;
 import com.example.perfume.member.service.jwt.JwtProvider;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class LoginService implements UserDetailsService {
+public class LoginService {
     private final JwtProvider jwtProvider;
     private final TokenRepository tokenRepository;
     private final MemberService memberService;
@@ -23,11 +20,6 @@ public class LoginService implements UserDetailsService {
         this.jwtProvider = jwtProvider;
         this.tokenRepository = tokenRepository;
         this.memberService = memberService;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String refreshToken) throws UsernameNotFoundException {
-        return (UserDetails) memberService.findMemberByEmail(refreshToken);
     }
 
     //토큰 저장
