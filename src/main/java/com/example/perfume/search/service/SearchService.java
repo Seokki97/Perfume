@@ -20,7 +20,6 @@ public class SearchService {
 
         httpHeaders.add(Search.CLIENT_ID.getValue(), clientId);
         httpHeaders.add(Search.API_KEY.getValue(), secretKey);
-
         return new HttpEntity<>(httpHeaders);
     }
 

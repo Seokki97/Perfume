@@ -19,10 +19,8 @@ public class SearchController {
         this.searchService = searchService;
     }
 
-
     @GetMapping("/search")
     public ResponseEntity<String> searchPerfumeInformation(@RequestParam("perfumeName") String perfumeName) {
-
         return new RestTemplate()
                 .exchange(searchService.generateQueryMessage(perfumeName), HttpMethod.GET,
                         searchService.generateRequestEntity(), String.class);
