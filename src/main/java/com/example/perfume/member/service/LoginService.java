@@ -40,8 +40,8 @@ public class LoginService implements UserDetailsService {
 
     public LoginResponse generateToken(Long id) {
         Member member = memberService.findMemberById(id);
-        String accessToken = jwtProvider.createToken(String.valueOf(member.getMemberId()));
-        String refreshToken = jwtProvider.createRefreshToken(String.valueOf(member.getMemberId()));
+        String accessToken = jwtProvider.generateAccessToken(String.valueOf(member.getMemberId()));
+        String refreshToken = jwtProvider.generateRefreshToken(String.valueOf(member.getMemberId()));
 
         LoginResponse loginResponse = LoginResponse.makeLoginResponseObject(member, accessToken, refreshToken);
 
@@ -75,6 +75,6 @@ public class LoginService implements UserDetailsService {
     }
 
     public String regenerateAccessToken(String userPk) {
-        return jwtProvider.createToken(userPk);
+        return jwtProvider.generateAccessToken(userPk);
     }
 }

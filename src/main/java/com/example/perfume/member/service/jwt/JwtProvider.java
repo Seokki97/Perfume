@@ -19,10 +19,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtProvider {
 
+    private static final long tokenValidTime = 3600000L;
     @Value("${jwt.secret}")
     private String secretKey;
-    private static final long tokenValidTime = 3600000L;
-
     private final LoginService loginService;
 
     public JwtProvider(@Lazy LoginService loginService) {
@@ -34,27 +33,26 @@ public class JwtProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String userPk) {
+    public String generateAccessToken(String userPk) {
         Claims claims = Jwts.claims().setSubject(userPk);
 
         Date now = new Date();
-        String accessToken = Jwts.builder()
+        return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + tokenValidTime))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
-        return accessToken;
     }
 
-    public String createRefreshToken(String uerPk) {
-        String refreshToken = Jwts.builder()
+    public String generateRefreshToken(String uerPk) {
+
+        return Jwts.builder()
                 .setId(uerPk)
                 .setExpiration(new Date(System.currentTimeMillis() + tokenValidTime * 24 * 14))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
-        return refreshToken;
     }
 
     public Authentication getAuthentication(String token) {
