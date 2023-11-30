@@ -1,9 +1,11 @@
 package com.example.perfume.member.jwt;
 
 import com.example.perfume.member.service.jwt.JwtProvider;
+import javax.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -45,5 +47,15 @@ public class JwtProviderTest {
         );
     }
 
-    
+    @DisplayName("Request Header에 담긴 AccessToken을 가져온다")
+    @Test
+    void resolveAccessToken() {
+
+        String userPk = "123";
+        String accessToken = jwtProvider.generateAccessToken(userPk);
+        HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
+
+        Mockito.when(httpServletRequest.getHeader("Authorization")).thenReturn(accessToken);
+        Assertions.assertEquals(accessToken, jwtProvider.resolveAccessToken(httpServletRequest));
+    }
 }
