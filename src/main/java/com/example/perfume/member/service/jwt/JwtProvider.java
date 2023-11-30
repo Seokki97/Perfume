@@ -1,7 +1,9 @@
 package com.example.perfume.member.service.jwt;
 
+import com.example.perfume.member.exception.TokenInvalidException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Base64;
@@ -26,18 +28,18 @@ public class JwtProvider {
 
     public String generateAccessToken(String userPk) {
         Claims claims = Jwts.claims().setSubject(userPk);
-
         Date now = new Date();
+
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
+                .setIssuer(IDENTIFIER)
                 .setExpiration(new Date(now.getTime() + tokenValidTime))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
     public String generateRefreshToken(String uerPk) {
-
         return Jwts.builder()
                 .setId(uerPk)
                 .setExpiration(new Date(System.currentTimeMillis() + tokenValidTime * 24 * 14))
@@ -62,21 +64,8 @@ public class JwtProvider {
     public Jws<Claims> getClaims(String jwtToken) {
         try {
             return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
-        } catch (Exception e) {
-            return null;
+        } catch (JwtException e) {
+            throw new TokenInvalidException(e.getMessage());
         }
-    }
-
-    public boolean isTokenExpired(String jwtToken) {
-        Jws<Claims> claims = getClaims(jwtToken);
-        return !claims.getBody().getExpiration().before(new Date());
-    }
-
-    public boolean isSubjectCorrect(String jwtToken, String userPk) {
-        return getClaims(jwtToken).getBody().getSubject().equals(userPk);
-    }
-
-    public boolean isIssuerCorrect(String jwtToken) {
-        return getClaims(jwtToken).getBody().getIssuer().equals(IDENTIFIER);
     }
 }

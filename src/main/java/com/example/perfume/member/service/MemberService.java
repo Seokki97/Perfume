@@ -1,8 +1,8 @@
 package com.example.perfume.member.service;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.dto.memberDto.MemberRequestDto;
 import com.example.perfume.member.dto.loginDto.SecessionRequest;
+import com.example.perfume.member.dto.memberDto.MemberRequestDto;
 import com.example.perfume.member.exception.TokenInvalidException;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.repository.BlacklistRepository;
@@ -49,7 +49,8 @@ public class MemberService {
 
     public void deleteMemberId(SecessionRequest secessionRequest) {
         memberRepository.deleteByMemberId(secessionRequest.getMemberId()).orElseThrow(UserNotFoundException::new);
-        tokenRepository.deleteByRefreshToken(secessionRequest.getRefreshToken()).orElseThrow(TokenInvalidException::new);
+        tokenRepository.deleteByRefreshToken(secessionRequest.getRefreshToken())
+                .orElseThrow(() -> new TokenInvalidException("Refresh Token이 존재하지 않습니다."));
     }
 
     public boolean isMemberLogout(String accessToken) {
