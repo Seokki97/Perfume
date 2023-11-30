@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtProvider {
 
+    private static final String IDENTIFIER = "https://inhyang.netlify.app/";
     private static final long tokenValidTime = 3600000L;
     @Value("${jwt.secret}")
     private String secretKey;
@@ -40,6 +41,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setId(uerPk)
                 .setExpiration(new Date(System.currentTimeMillis() + tokenValidTime * 24 * 14))
+                .setIssuer(IDENTIFIER)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
@@ -49,7 +51,7 @@ public class JwtProvider {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public String resolveToken(HttpServletRequest request) {
+    public String resolveAccessToken(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
 
@@ -57,12 +59,24 @@ public class JwtProvider {
         return request.getHeader("X-REFRESH-TOKEN");
     }
 
-    public boolean validateToken(String jwtToken) {
+    public Jws<Claims> getClaims(String jwtToken) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
-            return !claims.getBody().getExpiration().before(new Date());
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
         } catch (Exception e) {
-            return false;
+            return null;
         }
+    }
+
+    public boolean isTokenExpired(String jwtToken) {
+        Jws<Claims> claims = getClaims(jwtToken);
+        return !claims.getBody().getExpiration().before(new Date());
+    }
+
+    public boolean isSubjectCorrect(String jwtToken, String userPk) {
+        return getClaims(jwtToken).getBody().getSubject().equals(userPk);
+    }
+
+    public boolean isIssuerCorrect(String jwtToken) {
+        return getClaims(jwtToken).getBody().getIssuer().equals(IDENTIFIER);
     }
 }

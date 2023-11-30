@@ -4,10 +4,12 @@ import com.example.perfume.member.controller.docs.LogoutControllerDocs;
 import com.example.perfume.member.dto.logoutDto.LogoutRequestDto;
 import com.example.perfume.member.service.LogoutService;
 import com.example.perfume.member.service.jwt.JwtProvider;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/member")
@@ -22,8 +24,9 @@ public class LogoutController implements LogoutControllerDocs {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<Void> permitLogout(@RequestBody final LogoutRequestDto logoutRequestDto, final HttpServletRequest httpServletRequest) {
-        String accessToken = jwtProvider.resolveToken(httpServletRequest);
+    public ResponseEntity<Void> permitLogout(@RequestBody final LogoutRequestDto logoutRequestDto,
+                                             final HttpServletRequest httpServletRequest) {
+        String accessToken = jwtProvider.resolveAccessToken(httpServletRequest);
         logoutService.permitLogout(logoutRequestDto, accessToken);
         return ResponseEntity.noContent().build();
     }
