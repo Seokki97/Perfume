@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "피드백 API")
 public interface FeedbackControllerDocs {
+
     @Operation(summary = "피드백 저장")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "성공"),
