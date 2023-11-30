@@ -29,4 +29,21 @@ public class JwtProviderTest {
                 () -> Assertions.assertEquals(userPk, parsedToken)
         );
     }
+
+    @DisplayName("RefreshToken을 생성한다")
+    @Test
+    void generateRefreshToken() {
+        String userPk = "123";
+        String refreshToken = jwtProvider.generateRefreshToken(userPk);
+
+        String parsedToken = jwtProvider.getUserPk(refreshToken);
+        Assertions.assertAll(
+                () -> Assertions.assertNotEquals(userPk, refreshToken),
+                () -> Assertions.assertNotNull(refreshToken),
+                () -> Assertions.assertFalse(refreshToken.isEmpty()),
+                () -> Assertions.assertNotEquals(parsedToken, refreshToken)
+        );
+    }
+
+    
 }
