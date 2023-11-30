@@ -1,8 +1,9 @@
 package com.example.perfume.member.service.jwt;
 
-import com.example.perfume.member.service.LoginService;
+import com.example.perfume.member.exception.TokenInvalidException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Base64;
@@ -10,63 +11,49 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JwtProvider {
 
+    private static final String IDENTIFIER = "https://inhyang.netlify.app/";
+    private static final long tokenValidTime = 3600000L;
     @Value("${jwt.secret}")
     private String secretKey;
-    private static final long tokenValidTime = 3600000L;
-
-    private final LoginService loginService;
-
-    public JwtProvider(@Lazy LoginService loginService) {
-        this.loginService = loginService;
-    }
 
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(String userPk) {
+    public String generateAccessToken(String userPk) {
         Claims claims = Jwts.claims().setSubject(userPk);
-
         Date now = new Date();
-        String accessToken = Jwts.builder()
+
+        return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
+                .setIssuer(IDENTIFIER)
                 .setExpiration(new Date(now.getTime() + tokenValidTime))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
-        return accessToken;
     }
 
-    public String createRefreshToken(String uerPk) {
-        String refreshToken = Jwts.builder()
+    public String generateRefreshToken(String uerPk) {
+        return Jwts.builder()
                 .setId(uerPk)
                 .setExpiration(new Date(System.currentTimeMillis() + tokenValidTime * 24 * 14))
+                .setIssuer(IDENTIFIER)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
-        return refreshToken;
-    }
-
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = loginService.loadUserByUsername(this.getUserPk(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     public String getUserPk(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public String resolveToken(HttpServletRequest request) {
+    public String resolveAccessToken(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
 
@@ -74,12 +61,11 @@ public class JwtProvider {
         return request.getHeader("X-REFRESH-TOKEN");
     }
 
-    public boolean validateToken(String jwtToken) {
+    public Jws<Claims> getClaims(String jwtToken) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (Exception e) {
-            return false;
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+        } catch (JwtException e) {
+            throw new TokenInvalidException(e.getMessage());
         }
     }
 }
