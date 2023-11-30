@@ -1,6 +1,7 @@
 package com.example.perfume.member.jwt;
 
 import com.example.perfume.member.service.jwt.JwtProvider;
+import com.example.perfume.review.repository.ReviewBoardRepository;
 import javax.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -16,6 +17,8 @@ public class JwtProviderTest {
 
     @Autowired
     private JwtProvider jwtProvider;
+    @Autowired
+    private ReviewBoardRepository reviewBoardRepository;
 
     @DisplayName("AcccessToken을 생성한다.")
     @Test
@@ -50,7 +53,6 @@ public class JwtProviderTest {
     @DisplayName("Request Header에 담긴 AccessToken을 가져온다")
     @Test
     void resolveAccessToken() {
-
         String userPk = "123";
         String accessToken = jwtProvider.generateAccessToken(userPk);
         HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
@@ -58,4 +60,17 @@ public class JwtProviderTest {
         Mockito.when(httpServletRequest.getHeader("Authorization")).thenReturn(accessToken);
         Assertions.assertEquals(accessToken, jwtProvider.resolveAccessToken(httpServletRequest));
     }
+
+    @DisplayName("Header에 담긴 RefreshToken을 가져온다.")
+    @Test
+    void resolveRefreshToken() {
+
+        String userPk = "123";
+        String refreshToken = jwtProvider.generateRefreshToken(userPk);
+        HttpServletRequest httpServletRequest = Mockito.mock(HttpServletRequest.class);
+
+        Mockito.when(httpServletRequest.getHeader("X-REFRESH-TOKEN")).thenReturn(refreshToken);
+        Assertions.assertEquals(refreshToken, jwtProvider.resolveRefreshToken(httpServletRequest));
+    }
+
 }
