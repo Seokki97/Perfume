@@ -9,12 +9,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
 
-    private final JwtProvider jwtProvider;
-
     private final TokenValidator tokenValidator;
 
-    public JwtInterceptor(JwtProvider jwtProvider, TokenValidator tokenValidator) {
-        this.jwtProvider = jwtProvider;
+    public JwtInterceptor(TokenValidator tokenValidator) {
         this.tokenValidator = tokenValidator;
     }
 
