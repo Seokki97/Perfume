@@ -1,10 +1,9 @@
 package com.example.perfume.recommend.controller.docs;
 
+import com.example.perfume.common.APICommonResponse;
 import com.example.perfume.recommend.dto.analyze.RankingResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface AnalyzeControllerDocs {
 
     @Operation(summary = "가장 많이 추천받은 향수, 향기 제공")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "성공"),
-            @ApiResponse(responseCode = "404", description = "가장 많이 추천받은 향 조회 불가")
-    })
-    ResponseEntity<RankingResponse> showRankingList(@Parameter(description = "향수 id") @PathVariable("id") Long memberId);
+    @APICommonResponse
+    ResponseEntity<RankingResponse> showRankingList(
+            @Parameter(description = "향수 id") @PathVariable("id") Long memberId);
 }

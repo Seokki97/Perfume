@@ -24,7 +24,7 @@ public interface PerfumeControllerDocs {
             @RequestBody(description = " 향수 이름") @Parameter(description = "향수 이름") PerfumeRequestDto perfumeRequestDto);
 
     @Operation(summary = "브랜드로 향수 찾기")
-    @ApiResponses
+    @APICommonResponse
     ResponseEntity<List<Perfume>> findByBrandName(
             @Parameter(description = "브랜드 이름") PerfumeRequestDto perfumeRequestDto);
 

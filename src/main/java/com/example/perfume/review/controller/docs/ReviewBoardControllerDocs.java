@@ -1,5 +1,6 @@
 package com.example.perfume.review.controller.docs;
 
+import com.example.perfume.common.APICommonResponse;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.dto.review.requestDto.PostDeleteRequest;
 import com.example.perfume.review.dto.review.requestDto.PostUpdateRequest;
@@ -11,12 +12,11 @@ import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Tag(name = "향수 리뷰 게시판 Api")
 public interface ReviewBoardControllerDocs {
@@ -50,10 +50,7 @@ public interface ReviewBoardControllerDocs {
             @Parameter(name = "PostDeleteRequest", description = "memberId, boardId") @RequestBody PostDeleteRequest postDeleteRequest);
 
     @Operation(summary = "게시글 단일 조회")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "성공"),
-            @ApiResponse(responseCode = "404", description = "해당 게시글을 찾을 수 없음")
-    })
+    @APICommonResponse
     ResponseEntity<ReviewBoardResponse> showPost(
             @Parameter(name = "boardId", description = "게시글 번호") @PathVariable final Long boardId);
 
