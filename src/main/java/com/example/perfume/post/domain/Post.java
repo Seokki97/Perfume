@@ -1,7 +1,6 @@
 package com.example.perfume.post.domain;
 
 import com.example.perfume.post.service.NicknameGenerator;
-import com.sun.istack.NotNull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,22 +17,15 @@ public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "post_id", nullable = false)
+    private Long postId;
 
-    @NotNull
-    @Column(nullable = false, length = 50)
     private String visitor;
 
-    @NotNull
-    @Column(nullable = false, length = 500)
     private String content;
 
-    public Post(Nickname nickname, String content) {
-        this.visitor = NicknameGenerator.generateRandomNickname(nickname);
+    public Post(String content) {
+        this.visitor = NicknameGenerator.generateRandomNickname();
         this.content = content;
-    }
-
-    public Post(Long id) {
-        this.id = id;
     }
 }
