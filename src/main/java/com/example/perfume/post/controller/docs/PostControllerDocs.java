@@ -3,6 +3,7 @@ package com.example.perfume.post.controller.docs;
 import com.example.perfume.common.APICommonResponse;
 import com.example.perfume.post.domain.Post;
 import com.example.perfume.post.dto.PostRequestDto;
+import com.example.perfume.post.dto.PostResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,7 +20,7 @@ public interface PostControllerDocs {
 
     @Operation(summary = "방명록 단일 조회")
     @APICommonResponse
-    ResponseEntity<Post> showOnePost(@Parameter(description = "게시글 id") @PathVariable Long id);
+    ResponseEntity<PostResponseDto> showOnePost(@Parameter(description = "게시글 id") @PathVariable Long id);
 
     @Operation(summary = "방명록 전체 조회")
     @APICommonResponse

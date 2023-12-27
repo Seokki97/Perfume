@@ -2,6 +2,7 @@ package com.example.perfume.post.service;
 
 import com.example.perfume.post.domain.Post;
 import com.example.perfume.post.dto.PostRequestDto;
+import com.example.perfume.post.dto.PostResponseDto;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +19,10 @@ public class PostService {
         String query = "INSERT INTO post (visitor, content) VALUES (?, ?)";
         Post post = new Post(postRequestDto.getContent());
         jdbcTemplate.update(query, post.getVisitor(), post.getContent());
+    }
+
+    public PostResponseDto showOnePost(Long postId) {
+        String query = "SELECT * FROM post WHERE post_id = ?";
+        return jdbcTemplate.queryForObject(query, new PostRowMapper(), postId);
     }
 }

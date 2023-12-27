@@ -3,6 +3,7 @@ package com.example.perfume.post.controller;
 import com.example.perfume.post.controller.docs.PostControllerDocs;
 import com.example.perfume.post.domain.Post;
 import com.example.perfume.post.dto.PostRequestDto;
+import com.example.perfume.post.dto.PostResponseDto;
 import com.example.perfume.post.service.PostService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +34,8 @@ public class PostController implements PostControllerDocs {
     }
 
     @GetMapping("/show-post/{id}")
-    public ResponseEntity<Post> showOnePost(@PathVariable final Long id) {
-        return null;
+    public ResponseEntity<PostResponseDto> showOnePost(@PathVariable final Long id) {
+        return ResponseEntity.ok(postService.showOnePost(id));
     }
 
     @GetMapping("/show-all-post")
