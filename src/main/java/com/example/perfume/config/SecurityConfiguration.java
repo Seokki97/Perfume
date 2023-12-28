@@ -18,7 +18,6 @@ public class SecurityConfiguration {
         return (web) -> web.ignoring()
                 .mvcMatchers("/perfume/**", "/post/**", "/member/**", "/oauth/**", "/survey/**", "/feedback/**",
                         "/api-docs/**", "/api/**", "/swagger-ui/**", "/board/**", "/report/**");
-
     }
 
     @Bean

@@ -1,19 +1,18 @@
 package com.example.perfume.recommend.service;
 
 import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.service.MemberService;
+import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.RecommendRequestDto;
 import com.example.perfume.recommend.dto.RecommendResponseDto;
 import com.example.perfume.recommend.repository.RecommendRepository;
-import com.example.perfume.member.service.MemberService;
-import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.service.SurveyService;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class RecommendationService {
@@ -54,9 +53,8 @@ public class RecommendationService {
 
     private Perfume findPerfumeBySurvey(RecommendRequestDto recommendRequestDto) {
         SurveyRequestDto surveyRequestDto = recommendRequestDto.getSurveyAnswers();
-        List<Perfume> surveyResultList = surveyService.showPerfumeListBySurvey(surveyRequestDto);
-        int randomNumber = RecommendUtils.createRandomPerfumeFromList(surveyResultList);
-        return perfumeService.findPerfumeById(surveyResultList.get(randomNumber).getPerfumeId());
+        surveyRequestDto.addQueryParameter();
+        return surveyService.showRecommendedPerfume(surveyRequestDto);
     }
 
     @Transactional

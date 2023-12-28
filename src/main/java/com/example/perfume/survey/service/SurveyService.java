@@ -1,6 +1,7 @@
 package com.example.perfume.survey.service;
 
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.survey.domain.Survey;
 import com.example.perfume.survey.domain.SurveyType;
 import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
@@ -60,5 +61,14 @@ public class SurveyService {
                 (survey.getGenderAnswer(), survey.getScentAnswer(), selectedMoodAnswer);
 
         return surveyUtil.convertToPerfumeData(findSimilarData);
+    }
+
+    public Perfume showRecommendedPerfume(SurveyRequestDto surveyRequestDto) {
+        Survey survey = surveyRepository.findSurveysByRecommend(surveyRequestDto.getGenderAnswer(),
+                        surveyRequestDto.getScentAnswer(), surveyRequestDto.getMoodAnswer(),
+                        surveyRequestDto.getSeasonAnswer(), surveyRequestDto.getStyleAnswer())
+                .orElseThrow(PerfumeNotFoundException::new);
+
+        return survey.getPerfume();
     }
 }
