@@ -53,4 +53,8 @@ public class Survey {
     public String getGenderAnswer() {
         return question.getGenderAnswer();
     }
+
+    public String getSeasonAnswer() {
+        return question.getSeasonAnswer();
+    }
 }
