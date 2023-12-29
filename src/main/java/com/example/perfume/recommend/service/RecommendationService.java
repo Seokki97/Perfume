@@ -3,7 +3,6 @@ package com.example.perfume.recommend.service;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.RecommendRequestDto;
 import com.example.perfume.recommend.dto.RecommendResponseDto;
@@ -23,22 +22,18 @@ public class RecommendationService {
 
     private final MemberService memberService;
 
-    private final PerfumeService perfumeService;
-
     public RecommendationService(RecommendRepository recommendRepository, SurveyService surveyService,
-                                 MemberService memberService,
-                                 PerfumeService perfumeService) {
+                                 MemberService memberService) {
         this.recommendRepository = recommendRepository;
         this.surveyService = surveyService;
         this.memberService = memberService;
-        this.perfumeService = perfumeService;
     }
 
     public Recommendation recommendByOtherGuest(RecommendRequestDto recommendRequestDto) {
         long recommendedMemberId = recommendRequestDto.getRecommendedMemberId();
         Member recommendedMember = memberService.findMemberById(recommendedMemberId);
 
-        String scentAnswer = recommendRequestDto.getSurveyAnswers().getScentAnswer();
+        String scentAnswer = recommendRequestDto.getScentAnswer();
 
         Recommendation recommendation = Recommendation.builder()
                 .member(recommendedMember)

@@ -24,4 +24,8 @@ public class RecommendRequestDto {
         this.recommendedMemberId = recommendedMemberId;
         this.comment = comment;
     }
+
+    public String getScentAnswer() {
+        return surveyAnswers.getScentAnswer();
+    }
 }
