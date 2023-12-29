@@ -31,4 +31,11 @@ public class Question {
         this.seasonAnswer = seasonAnswer;
         this.styleAnswer = styleAnswer;
     }
+
+    public void addQueryParameter() {
+        this.genderAnswer = "%" + genderAnswer + "%";
+        this.moodAnswer = "%" + moodAnswer + "%";
+        this.seasonAnswer = "%" + seasonAnswer + "%";
+        this.styleAnswer = "%" + styleAnswer + "%";
+    }
 }
