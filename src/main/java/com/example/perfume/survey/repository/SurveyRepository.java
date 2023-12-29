@@ -14,18 +14,18 @@ public interface SurveyRepository extends JpaRepository<Survey, Long> {
     @Query("SELECT s FROM survey s JOIN FETCH s.perfume WHERE s.surveyId = :surveyId")
     Optional<Survey> findBySurveyId(@Param("surveyId") Long surveyId);
 
-    @Query("SELECT s FROM survey s WHERE s.genderAnswer LIKE %:genderAnswer% AND s.scentAnswer = :scentAnswer AND s.moodAnswer LIKE %:moodAnswer% AND s.seasonAnswer LIKE %:seasonAnswer% AND s.styleAnswer LIKE %:styleAnswer%")
+    @Query("SELECT s FROM survey s JOIN FETCH s.perfume WHERE s.question.genderAnswer LIKE %:genderAnswer% AND s.question.scentAnswer = :scentAnswer AND s.question.moodAnswer LIKE %:moodAnswer% AND s.question.seasonAnswer LIKE %:seasonAnswer% AND s.question.styleAnswer LIKE %:styleAnswer%")
     List<Survey> findSurveysByAnswers(@Param("genderAnswer") String genderAnswer,
                                       @Param("scentAnswer") String scentAnswer, @Param("moodAnswer") String moodAnswer,
                                       @Param("seasonAnswer") String seasonAnswer,
                                       @Param("styleAnswer") String styleAnswer);
 
-    @Query("SELECT s FROM survey s WHERE s.genderAnswer LIKE %:genderAnswer% AND s.scentAnswer = :scentAnswer AND s.moodAnswer LIKE %:moodAnswer%")
+    @Query("SELECT s FROM survey s JOIN FETCH s.perfume WHERE s.question.genderAnswer LIKE %:genderAnswer% AND s.question.scentAnswer = :scentAnswer AND s.question.moodAnswer LIKE %:moodAnswer%")
     List<Survey> findSurveysByGenderScentAndMood(@Param("genderAnswer") String genderAnswer,
                                                  @Param("scentAnswer") String scentAnswer,
                                                  @Param("moodAnswer") String moodAnswer);
 
-    @Query("SELECT s FROM survey s WHERE s.genderAnswer LIKE %:genderAnswer% AND s.scentAnswer = :scentAnswer AND s.moodAnswer LIKE %:moodAnswer% AND s.styleAnswer LIKE %:styleAnswer%")
+    @Query("SELECT s FROM survey s JOIN FETCH s.perfume WHERE s.question.genderAnswer LIKE %:genderAnswer% AND s.question.scentAnswer = :scentAnswer AND s.question.moodAnswer LIKE %:moodAnswer% AND s.question.styleAnswer LIKE %:styleAnswer%")
     List<Survey> findSurveysByGenderScentMoodAndStyle(@Param("genderAnswer") String genderAnswer,
                                                       @Param("scentAnswer") String scentAnswer,
                                                       @Param("moodAnswer") String moodAnswer,
