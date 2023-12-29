@@ -11,7 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SurveyRepository extends JpaRepository<Survey, Long> {
 
-    Optional<Survey> findBySurveyId(Long surveyId);
+    @Query("SELECT s FROM survey s JOIN FETCH s.perfume WHERE s.surveyId = :surveyId")
+    Optional<Survey> findBySurveyId(@Param("surveyId") Long surveyId);
 
     @Query("SELECT s FROM survey s WHERE s.genderAnswer LIKE %:genderAnswer% AND s.scentAnswer = :scentAnswer AND s.moodAnswer LIKE %:moodAnswer% AND s.seasonAnswer LIKE %:seasonAnswer% AND s.styleAnswer LIKE %:styleAnswer%")
     List<Survey> findSurveysByAnswers(@Param("genderAnswer") String genderAnswer,

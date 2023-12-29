@@ -29,6 +29,7 @@ public class RecommendationService {
         this.memberService = memberService;
     }
 
+    @Transactional
     public Recommendation recommendByOtherGuest(RecommendRequestDto recommendRequestDto) {
         long recommendedMemberId = recommendRequestDto.getRecommendedMemberId();
         Member recommendedMember = memberService.findMemberById(recommendedMemberId);
