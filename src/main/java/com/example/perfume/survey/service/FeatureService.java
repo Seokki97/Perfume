@@ -1,6 +1,5 @@
 package com.example.perfume.survey.service;
 
-import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.survey.domain.Maintenance;
 import com.example.perfume.survey.domain.MoodType;
 import com.example.perfume.survey.domain.ScentType;
@@ -13,11 +12,10 @@ import org.springframework.stereotype.Service;
 public class FeatureService {
 
     private final SurveyService surveyService;
-    private final PerfumeService perfumeService;
 
-    public FeatureService(SurveyService surveyService, PerfumeService perfumeService) {
+
+    public FeatureService(SurveyService surveyService) {
         this.surveyService = surveyService;
-        this.perfumeService = perfumeService;
     }
 
     public FeatureResponseDto showFeatureDetails(Long id) {

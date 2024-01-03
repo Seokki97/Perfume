@@ -8,6 +8,7 @@ import com.example.perfume.member.service.MemberService;
 import com.example.perfume.member.service.jwt.LoginCheck;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,5 +55,10 @@ public class MemberController implements MemberControllerDocs {
                 .build();
         memberService.saveMemberProfile(member);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/find/{memberId}")
+    public ResponseEntity<Member> findMember(@PathVariable("memberId") Long memberId) {
+        return ResponseEntity.ok(memberService.findByMemberPk(memberId));
     }
 }

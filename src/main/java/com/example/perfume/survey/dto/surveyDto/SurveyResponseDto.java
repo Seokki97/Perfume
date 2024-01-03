@@ -2,6 +2,7 @@ package com.example.perfume.survey.dto.surveyDto;
 
 import com.example.perfume.crawling.domain.survey.SurveyList;
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.survey.domain.Question;
 import com.example.perfume.survey.domain.Survey;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +24,8 @@ public class SurveyResponseDto {
     }
 
     @Builder
-    public SurveyResponseDto(Long surveyId, String genderAnswer, String scentAnswer, String moodAnswer, String seasonAnswer, String styleAnswer, Perfume perfume) {
+    public SurveyResponseDto(Long surveyId, String genderAnswer, String scentAnswer, String moodAnswer,
+                             String seasonAnswer, String styleAnswer, Perfume perfume) {
         this.surveyId = surveyId;
         this.genderAnswer = genderAnswer;
         this.scentAnswer = scentAnswer;
@@ -34,13 +36,17 @@ public class SurveyResponseDto {
     }
 
     public Survey toEntity(Perfume perfume) {
-        return Survey.builder()
-                .surveyId(surveyId)
+        Question question = Question.builder()
                 .genderAnswer(genderAnswer)
-                .scentAnswer(scentAnswer)
                 .moodAnswer(moodAnswer)
+                .scentAnswer(scentAnswer)
                 .seasonAnswer(seasonAnswer)
                 .styleAnswer(styleAnswer)
+                .build();
+
+        return Survey.builder()
+                .surveyId(surveyId)
+                .question(question)
                 .perfume(perfume)
                 .build();
     }

@@ -3,12 +3,11 @@ package com.example.perfume.recommend.service;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.service.MemberService;
 import com.example.perfume.perfume.domain.Perfume;
-import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.RecommendRequestDto;
 import com.example.perfume.recommend.dto.RecommendResponseDto;
 import com.example.perfume.recommend.repository.RecommendRepository;
-import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
+import com.example.perfume.survey.domain.Question;
 import com.example.perfume.survey.service.SurveyService;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -23,22 +22,19 @@ public class RecommendationService {
 
     private final MemberService memberService;
 
-    private final PerfumeService perfumeService;
-
     public RecommendationService(RecommendRepository recommendRepository, SurveyService surveyService,
-                                 MemberService memberService,
-                                 PerfumeService perfumeService) {
+                                 MemberService memberService) {
         this.recommendRepository = recommendRepository;
         this.surveyService = surveyService;
         this.memberService = memberService;
-        this.perfumeService = perfumeService;
     }
 
+    @Transactional
     public Recommendation recommendByOtherGuest(RecommendRequestDto recommendRequestDto) {
         long recommendedMemberId = recommendRequestDto.getRecommendedMemberId();
         Member recommendedMember = memberService.findMemberById(recommendedMemberId);
 
-        String scentAnswer = recommendRequestDto.getSurveyAnswers().getScentAnswer();
+        String scentAnswer = recommendRequestDto.getScentAnswer();
 
         Recommendation recommendation = Recommendation.builder()
                 .member(recommendedMember)
@@ -52,9 +48,9 @@ public class RecommendationService {
     }
 
     private Perfume findPerfumeBySurvey(RecommendRequestDto recommendRequestDto) {
-        SurveyRequestDto surveyRequestDto = recommendRequestDto.getSurveyAnswers();
-        surveyRequestDto.addQueryParameter();
-        return surveyService.showRecommendedPerfume(surveyRequestDto);
+        Question question = recommendRequestDto.getQuestion();
+        question.addQueryParameter();
+        return surveyService.showRecommendedPerfume(question);
     }
 
     @Transactional
