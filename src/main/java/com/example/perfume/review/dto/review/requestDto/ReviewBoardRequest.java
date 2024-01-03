@@ -1,9 +1,8 @@
 package com.example.perfume.review.dto.review.requestDto;
 
+import com.example.perfume.member.domain.Member;
 import com.example.perfume.review.domain.Content;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
-import com.example.perfume.member.domain.Member;
-import com.example.perfume.perfume.domain.Perfume;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,6 +19,8 @@ public class ReviewBoardRequest {
 
     private String perfumeName;
 
+    public ReviewBoardRequest() {
+    }
 
     @Builder
     public ReviewBoardRequest(final Long boardId, final Long writer, final String title,

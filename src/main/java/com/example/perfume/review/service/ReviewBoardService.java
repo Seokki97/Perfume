@@ -27,7 +27,6 @@ public class ReviewBoardService {
 
     @Transactional
     public ReviewBoardResponse writeReview(Long memberId, ReviewBoardRequest boardRequest) {
-
         Member member = memberService.findByMemberPk(memberId);
         PerfumeReviewBoard perfumeReviewBoard = boardRequest.toEntity(member, boardRequest.getContent());
 
@@ -108,7 +107,6 @@ public class ReviewBoardService {
 
     //게시글 검색 (향수 이름으로)
     public List<PerfumeReviewBoard> showSearchedPosts(String perfumeName) {
-
         return reviewBoardRepository
                 .findByTitleContainingOrContentContaining(perfumeName, perfumeName);
     }
