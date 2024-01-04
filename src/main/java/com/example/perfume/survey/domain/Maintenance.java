@@ -1,10 +1,8 @@
 package com.example.perfume.survey.domain;
 
 import com.example.perfume.survey.exception.MaintenanceNotFoundException;
-import lombok.Getter;
-
 import java.util.Arrays;
-import java.util.stream.Collectors;
+import lombok.Getter;
 
 @Getter
 public enum Maintenance {
