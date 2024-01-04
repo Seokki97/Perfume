@@ -18,9 +18,12 @@ public class SurveyService {
 
     private final SurveyUtil surveyUtil;
 
-    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil) {
+    private final SurveyConverter surveyConverter;
+
+    public SurveyService(SurveyRepository surveyRepository, SurveyUtil surveyUtil, SurveyConverter surveyConverter) {
         this.surveyRepository = surveyRepository;
         this.surveyUtil = surveyUtil;
+        this.surveyConverter = surveyConverter;
     }
 
     public Survey findSurveyById(Long id) {
@@ -51,9 +54,9 @@ public class SurveyService {
                     surveyRequestDto.getGenderAnswer(), surveyRequestDto.getScentAnswer(),
                     surveyRequestDto.getMoodAnswer());
 
-            return surveyUtil.convertToPerfumeData(surveyListByMood);
+            return surveyConverter.convertToPerfumeData(surveyListByMood);
         }
-        return surveyUtil.convertToPerfumeData(surveyList);
+        return surveyConverter.convertToPerfumeData(surveyList);
     }
 
     public List<Perfume> showSimilarPerfumeList(Survey survey) {
@@ -61,7 +64,7 @@ public class SurveyService {
         List<Survey> findSimilarData = surveyRepository.findSurveysByGenderScentAndMood
                 (survey.getGenderAnswer(), survey.getScentAnswer(), selectedMoodAnswer);
 
-        return surveyUtil.convertToPerfumeData(findSimilarData);
+        return surveyConverter.convertToPerfumeData(findSimilarData);
     }
 
     public Perfume showRecommendedPerfume(Question question) {
