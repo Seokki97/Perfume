@@ -1,7 +1,6 @@
 package com.example.perfume.post.controller;
 
 import com.example.perfume.post.controller.docs.PostControllerDocs;
-import com.example.perfume.post.domain.Post;
 import com.example.perfume.post.dto.PostRequestDto;
 import com.example.perfume.post.dto.PostResponseDto;
 import com.example.perfume.post.service.PostService;
@@ -39,7 +38,7 @@ public class PostController implements PostControllerDocs {
     }
 
     @GetMapping("/show-all-post")
-    public ResponseEntity<List<Post>> showAllPost() {
-        return null;
+    public ResponseEntity<List<PostResponseDto>> showAllPost() {
+        return ResponseEntity.ok(postService.showAllPost());
     }
 }

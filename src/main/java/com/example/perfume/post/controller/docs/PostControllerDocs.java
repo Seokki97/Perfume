@@ -1,7 +1,6 @@
 package com.example.perfume.post.controller.docs;
 
 import com.example.perfume.common.APICommonResponse;
-import com.example.perfume.post.domain.Post;
 import com.example.perfume.post.dto.PostRequestDto;
 import com.example.perfume.post.dto.PostResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,5 +23,5 @@ public interface PostControllerDocs {
 
     @Operation(summary = "방명록 전체 조회")
     @APICommonResponse
-    ResponseEntity<List<Post>> showAllPost();
+    ResponseEntity<List<PostResponseDto>> showAllPost();
 }
