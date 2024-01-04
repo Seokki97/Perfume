@@ -39,6 +39,6 @@ public class SurveyUtil {
     }
 
     public boolean isEmptyRecommendedPerfumeList(List<Survey> surveyList) {
-        return convertToPerfumeData(surveyList).isEmpty();
+        return surveyList.isEmpty();
     }
 }
