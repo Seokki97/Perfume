@@ -30,4 +30,8 @@ public interface PostControllerDocs {
     @APICommonResponse
     ResponseEntity<List<PostResponseDto>> showByContent(
             @Parameter(description = "게시글 내용") @RequestParam(name = "content") String content);
+
+    @Operation(summary = "닉네임 변경")
+    @APICommonResponse
+    ResponseEntity<PostResponseDto> changeNickname(@PathVariable(name = "postId") Long postId);
 }

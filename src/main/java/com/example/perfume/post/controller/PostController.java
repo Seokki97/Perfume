@@ -8,6 +8,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,5 +47,10 @@ public class PostController implements PostControllerDocs {
     @GetMapping("/show-post")
     public ResponseEntity<List<PostResponseDto>> showByContent(@RequestParam(name = "content") String content) {
         return ResponseEntity.ok(postService.findByContent(content));
+    }
+
+    @PatchMapping("/change-nickname/{id}")
+    public ResponseEntity<PostResponseDto> changeNickname(@PathVariable(name = "id") final Long postId) {
+        return ResponseEntity.ok(postService.updateNickname(postId));
     }
 }

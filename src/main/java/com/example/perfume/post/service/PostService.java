@@ -36,4 +36,11 @@ public class PostService {
         String query = "SELECT * FROM post WHERE content LIKE ?";
         return jdbcTemplate.query(query, new PostRowMapper(), "%" + content + "%");
     }
+
+    public PostResponseDto updateNickname(Long postId) {
+        String query = "UPDATE post SET visitor = ? WHERE post_id = ?";
+        jdbcTemplate.update(query, NicknameGenerator.generateRandomNickname(), postId);
+
+        return showOnePost(postId);
+    }
 }
