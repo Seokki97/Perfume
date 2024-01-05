@@ -6,6 +6,7 @@ import com.example.perfume.post.dto.PostResponseDto;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PostService {
@@ -37,6 +38,7 @@ public class PostService {
         return jdbcTemplate.query(query, new PostRowMapper(), "%" + content + "%");
     }
 
+    @Transactional
     public PostResponseDto updateNickname(Long postId) {
         String query = "UPDATE post SET visitor = ? WHERE post_id = ?";
         jdbcTemplate.update(query, NicknameGenerator.generateRandomNickname(), postId);
