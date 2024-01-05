@@ -31,4 +31,9 @@ public class PostService {
         String query = "SELECT * FROM post";
         return jdbcTemplate.query(query, new PostRowMapper());
     }
+
+    public List<PostResponseDto> findByContent(String content) {
+        String query = "SELECT * FROM post WHERE content LIKE ?";
+        return jdbcTemplate.query(query, new PostRowMapper(), "%" + content + "%");
+    }
 }
