@@ -59,13 +59,6 @@ public class SurveyService {
         return surveyConverter.convertToPerfumeData(surveyList);
     }
 
-    public List<Perfume> showSimilarPerfumeList(Survey survey) {
-        String selectedMoodAnswer = surveyUtil.showMoodAnswer(survey);
-        List<Survey> findSimilarData = surveyRepository.findSurveysByGenderScentAndMood
-                (survey.getGenderAnswer(), survey.getScentAnswer(), selectedMoodAnswer);
-
-        return surveyConverter.convertToPerfumeData(findSimilarData);
-    }
 
     public Perfume showRecommendedPerfume(Question question) {
         Survey survey = surveyRepository.findSurveysByRecommend(question.getGenderAnswer(),

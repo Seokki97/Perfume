@@ -1,9 +1,15 @@
 package com.example.perfume.survey.service;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.Mockito.when;
+
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.survey.domain.Question;
 import com.example.perfume.survey.domain.Survey;
-import com.example.perfume.survey.dto.surveyDto.SurveyRequestDto;
 import com.example.perfume.survey.repository.SurveyRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,14 +18,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.when;
-
 @ExtendWith(MockitoExtension.class)
 public class SurveyServiceTest {
 
@@ -27,7 +25,7 @@ public class SurveyServiceTest {
     private SurveyRepository surveyRepository;
 
     @InjectMocks
-    private SurveyService surveyService;
+    private SimilarPerfumeService similarPerfumeService;
 
     @Mock
     private SurveyUtil surveyUtil;
@@ -46,16 +44,12 @@ public class SurveyServiceTest {
 
         Survey vanillaPerfume = Survey.builder()
                 .perfume(perfume)
-                .genderAnswer("여자")
-                .moodAnswer("시트러스")
-                .scentAnswer("상큼한")
+                .question(new Question("여자", "시트러스", "상큼한", null, null))
                 .build();
 
         Survey citrusPerfume = Survey.builder()
                 .perfume(perfume1)
-                .genderAnswer("여자")
-                .scentAnswer("시트러스")
-                .moodAnswer("상큼한")
+                .question(new Question("여자", "시트러스", "상큼한", null, null))
                 .build();
 
         List<Survey> surveyList = new ArrayList<>();
@@ -70,7 +64,7 @@ public class SurveyServiceTest {
         when(surveyRepository.findSurveysByGenderScentAndMood
                 (any(), any(), any())).thenReturn(surveyList);
 
-        List<Perfume> actual = surveyService.showSimilarPerfumeList(citrusPerfume);
+        List<Perfume> actual = similarPerfumeService.showSimilarPerfumeList(citrusPerfume);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(2, actual.size())
