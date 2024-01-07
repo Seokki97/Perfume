@@ -1,5 +1,8 @@
 package com.example.perfume.review.service;
 
+import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.service.MemberService;
+import com.example.perfume.review.domain.like.LikeStatus;
 import com.example.perfume.review.domain.like.ReviewLike;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.dto.like.ReviewLikeRequest;
@@ -16,53 +19,40 @@ public class ReviewLikeService {
     private final ReviewLikeRepository reviewLikeRepository;
 
     private final ReviewBoardRepository reviewBoardRepository;
+    private final MemberService memberService;
 
 
-    public ReviewLikeService(ReviewLikeRepository reviewLikeRepository, ReviewBoardRepository reviewBoardRepository) {
+    public ReviewLikeService(ReviewLikeRepository reviewLikeRepository, ReviewBoardRepository reviewBoardRepository,
+                             MemberService memberService) {
         this.reviewLikeRepository = reviewLikeRepository;
         this.reviewBoardRepository = reviewBoardRepository;
+        this.memberService = memberService;
     }
 
     @Transactional
     public void likePost(ReviewLikeRequest reviewLikeRequest) {
-        ReviewLike reviewLike = reviewLikeRequest.toEntity();
-
-        PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(
-                        reviewLike.getLikedPost().getBoardId())
+        Member member = memberService.findByMemberPk(reviewLikeRequest.getMemberId());
+        PerfumeReviewBoard reviewedPost = reviewBoardRepository.findByBoardId(reviewLikeRequest.getPostId())
                 .orElseThrow(ReviewPostNotFoundException::new);
-
-        reviewLike.updateStatus(reviewLike.getLikeStatus());
-        if (!isAlreadyPushLikeOrUnlike(reviewLikeRequest)) {
-            reviewLikeRepository.save(reviewLike);
-        }
-        perfumeReviewBoard.likePost(reviewLike);
+        ReviewLike reviewLike = ReviewLike.builder()
+                .member(member)
+                .likedPost(reviewedPost)
+                .likeStatus(LikeStatus.LIKE)
+                .build();
+        reviewLikeRepository.save(reviewLike);
+        reviewedPost.likePost(reviewLike);
     }
 
     @Transactional
     public void unlikePost(ReviewLikeRequest reviewLikeRequest) {
-        ReviewLike reviewLike = reviewLikeRequest.toEntity();
-
-        PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(
-                        reviewLike.getLikedPost().getBoardId())
-                .orElseThrow(ReviewPostNotFoundException::new);
-
-        reviewLike.updateStatus(reviewLike.getLikeStatus());
-        if (!isAlreadyPushLikeOrUnlike(reviewLikeRequest)) {
-            reviewLikeRepository.save(reviewLike);
-        }
-        perfumeReviewBoard.unlikePost(reviewLike);
     }
 
     public boolean isAlreadyPushLikeOrUnlike(ReviewLikeRequest reviewLikeRequest) {
-        Long memberId = reviewLikeRequest.getMemberId();
-        Long postId = reviewLikeRequest.getPostId();
-        return reviewLikeRepository.existsByMemberAndReviewId(memberId, postId);
+        return true;
     }
 
-    public ReviewLikeResponse showLikeCount(Long boardId) {
-        PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(boardId)
-                .orElseThrow(ReviewPostNotFoundException::new);
 
-        return new ReviewLikeResponse(perfumeReviewBoard.getLikeCount(), perfumeReviewBoard.getUnlikeCount());
+    public ReviewLikeResponse showLikeCount(Long boardId) {
+        return null;
     }
 }
