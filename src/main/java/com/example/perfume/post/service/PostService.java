@@ -42,7 +42,11 @@ public class PostService {
     public PostResponseDto updateNickname(Long postId) {
         String query = "UPDATE post SET visitor = ? WHERE post_id = ?";
         jdbcTemplate.update(query, NicknameGenerator.generateRandomNickname(), postId);
-
         return showOnePost(postId);
+    }
+
+    public int deletePost(Long postId) {
+        String query = "DELETE FROM post WHERE post_id =?";
+        return jdbcTemplate.update(query, postId);
     }
 }

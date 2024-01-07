@@ -34,4 +34,8 @@ public interface PostControllerDocs {
     @Operation(summary = "닉네임 변경")
     @APICommonResponse
     ResponseEntity<PostResponseDto> changeNickname(@PathVariable(name = "postId") Long postId);
+
+    @Operation(summary = "게시글 삭제")
+    @APICommonResponse
+    ResponseEntity<Integer> deletePost(@PathVariable(name = "postId") Long postId);
 }

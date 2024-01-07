@@ -7,6 +7,7 @@ import com.example.perfume.post.service.PostService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,5 +53,10 @@ public class PostController implements PostControllerDocs {
     @PatchMapping("/change-nickname/{id}")
     public ResponseEntity<PostResponseDto> changeNickname(@PathVariable(name = "id") final Long postId) {
         return ResponseEntity.ok(postService.updateNickname(postId));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Integer> deletePost(@PathVariable(name = "id") final Long postId) {
+        return ResponseEntity.ok(postService.deletePost(postId));
     }
 }
