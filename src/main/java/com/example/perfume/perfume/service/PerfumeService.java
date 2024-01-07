@@ -30,7 +30,7 @@ public class PerfumeService {
         return perfume;
     }
 
-    public Perfume findPerfumeById(Long perfumeId) { // 1240
+    public Perfume findPerfumeById(Long perfumeId) {
         return perfumeRepository.findByPerfumeId(perfumeId).orElseThrow(PerfumeNotFoundException::new);
     }
 

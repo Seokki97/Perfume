@@ -4,13 +4,13 @@ import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.analyze.AnalyzeResponse;
 import com.example.perfume.recommend.dto.analyze.PerfumeAnalyzeResponse;
 import com.example.perfume.recommend.repository.RecommendRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class PerfumeAnalyze implements Analyze {
+
     private final RecommendRepository recommendRepository;
 
     private final AnalyzeUtil analyzeUtil;

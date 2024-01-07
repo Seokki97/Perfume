@@ -87,7 +87,6 @@ public class ReviewBoardService {
     public Long deleteReviewPost(PostDeleteRequest postDeleteRequest) {
         memberService.findByMemberPk(postDeleteRequest.getMemberId());
         reviewBoardRepository.deleteByBoardId(postDeleteRequest.getBoardId());
-
         return postDeleteRequest.getBoardId();
     }
 

@@ -31,7 +31,6 @@ public class ReportService {
 
     public ReportResponse receiveReport(ReportRequest reportRequest) {
         Report savedReport = reportRepository.save(Report.createReportObject(reportRequest));
-
         MailDto reportDetail = MailDto.generateReportMail(reportRequest);
         emailSender.sendMail(reportDetail);
         return ReportResponse.convertToResponse(savedReport);

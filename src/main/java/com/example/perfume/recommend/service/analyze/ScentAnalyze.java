@@ -4,10 +4,9 @@ import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.analyze.AnalyzeResponse;
 import com.example.perfume.recommend.dto.analyze.ScentAnalyzeResponse;
 import com.example.perfume.recommend.repository.RecommendRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ScentAnalyze implements Analyze {
@@ -32,7 +31,6 @@ public class ScentAnalyze implements Analyze {
 
     public ScentAnalyzeResponse filterMostRecommendedScent(Long memberId) {
         List<String> scentList = extractRecommendedElement(memberId);
-
         AnalyzeResponse analyzeResponse = analyzeUtil.countPerfumeList(scentList);
 
         return ScentAnalyzeResponse.builder()
