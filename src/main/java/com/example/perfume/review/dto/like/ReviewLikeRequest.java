@@ -9,6 +9,9 @@ public class ReviewLikeRequest {
 
     private Long postId;
 
+    public ReviewLikeRequest() {
+    }
+
     public ReviewLikeRequest(Long memberId, Long postId) {
         this.memberId = memberId;
         this.postId = postId;
