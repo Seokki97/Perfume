@@ -35,6 +35,9 @@ public class ReviewBoardService {
 
         return ReviewBoardResponse.builder()
                 .boardId(savedBoard.getBoardId())
+                .member(savedBoard.getWriter())
+                .title(savedBoard.getTitle())
+                .content(savedBoard.getContent())
                 .build();
     }
 
