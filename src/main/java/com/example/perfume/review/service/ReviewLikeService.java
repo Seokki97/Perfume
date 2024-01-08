@@ -39,16 +39,19 @@ public class ReviewLikeService {
                 .likedPost(reviewedPost)
                 .likeStatus(LikeStatus.CANCELED)
                 .build();
-        reviewLikeRepository.save(reviewLike);
+        if (!isAlreadyPushLikeOrUnlike(member, reviewedPost)) {
+            reviewLikeRepository.save(reviewLike);
+        }
         reviewedPost.likePost(reviewLike);
+        reviewLike.updateStatus();
     }
 
     @Transactional
     public void unlikePost(ReviewLikeRequest reviewLikeRequest) {
     }
 
-    public boolean isAlreadyPushLikeOrUnlike(ReviewLikeRequest reviewLikeRequest) {
-        return true;
+    public boolean isAlreadyPushLikeOrUnlike(Member member, PerfumeReviewBoard reviewedPost) {
+        return reviewLikeRepository.existsByMemberAndLikedPost(member, reviewedPost);
     }
 
 
