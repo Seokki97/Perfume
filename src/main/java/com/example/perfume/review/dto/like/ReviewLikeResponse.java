@@ -1,13 +1,13 @@
 package com.example.perfume.review.dto.like;
 
+import com.example.perfume.review.domain.like.PostLike;
+
 public class ReviewLikeResponse {
 
-    private Long likeCount;
-    private Long unlikeCount;
+    private PostLike postLike;
 
-    public ReviewLikeResponse(Long likeCount, Long unlikeCount) {
-        this.likeCount = likeCount;
-        this.unlikeCount = unlikeCount;
+    public ReviewLikeResponse(final PostLike postLike) {
+        this.postLike = postLike;
     }
 
 }
