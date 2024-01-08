@@ -37,7 +37,7 @@ public class ReviewLikeService {
         ReviewLike reviewLike = ReviewLike.builder()
                 .member(member)
                 .likedPost(reviewedPost)
-                .likeStatus(LikeStatus.LIKE)
+                .likeStatus(LikeStatus.CANCELED)
                 .build();
         reviewLikeRepository.save(reviewLike);
         reviewedPost.likePost(reviewLike);
