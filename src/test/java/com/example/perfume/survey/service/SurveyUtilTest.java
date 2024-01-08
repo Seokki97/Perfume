@@ -1,18 +1,18 @@
 package com.example.perfume.survey.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.example.perfume.perfume.domain.Perfume;
+import com.example.perfume.survey.domain.Question;
 import com.example.perfume.survey.domain.Survey;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class SurveyUtilTest {
@@ -24,7 +24,7 @@ public class SurveyUtilTest {
     @Test
     void getRandomMoodAnswer() {
         Survey survey = Survey.builder()
-                .moodAnswer("달콤한 상큼한")
+                .question(new Question("여자", "시트러스", "달콤한 상큼한", null, null))
                 .build();
 
         String actualCaseOne = "달콤한";

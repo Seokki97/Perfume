@@ -13,7 +13,7 @@ public class ScentTypeTest {
     @Test
     void getFeatureAnswer() {
         Survey survey = Survey.builder()
-                .scentAnswer("우디")
+                .question(new Question("우디", null, null, null, null))
                 .build();
 
         String actual = ScentType.getFeature(survey);
@@ -21,7 +21,7 @@ public class ScentTypeTest {
         String expected = "당신은 자연에서 나는 듯한 냄새와 잘 어울릴 것 같아요 우디향 향수는 당신을 더욱 매력적인 사람으로 만들거예요.";
 
         Survey exceptionCase = Survey.builder()
-                .scentAnswer("오류")
+                .question(new Question("오휴", null, null, null, null))
                 .build();
         Assertions.assertAll(
                 () -> Assertions.assertEquals(expected, actual),
