@@ -9,7 +9,6 @@ import lombok.Getter;
 @Getter
 public class ReviewBoardRequest {
 
-    private Long boardId;
 
     private Long writer;
 
@@ -23,9 +22,8 @@ public class ReviewBoardRequest {
     }
 
     @Builder
-    public ReviewBoardRequest(final Long boardId, final Long writer, final String title,
+    public ReviewBoardRequest(final Long writer, final String title,
                               final Content content, final String perfumeName) {
-        this.boardId = boardId;
         this.writer = writer;
         this.content = content;
         this.title = title;
