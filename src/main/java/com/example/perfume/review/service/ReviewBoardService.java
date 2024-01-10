@@ -2,6 +2,7 @@ package com.example.perfume.review.service;
 
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.service.MemberService;
+import com.example.perfume.review.domain.review.LikeCount;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.dto.review.requestDto.PostDeleteRequest;
 import com.example.perfume.review.dto.review.requestDto.PostUpdateRequest;
@@ -28,13 +29,22 @@ public class ReviewBoardService {
     @Transactional
     public ReviewBoardResponse writeReview(Long memberId, ReviewBoardRequest boardRequest) {
         Member member = memberService.findByMemberPk(memberId);
-        PerfumeReviewBoard perfumeReviewBoard = boardRequest.toEntity(member, boardRequest.getContent());
+        PerfumeReviewBoard perfumeReviewBoard = PerfumeReviewBoard.builder()
+                .likeCount(new LikeCount(0L, 0L))
+                .member(member)
+                .title(boardRequest.getTitle())
+                .content(boardRequest.getContent())
+                .build();
 
         perfumeReviewBoard.validatePostDuplication(reviewBoardRepository);
         PerfumeReviewBoard savedBoard = reviewBoardRepository.save(perfumeReviewBoard);
 
         return ReviewBoardResponse.builder()
                 .boardId(savedBoard.getBoardId())
+                .member(savedBoard.getWriter())
+                .title(savedBoard.getTitle())
+                .content(savedBoard.getContent())
+                .likeCount(savedBoard.getLikeCount())
                 .build();
     }
 
@@ -99,8 +109,6 @@ public class ReviewBoardService {
                 .boardId(perfumeReviewBoard.getBoardId())
                 .title(perfumeReviewBoard.getTitle())
                 .content(perfumeReviewBoard.getContent())
-                .likeCount(perfumeReviewBoard.getLikeCount())
-                .unlikeCount(perfumeReviewBoard.getUnlikeCount())
                 .build();
     }
 

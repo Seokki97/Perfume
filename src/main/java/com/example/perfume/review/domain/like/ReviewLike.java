@@ -1,46 +1,41 @@
 package com.example.perfume.review.domain.like;
 
-import com.example.perfume.member.domain.Member;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity(name = "review_like")
 public class ReviewLike {
-
+    //게시글당 좋아요 실헝요가 하나씩 생성되어야함
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id", nullable = false)
     private Long reviewId;
 
-    @ManyToOne
-    private Member member;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private PerfumeReviewBoard likedPost;
 
-    @Enumerated(EnumType.ORDINAL)
-    private LikeStatus likeStatus;
+    @Embedded
+    private PostLike postLike;
 
     @Builder
-    public ReviewLike(final Long reviewId, final Member member, final PerfumeReviewBoard likedPost, LikeStatus likeStatus) {
+    public ReviewLike(final Long reviewId, final PerfumeReviewBoard likedPost, PostLike postLike) {
         this.reviewId = reviewId;
-        this.member = member;
         this.likedPost = likedPost;
-        this.likeStatus = likeStatus;
+        this.postLike = postLike;
     }
-    public void updateStatus(LikeStatus status){
-        if(status == LikeStatus.LIKE){
-            this.likeStatus = LikeStatus.updateLike(status);
-        }
-        if(status == LikeStatus.UNLIKE){
-            this.likeStatus = LikeStatus.updateUnLike(status);
-        }
-    }
+
+
 }

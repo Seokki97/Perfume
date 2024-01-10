@@ -2,6 +2,7 @@ package com.example.perfume.review.dto.review.requestDto;
 
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.review.domain.Content;
+import com.example.perfume.review.domain.review.LikeCount;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +10,6 @@ import lombok.Getter;
 @Getter
 public class ReviewBoardRequest {
 
-    private Long boardId;
 
     private Long writer;
 
@@ -23,9 +23,8 @@ public class ReviewBoardRequest {
     }
 
     @Builder
-    public ReviewBoardRequest(final Long boardId, final Long writer, final String title,
+    public ReviewBoardRequest(final Long writer, final String title,
                               final Content content, final String perfumeName) {
-        this.boardId = boardId;
         this.writer = writer;
         this.content = content;
         this.title = title;
@@ -37,6 +36,7 @@ public class ReviewBoardRequest {
                 .member(member)
                 .content(content)
                 .title(title)
+                .likeCount(new LikeCount(0L, 0L))
                 .build();
     }
 }
