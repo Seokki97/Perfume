@@ -18,11 +18,12 @@ public interface ReviewBoardRepository extends JpaRepository<PerfumeReviewBoard,
 
     List<PerfumeReviewBoard> findByWriter(Long memberId);
 
-    List<PerfumeReviewBoard> findAllByOrderByLikeCountDesc();
-
-    List<PerfumeReviewBoard> findAllByOrderByUnlikeCountDesc();
-
     List<PerfumeReviewBoard> findAllByTitleContainingOrContentContaining(String title, String content, Sort sort);
+
+
+    List<PerfumeReviewBoard> findAllByOrderByLikeCountLikeCountDesc();
+
+    List<PerfumeReviewBoard> findAllByOrderByLikeCountUnlikeCountDesc();
 
     boolean existsByTitle(String title);
 

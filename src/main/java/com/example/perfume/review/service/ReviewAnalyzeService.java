@@ -2,12 +2,10 @@ package com.example.perfume.review.service;
 
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.repository.ReviewBoardRepository;
+import com.example.perfume.review.repository.ReviewLikeRepository;
+import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReviewAnalyzeService {
@@ -15,20 +13,24 @@ public class ReviewAnalyzeService {
     private static final String LIKE_COUNT = "likeCount";
     private static final String UNLIKE_COUNT = "unlikeCount";
 
+    private final ReviewLikeRepository reviewLikeRepository;
+
     private final ReviewBoardRepository reviewBoardRepository;
 
-    public ReviewAnalyzeService(ReviewBoardRepository reviewBoardRepository) {
+    public ReviewAnalyzeService(ReviewLikeRepository reviewLikeRepository,
+                                ReviewBoardRepository reviewBoardRepository) {
+        this.reviewLikeRepository = reviewLikeRepository;
         this.reviewBoardRepository = reviewBoardRepository;
     }
 
     public List<PerfumeReviewBoard> sortLikeReviews() {
 
-        return reviewBoardRepository.findAllByOrderByLikeCountDesc();
+        return reviewBoardRepository.findAllByOrderByLikeCountLikeCountDesc();
     }
 
     public List<PerfumeReviewBoard> sortUnlikeReviews() {
 
-        return reviewBoardRepository.findAllByOrderByUnlikeCountDesc();
+        return reviewBoardRepository.findAllByOrderByLikeCountUnlikeCountDesc();
     }
 
     public List<PerfumeReviewBoard> sortLikeReviewsFromSelectedPerfume(String perfumeName) {

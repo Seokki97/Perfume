@@ -25,5 +25,4 @@ public class PostLike {
         this.member = member;
         this.likeStatus = likeStatus;
     }
-
 }

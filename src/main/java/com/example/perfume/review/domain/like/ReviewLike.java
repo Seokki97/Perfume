@@ -36,6 +36,4 @@ public class ReviewLike {
         this.likedPost = likedPost;
         this.postLike = postLike;
     }
-
-
 }
