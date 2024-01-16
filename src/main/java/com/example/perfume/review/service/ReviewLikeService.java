@@ -53,12 +53,20 @@ public class ReviewLikeService {
 
     @Transactional
     public void cancelLikePost(ReviewLikeRequest reviewLikeRequest) {
+        PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLikeRequest.getPostId())
+                .orElseThrow(ReviewPostNotFoundException::new);
+        Member member = perfumeReviewBoard.getWriter();
+
+        reviewLikeRepository.deleteReviewLikeByPostLikeMemberAndLikedPost(member, perfumeReviewBoard)
+                .orElseThrow(ReviewPostNotFoundException::new);
+
+        LikeCount likeCount = perfumeReviewBoard.getLikeCount();
+        likeCount.decreaseLikeCount();
     }
 
     @Transactional
     public void unlikePost(ReviewLikeRequest reviewLikeRequest) {
     }
-
 
     public ReviewLikeResponse showLikeCount(Long boardId) {
         return null;
