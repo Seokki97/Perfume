@@ -1,7 +1,6 @@
 package com.example.perfume.review.service;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.review.domain.like.LikeStatus;
 import com.example.perfume.review.domain.like.PostLike;
 import com.example.perfume.review.domain.like.ReviewLike;
 import com.example.perfume.review.domain.review.LikeCount;
@@ -30,21 +29,15 @@ public class ReviewLikeService {
     }
 
     @Transactional
-    public void likePost(ReviewLikeRequest reviewLikeRequest) {
-        PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLikeRequest.getPostId())
-                .orElseThrow(ReviewPostNotFoundException::new);
-        Member member = perfumeReviewBoard.getWriter();
-
-        if (isAlreadyPushLikeOrUnlike(perfumeReviewBoard)) {
-            throw new AlreadyPushLikeException();
-        }
+    public void pushLikeOrUnlike(ReviewLikeRequest reviewLikeRequest) {
+        PerfumeReviewBoard reviewPost = validateAlreadyPushLike(reviewLikeRequest);
 
         ReviewLike reviewLike = ReviewLike.builder()
-                .postLike(new PostLike(member, LikeStatus.LIKE))
-                .likedPost(perfumeReviewBoard)
+                .postLike(new PostLike(reviewPost.getWriter(), reviewLikeRequest.getLikeStatus()))
+                .likedPost(reviewPost)
                 .build();
-        LikeCount likeCount = perfumeReviewBoard.getLikeCount();
-        likeCount.increaseLikeCount();
+        LikeCount likeCount = reviewPost.getLikeCount();
+        likeCount.calculatePushButton(reviewLike.getPostLike());
         reviewLikeRepository.save(reviewLike);
     }
 
@@ -61,27 +54,13 @@ public class ReviewLikeService {
         likeCount.decreaseLikeCount();
     }
 
-    @Transactional
-    public void unlikePost(ReviewLikeRequest reviewLikeRequest) {
+    public PerfumeReviewBoard validateAlreadyPushLike(ReviewLikeRequest reviewLikeRequest) {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLikeRequest.getPostId())
                 .orElseThrow(ReviewPostNotFoundException::new);
-        Member member = perfumeReviewBoard.getWriter();
-
-        if (isAlreadyPushLikeOrUnlike(perfumeReviewBoard)) {
+        if (reviewLikeRepository.existsReviewLikeByLikedPost(perfumeReviewBoard)) {
             throw new AlreadyPushLikeException();
         }
-
-        ReviewLike reviewLike = ReviewLike.builder()
-                .postLike(new PostLike(member, LikeStatus.UNLIKE))
-                .likedPost(perfumeReviewBoard)
-                .build();
-        LikeCount likeCount = perfumeReviewBoard.getLikeCount();
-        likeCount.increaseUnlikeCount();
-        reviewLikeRepository.save(reviewLike);
-    }
-
-    public boolean isAlreadyPushLikeOrUnlike(PerfumeReviewBoard perfumeReviewBoard) {
-        return reviewLikeRepository.existsReviewLikeByLikedPost(perfumeReviewBoard);
+        return perfumeReviewBoard;
     }
 
     public ReviewLikeResponse showLikeCount(Long boardId) {

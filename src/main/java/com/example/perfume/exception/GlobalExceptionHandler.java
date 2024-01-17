@@ -1,16 +1,29 @@
 package com.example.perfume.exception;
 
-import com.example.perfume.review.exception.ReviewPostNotFoundException;
-import com.example.perfume.member.exception.*;
-import com.example.perfume.recommend.exception.RecommendNotFoundException;
+import com.example.perfume.member.exception.AuthorizationHeaderNotFoundException;
+import com.example.perfume.member.exception.MemberAlreadyLogoutException;
+import com.example.perfume.member.exception.TokenExpiredException;
+import com.example.perfume.member.exception.TokenInvalidException;
+import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.oauth.exception.EmailNotFoundException;
 import com.example.perfume.oauth.exception.MemberAlreadyExistException;
 import com.example.perfume.perfume.exception.BrandNotFoundException;
 import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.post.exception.PostNotFoundException;
+import com.example.perfume.recommend.exception.RecommendNotFoundException;
+import com.example.perfume.review.exception.AlreadyPushLikeException;
+import com.example.perfume.review.exception.ReviewPostNotFoundException;
 import com.example.perfume.review.exception.ReviewTitleDuplicatedException;
-import com.example.perfume.survey.exception.*;
-import com.example.perfume.wishlist.exception.*;
+import com.example.perfume.survey.exception.MaintenanceNotFoundException;
+import com.example.perfume.survey.exception.MoodNotFoundException;
+import com.example.perfume.survey.exception.ScentNotFoundException;
+import com.example.perfume.survey.exception.SeasonNotFoundException;
+import com.example.perfume.survey.exception.SurveyNotFoundException;
+import com.example.perfume.wishlist.exception.RankingCannotMakeException;
+import com.example.perfume.wishlist.exception.RequestBodyNullPointException;
+import com.example.perfume.wishlist.exception.WishListDuplicateException;
+import com.example.perfume.wishlist.exception.WishListNotFoundException;
+import com.example.perfume.wishlist.exception.WishListTooMuchException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -136,7 +149,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<?> handlerReviewTitleDuplicatedException(ReviewTitleDuplicatedException e){
+    public ResponseEntity<?> handlerReviewTitleDuplicatedException(ReviewTitleDuplicatedException e) {
         return ResponseEntity.status(NOT_FOUND_ERROR).body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handlerAlreadyPushLikeException(AlreadyPushLikeException e) {
+        return ResponseEntity.status(BAD_REQUEST_ERROR).body(e.getMessage());
     }
 }
