@@ -22,13 +22,13 @@ public class ReviewLikeController implements ReviewLikeControllerDocs {
     }
 
     //@LoginCheck
-    @PatchMapping("/like")
-    public ResponseEntity<Void> likePost(@RequestBody ReviewLikeRequest reviewLikeRequest) {
-        reviewLikeService.likePost(reviewLikeRequest);
+    @PatchMapping("/push")
+    public ResponseEntity<Void> pushLikeOrUnlike(@RequestBody ReviewLikeRequest reviewLikeRequest) {
+        reviewLikeService.pushLikeOrUnlike(reviewLikeRequest);
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/like/cancel")
+    @PatchMapping("/push/cancel")
     public ResponseEntity<Void> cancelLike(@RequestBody ReviewLikeRequest reviewLikeRequest) {
         reviewLikeService.cancelLikePost(reviewLikeRequest);
         return ResponseEntity.noContent().build();

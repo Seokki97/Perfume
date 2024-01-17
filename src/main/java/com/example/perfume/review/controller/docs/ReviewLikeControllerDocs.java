@@ -18,7 +18,7 @@ public interface ReviewLikeControllerDocs {
             @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자의 접근",
                     headers = @Header(name = "Authorization", description = "Access Token"))
     })
-    ResponseEntity<Void> likePost(
+    ResponseEntity<Void> pushLikeOrUnlike(
             @Parameter(name = "memberId, boardId") @RequestBody ReviewLikeRequest reviewLikeRequest);
 
 }

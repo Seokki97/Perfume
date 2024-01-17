@@ -29,7 +29,7 @@ public class ReviewLikeService {
     }
 
     @Transactional
-    public void likePost(ReviewLikeRequest reviewLikeRequest) {
+    public void pushLikeOrUnlike(ReviewLikeRequest reviewLikeRequest) {
         PerfumeReviewBoard reviewPost = validateAlreadyPushLike(reviewLikeRequest);
 
         ReviewLike reviewLike = ReviewLike.builder()
@@ -53,7 +53,6 @@ public class ReviewLikeService {
         LikeCount likeCount = perfumeReviewBoard.getLikeCount();
         likeCount.decreaseLikeCount();
     }
-
 
     public PerfumeReviewBoard validateAlreadyPushLike(ReviewLikeRequest reviewLikeRequest) {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLikeRequest.getPostId())
