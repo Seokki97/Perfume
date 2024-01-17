@@ -34,10 +34,4 @@ public class ReviewLikeController implements ReviewLikeControllerDocs {
         return ResponseEntity.noContent().build();
     }
 
-    //@LoginCheck
-    @PatchMapping("/unlike")
-    public ResponseEntity<Void> unlikePost(@RequestBody ReviewLikeRequest reviewLikeRequest) {
-        reviewLikeService.unlikePost(reviewLikeRequest);
-        return ResponseEntity.noContent().build();
-    }
 }
