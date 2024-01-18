@@ -21,9 +21,7 @@ public class ReviewLikeService {
 
     private final ReviewBoardRepository reviewBoardRepository;
 
-
-    public ReviewLikeService(ReviewLikeRepository reviewLikeRepository, ReviewBoardRepository reviewBoardRepository
-    ) {
+    public ReviewLikeService(ReviewLikeRepository reviewLikeRepository, ReviewBoardRepository reviewBoardRepository) {
         this.reviewLikeRepository = reviewLikeRepository;
         this.reviewBoardRepository = reviewBoardRepository;
     }
