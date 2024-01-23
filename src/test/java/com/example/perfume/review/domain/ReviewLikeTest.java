@@ -69,10 +69,25 @@ public class ReviewLikeTest {
         );
     }
 
-    @DisplayName("게시글을 Unlike상태로 전환한다. 이미 Unlike 상태일 경우 Canceled상태로 전환한다")
+    @DisplayName("게시글 상태에 따라 좋아요 / 싫어요를 푸쉬하고, 좋아요 수가 반영된다")
     @Test
     void updateUnlike() {
+        ReviewLikeRequest likeRequest = new ReviewLikeRequest(1l, 1l, LikeStatus.LIKE);
+        ReviewLikeRequest unlikeRequest = new ReviewLikeRequest(1l, 1l, LikeStatus.UNLIKE);
+        PerfumeReviewBoard perfumeReviewBoard = PerfumeReviewBoard.builder()
+                .boardId(1L)
+                .likeCount(new LikeCount(0l, 0l))
+                .build();
 
+        Mockito.when(reviewBoardRepository.findByBoardId(any())).thenReturn(Optional.ofNullable(perfumeReviewBoard));
+        Mockito.when(reviewLikeRepository.existsReviewLikeByLikedPost(any())).thenReturn(false);
+
+        reviewLikeService.pushLikeOrUnlike(likeRequest);
+        reviewLikeService.pushLikeOrUnlike(unlikeRequest);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(1l, perfumeReviewBoard.getLikeCount().getLikeCount()),
+                () -> Assertions.assertEquals(1l, perfumeReviewBoard.getLikeCount().getUnlikeCount())
+        );
     }
 
 }
