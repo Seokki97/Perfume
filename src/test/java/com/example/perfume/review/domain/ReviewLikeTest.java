@@ -46,9 +46,9 @@ public class ReviewLikeTest {
 
     }
 
-    @DisplayName("게시글 좋아요를 취소한다.")
+    @DisplayName("게시글 좋아요를 취소할 시 , 좋아요 수가 줄어든다")
     @Test
-    void updateLike() {
+    void cancelLike() {
         Member member = Member.builder()
                 .memberId(1l)
                 .build();
