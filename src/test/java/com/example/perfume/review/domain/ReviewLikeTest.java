@@ -32,7 +32,6 @@ public class ReviewLikeTest {
     @InjectMocks
     private ReviewLikeService reviewLikeService;
 
-
     @DisplayName("이미 푸시버튼을 누른 경우 예외를 발생시킨다")
     @Test
     void validateAlreadyPush() {
@@ -89,5 +88,4 @@ public class ReviewLikeTest {
                 () -> Assertions.assertEquals(1l, perfumeReviewBoard.getLikeCount().getUnlikeCount())
         );
     }
-
 }
