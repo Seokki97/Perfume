@@ -3,6 +3,7 @@ package com.example.perfume.review.domain;
 import static org.mockito.ArgumentMatchers.any;
 
 import com.example.perfume.member.domain.Member;
+import com.example.perfume.member.repository.MemberRepository;
 import com.example.perfume.review.domain.like.LikeStatus;
 import com.example.perfume.review.domain.like.ReviewLike;
 import com.example.perfume.review.domain.review.LikeCount;
@@ -29,6 +30,8 @@ public class ReviewLikeTest {
     private ReviewLikeRepository reviewLikeRepository;
     @Mock
     private ReviewBoardRepository reviewBoardRepository;
+    @Mock
+    private MemberRepository memberRepository;
     @InjectMocks
     private ReviewLikeService reviewLikeService;
 
@@ -37,9 +40,10 @@ public class ReviewLikeTest {
     void validateAlreadyPush() {
         ReviewLikeRequest reviewLikeRequest = new ReviewLikeRequest(1l, 1l, null);
         PerfumeReviewBoard perfumeReviewBoard = PerfumeReviewBoard.builder().boardId(1L).build();
+        Member member = Member.builder().build();
         Mockito.when(reviewBoardRepository.findByBoardId(any())).thenReturn(Optional.ofNullable(perfumeReviewBoard));
-        Mockito.when(reviewLikeRepository.existsReviewLikeByLikedPost(any())).thenReturn(true);
-
+        Mockito.when(reviewLikeRepository.existsReviewLikeByLikedPostAndPostLikeMember(any(), any())).thenReturn(true);
+        Mockito.when(memberRepository.findByMemberId(any())).thenReturn(Optional.ofNullable(member));
         Assertions.assertAll(() -> Assertions.assertThrows(AlreadyPushLikeException.class,
                 () -> reviewLikeService.validateAlreadyPushLike(reviewLikeRequest)));
 
@@ -60,6 +64,7 @@ public class ReviewLikeTest {
         Mockito.when(reviewBoardRepository.findByBoardId(any())).thenReturn(Optional.ofNullable(perfumeReviewBoard));
         Mockito.when(reviewLikeRepository.deleteReviewLikeByPostLikeMemberAndLikedPost(any(), any())).thenReturn(
                 Optional.of(reviewLike));
+        Mockito.when(memberRepository.findByMemberId(any())).thenReturn(Optional.ofNullable(member));
 
         ReviewLikeRequest reviewLikeRequest = new ReviewLikeRequest(1l, 1l, LikeStatus.LIKE);
         reviewLikeService.cancelLikePost(reviewLikeRequest);
@@ -77,9 +82,11 @@ public class ReviewLikeTest {
                 .boardId(1L)
                 .likeCount(new LikeCount(0l, 0l))
                 .build();
+        Member member = Member.builder().build();
 
         Mockito.when(reviewBoardRepository.findByBoardId(any())).thenReturn(Optional.ofNullable(perfumeReviewBoard));
-        Mockito.when(reviewLikeRepository.existsReviewLikeByLikedPost(any())).thenReturn(false);
+        Mockito.when(reviewLikeRepository.existsReviewLikeByLikedPostAndPostLikeMember(any(), any())).thenReturn(false);
+        Mockito.when(memberRepository.findByMemberId(any())).thenReturn(Optional.ofNullable(member));
 
         reviewLikeService.pushLikeOrUnlike(likeRequest);
         reviewLikeService.pushLikeOrUnlike(unlikeRequest);
