@@ -26,8 +26,7 @@ public class ReviewAnalyzeController implements ReviewAnalyzeControllerDocs {
             @RequestParam(value = "perfumeName", required = false) String perfumeName) {
         if (perfumeName == null) {
             log.info("리뷰수에 따른 순위를 조회한다.");
-            return null;
-            //return ResponseEntity.ok(reviewAnalyzeService.sortLikeReviews());
+            return ResponseEntity.ok(reviewAnalyzeService.sortLikeReviews());
         }
         log.info("향수 이름 : {} 에 대한 순위를 조회한다.", perfumeName);
         return ResponseEntity.ok(reviewAnalyzeService.sortLikeReviewsFromSelectedPerfume(perfumeName));
@@ -38,11 +37,9 @@ public class ReviewAnalyzeController implements ReviewAnalyzeControllerDocs {
             @RequestParam(value = "perfumeName", required = false) String perfumeName) {
         if (perfumeName == null) {
             log.info("리뷰수에 따른 순위를 조회한다.");
-            return null;
-            // return ResponseEntity.ok(reviewAnalyzeService.sortUnlikeReviews());
+            return ResponseEntity.ok(reviewAnalyzeService.sortUnlikeReviews());
         }
         log.info("향수 이름 : {} 에 대한 순위를 조회한다.", perfumeName);
         return ResponseEntity.ok(reviewAnalyzeService.sortUnlikeReviewsFromSelectedPerfume(perfumeName));
     }
-
 }
