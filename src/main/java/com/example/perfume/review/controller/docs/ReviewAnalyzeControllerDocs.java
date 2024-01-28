@@ -12,7 +12,7 @@ public interface ReviewAnalyzeControllerDocs {
 
     @Operation(summary = "리뷰 좋아요 많은 순 정렬")
     @APICommonResponse
-    ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume(String perfumeName);
+    ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume();
 
     @Operation(summary = "리뷰 좋아요 적은 순 정렬")
     @APICommonResponse

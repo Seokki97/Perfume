@@ -22,14 +22,9 @@ public class ReviewAnalyzeController implements ReviewAnalyzeControllerDocs {
     }
 
     @GetMapping("/show-like-ranking")
-    public ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume(
-            @RequestParam(value = "perfumeName", required = false) String perfumeName) {
-        if (perfumeName == null) {
-            log.info("리뷰수에 따른 순위를 조회한다.");
-            return ResponseEntity.ok(reviewAnalyzeService.sortLikeReviews());
-        }
-        log.info("향수 이름 : {} 에 대한 순위를 조회한다.", perfumeName);
-        return ResponseEntity.ok(reviewAnalyzeService.sortLikeReviewsFromSelectedPerfume(perfumeName));
+    public ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume() {
+
+        return ResponseEntity.ok(reviewAnalyzeService.sortLikeReviews());
     }
 
     @GetMapping("/show-unlike-ranking")

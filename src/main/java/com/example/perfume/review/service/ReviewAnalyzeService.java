@@ -5,6 +5,7 @@ import com.example.perfume.review.repository.ReviewBoardRepository;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReviewAnalyzeService {
@@ -18,6 +19,7 @@ public class ReviewAnalyzeService {
         this.reviewBoardRepository = reviewBoardRepository;
     }
 
+    @Transactional
     public List<PerfumeReviewBoard> sortLikeReviews() {
 
         return reviewBoardRepository.findAllByOrderByLikeCountLikeCountDesc();
