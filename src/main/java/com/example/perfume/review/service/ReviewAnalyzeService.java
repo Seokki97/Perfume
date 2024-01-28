@@ -2,10 +2,10 @@ package com.example.perfume.review.service;
 
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.repository.ReviewBoardRepository;
-import com.example.perfume.review.repository.ReviewLikeRepository;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReviewAnalyzeService {
@@ -13,16 +13,13 @@ public class ReviewAnalyzeService {
     private static final String LIKE_COUNT = "likeCount";
     private static final String UNLIKE_COUNT = "unlikeCount";
 
-    private final ReviewLikeRepository reviewLikeRepository;
-
     private final ReviewBoardRepository reviewBoardRepository;
 
-    public ReviewAnalyzeService(ReviewLikeRepository reviewLikeRepository,
-                                ReviewBoardRepository reviewBoardRepository) {
-        this.reviewLikeRepository = reviewLikeRepository;
+    public ReviewAnalyzeService(ReviewBoardRepository reviewBoardRepository) {
         this.reviewBoardRepository = reviewBoardRepository;
     }
 
+    @Transactional
     public List<PerfumeReviewBoard> sortLikeReviews() {
 
         return reviewBoardRepository.findAllByOrderByLikeCountLikeCountDesc();

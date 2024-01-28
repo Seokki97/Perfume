@@ -8,7 +8,6 @@ import com.example.perfume.review.domain.like.ReviewLike;
 import com.example.perfume.review.domain.review.LikeCount;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.dto.like.ReviewLikeRequest;
-import com.example.perfume.review.dto.like.ReviewLikeResponse;
 import com.example.perfume.review.exception.AlreadyPushLikeException;
 import com.example.perfume.review.exception.ReviewPostNotFoundException;
 import com.example.perfume.review.repository.ReviewBoardRepository;
@@ -69,7 +68,4 @@ public class ReviewLikeService {
         return perfumeReviewBoard;
     }
 
-    public ReviewLikeResponse showLikeCount(Long boardId) {
-        return null;
-    }
 }
