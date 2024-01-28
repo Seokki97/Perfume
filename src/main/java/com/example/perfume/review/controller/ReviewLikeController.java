@@ -33,5 +33,4 @@ public class ReviewLikeController implements ReviewLikeControllerDocs {
         reviewLikeService.cancelLikePost(reviewLikeRequest);
         return ResponseEntity.noContent().build();
     }
-
 }
