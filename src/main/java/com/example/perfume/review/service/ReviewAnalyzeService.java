@@ -1,11 +1,11 @@
 package com.example.perfume.review.service;
 
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
+import com.example.perfume.review.dto.review.responseDto.ReviewAnalyzeResponse;
 import com.example.perfume.review.repository.ReviewBoardRepository;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReviewAnalyzeService {
@@ -19,10 +19,11 @@ public class ReviewAnalyzeService {
         this.reviewBoardRepository = reviewBoardRepository;
     }
 
-    @Transactional
-    public List<PerfumeReviewBoard> sortLikeReviews() {
 
-        return reviewBoardRepository.findAllByOrderByLikeCountLikeCountDesc();
+    public ReviewAnalyzeResponse sortLikeReviews() {
+        ReviewAnalyzeResponse reviewAnalyzeResponse = new ReviewAnalyzeResponse(
+                reviewBoardRepository.findAllByOrderByLikeCountLikeCountDesc());
+        return reviewAnalyzeResponse;
     }
 
     public List<PerfumeReviewBoard> sortUnlikeReviews() {
