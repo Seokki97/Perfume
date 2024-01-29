@@ -117,9 +117,4 @@ public class ReviewBoardService {
         return reviewBoardRepository
                 .findByTitleContainingOrContentContaining(perfumeName, perfumeName);
     }
-
-    //내가 남긴 게시글 조회
-    public List<PerfumeReviewBoard> showMyReviewPost(Long memberId) {
-        return reviewBoardRepository.findByWriter(memberId);
-    }
 }
