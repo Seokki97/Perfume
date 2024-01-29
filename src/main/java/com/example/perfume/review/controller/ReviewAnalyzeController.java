@@ -2,6 +2,7 @@ package com.example.perfume.review.controller;
 
 import com.example.perfume.review.controller.docs.ReviewAnalyzeControllerDocs;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
+import com.example.perfume.review.dto.review.responseDto.ReviewAnalyzeResponse;
 import com.example.perfume.review.service.ReviewAnalyzeService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +23,7 @@ public class ReviewAnalyzeController implements ReviewAnalyzeControllerDocs {
     }
 
     @GetMapping("/show-like-ranking")
-    public ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume() {
+    public ResponseEntity<ReviewAnalyzeResponse> showMostLikedPerfume() {
 
         return ResponseEntity.ok(reviewAnalyzeService.sortLikeReviews());
     }
