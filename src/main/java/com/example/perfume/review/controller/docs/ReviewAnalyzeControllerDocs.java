@@ -2,6 +2,7 @@ package com.example.perfume.review.controller.docs;
 
 import com.example.perfume.common.APICommonResponse;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
+import com.example.perfume.review.dto.review.responseDto.ReviewAnalyzeResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
@@ -12,7 +13,7 @@ public interface ReviewAnalyzeControllerDocs {
 
     @Operation(summary = "리뷰 좋아요 많은 순 정렬")
     @APICommonResponse
-    ResponseEntity<List<PerfumeReviewBoard>> showMostLikedPerfume();
+    ResponseEntity<ReviewAnalyzeResponse> showMostLikedPerfume();
 
     @Operation(summary = "리뷰 좋아요 적은 순 정렬")
     @APICommonResponse

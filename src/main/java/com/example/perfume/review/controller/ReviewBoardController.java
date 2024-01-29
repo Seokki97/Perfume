@@ -82,10 +82,4 @@ public class ReviewBoardController implements ReviewBoardControllerDocs {
         return ResponseEntity.ok(reviewBoardService.showSearchedPosts(content));
     }
 
-    @GetMapping("/show-my-posts/{memberId}")
-    public ResponseEntity<List<PerfumeReviewBoard>> showMyPosts(@PathVariable final Long memberId) {
-        log.info("memberId : {} 가 작성한 리뷰 게시글만 조회한다", memberId);
-        return ResponseEntity.ok(reviewBoardService.showMyReviewPost(memberId));
-    }
-
 }
