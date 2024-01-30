@@ -56,6 +56,7 @@ public class ReviewLikeService {
         likeCount.decreaseLikeCount();
     }
 
+    @Transactional
     public PerfumeReviewBoard validateAlreadyPushLike(ReviewLikeRequest reviewLikeRequest) {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLikeRequest.getPostId())
                 .orElseThrow(ReviewPostNotFoundException::new);
@@ -64,7 +65,6 @@ public class ReviewLikeService {
         if (reviewLikeRepository.existsReviewLikeByLikedPostAndPostLikeMember(perfumeReviewBoard, member)) {
             throw new AlreadyPushLikeException();
         }
-
         return perfumeReviewBoard;
     }
 
