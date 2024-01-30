@@ -15,6 +15,7 @@ import com.example.perfume.review.repository.ReviewLikeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class ReviewLikeService {
 
@@ -30,7 +31,6 @@ public class ReviewLikeService {
         this.memberRepository = memberRepository;
     }
 
-    @Transactional
     public void pushLikeOrUnlike(ReviewLikeRequest reviewLikeRequest) {
         PerfumeReviewBoard reviewPost = validateAlreadyPushLike(reviewLikeRequest);
         ReviewLike reviewLike = ReviewLike.builder()
@@ -42,7 +42,6 @@ public class ReviewLikeService {
         reviewLikeRepository.save(reviewLike);
     }
 
-    @Transactional
     public void cancelLikePost(ReviewLikeRequest reviewLikeRequest) {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLikeRequest.getPostId())
                 .orElseThrow(ReviewPostNotFoundException::new);
@@ -56,7 +55,6 @@ public class ReviewLikeService {
         likeCount.decreaseLikeCount();
     }
 
-    @Transactional
     public PerfumeReviewBoard validateAlreadyPushLike(ReviewLikeRequest reviewLikeRequest) {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLikeRequest.getPostId())
                 .orElseThrow(ReviewPostNotFoundException::new);
@@ -67,5 +65,4 @@ public class ReviewLikeService {
         }
         return perfumeReviewBoard;
     }
-
 }
