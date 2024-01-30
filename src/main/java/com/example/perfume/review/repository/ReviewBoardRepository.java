@@ -26,7 +26,7 @@ public interface ReviewBoardRepository extends JpaRepository<PerfumeReviewBoard,
     @Query("SELECT board FROM perfume_review_board board JOIN FETCH board.writer ORDER BY board.likeCount.likeCount DESC")
     List<PerfumeReviewBoard> findByLikeCountDesc();
 
-    @Query("SELECT board FROM perfume_review_board board JOIN FETCH board.writer ORDER BY board.likeCount.likeCount DESC")
+    @Query("SELECT board FROM perfume_review_board board JOIN FETCH board.writer ORDER BY board.likeCount.unlikeCount DESC")
     List<PerfumeReviewBoard> findByUnLikeCountDesc();
 
     boolean existsByTitle(String title);
