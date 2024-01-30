@@ -15,7 +15,7 @@ public interface ReviewAnalyzeControllerDocs {
     @APICommonResponse
     ResponseEntity<ReviewAnalyzeResponse> showMostLikedPerfume();
 
-    @Operation(summary = "리뷰 좋아요 적은 순 정렬")
+    @Operation(summary = "리뷰 싫어요 많은 순 정렬")
     @APICommonResponse
-    ResponseEntity<List<PerfumeReviewBoard>> showMostUnlikedPerfume(String perfumeName);
+    ResponseEntity<List<PerfumeReviewBoard>> showMostUnlikedPerfume();
 }

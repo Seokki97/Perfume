@@ -27,7 +27,7 @@ public class ReviewAnalyzeService {
 
     public List<PerfumeReviewBoard> sortUnlikeReviews() {
 
-        return reviewBoardRepository.findAllByOrderByLikeCountUnlikeCountDesc();
+        return reviewBoardRepository.findByUnLikeCountDesc();
     }
 
     public List<PerfumeReviewBoard> sortLikeReviewsFromSelectedPerfume(String perfumeName) {
