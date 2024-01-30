@@ -23,7 +23,7 @@ public interface ReviewBoardRepository extends JpaRepository<PerfumeReviewBoard,
     List<PerfumeReviewBoard> findAllByTitleContainingOrContentContaining(String title, String content, Sort sort);
 
 
-    @Query("SELECT board FROM perfume_review_board board JOIN FETCH board.writer")
+    @Query("SELECT board FROM perfume_review_board board JOIN FETCH board.writer ORDER BY board.likeCount.likeCount DESC")
     List<PerfumeReviewBoard> findAllByOrderByLikeCountLikeCountDesc();
 
     List<PerfumeReviewBoard> findAllByOrderByLikeCountUnlikeCountDesc();
