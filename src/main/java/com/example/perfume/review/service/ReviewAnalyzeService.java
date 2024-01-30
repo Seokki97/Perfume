@@ -21,9 +21,8 @@ public class ReviewAnalyzeService {
 
 
     public ReviewAnalyzeResponse sortLikeReviews() {
-        ReviewAnalyzeResponse reviewAnalyzeResponse = new ReviewAnalyzeResponse(
-                reviewBoardRepository.findAllByOrderByLikeCountLikeCountDesc());
-        return reviewAnalyzeResponse;
+        return new ReviewAnalyzeResponse(
+                reviewBoardRepository.findByLikeCountDesc());
     }
 
     public List<PerfumeReviewBoard> sortUnlikeReviews() {
