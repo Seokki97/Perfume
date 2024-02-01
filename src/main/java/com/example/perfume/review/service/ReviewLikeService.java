@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewLikeService {
 
     private final ReviewLikeRepository reviewLikeRepository;
-
     private final ReviewBoardRepository reviewBoardRepository;
     private final MemberRepository memberRepository;
 
