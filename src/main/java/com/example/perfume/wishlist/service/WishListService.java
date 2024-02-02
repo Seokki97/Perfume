@@ -11,7 +11,9 @@ import com.example.perfume.wishlist.exception.WishListDuplicateException;
 import com.example.perfume.wishlist.exception.WishListNotFoundException;
 import com.example.perfume.wishlist.exception.WishListTooMuchException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 public class WishListService {
 

@@ -27,7 +27,6 @@ public class WishList {
     @ManyToOne
     private Perfume perfume;
 
-
     public WishList(Long wishListId, Member member, Perfume perfume) {
         this.wishListId = wishListId;
         this.member = member;
