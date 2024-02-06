@@ -26,8 +26,4 @@ public class Feedback {
         this.serviceName = serviceName;
         this.comment = comment;
     }
-
-    public Feedback(Long id) {
-        this.id = id;
-    }
 }
