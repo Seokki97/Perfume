@@ -30,8 +30,6 @@ public class WishListService {
     }
 
     public WishListResponse selectLikePerfume(WishListRequest wishListRequest) {
-        wishListRequest.isEmptyRequestBody();
-
         Member member = memberService.findMemberById(wishListRequest.getMemberId());
         Perfume perfume = perfumeService.findPerfumeById(wishListRequest.getPerfumeId());
 
