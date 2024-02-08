@@ -20,7 +20,6 @@ public class ReviewAnalyzeService {
     }
 
     public List<PerfumeReviewBoard> sortUnlikeReviews() {
-
         return reviewBoardRepository.findByUnLikeCountDesc();
     }
 }
