@@ -12,7 +12,8 @@ import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
 import com.example.perfume.wishlist.repository.WishListRepository;
-import com.example.perfume.wishlist.service.WishListUtil;
+import com.example.perfume.wishlist.service.WishListService;
+import com.example.perfume.wishlist.service.WishListValidation;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -27,7 +28,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class WishListUtilTest {
 
     @InjectMocks
-    private WishListUtil wishListUtil;
+    private WishListService wishListUtil;
+
+    @InjectMocks
+    private WishListValidation wishListValidation;
 
     @Mock
     private WishListRepository wishListRepository;
@@ -61,7 +65,7 @@ public class WishListUtilTest {
         when(wishListRepository.findByMember(any())).thenReturn(wishLists);
 
         WishListRequest duplicatedPerfume = new WishListRequest(2l, 1l);
-        boolean actual = wishListUtil.isDuplicateWishItem(duplicatedPerfume);
+        boolean actual = wishListValidation.isDuplicateWishItem(duplicatedPerfume);
 
         Assertions.assertTrue(actual);
     }
@@ -77,7 +81,7 @@ public class WishListUtilTest {
 
         when(wishListRepository.findByMember(any())).thenReturn(wishLists);
 
-        boolean actual = wishListUtil.isWishListOverMaxSize(new WishListRequest(1l, 1l));
+        boolean actual = wishListValidation.isWishListOverMaxSize(new WishListRequest(1l, 1l));
 
         Assertions.assertTrue(actual);
     }
@@ -86,11 +90,11 @@ public class WishListUtilTest {
     @Test
     void deleteAllWishList() {
         Long memberId = 1l;
-        doNothing().when(wishListRepository).deleteByMember_MemberId(memberId);
+        doNothing().when(wishListRepository).deleteByMemberMemberId(memberId);
 
-        wishListUtil.deleteAllWishedList(memberId);
+        wishListUtil.deleteAllWishList(memberId);
 
-        verify(wishListRepository, times(1)).deleteByMember_MemberId(memberId);
+        verify(wishListRepository, times(1)).deleteByMemberMemberId(memberId);
     }
 
     @DisplayName("선택한 위시 향수를 삭제한다.")
@@ -98,11 +102,11 @@ public class WishListUtilTest {
     void deleteSelectedWishElement() {
         WishListRequest wishListRequest = new WishListRequest(1l, 1l);
 
-        doNothing().when(wishListRepository).deleteByMember_MemberIdAndPerfume_PerfumeId(wishListRequest.getMemberId(),
+        doNothing().when(wishListRepository).deleteByMemberMemberIdAndPerfumePerfumeId(wishListRequest.getMemberId(),
                 wishListRequest.getPerfumeId());
 
-        wishListUtil.deleteSelectedWishElement(wishListRequest);
-        verify(wishListRepository, times(1)).deleteByMember_MemberIdAndPerfume_PerfumeId(wishListRequest.getMemberId(),
+        wishListUtil.deleteSelectedWishList(wishListRequest);
+        verify(wishListRepository, times(1)).deleteByMemberMemberIdAndPerfumePerfumeId(wishListRequest.getMemberId(),
                 wishListRequest.getPerfumeId());
     }
 

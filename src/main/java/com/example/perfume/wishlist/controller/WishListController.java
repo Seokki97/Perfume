@@ -6,7 +6,6 @@ import com.example.perfume.wishlist.domain.WishList;
 import com.example.perfume.wishlist.dto.WishListRequest;
 import com.example.perfume.wishlist.dto.WishListResponse;
 import com.example.perfume.wishlist.service.WishListService;
-import com.example.perfume.wishlist.service.WishListUtil;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +24,7 @@ public class WishListController implements WishListControllerDocs {
 
     private final WishListService wishListService;
 
-    private final WishListUtil wishListUtil;
-
-    public WishListController(WishListService wishListService, WishListUtil wishListUtil) {
-        this.wishListUtil = wishListUtil;
+    public WishListController(WishListService wishListService) {
         this.wishListService = wishListService;
     }
 
@@ -44,7 +40,7 @@ public class WishListController implements WishListControllerDocs {
     @GetMapping("/show-list/{memberId}")
     public ResponseEntity<List<WishList>> showWishList(@PathVariable("memberId") final Long memberId) {
         log.info("향수 리스트 조회하기, Member Id :{}", memberId);
-        return ResponseEntity.ok(wishListUtil.showWishList(memberId));
+        return ResponseEntity.ok(wishListService.showWishList(memberId));
     }
 
     @LoginCheck
