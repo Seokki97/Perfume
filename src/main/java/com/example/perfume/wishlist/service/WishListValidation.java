@@ -5,7 +5,6 @@ import com.example.perfume.wishlist.repository.WishListRepository;
 import java.util.Objects;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class WishListValidation {
 
