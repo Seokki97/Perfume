@@ -17,16 +17,16 @@ public class WishListValidation {
     }
 
     public boolean isEmptyWishList(Long memberId) {
-        return wishListRepository.findByMember(memberId).isEmpty();
+        return wishListRepository.findByMemberMemberId(memberId).isEmpty();
     }
 
     public boolean isDuplicateWishItem(WishListRequest wishListRequest) {
-        return wishListRepository.findByMember(wishListRequest.getMemberId()).stream()
+        return wishListRepository.findByMemberMemberId(wishListRequest.getMemberId()).stream()
                 .anyMatch(
                         perfume -> Objects.equals(perfume.getPerfumeId(), wishListRequest.getPerfumeId()));
     }
 
     public boolean isWishListOverMaxSize(WishListRequest wishListRequest) {
-        return wishListRepository.findByMember(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE;
+        return wishListRepository.findByMemberMemberId(wishListRequest.getMemberId()).size() > MAX_WISH_SIZE;
     }
 }

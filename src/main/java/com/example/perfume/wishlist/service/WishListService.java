@@ -67,6 +67,6 @@ public class WishListService {
     }
 
     public List<WishList> showWishList(Long memberId) {
-        return wishListRepository.findByMember(memberId);
+        return wishListRepository.findByMemberMemberId(memberId);
     }
 }
