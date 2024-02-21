@@ -28,8 +28,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/member/logout/**")
-                .excludePathPatterns("/api-docs/**")
-                .excludePathPatterns("/swagger-ui/**");
+                .excludePathPatterns("/api//member/logout/**")
+                .excludePathPatterns("/api//api-docs/**")
+                .excludePathPatterns("/api//swagger-ui/**");
     }
 }
