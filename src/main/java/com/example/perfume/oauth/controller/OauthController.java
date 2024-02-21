@@ -23,7 +23,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @RestController
-@RequestMapping("/oauth")
+@RequestMapping("/api//oauth")
 public class OauthController {
 
     private final KakaoToken kakaoToken;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/perfume")
+@RequestMapping("/api//perfume")
 public class PerfumeStoryController implements PerfumeStoryControllerDocs {
     private final PerfumeStoryService perfumeStoryService;
 

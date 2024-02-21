@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/member/wish")
+@RequestMapping("/api//member/wish")
 public class WishListController implements WishListControllerDocs {
 
     private final WishListService wishListService;

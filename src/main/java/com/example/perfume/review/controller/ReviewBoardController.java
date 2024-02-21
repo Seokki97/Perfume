@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/board")
+@RequestMapping("/api//board")
 public class ReviewBoardController implements ReviewBoardControllerDocs {
 
     private final ReviewBoardService reviewBoardService;

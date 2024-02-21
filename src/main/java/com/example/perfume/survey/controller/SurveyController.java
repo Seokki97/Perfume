@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/survey")
+@RequestMapping("/api//survey")
 public class SurveyController implements SurveyControllerDocs {
 
     private final SurveyService surveyService;

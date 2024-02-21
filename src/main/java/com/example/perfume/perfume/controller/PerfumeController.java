@@ -16,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/perfume")
+@RequestMapping("/api//perfume")
 public class PerfumeController implements PerfumeControllerDocs {
 
     private final PerfumeService perfumeService;

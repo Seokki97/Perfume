@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api//member")
 public class RecommendController implements RecommendControllerDocs {
 
     private final RecommendationService recommendationService;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/perfume")
+@RequestMapping("/api//perfume")
 public class PerfumeDataController {
 
     private final PerfumeData perfumeData;

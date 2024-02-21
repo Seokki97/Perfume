@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("/report")
+@RequestMapping("/api//report")
 public class ReportController {
 
     private final ReportService reportService;
@@ -22,7 +22,7 @@ public class ReportController {
     @LoginCheck
     @PostMapping("/receive")
     public ResponseEntity<ReportResponse> receiveReport(@RequestBody ReportRequest reportRequest) {
-        log.info("리포트 접수 게시글 id : {} ",reportRequest.getReportDetail().getReportedPostUserId());
+        log.info("리포트 접수 게시글 id : {} ", reportRequest.getReportDetail().getReportedPostUserId());
         return ResponseEntity.ok(reportService.receiveReport(reportRequest));
     }
 

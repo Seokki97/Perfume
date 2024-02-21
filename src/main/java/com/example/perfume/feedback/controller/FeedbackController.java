@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
-@RequestMapping("/feedback")
+@RequestMapping("/api//feedback")
 public class FeedbackController implements FeedbackControllerDocs {
     private final FeedbackService feedbackService;
 

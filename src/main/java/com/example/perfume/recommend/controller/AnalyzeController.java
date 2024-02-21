@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api//member/analyze")
 public class AnalyzeController implements AnalyzeControllerDocs {
 
     private final AnalyzeService analyzeService;
@@ -23,7 +23,7 @@ public class AnalyzeController implements AnalyzeControllerDocs {
     }
 
     @LoginCheck
-    @GetMapping("show-analyzed-data/{id}")
+    @GetMapping("/showRanking/{id}")
     public ResponseEntity<RankingResponse> showRankingList(@PathVariable("id") final Long memberId) {
         log.info("memberId : {} 의 추천받은 향수 결과 분석 요청", memberId);
         return ResponseEntity.ok(analyzeService.responseAnalyzedData(memberId));

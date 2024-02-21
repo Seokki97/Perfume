@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/member/wish")
+@RequestMapping("/api//member/wish")
 public class RankingController implements RankingListDocs {
     private final WishListAnalyze wishListAnalyze;
 
