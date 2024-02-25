@@ -12,6 +12,7 @@ import com.example.perfume.perfume.exception.PerfumeNotFoundException;
 import com.example.perfume.post.exception.PostNotFoundException;
 import com.example.perfume.recommend.exception.RecommendNotFoundException;
 import com.example.perfume.review.exception.AlreadyPushLikeException;
+import com.example.perfume.review.exception.LikedPostNotFoundException;
 import com.example.perfume.review.exception.ReviewPostNotFoundException;
 import com.example.perfume.review.exception.ReviewTitleDuplicatedException;
 import com.example.perfume.survey.exception.MaintenanceNotFoundException;
@@ -155,6 +156,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<?> handlerAlreadyPushLikeException(AlreadyPushLikeException e) {
+        return ResponseEntity.status(BAD_REQUEST_ERROR).body(e.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handlerLikedPostNotFoundException(LikedPostNotFoundException e) {
         return ResponseEntity.status(BAD_REQUEST_ERROR).body(e.getMessage());
     }
 }
