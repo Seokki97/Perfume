@@ -33,8 +33,10 @@ public class ReviewLikeService {
 
     public void pushLikeOrUnlike(ReviewLikeRequest reviewLikeRequest) {
         PerfumeReviewBoard reviewPost = validateAlreadyPushLike(reviewLikeRequest);
+        Member member = memberRepository.findByMemberId(reviewLikeRequest.getMemberId())
+                .orElseThrow(UserNotFoundException::new);
         ReviewLike reviewLike = ReviewLike.builder()
-                .postLike(new PostLike(reviewPost.getWriter(), reviewLikeRequest.getLikeStatus()))
+                .postLike(new PostLike(member, reviewLikeRequest.getLikeStatus()))
                 .likedPost(reviewPost)
                 .build();
         LikeCount likeCount = reviewPost.getLikeCount();
