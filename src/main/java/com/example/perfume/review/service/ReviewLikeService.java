@@ -57,9 +57,9 @@ public class ReviewLikeService {
     public PerfumeReviewBoard validateAlreadyPushLike(ReviewLikeRequest reviewLikeRequest) {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLikeRequest.getPostId())
                 .orElseThrow(ReviewPostNotFoundException::new);
-        Member member = memberRepository.findByMemberId(reviewLikeRequest.getMemberId())
-                .orElseThrow(UserNotFoundException::new);
-        if (reviewLikeRepository.existsReviewLikeByLikedPostAndPostLikeMember(perfumeReviewBoard, member)) {
+        if (reviewLikeRepository.existsByLikedPostBoardIdAndPostLikeMemberMemberId(
+                reviewLikeRequest.getPostId(),
+                reviewLikeRequest.getMemberId())) {
             throw new AlreadyPushLikeException();
         }
         return perfumeReviewBoard;
