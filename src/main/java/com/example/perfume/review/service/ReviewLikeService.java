@@ -57,11 +57,15 @@ public class ReviewLikeService {
     public PerfumeReviewBoard validateAlreadyPushLike(ReviewLikeRequest reviewLikeRequest) {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLikeRequest.getPostId())
                 .orElseThrow(ReviewPostNotFoundException::new);
-        if (reviewLikeRepository.existsByLikedPostBoardIdAndPostLikeMemberMemberId(
-                reviewLikeRequest.getPostId(),
-                reviewLikeRequest.getMemberId())) {
+        if (isExistPushedData(reviewLikeRequest)) {
             throw new AlreadyPushLikeException();
         }
         return perfumeReviewBoard;
+    }
+
+    public boolean isExistPushedData(ReviewLikeRequest reviewLikeRequest) {
+        return reviewLikeRepository.existsByLikedPostBoardIdAndPostLikeMemberMemberId(
+                reviewLikeRequest.getPostId(),
+                reviewLikeRequest.getMemberId());
     }
 }
