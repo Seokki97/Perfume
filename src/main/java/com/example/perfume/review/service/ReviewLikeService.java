@@ -9,6 +9,7 @@ import com.example.perfume.review.domain.review.LikeCount;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.dto.like.ReviewLikeRequest;
 import com.example.perfume.review.exception.AlreadyPushLikeException;
+import com.example.perfume.review.exception.LikedPostNotFoundException;
 import com.example.perfume.review.exception.ReviewPostNotFoundException;
 import com.example.perfume.review.repository.ReviewBoardRepository;
 import com.example.perfume.review.repository.ReviewLikeRepository;
@@ -47,6 +48,9 @@ public class ReviewLikeService {
         Member member = memberRepository.findByMemberId(reviewLikeRequest.getMemberId())
                 .orElseThrow(UserNotFoundException::new);
 
+        if (!isExistPushedData(reviewLikeRequest)) {
+            throw new LikedPostNotFoundException();
+        }
         reviewLikeRepository.deleteReviewLikeByPostLikeMemberAndLikedPost(member, perfumeReviewBoard)
                 .orElseThrow(ReviewPostNotFoundException::new);
 
@@ -57,11 +61,15 @@ public class ReviewLikeService {
     public PerfumeReviewBoard validateAlreadyPushLike(ReviewLikeRequest reviewLikeRequest) {
         PerfumeReviewBoard perfumeReviewBoard = reviewBoardRepository.findByBoardId(reviewLikeRequest.getPostId())
                 .orElseThrow(ReviewPostNotFoundException::new);
-        Member member = memberRepository.findByMemberId(reviewLikeRequest.getMemberId())
-                .orElseThrow(UserNotFoundException::new);
-        if (reviewLikeRepository.existsReviewLikeByLikedPostAndPostLikeMember(perfumeReviewBoard, member)) {
+        if (isExistPushedData(reviewLikeRequest)) {
             throw new AlreadyPushLikeException();
         }
         return perfumeReviewBoard;
+    }
+
+    public boolean isExistPushedData(ReviewLikeRequest reviewLikeRequest) {
+        return reviewLikeRepository.existsByLikedPostBoardIdAndPostLikeMemberMemberId(
+                reviewLikeRequest.getPostId(),
+                reviewLikeRequest.getMemberId());
     }
 }

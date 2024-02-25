@@ -46,9 +46,7 @@ public class WishListUtilTest {
         boolean perfumeEmptyObject = perfumeIdEmpty.isEmptyRequestBody();
         boolean memberEmptyObject = memberIdEmptyObject.isEmptyRequestBody();
 
-        Assertions.assertAll(
-                () -> Assertions.assertTrue(emptyObject),
-                () -> Assertions.assertTrue(perfumeEmptyObject),
+        Assertions.assertAll(() -> Assertions.assertTrue(emptyObject), () -> Assertions.assertTrue(perfumeEmptyObject),
                 () -> Assertions.assertTrue(memberEmptyObject)
 
         );
@@ -62,7 +60,7 @@ public class WishListUtilTest {
         List<WishList> wishLists = new ArrayList<>();
         wishLists.add(wishList);
 
-        when(wishListRepository.findByMember(any())).thenReturn(wishLists);
+        when(wishListRepository.findByMemberMemberId(any())).thenReturn(wishLists);
 
         WishListRequest duplicatedPerfume = new WishListRequest(2l, 1l);
         boolean actual = wishListValidation.isDuplicateWishItem(duplicatedPerfume);
@@ -79,7 +77,7 @@ public class WishListUtilTest {
             wishLists.add(new WishList(1l, Member.builder().memberId(1l).build(), null));
         }
 
-        when(wishListRepository.findByMember(any())).thenReturn(wishLists);
+        when(wishListRepository.findByMemberMemberId(any())).thenReturn(wishLists);
 
         boolean actual = wishListValidation.isWishListOverMaxSize(new WishListRequest(1l, 1l));
 
@@ -101,11 +99,13 @@ public class WishListUtilTest {
     @Test
     void deleteSelectedWishElement() {
         WishListRequest wishListRequest = new WishListRequest(1l, 1l);
-
-        doNothing().when(wishListRepository).deleteByMemberMemberIdAndPerfumePerfumeId(wishListRequest.getMemberId(),
-                wishListRequest.getPerfumeId());
+        List<WishList> wishLists = new ArrayList<>();
+        wishLists.add(new WishList(1l, new Member(1l, null, null, null, null), null));
+        doNothing().when(wishListRepository).deleteByMemberMemberIdAndPerfumePerfumeId(any(), any());
+        when(wishListRepository.findByMemberMemberId(any())).thenReturn(wishLists);
 
         wishListUtil.deleteSelectedWishList(wishListRequest);
+
         verify(wishListRepository, times(1)).deleteByMemberMemberIdAndPerfumePerfumeId(wishListRequest.getMemberId(),
                 wishListRequest.getPerfumeId());
     }
@@ -121,14 +121,12 @@ public class WishListUtilTest {
         }
         List<WishList> notFoundedWishList = new ArrayList<>();
 
-        when(wishListRepository.findByMember(eq(1l))).thenReturn(wishLists);
-        when(wishListRepository.findByMember(eq(2l))).thenReturn(notFoundedWishList);
+        when(wishListRepository.findByMemberMemberId(eq(1l))).thenReturn(wishLists);
+        when(wishListRepository.findByMemberMemberId(eq(2l))).thenReturn(notFoundedWishList);
 
         int actual = wishListUtil.showWishList(1l).size();
         int actualNotFoundedCase = wishListUtil.showWishList(2l).size();
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(10, actual),
-                () -> Assertions.assertEquals(0, actualNotFoundedCase)
-        );
+        Assertions.assertAll(() -> Assertions.assertEquals(10, actual),
+                () -> Assertions.assertEquals(0, actualNotFoundedCase));
     }
 }
