@@ -30,7 +30,7 @@ public class PerfumeReviewBoard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_board_id", nullable = false)
+    @Column(name = "board_id", nullable = false)
     private Long boardId;
 
     @NotNull
