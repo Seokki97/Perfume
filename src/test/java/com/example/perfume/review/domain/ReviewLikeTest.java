@@ -42,7 +42,8 @@ public class ReviewLikeTest {
         PerfumeReviewBoard perfumeReviewBoard = PerfumeReviewBoard.builder().boardId(1L).build();
         Member member = Member.builder().build();
         Mockito.when(reviewBoardRepository.findByBoardId(any())).thenReturn(Optional.ofNullable(perfumeReviewBoard));
-        Mockito.when(reviewLikeRepository.existsReviewLikeByLikedPostAndPostLikeMember(any(), any())).thenReturn(true);
+        Mockito.when(reviewLikeRepository.existsByLikedPostBoardIdAndPostLikeMemberMemberId(any(), any()))
+                .thenReturn(true);
         Mockito.when(memberRepository.findByMemberId(any())).thenReturn(Optional.ofNullable(member));
         Assertions.assertAll(() -> Assertions.assertThrows(AlreadyPushLikeException.class,
                 () -> reviewLikeService.validateAlreadyPushLike(reviewLikeRequest)));
@@ -85,7 +86,8 @@ public class ReviewLikeTest {
         Member member = Member.builder().build();
 
         Mockito.when(reviewBoardRepository.findByBoardId(any())).thenReturn(Optional.ofNullable(perfumeReviewBoard));
-        Mockito.when(reviewLikeRepository.existsReviewLikeByLikedPostAndPostLikeMember(any(), any())).thenReturn(false);
+        Mockito.when(reviewLikeRepository.existsByLikedPostBoardIdAndPostLikeMemberMemberId(any(), any()))
+                .thenReturn(false);
         Mockito.when(memberRepository.findByMemberId(any())).thenReturn(Optional.ofNullable(member));
 
         reviewLikeService.pushLikeOrUnlike(likeRequest);

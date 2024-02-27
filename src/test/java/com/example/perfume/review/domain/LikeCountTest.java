@@ -25,6 +25,5 @@ public class LikeCountTest {
                 () -> Assertions.assertEquals(likeCount.getLikeCount(), 1l),
                 () -> Assertions.assertEquals(likeCount.getUnlikeCount(), 1l)
         );
-
     }
 }
