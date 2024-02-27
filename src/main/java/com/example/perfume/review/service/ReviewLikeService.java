@@ -3,6 +3,7 @@ package com.example.perfume.review.service;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.exception.UserNotFoundException;
 import com.example.perfume.member.repository.MemberRepository;
+import com.example.perfume.review.domain.like.LikeStatus;
 import com.example.perfume.review.domain.like.PostLike;
 import com.example.perfume.review.domain.like.ReviewLike;
 import com.example.perfume.review.domain.review.LikeCount;
@@ -42,6 +43,28 @@ public class ReviewLikeService {
         LikeCount likeCount = reviewPost.getLikeCount();
         likeCount.calculatePushButton(reviewLike.getPostLike());
         reviewLikeRepository.save(reviewLike);
+    }
+
+    public void pushLike(Long boardId) {
+        PerfumeReviewBoard reviewPost = reviewBoardRepository.findByBoardId(boardId)
+                .orElseThrow(ReviewPostNotFoundException::new);
+        ReviewLike reviewLike = ReviewLike.builder()
+                .postLike(new PostLike(null, LikeStatus.LIKE))
+                .likedPost(reviewPost)
+                .build();
+        LikeCount likeCount = reviewPost.getLikeCount();
+        likeCount.calculatePushButton(reviewLike.getPostLike());
+    }
+
+    public void pushLikeByOptimisticLock(Long boardId) throws InterruptedException {
+        while (true) {
+            try {
+                pushLike(boardId);
+                break;
+            } catch (Exception e) {
+                Thread.sleep(50);
+            }
+        }
     }
 
     public void cancelLikePost(ReviewLikeRequest reviewLikeRequest) {

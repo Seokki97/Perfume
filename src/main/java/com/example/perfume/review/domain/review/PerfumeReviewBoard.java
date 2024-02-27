@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -49,6 +50,9 @@ public class PerfumeReviewBoard {
 
     @Embedded
     private LikeCount likeCount;
+
+    @Version
+    private Long version;
 
     @Builder
     public PerfumeReviewBoard(final Long boardId, final Member member, final String title, final Content content,
