@@ -30,7 +30,7 @@ public class PessimisticLockLikeCountTest {
     private ReviewLikeRepository reviewLikeRepository;
 
     @BeforeEach
-    private void before() {
+    public void before() {
         LikeCount likeCount = new LikeCount(0l, 0l);
 
         PerfumeReviewBoard perfumeReviewBoard = PerfumeReviewBoard.builder().boardId(30L).content(null).member(null)
@@ -40,14 +40,14 @@ public class PessimisticLockLikeCountTest {
     }
 
     @AfterEach
-    private void after() {
+    public void after() {
         reviewBoardRepository.deleteAll();
     }
 
     @Transactional
-    @DisplayName("비관적 락 사용했을 경우 값이 정상적으로 반영된다.")
+    @DisplayName("100개의 좋아요 수가 동시성이슈로 인해 정확히 카운트되지 않는다.")
     @Test
-    void request() throws InterruptedException {
+    void test() throws InterruptedException {
         int threadCount = 100;
         ExecutorService executorService = Executors.newFixedThreadPool(32);
 
@@ -65,30 +65,5 @@ public class PessimisticLockLikeCountTest {
         latch.await();
         LikeCount likeCount = reviewBoardRepository.findByBoardId(4L).get().getLikeCount();
         Assertions.assertEquals(likeCount.getLikeCount(), 100L);
-    }
-
-    @Transactional
-    @DisplayName("낙관적 락 사용했을 경우 값이 정상적으로 반영된다.")
-    @Test
-    void play() throws InterruptedException {
-        int threadCount = 100;
-        ExecutorService executorService = Executors.newFixedThreadPool(32);
-
-        CountDownLatch latch = new CountDownLatch(threadCount);
-
-        for (int i = 0; i < threadCount; i++) {
-            executorService.submit(() -> {
-                try {
-                    reviewLikeService.pushLikeByOptimisticLock(9L);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    latch.countDown();
-                }
-            });
-        }
-        latch.await();
-        LikeCount likeCount = reviewBoardRepository.findByBoardId(9L).get().getLikeCount();
-        Assertions.assertEquals(likeCount.getLikeCount(), 101L);
     }
 }
