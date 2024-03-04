@@ -42,7 +42,6 @@ public class ReviewLikeService {
                 .build();
         LikeCount likeCount = reviewPost.getLikeCount();
         likeCount.calculatePushButton(reviewLike.getPostLike());
-        reviewLikeRepository.save(reviewLike);
     }
 
     public void pushLike(Long boardId) {
@@ -54,6 +53,7 @@ public class ReviewLikeService {
                 .build();
         LikeCount likeCount = reviewPost.getLikeCount();
         likeCount.calculatePushButton(reviewLike.getPostLike());
+        reviewBoardRepository.save(reviewPost);
     }
 
     public void pushLikeByOptimisticLock(Long boardId) throws InterruptedException {
