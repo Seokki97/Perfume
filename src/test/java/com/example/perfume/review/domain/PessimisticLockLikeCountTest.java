@@ -1,21 +1,15 @@
 package com.example.perfume.review.domain;
 
-import com.example.perfume.review.domain.review.LikeCount;
-import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.repository.ReviewBoardRepository;
-import com.example.perfume.review.repository.ReviewLikeRepository;
 import com.example.perfume.review.service.ReviewLikeService;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 public class PessimisticLockLikeCountTest {
@@ -26,29 +20,11 @@ public class PessimisticLockLikeCountTest {
     @Autowired
     private ReviewBoardRepository reviewBoardRepository;
 
-    @Autowired
-    private ReviewLikeRepository reviewLikeRepository;
 
-    @BeforeEach
-    public void before() {
-        LikeCount likeCount = new LikeCount(0l, 0l);
-
-        PerfumeReviewBoard perfumeReviewBoard = PerfumeReviewBoard.builder().boardId(30L).content(null).member(null)
-                .title("test").likeCount(likeCount).build();
-
-        reviewBoardRepository.save(perfumeReviewBoard);
-    }
-
-    @AfterEach
-    public void after() {
-        reviewBoardRepository.deleteAll();
-    }
-
-    @Transactional
-    @DisplayName("100개의 좋아요 수가 동시성이슈로 인해 정확히 카운트되지 않는다.")
+    @DisplayName("Synchronized를 사용하여 동시성 문제를 해결한다")
     @Test
     void test() throws InterruptedException {
-        int threadCount = 100;
+        int threadCount = 20;
         ExecutorService executorService = Executors.newFixedThreadPool(32);
 
         CountDownLatch latch = new CountDownLatch(threadCount);
@@ -56,14 +32,17 @@ public class PessimisticLockLikeCountTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
                 try {
-                    reviewLikeService.pushLike(4L);
+                    reviewLikeService.pushLikeByOptimisticLock(83l);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 } finally {
                     latch.countDown();
                 }
             });
         }
         latch.await();
-        LikeCount likeCount = reviewBoardRepository.findByBoardId(4L).get().getLikeCount();
-        Assertions.assertEquals(likeCount.getLikeCount(), 100L);
+        long likeCount = reviewBoardRepository.findByBoardId(83l).get().getLikeCount()
+                .getLikeCount();
+        Assertions.assertEquals(likeCount, 100L);
     }
 }
