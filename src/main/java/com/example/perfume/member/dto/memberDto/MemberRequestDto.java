@@ -27,11 +27,6 @@ public class MemberRequestDto {
     }
 
     public Member toEntity() {
-        return Member.builder()
-                .memberId(memberId)
-                .kakaoId(kakaoId)
-                .email(email)
-                .nickname(nickname)
-                .build();
+        return Member.create(kakaoId, nickname, email, thumbnailImage);
     }
 }

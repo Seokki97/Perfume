@@ -9,21 +9,11 @@ import org.springframework.stereotype.Service;
 public class OauthService {
     private final MemberService memberService;
 
-    private OauthService(MemberService memberService) {
+    public OauthService(MemberService memberService) {
         this.memberService = memberService;
     }
 
     public Member saveUserProfile(MemberRequestDto memberRequestDto) {
-        Member member = Member.builder()
-                .email(memberRequestDto.getEmail())
-                .kakaoId(memberRequestDto.getKakaoId())
-                .nickname(memberRequestDto.getNickname())
-                .thumbnailImage(memberRequestDto.getThumbnailImage())
-                .build();
-
-        if (!memberService.isAlreadyExistMember(memberRequestDto)) {
-            memberService.saveMemberProfile(member);
-        }
-        return member;
+        return memberService.registerIfAbsent(memberRequestDto);
     }
 }

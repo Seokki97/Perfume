@@ -9,11 +9,11 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
 
     Optional<Token> findByMemberId(Long memberId);
 
-    Optional<Token> deleteByMemberId(Long memberId);
+    long deleteByMemberId(Long memberId);
 
     Optional<Token> findByRefreshToken(String refreshToken);
 
-    Optional<Token> deleteByRefreshToken(String refreshToken);
+    long deleteByRefreshToken(String refreshToken);
 
     boolean existsByMemberId(Long memberId);
 }

@@ -1,6 +1,5 @@
 package com.example.perfume.member.dto.memberDto;
 
-import com.example.perfume.member.domain.Member;
 import lombok.Getter;
 
 @Getter
@@ -22,11 +21,4 @@ public class MemberResponseDto {
 
     }
 
-    public Member toEntity() {
-        return Member.builder()
-                .memberId(memberId)
-                .email(email)
-                .nickname(nickname)
-                .build();
-    }
 }
