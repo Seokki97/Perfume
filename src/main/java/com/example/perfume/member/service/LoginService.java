@@ -1,5 +1,6 @@
 package com.example.perfume.member.service;
 
+import com.example.perfume.member.application.port.in.MemberUseCase;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.domain.Token;
 import com.example.perfume.member.dto.loginDto.LoginResponse;
@@ -14,9 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginService {
     private final JwtProvider jwtProvider;
     private final TokenRepository tokenRepository;
-    private final MemberService memberService;
+    private final MemberUseCase memberService;
 
-    public LoginService(JwtProvider jwtProvider, TokenRepository tokenRepository, MemberService memberService) {
+    public LoginService(JwtProvider jwtProvider, TokenRepository tokenRepository, MemberUseCase memberService) {
         this.jwtProvider = jwtProvider;
         this.tokenRepository = tokenRepository;
         this.memberService = memberService;

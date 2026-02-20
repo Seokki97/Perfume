@@ -1,5 +1,6 @@
 package com.example.perfume.member.service;
 
+import com.example.perfume.member.application.port.in.MemberUseCase;
 import com.example.perfume.member.domain.Blacklist;
 import com.example.perfume.member.dto.logoutDto.LogoutRequestDto;
 import com.example.perfume.member.exception.MemberAlreadyLogoutException;
@@ -13,10 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class LogoutService {
     private static final int AUTO_DELETE_DELAY = 24 * 60 * 60 * 1000;
     private final TokenRepository tokenRepository;
-    private final MemberService memberService;
+    private final MemberUseCase memberService;
     private final BlacklistRepository blacklistRepository;
 
-    public LogoutService(TokenRepository tokenRepository, MemberService memberService, BlacklistRepository blacklistRepository) {
+    public LogoutService(TokenRepository tokenRepository, MemberUseCase memberService, BlacklistRepository blacklistRepository) {
         this.tokenRepository = tokenRepository;
         this.memberService = memberService;
         this.blacklistRepository = blacklistRepository;

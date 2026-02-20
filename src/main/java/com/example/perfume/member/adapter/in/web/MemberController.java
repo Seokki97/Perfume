@@ -1,10 +1,10 @@
-package com.example.perfume.member.controller;
+package com.example.perfume.member.adapter.in.web;
 
+import com.example.perfume.member.application.port.in.MemberUseCase;
 import com.example.perfume.member.controller.docs.MemberControllerDocs;
-import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.dto.loginDto.SecessionRequest;
 import com.example.perfume.member.dto.memberDto.MemberRequestDto;
-import com.example.perfume.member.service.MemberService;
+import com.example.perfume.member.dto.memberDto.MemberResponseDto;
 import com.example.perfume.member.service.jwt.LoginCheck;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,49 +16,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api//member")
+@RequestMapping("/api/member")
 public class MemberController implements MemberControllerDocs {
 
-    private final MemberService memberService;
+    private final MemberUseCase memberUseCase;
 
-    public MemberController(MemberService memberService) {
-        this.memberService = memberService;
+    public MemberController(MemberUseCase memberUseCase) {
+        this.memberUseCase = memberUseCase;
     }
 
     @LoginCheck
     @PostMapping("/delete")
     public ResponseEntity<Void> deleteMember(@RequestBody final SecessionRequest secessionRequest) {
-        memberService.deleteMemberId(secessionRequest);
+        memberUseCase.deleteMemberId(secessionRequest);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete-all")
     public ResponseEntity<Void> deleteAllMember() {
-        memberService.deleteAllMember();
+        memberUseCase.deleteAllMember();
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/delete-select-member/{id}")
     public ResponseEntity<Void> deleteSelectedMember(@PathVariable("id") Long memberId) {
-        memberService.deleteMember(memberId);
+        memberUseCase.deleteMember(memberId);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("save")
+    @PostMapping("/save")
     public ResponseEntity<Void> saveMember(@RequestBody final MemberRequestDto memberRequestDto) {
-        Member member = Member.builder()
-                .memberId(memberRequestDto.getMemberId())
-                .kakaoId(memberRequestDto.getKakaoId())
-                .email(memberRequestDto.getEmail())
-                .nickname(memberRequestDto.getNickname())
-                .thumbnailImage(memberRequestDto.getThumbnailImage())
-                .build();
-        memberService.saveMemberProfile(member);
+        memberUseCase.saveMemberProfile(memberRequestDto);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/find/{memberId}")
-    public ResponseEntity<Member> findMember(@PathVariable("memberId") Long memberId) {
-        return ResponseEntity.ok(memberService.findByMemberPk(memberId));
+    public ResponseEntity<MemberResponseDto> findMember(@PathVariable("memberId") Long memberId) {
+        return ResponseEntity.ok(MemberResponseDto.from(memberUseCase.findByMemberPk(memberId)));
     }
 }

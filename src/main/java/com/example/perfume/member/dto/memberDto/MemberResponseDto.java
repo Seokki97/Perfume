@@ -22,11 +22,8 @@ public class MemberResponseDto {
 
     }
 
-    public Member toEntity() {
-        return Member.builder()
-                .memberId(memberId)
-                .email(email)
-                .nickname(nickname)
-                .build();
+    public static MemberResponseDto from(Member member) {
+        return new MemberResponseDto(member.getMemberId(), member.getNickname(), member.getEmail());
     }
+
 }

@@ -1,7 +1,7 @@
 package com.example.perfume.recommend.service;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.service.MemberService;
+import com.example.perfume.member.application.port.in.MemberUseCase;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.dto.RecommendRequestDto;
@@ -20,10 +20,10 @@ public class RecommendationService {
 
     private final SurveyService surveyService;
 
-    private final MemberService memberService;
+    private final MemberUseCase memberService;
 
     public RecommendationService(RecommendRepository recommendRepository, SurveyService surveyService,
-                                 MemberService memberService) {
+                                 MemberUseCase memberService) {
         this.recommendRepository = recommendRepository;
         this.surveyService = surveyService;
         this.memberService = memberService;

@@ -94,3 +94,22 @@
 ----
 ![img_10.png](menual/img_10.png)
 ![img_11.png](menual/img_11.png)
+## Hexagonal Architecture 전환 가능 여부
+가능합니다. 현재도 도메인 패키지가 분리되어 있어 점진적 전환에 유리합니다.
+
+### 제안하는 전환 단계
+1. **도메인 코어 고정**: `member`, `recommend`, `survey` 등 핵심 규칙을 `domain` + `application`(use case)으로 재배치하고, Spring 의존이 없는 포트 인터페이스를 먼저 정의합니다.
+2. **아웃바운드 포트 추상화**: JPA Repository, SMTP, ChatGPT, JWT 저장소 접근을 `port.out` 인터페이스로 감싼 뒤 기존 구현체를 `adapter.out.persistence|infra`로 옮깁니다.
+3. **인바운드 어댑터 분리**: Controller를 `adapter.in.web`로 명확히 분리하고, 컨트롤러는 DTO 변환 + 유스케이스 호출만 수행하도록 제한합니다.
+4. **트랜잭션 경계 재정의**: Service 단위 트랜잭션을 유스케이스 단위로 재설정하고, 유스케이스별 command/query 모델을 분리합니다.
+5. **모듈별 점진 마이그레이션**: 영향도가 낮은 `member`부터 전환 후 `wishlist`, `review`, `recommend` 순서로 확장합니다.
+
+### 전환 시 기대 효과
+- 프레임워크 교체 비용 감소 (Spring/JPA 의존 축소)
+- 도메인 규칙 테스트 단순화 (mock 포트 기반 테스트)
+- 외부 연동(ChatGPT/SMTP) 교체 시 파급 범위 축소
+
+### 리스크 및 대응
+- **초기 보일러플레이트 증가**: 패키지/포트/어댑터 템플릿을 미리 정의해 코드 스타일을 통일합니다.
+- **팀 러닝커브**: 1개 도메인(`member`)을 파일럿으로 전환해 패턴을 확정한 뒤 수평 확장합니다.
+- **전환 중 중복 구조 공존**: 기존 service 레이어와 새 use case 레이어 공존 기간을 허용하고, 기능 단위로 제거 계획을 관리합니다.

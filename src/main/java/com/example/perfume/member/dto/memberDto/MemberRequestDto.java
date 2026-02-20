@@ -1,6 +1,5 @@
 package com.example.perfume.member.dto.memberDto;
 
-import com.example.perfume.member.domain.Member;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -24,14 +23,5 @@ public class MemberRequestDto {
         this.email = email;
         this.kakaoId = kakaoId;
         this.thumbnailImage = thumbnailImage;
-    }
-
-    public Member toEntity() {
-        return Member.builder()
-                .memberId(memberId)
-                .kakaoId(kakaoId)
-                .email(email)
-                .nickname(nickname)
-                .build();
     }
 }

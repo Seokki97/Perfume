@@ -1,71 +1,62 @@
 package com.example.perfume.member.service;
 
+import com.example.perfume.member.application.port.in.MemberUseCase;
 import com.example.perfume.member.domain.Member;
 import com.example.perfume.member.dto.loginDto.SecessionRequest;
 import com.example.perfume.member.dto.memberDto.MemberRequestDto;
-import com.example.perfume.member.exception.TokenInvalidException;
-import com.example.perfume.member.exception.UserNotFoundException;
-import com.example.perfume.member.repository.BlacklistRepository;
-import com.example.perfume.member.repository.MemberRepository;
-import com.example.perfume.member.repository.TokenRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Service
+/**
+ * @deprecated use {@link com.example.perfume.member.application.service.MemberService} through {@link MemberUseCase}.
+ */
+@Deprecated
 public class MemberService {
+    private final MemberUseCase memberUseCase;
 
-    private final MemberRepository memberRepository;
-    private final TokenRepository tokenRepository;
-    private final BlacklistRepository blacklistRepository;
-
-    public MemberService(MemberRepository memberRepository,
-                         TokenRepository tokenRepository,
-                         BlacklistRepository blacklistRepository) {
-        this.memberRepository = memberRepository;
-        this.tokenRepository = tokenRepository;
-        this.blacklistRepository = blacklistRepository;
+    public MemberService(MemberUseCase memberUseCase) {
+        this.memberUseCase = memberUseCase;
     }
 
     public Member findMemberById(Long id) {
-        return memberRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        return memberUseCase.findMemberById(id);
     }
 
-    public Member findMemberByEmail(String token) {
-        return memberRepository.findByEmail(token)
-                .orElseThrow(UserNotFoundException::new);
+    public Member findMemberByEmail(String email) {
+        return memberUseCase.findMemberByEmail(email);
     }
 
     public Member findByMemberPk(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(UserNotFoundException::new);
+        return memberUseCase.findByMemberPk(memberId);
     }
 
     public boolean isAlreadyExistMember(MemberRequestDto memberRequestDto) {
-        return memberRepository.existsByMemberId(memberRequestDto.getKakaoId());
+        return memberUseCase.isAlreadyExistMember(memberRequestDto);
     }
 
-    public void saveMemberProfile(Member member) {
-        memberRepository.save(member);
+    public Member saveMemberProfile(MemberRequestDto memberRequestDto) {
+        return memberUseCase.saveMemberProfile(memberRequestDto);
+    }
+
+    public Member findByKakaoId(Long kakaoId) {
+        return memberUseCase.findByKakaoId(kakaoId);
+    }
+
+    public Member registerIfAbsent(MemberRequestDto memberRequestDto) {
+        return memberUseCase.registerIfAbsent(memberRequestDto);
     }
 
     public void deleteMemberId(SecessionRequest secessionRequest) {
-        memberRepository.deleteByMemberId(secessionRequest.getMemberId()).orElseThrow(UserNotFoundException::new);
-        tokenRepository.deleteByRefreshToken(secessionRequest.getRefreshToken())
-                .orElseThrow(() -> new TokenInvalidException("Refresh Token이 존재하지 않습니다."));
+        memberUseCase.deleteMemberId(secessionRequest);
     }
 
     public boolean isMemberLogout(String accessToken) {
-        return !blacklistRepository.existsByAccessToken(accessToken);
+        return memberUseCase.isMemberLogout(accessToken);
     }
 
-    @Transactional
     public void deleteAllMember() {
-        memberRepository.deleteAll();
-        tokenRepository.deleteAll();
+        memberUseCase.deleteAllMember();
     }
 
-    @Transactional
     public void deleteMember(Long memberId) {
-        memberRepository.deleteByMemberId(memberId);
-        tokenRepository.deleteByMemberId(memberId);
+        memberUseCase.deleteMember(memberId);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.perfume.review.service;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.service.MemberService;
+import com.example.perfume.member.application.port.in.MemberUseCase;
 import com.example.perfume.review.domain.review.LikeCount;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
 import com.example.perfume.review.dto.review.requestDto.PostDeleteRequest;
@@ -17,11 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ReviewBoardService {
 
-    private final MemberService memberService;
+    private final MemberUseCase memberService;
 
     private final ReviewBoardRepository reviewBoardRepository;
 
-    public ReviewBoardService(ReviewBoardRepository reviewBoardRepository, MemberService memberService) {
+    public ReviewBoardService(ReviewBoardRepository reviewBoardRepository, MemberUseCase memberService) {
         this.reviewBoardRepository = reviewBoardRepository;
         this.memberService = memberService;
     }

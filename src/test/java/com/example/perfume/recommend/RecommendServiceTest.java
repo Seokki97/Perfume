@@ -1,9 +1,7 @@
 package com.example.perfume.recommend;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.exception.UserNotFoundException;
-import com.example.perfume.member.repository.MemberRepository;
-import com.example.perfume.member.service.MemberService;
+import com.example.perfume.member.application.port.in.MemberUseCase;
 import com.example.perfume.recommend.domain.Recommendation;
 import com.example.perfume.recommend.repository.RecommendRepository;
 import com.example.perfume.recommend.service.RecommendationService;
@@ -32,7 +30,7 @@ public class RecommendServiceTest {
     @InjectMocks
     private RecommendationService recommendationService;
     @Mock
-    private MemberService memberService;
+    private MemberUseCase memberService;
 
     @DisplayName("추천받은 항목을 지운다.")
     @Test

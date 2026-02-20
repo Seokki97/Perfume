@@ -1,7 +1,7 @@
 package com.example.perfume.wishlist.service;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.service.MemberService;
+import com.example.perfume.member.application.port.in.MemberUseCase;
 import com.example.perfume.perfume.domain.Perfume;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.wishlist.domain.WishList;
@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class WishListService {
 
-    private final MemberService memberService;
+    private final MemberUseCase memberService;
 
     private final PerfumeService perfumeService;
 
@@ -27,7 +27,7 @@ public class WishListService {
 
     private final WishListRepository wishListRepository;
 
-    public WishListService(MemberService memberService, PerfumeService perfumeService,
+    public WishListService(MemberUseCase memberService, PerfumeService perfumeService,
                            WishListValidation wishListValidation, WishListRepository wishListRepository) {
         this.memberService = memberService;
         this.perfumeService = perfumeService;

@@ -7,7 +7,7 @@ import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.when;
 
 import com.example.perfume.member.domain.Member;
-import com.example.perfume.member.service.MemberService;
+import com.example.perfume.member.application.port.in.MemberUseCase;
 import com.example.perfume.perfume.service.PerfumeService;
 import com.example.perfume.review.domain.Content;
 import com.example.perfume.review.domain.review.PerfumeReviewBoard;
@@ -38,7 +38,7 @@ public class ReviewBoardServiceTest {
     private ReviewBoardRepository reviewBoardRepository;
 
     @Mock
-    private MemberService memberService;
+    private MemberUseCase memberService;
 
     @Mock
     private PerfumeService perfumeService;
