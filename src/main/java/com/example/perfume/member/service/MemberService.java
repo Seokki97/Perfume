@@ -11,6 +11,8 @@ import com.example.perfume.member.repository.TokenRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 public class MemberService {
 
@@ -30,8 +32,8 @@ public class MemberService {
         return memberRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
-    public Member findMemberByEmail(String token) {
-        return memberRepository.findByEmail(token)
+    public Member findMemberByEmail(String email) {
+        return memberRepository.findByEmail(email)
                 .orElseThrow(UserNotFoundException::new);
     }
 
@@ -40,17 +42,39 @@ public class MemberService {
     }
 
     public boolean isAlreadyExistMember(MemberRequestDto memberRequestDto) {
-        return memberRepository.existsByMemberId(memberRequestDto.getKakaoId());
+        Long kakaoId = Objects.requireNonNull(memberRequestDto.getKakaoId(), "카카오 ID는 필수입니다.");
+        return memberRepository.existsByKakaoId(kakaoId);
     }
 
-    public void saveMemberProfile(Member member) {
-        memberRepository.save(member);
+    @Transactional
+    public Member saveMemberProfile(MemberRequestDto memberRequestDto) {
+        Objects.requireNonNull(memberRequestDto, "회원 정보는 필수입니다.");
+        Member member = memberRequestDto.toEntity();
+        return memberRepository.save(member);
     }
 
+    @Transactional(readOnly = true)
+    public Member findByKakaoId(Long kakaoId) {
+        return memberRepository.findByKakaoId(kakaoId).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Transactional
+    public Member registerIfAbsent(MemberRequestDto memberRequestDto) {
+        Long kakaoId = Objects.requireNonNull(memberRequestDto.getKakaoId(), "카카오 ID는 필수입니다.");
+        return memberRepository.findByKakaoId(kakaoId)
+                .orElseGet(() -> saveMemberProfile(memberRequestDto));
+    }
+
+    @Transactional
     public void deleteMemberId(SecessionRequest secessionRequest) {
-        memberRepository.deleteByMemberId(secessionRequest.getMemberId()).orElseThrow(UserNotFoundException::new);
-        tokenRepository.deleteByRefreshToken(secessionRequest.getRefreshToken())
-                .orElseThrow(() -> new TokenInvalidException("Refresh Token이 존재하지 않습니다."));
+        long deletedMemberCount = memberRepository.deleteByMemberId(secessionRequest.getMemberId());
+        if (deletedMemberCount == 0) {
+            throw new UserNotFoundException();
+        }
+        long deletedTokenCount = tokenRepository.deleteByRefreshToken(secessionRequest.getRefreshToken());
+        if (deletedTokenCount == 0) {
+            throw new TokenInvalidException("Refresh Token이 존재하지 않습니다.");
+        }
     }
 
     public boolean isMemberLogout(String accessToken) {
@@ -65,7 +89,10 @@ public class MemberService {
 
     @Transactional
     public void deleteMember(Long memberId) {
-        memberRepository.deleteByMemberId(memberId);
+        long deletedMemberCount = memberRepository.deleteByMemberId(memberId);
+        if (deletedMemberCount == 0) {
+            throw new UserNotFoundException();
+        }
         tokenRepository.deleteByMemberId(memberId);
     }
 }
